@@ -14,13 +14,13 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-
+        
 
         \DB::table('users')->delete();
-
-        \DB::table('users')->insert(array(
-            0 =>
-            array(
+        
+        \DB::table('users')->insert(array (
+            0 => 
+            array (
                 'id' => 1,
                 'name' => 'Super Admin',
                 'email' => 'superadmin@gmail.com',
@@ -36,7 +36,9 @@ class UsersTableSeeder extends Seeder
                 'active' => 1,
                 'created_at' => NULL,
                 'updated_at' => '2022-08-28 20:49:57',
-            )
+            ),
         ));
+        
+        
     }
 }

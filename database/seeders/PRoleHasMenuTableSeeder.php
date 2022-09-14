@@ -14,8 +14,11 @@ class PRoleHasMenuTableSeeder extends Seeder
      */
     public function run()
     {
-
+        
 
         \DB::table('p_role_has_menu')->delete();
+        
+        
+        
     }
 }

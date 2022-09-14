@@ -14,19 +14,21 @@ class PRolesTableSeeder extends Seeder
      */
     public function run()
     {
-
+        
 
         \DB::table('p_roles')->delete();
-
-        \DB::table('p_roles')->insert(array(
-            0 =>
-            array(
+        
+        \DB::table('p_roles')->insert(array (
+            0 => 
+            array (
                 'id' => 1,
                 'name' => 'SuperAdmin',
                 'guard_name' => 'web',
                 'created_at' => '2022-08-04 16:05:41',
                 'updated_at' => '2022-08-06 14:36:10',
-            )
+            ),
         ));
+        
+        
     }
 }
