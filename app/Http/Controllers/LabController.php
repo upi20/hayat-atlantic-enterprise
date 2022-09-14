@@ -62,10 +62,10 @@ class LabController extends Controller
 
         // Dokumen Properti
         $spreadsheet->getProperties()
-            ->setCreator("Administrator")
-            ->setLastModifiedBy("Administrator")
+            ->setCreator("SuperAdmin")
+            ->setLastModifiedBy("SuperAdmin")
             ->setTitle($title_excel)
-            ->setSubject("Administrator")
+            ->setSubject("SuperAdmin")
             ->setDescription("LIst Company $date")
             ->setKeywords("Laporan, Report")
             ->setCategory("Laporan, Report");

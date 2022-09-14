@@ -89,18 +89,28 @@ $page_attr_title = ($page_attr->title == '' ? '' : $page_attr->title . ' | ') . 
         <!-- custom {{ $meta->name }} -->
         {!! $meta->value !!}
     @endforeach
+
+    <!-- custom -->
+    <style>
+        body {
+            background-color: #F0F0F5;
+        }
+    </style>
 </head>
 
-<body class="app sidebar-mini ltr dark-mode">
+<body class="app sidebar-mini ltr">
 
     <!-- BACKGROUND-IMAGE -->
     <div class="login-img">
 
         @if ($page_attr->loader)
             <!-- GLOBAL-LOADER -->
-            <div id="global-loader" style="background-color: #1a1a3c">
-                <img src="{{ asset(settings()->get(set_admin('app.foto_light_mode'))) }}" class="loader-img"
-                    alt="Loader">
+            <div id="global-loader">
+                <div style="background-color: #1a1a3c; height: 100vh"
+                    class="d-flex align-items-center justify-content-center">
+                    <img src="{{ asset(settings()->get(set_admin('app.foto_light_mode'))) }}" alt="Loader"
+                        style="max-width: 100px;">
+                </div>
             </div>
             <!-- /GLOBAL-LOADER -->
         @endif
@@ -112,23 +122,23 @@ $page_attr_title = ($page_attr->title == '' ? '' : $page_attr->title . ' | ') . 
                     <div class="wrap-login100 p-6" style="border-radius: 24px; box-shadow: none">
                         <div class="text-center">
                             <img src="{{ asset(settings()->get(set_admin('app.foto_light_landscape_mode'))) }}"
-                                class="header-brand-img" alt="Logo Karmapack" id="logo">
+                                class="header-brand-img" alt="Logo Perusahaan" id="logo">
                         </div>
-                        <p class="text-center mt-5">Sistem Informasi Anggota (SIA)</p>
+                        <p class="text-center mt-5">Sistem Informasi Data Barang</p>
                         <div class="panel panel-primary">
                             <div class="panel-body tabs-menu-body p-0">
                                 <div class="tab-content">
                                     <form action="javascript:void(0)" id="Loginform" name="Loginform" method="POST"
                                         enctype="multipart/form-data" autocomplete="false">
                                         <div class="wrap-input100 validate-input input-group"
-                                            data-bs-validate="Valid email is required: ex@abc.xyz">
+                                            data-bs-validate="Valid nik is required: ex@abc.xyz">
                                             <a href="javascript:void(0)" class="input-group-text bg-white text-muted"
                                                 style="border-radius: 24px 0 0 24px;">
-                                                <i class="zmdi zmdi-email text-muted ms-1" aria-hidden="true"></i>
+                                                <i class="zmdi zmdi-account-o text-muted ms-1" aria-hidden="true"></i>
                                             </a>
                                             <input class="input100 border-start-0 form-control ms-0 bg-white"
-                                                type="email" placeholder="Email" id="email" required=""
-                                                name="email" style="border-radius: 0 24px 24px 0;">
+                                                type="text" placeholder="Nomor Induk Kependudukan" id="nik"
+                                                required="" name="nik" style="border-radius: 0 24px 24px 0;">
                                         </div>
                                         <div class="wrap-input100 validate-input input-group" id="Password-toggle">
                                             <a href="javascript:void(0)" class="input-group-text bg-white text-muted"
@@ -140,16 +150,10 @@ $page_attr_title = ($page_attr->title == '' ? '' : $page_attr->title . ' | ') . 
                                                 name="password" style="border-radius: 0 24px 24px 0;">
                                         </div>
                                         <div class="container-login100-form-btn">
-                                            <button type="submit" class="login100-form-btn btn-primary"
+                                            <button type="submit" class="login100-form-btn btn-dark"
                                                 style="border: 0; border-radius: 24px">
                                                 Masuk
                                             </button>
-                                            <div class="text-center pt-4">
-                                                <p class="mb-0">
-                                                    <a href="{{ url('/') }}" class="text-primary ms-1"> Kembali
-                                                    </a>
-                                                </p>
-                                            </div>
                                         </div>
                                     </form>
                                 </div>
@@ -163,9 +167,6 @@ $page_attr_title = ($page_attr->title == '' ? '' : $page_attr->title . ' | ') . 
                 </div>
             </div>
         </div>
-
-        <div id="particles-js" style="height: 100vh"> </div>
-        <!-- End PAGE -->
     </div>
     <!-- BACKGROUND-IMAGE CLOSED -->
 
@@ -187,19 +188,10 @@ $page_attr_title = ($page_attr->title == '' ? '' : $page_attr->title . ' | ') . 
 
     <script src="{{ asset('assets/templates/admin/plugins/sweet-alert/sweetalert2.all.js') }}"></script>
 
-    <script src="{{ asset('assets/templates/admin/plugins/particle/particles.js') }}"></script>
-
     <script>
-        {{-- if (localStorage.getItem('lightMode') || localStorage.getItem('darkMode') == null) {
-            $('#logo').attr('src', "{{ asset(settings()->get(set_admin('app.foto_light_landscape_mode'))) }}");
-        } --}}
-
-        // auto darkmode
-        $(window).on("load", function(e) {
-            if (!(document.querySelector('body').classList.contains('dark-mode'))) {
-                $('body').addClass('dark-mode');
-            }
-        })
+        if (localStorage.getItem('lightMode') || localStorage.getItem('darkMode') == null) {
+            $('#logo').attr('src', "{{ asset(settings()->get(set_admin('app.foto_dark_landscape_mode'))) }}");
+        }
     </script>
 
     <script src="{{ url('loader/js/auth/login.js') }}"></script>

@@ -17,7 +17,7 @@ class LoginController extends Controller
             return Redirect::route('dashboard');
         }
         $page_attr = ['title' => 'Login'];
-        return view('auth.login-surat', compact('page_attr'));
+        return view('auth.login', compact('page_attr'));
     }
 
     public function index_old()

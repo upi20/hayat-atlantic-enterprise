@@ -162,7 +162,7 @@ class UserRepository
                 $user->password = Hash::make($request->new_password);
                 $user->save();
             } else {
-                throw new Exception("Password Lama Salah. Jika anda lupa silahkan hubungi administrator.");
+                throw new Exception("Password Lama Salah. Jika anda lupa silahkan hubungi SuperAdmin.");
             }
             return response()->json();
         } catch (ValidationException $error) {

@@ -3,11 +3,11 @@ accusoft:
     - accusoft
   label: Accusoft
   url: 'https://www.accusoft.com'
-administrator-technology:
+SuperAdmin-technology:
   icons:
     - stream
-  label: Administrator Technology
-  url: 'https://administrator.de'
+  label: SuperAdmin Technology
+  url: 'https://SuperAdmin.de'
 adversal:
   icons:
     - adversal
