@@ -63,6 +63,7 @@
                                     <th>No</th>
                                     <th>Name</th>
                                     <th>NIK</th>
+                                    <th>Jenis Kelamin</th>
                                     {!! $is_admin ? '<th>Email</th>' : '' !!}
                                     <th>Role</th>
                                     <th>Active</th>
@@ -95,9 +96,9 @@
 
                         </div>
                         <div class="form-group">
-                            <label class="form-label" for="email">Email <span class="text-danger">*</span></label>
+                            <label class="form-label" for="email">Email</label>
                             <input type="email" id="email" name="email" class="form-control"
-                                placeholder="Email Address" required="" />
+                                placeholder="Email Address" />
                             <div class="help-block"></div>
                         </div>
                         <div class="form-group">
@@ -121,6 +122,13 @@
                                         {{ ucfirst(implode(' ', explode('_', $role->name))) }}
                                     </option>
                                 @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="jenis_kelamin">Jenis Kelamin</label>
+                            <select class="form-control" required="" id="jenis_kelamin" name="jenis_kelamin">
+                                <option value="l">Laki-Laki</option>
+                                <option value="p">Perempuan</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -204,6 +212,10 @@
                     {
                         data: 'nik',
                         name: 'nik',
+                    },
+                    {
+                        data: 'jenis_kelamin_str',
+                        name: 'jenis_kelamin_str',
                     },
                     ...(is_admin ? [{
                         data: 'email',
@@ -348,6 +360,7 @@
                     $('#name').val(data.name);
                     $('#email').val(data.email);
                     $('#nik').val(data.nik);
+                    $('#jenis_kelamin').val(data.jenis_kelamin);
                     $('#roles').val(data.roles.map(e => e.name)).trigger('change');
                     $('#active').val(data.active);
                     $('#password').removeAttr('required');

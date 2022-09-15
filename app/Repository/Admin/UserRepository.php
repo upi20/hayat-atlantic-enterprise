@@ -46,6 +46,7 @@ class UserRepository
 
         $user = User::select(['id', 'name', 'email', 'active', 'nik'])
             ->selectRaw('IF(active = 1, "Yes", "No") as active_str')
+            ->selectRaw("IF(jenis_kelamin = 'l', 'Laki-Laki', IF(jenis_kelamin = 'p', 'Perempuan', 'Belum Ditentukan')) as jenis_kelamin_str")
             ->selectRaw($this->query[$c_roles] . ' as ' . $this->query["{$c_roles}_alias"]);
         // filter
         if (isset($request->filter)) {
@@ -69,6 +70,9 @@ class UserRepository
             ->filterColumn($this->query["{$c_roles}_alias"], function ($query, $keyword) use ($c_roles) {
                 $query->whereRaw($this->query[$c_roles] . " like '%$keyword%'");
             })
+            ->filterColumn('jenis_kelamin_str', function ($query, $keyword) {
+                $query->whereRaw("IF(jenis_kelamin = 'l', 'Laki-Laki', IF(jenis_kelamin = 'p', 'Perempuan', 'Belum Ditentukan')) like '%$keyword%'");
+            })
             ->make(true);
     }
 
@@ -77,7 +81,7 @@ class UserRepository
         try {
             $request->validate([
                 'name' => ['required', 'string', 'max:255'],
-                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+                'email' => ['nullable', 'string', 'email'],
                 'active' => ['required', 'int', 'in:1,0'],
                 'nik' => ['required', 'string', 'max:16'],
                 'password' => ['required', 'string', new Password]
@@ -88,6 +92,7 @@ class UserRepository
                 'email' => $request->email,
                 'nik' => $request->nik,
                 'active' => $request->active,
+                'jenis_kelamin' => $request->jenis_kelamin,
                 'password' => Hash::make($request->password),
             ]);
 
@@ -109,7 +114,7 @@ class UserRepository
             $request->validate([
                 'id' => ['required', 'int'],
                 'name' => ['required', 'string', 'max:255'],
-                'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . $user->id],
+                'email' => ['nullable', 'string', 'email', 'max:255', 'unique:users,email,' . $user->id],
                 'active' => ['required', 'int', 'in:1,0'],
                 'nik' => ['required', 'string', 'max:16'],
                 'password' => $request->password ? ['required', 'string', new Password] : ''
@@ -123,6 +128,7 @@ class UserRepository
             $user->email = $request->email;
             $user->nik = $request->nik;
             $user->active = $request->active;
+            $user->jenis_kelamin = $request->jenis_kelamin;
 
             $user->syncRoles($request->roles);
 

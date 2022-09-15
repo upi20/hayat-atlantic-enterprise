@@ -25,6 +25,7 @@ class UsersTableSeeder extends Seeder
                 'name' => 'Super Admin',
                 'email' => 'superadmin@gmail.com',
                 'nik' => '0000000',
+                'jenis_kelamin' => 'l',
                 'email_verified_at' => NULL,
                 'password' => '$2y$10$DsI7ChQu4aIwEwc0CTlCnO66pBuIukicAIA/oIKwHD4AIGzIHmHZO',
                 'two_factor_secret' => NULL,
@@ -35,7 +36,7 @@ class UsersTableSeeder extends Seeder
                 'profile_photo_path' => NULL,
                 'active' => 1,
                 'created_at' => NULL,
-                'updated_at' => '2022-08-28 20:49:57',
+                'updated_at' => '2022-09-15 08:38:55',
             ),
         ));
         

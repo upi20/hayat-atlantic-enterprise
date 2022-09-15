@@ -47,7 +47,7 @@ class RoleController extends Controller
         SQL;
         $permissions = Permission::select([DB::raw("$t_permission.name"), DB::raw("$is_page as page")])->orderBy('name', 'asc')->get();
 
-        $reload = true;
+        $reload = (request('r') == "1") ? false : true;
 
         $page_attr = [
             'title' => 'Create Role',

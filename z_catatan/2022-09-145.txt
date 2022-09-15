@@ -1,0 +1,4 @@
+Tambahkan Fitur Log User
+favicon belum di ganti[done]
+Buat semua role yang ada[done]
+Masukan semua data pegawai sesuai dengan role
