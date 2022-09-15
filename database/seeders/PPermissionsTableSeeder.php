@@ -21,7 +21,7 @@ class PPermissionsTableSeeder extends Seeder
         \DB::table('p_permissions')->insert(array (
             0 => 
             array (
-                'id' => 27,
+                'id' => '27',
                 'name' => 'admin.artikel.data',
                 'guard_name' => 'web',
                 'created_at' => '2022-08-04 16:05:42',
@@ -29,7 +29,7 @@ class PPermissionsTableSeeder extends Seeder
             ),
             1 => 
             array (
-                'id' => 30,
+                'id' => '30',
                 'name' => 'admin.artikel.data.delete',
                 'guard_name' => 'web',
                 'created_at' => '2022-08-04 16:05:42',
@@ -37,7 +37,7 @@ class PPermissionsTableSeeder extends Seeder
             ),
             2 => 
             array (
-                'id' => 31,
+                'id' => '31',
                 'name' => 'admin.artikel.data.insert',
                 'guard_name' => 'web',
                 'created_at' => '2022-08-04 16:05:42',
@@ -45,7 +45,7 @@ class PPermissionsTableSeeder extends Seeder
             ),
             3 => 
             array (
-                'id' => 32,
+                'id' => '32',
                 'name' => 'admin.artikel.data.update',
                 'guard_name' => 'web',
                 'created_at' => '2022-08-04 16:05:42',
@@ -53,7 +53,7 @@ class PPermissionsTableSeeder extends Seeder
             ),
             4 => 
             array (
-                'id' => 33,
+                'id' => '33',
                 'name' => 'admin.artikel.kategori',
                 'guard_name' => 'web',
                 'created_at' => '2022-08-04 16:05:42',
@@ -61,7 +61,7 @@ class PPermissionsTableSeeder extends Seeder
             ),
             5 => 
             array (
-                'id' => 35,
+                'id' => '35',
                 'name' => 'admin.artikel.kategori.insert',
                 'guard_name' => 'web',
                 'created_at' => '2022-08-04 16:05:42',
@@ -69,7 +69,7 @@ class PPermissionsTableSeeder extends Seeder
             ),
             6 => 
             array (
-                'id' => 36,
+                'id' => '36',
                 'name' => 'admin.artikel.kategori.delete',
                 'guard_name' => 'web',
                 'created_at' => '2022-08-04 16:05:42',
@@ -77,7 +77,7 @@ class PPermissionsTableSeeder extends Seeder
             ),
             7 => 
             array (
-                'id' => 37,
+                'id' => '37',
                 'name' => 'admin.artikel.kategori.update',
                 'guard_name' => 'web',
                 'created_at' => '2022-08-04 16:05:42',
@@ -85,7 +85,7 @@ class PPermissionsTableSeeder extends Seeder
             ),
             8 => 
             array (
-                'id' => 38,
+                'id' => '38',
                 'name' => 'admin.artikel.tag',
                 'guard_name' => 'web',
                 'created_at' => '2022-08-04 16:05:42',
@@ -93,7 +93,7 @@ class PPermissionsTableSeeder extends Seeder
             ),
             9 => 
             array (
-                'id' => 40,
+                'id' => '40',
                 'name' => 'admin.artikel.tag.insert',
                 'guard_name' => 'web',
                 'created_at' => '2022-08-04 16:05:42',
@@ -101,7 +101,7 @@ class PPermissionsTableSeeder extends Seeder
             ),
             10 => 
             array (
-                'id' => 41,
+                'id' => '41',
                 'name' => 'admin.artikel.tag.delete',
                 'guard_name' => 'web',
                 'created_at' => '2022-08-04 16:05:42',
@@ -109,7 +109,7 @@ class PPermissionsTableSeeder extends Seeder
             ),
             11 => 
             array (
-                'id' => 42,
+                'id' => '42',
                 'name' => 'admin.artikel.tag.update',
                 'guard_name' => 'web',
                 'created_at' => '2022-08-04 16:05:42',
@@ -117,7 +117,7 @@ class PPermissionsTableSeeder extends Seeder
             ),
             12 => 
             array (
-                'id' => 61,
+                'id' => '61',
                 'name' => 'admin.galeri',
                 'guard_name' => 'web',
                 'created_at' => '2022-08-04 16:05:43',
@@ -125,7 +125,7 @@ class PPermissionsTableSeeder extends Seeder
             ),
             13 => 
             array (
-                'id' => 63,
+                'id' => '63',
                 'name' => 'admin.galeri.insert',
                 'guard_name' => 'web',
                 'created_at' => '2022-08-04 16:05:43',
@@ -133,7 +133,7 @@ class PPermissionsTableSeeder extends Seeder
             ),
             14 => 
             array (
-                'id' => 64,
+                'id' => '64',
                 'name' => 'admin.galeri.delete',
                 'guard_name' => 'web',
                 'created_at' => '2022-08-04 16:05:43',
@@ -141,7 +141,7 @@ class PPermissionsTableSeeder extends Seeder
             ),
             15 => 
             array (
-                'id' => 65,
+                'id' => '65',
                 'name' => 'admin.galeri.update',
                 'guard_name' => 'web',
                 'created_at' => '2022-08-04 16:05:43',
@@ -149,7 +149,7 @@ class PPermissionsTableSeeder extends Seeder
             ),
             16 => 
             array (
-                'id' => 66,
+                'id' => '66',
                 'name' => 'admin.social_media',
                 'guard_name' => 'web',
                 'created_at' => '2022-08-04 16:05:43',
@@ -157,7 +157,7 @@ class PPermissionsTableSeeder extends Seeder
             ),
             17 => 
             array (
-                'id' => 67,
+                'id' => '67',
                 'name' => 'admin.social_media.insert',
                 'guard_name' => 'web',
                 'created_at' => '2022-08-04 16:05:43',
@@ -165,7 +165,7 @@ class PPermissionsTableSeeder extends Seeder
             ),
             18 => 
             array (
-                'id' => 68,
+                'id' => '68',
                 'name' => 'admin.social_media.delete',
                 'guard_name' => 'web',
                 'created_at' => '2022-08-04 16:05:43',
@@ -173,7 +173,7 @@ class PPermissionsTableSeeder extends Seeder
             ),
             19 => 
             array (
-                'id' => 69,
+                'id' => '69',
                 'name' => 'admin.social_media.update',
                 'guard_name' => 'web',
                 'created_at' => '2022-08-04 16:05:43',
@@ -181,7 +181,7 @@ class PPermissionsTableSeeder extends Seeder
             ),
             20 => 
             array (
-                'id' => 70,
+                'id' => '70',
                 'name' => 'admin.contact',
                 'guard_name' => 'web',
                 'created_at' => '2022-08-04 16:05:43',
@@ -189,7 +189,7 @@ class PPermissionsTableSeeder extends Seeder
             ),
             21 => 
             array (
-                'id' => 71,
+                'id' => '71',
                 'name' => 'admin.contact.insert',
                 'guard_name' => 'web',
                 'created_at' => '2022-08-04 16:05:43',
@@ -197,7 +197,7 @@ class PPermissionsTableSeeder extends Seeder
             ),
             22 => 
             array (
-                'id' => 72,
+                'id' => '72',
                 'name' => 'admin.contact.delete',
                 'guard_name' => 'web',
                 'created_at' => '2022-08-04 16:05:43',
@@ -205,7 +205,7 @@ class PPermissionsTableSeeder extends Seeder
             ),
             23 => 
             array (
-                'id' => 73,
+                'id' => '73',
                 'name' => 'admin.contact.update',
                 'guard_name' => 'web',
                 'created_at' => '2022-08-04 16:05:43',
@@ -213,7 +213,7 @@ class PPermissionsTableSeeder extends Seeder
             ),
             24 => 
             array (
-                'id' => 74,
+                'id' => '74',
                 'name' => 'admin.footer_instagram',
                 'guard_name' => 'web',
                 'created_at' => '2022-08-04 16:05:43',
@@ -221,7 +221,7 @@ class PPermissionsTableSeeder extends Seeder
             ),
             25 => 
             array (
-                'id' => 97,
+                'id' => '97',
                 'name' => 'admin.user_access.permission',
                 'guard_name' => 'web',
                 'created_at' => '2022-08-04 16:05:44',
@@ -229,7 +229,7 @@ class PPermissionsTableSeeder extends Seeder
             ),
             26 => 
             array (
-                'id' => 99,
+                'id' => '99',
                 'name' => 'admin.user_access.permission.insert',
                 'guard_name' => 'web',
                 'created_at' => '2022-08-04 16:05:44',
@@ -237,7 +237,7 @@ class PPermissionsTableSeeder extends Seeder
             ),
             27 => 
             array (
-                'id' => 100,
+                'id' => '100',
                 'name' => 'admin.user_access.permission.delete',
                 'guard_name' => 'web',
                 'created_at' => '2022-08-04 16:05:44',
@@ -245,7 +245,7 @@ class PPermissionsTableSeeder extends Seeder
             ),
             28 => 
             array (
-                'id' => 101,
+                'id' => '101',
                 'name' => 'admin.user_access.permission.update',
                 'guard_name' => 'web',
                 'created_at' => '2022-08-04 16:05:44',
@@ -253,7 +253,7 @@ class PPermissionsTableSeeder extends Seeder
             ),
             29 => 
             array (
-                'id' => 102,
+                'id' => '102',
                 'name' => 'admin.user_access.role',
                 'guard_name' => 'web',
                 'created_at' => '2022-08-04 16:05:44',
@@ -261,7 +261,7 @@ class PPermissionsTableSeeder extends Seeder
             ),
             30 => 
             array (
-                'id' => 103,
+                'id' => '103',
                 'name' => 'admin.user_access.role.insert',
                 'guard_name' => 'web',
                 'created_at' => '2022-08-04 16:05:44',
@@ -269,7 +269,7 @@ class PPermissionsTableSeeder extends Seeder
             ),
             31 => 
             array (
-                'id' => 107,
+                'id' => '107',
                 'name' => 'admin.user_access.role.update',
                 'guard_name' => 'web',
                 'created_at' => '2022-08-04 16:05:44',
@@ -277,7 +277,7 @@ class PPermissionsTableSeeder extends Seeder
             ),
             32 => 
             array (
-                'id' => 108,
+                'id' => '108',
                 'name' => 'admin.user_access.role.delete',
                 'guard_name' => 'web',
                 'created_at' => '2022-08-04 16:05:44',
@@ -285,7 +285,7 @@ class PPermissionsTableSeeder extends Seeder
             ),
             33 => 
             array (
-                'id' => 109,
+                'id' => '109',
                 'name' => 'member.dashboard',
                 'guard_name' => 'web',
                 'created_at' => '2022-08-04 16:05:44',
@@ -293,7 +293,7 @@ class PPermissionsTableSeeder extends Seeder
             ),
             34 => 
             array (
-                'id' => 110,
+                'id' => '110',
                 'name' => 'member.profile',
                 'guard_name' => 'web',
                 'created_at' => '2022-08-04 16:05:44',
@@ -301,7 +301,7 @@ class PPermissionsTableSeeder extends Seeder
             ),
             35 => 
             array (
-                'id' => 135,
+                'id' => '135',
                 'name' => 'member.password',
                 'guard_name' => 'web',
                 'created_at' => '2022-08-04 16:05:45',
@@ -309,7 +309,7 @@ class PPermissionsTableSeeder extends Seeder
             ),
             36 => 
             array (
-                'id' => 136,
+                'id' => '136',
                 'name' => 'member.password.save',
                 'guard_name' => 'web',
                 'created_at' => '2022-08-04 16:05:45',
@@ -317,7 +317,7 @@ class PPermissionsTableSeeder extends Seeder
             ),
             37 => 
             array (
-                'id' => 137,
+                'id' => '137',
                 'name' => 'admin.menu.admin',
                 'guard_name' => 'web',
                 'created_at' => '2022-08-05 00:27:17',
@@ -325,7 +325,7 @@ class PPermissionsTableSeeder extends Seeder
             ),
             38 => 
             array (
-                'id' => 139,
+                'id' => '139',
                 'name' => 'admin.menu.admin.update',
                 'guard_name' => 'web',
                 'created_at' => '2022-08-05 19:03:54',
@@ -333,7 +333,7 @@ class PPermissionsTableSeeder extends Seeder
             ),
             39 => 
             array (
-                'id' => 140,
+                'id' => '140',
                 'name' => 'admin.menu.admin.save',
                 'guard_name' => 'web',
                 'created_at' => '2022-08-05 21:03:40',
@@ -341,7 +341,7 @@ class PPermissionsTableSeeder extends Seeder
             ),
             40 => 
             array (
-                'id' => 141,
+                'id' => '141',
                 'name' => 'admin.menu.admin.insert',
                 'guard_name' => 'web',
                 'created_at' => '2022-08-05 21:03:46',
@@ -349,7 +349,7 @@ class PPermissionsTableSeeder extends Seeder
             ),
             41 => 
             array (
-                'id' => 143,
+                'id' => '143',
                 'name' => 'admin.menu.admin.delete',
                 'guard_name' => 'web',
                 'created_at' => '2022-08-05 23:07:03',
@@ -357,7 +357,7 @@ class PPermissionsTableSeeder extends Seeder
             ),
             42 => 
             array (
-                'id' => 145,
+                'id' => '145',
                 'name' => 'admin.profile.save_another',
                 'guard_name' => 'web',
                 'created_at' => '2022-08-06 14:48:58',
@@ -365,7 +365,7 @@ class PPermissionsTableSeeder extends Seeder
             ),
             43 => 
             array (
-                'id' => 146,
+                'id' => '146',
                 'name' => 'admin.pengurus.periode.set_role',
                 'guard_name' => 'web',
                 'created_at' => '2022-08-08 21:06:58',
@@ -373,7 +373,7 @@ class PPermissionsTableSeeder extends Seeder
             ),
             44 => 
             array (
-                'id' => 147,
+                'id' => '147',
                 'name' => 'admin.pendaftaran.gform',
                 'guard_name' => 'web',
                 'created_at' => '2022-08-08 21:07:44',
@@ -381,7 +381,7 @@ class PPermissionsTableSeeder extends Seeder
             ),
             45 => 
             array (
-                'id' => 148,
+                'id' => '148',
                 'name' => 'admin.pendaftaran.gform.insert',
                 'guard_name' => 'web',
                 'created_at' => '2022-08-08 21:08:04',
@@ -389,7 +389,7 @@ class PPermissionsTableSeeder extends Seeder
             ),
             46 => 
             array (
-                'id' => 149,
+                'id' => '149',
                 'name' => 'admin.pendaftaran.gform.update',
                 'guard_name' => 'web',
                 'created_at' => '2022-08-08 21:08:12',
@@ -397,7 +397,7 @@ class PPermissionsTableSeeder extends Seeder
             ),
             47 => 
             array (
-                'id' => 150,
+                'id' => '150',
                 'name' => 'admin.pendaftaran.gform.delete',
                 'guard_name' => 'web',
                 'created_at' => '2022-08-08 21:08:18',
@@ -405,7 +405,7 @@ class PPermissionsTableSeeder extends Seeder
             ),
             48 => 
             array (
-                'id' => 151,
+                'id' => '151',
                 'name' => 'admin.kata_alumni',
                 'guard_name' => 'web',
                 'created_at' => '2022-08-09 15:19:19',
@@ -413,7 +413,7 @@ class PPermissionsTableSeeder extends Seeder
             ),
             49 => 
             array (
-                'id' => 152,
+                'id' => '152',
                 'name' => 'admin.kata_alumni.insert',
                 'guard_name' => 'web',
                 'created_at' => '2022-08-09 15:19:25',
@@ -421,7 +421,7 @@ class PPermissionsTableSeeder extends Seeder
             ),
             50 => 
             array (
-                'id' => 153,
+                'id' => '153',
                 'name' => 'admin.kata_alumni.update',
                 'guard_name' => 'web',
                 'created_at' => '2022-08-09 15:19:30',
@@ -429,7 +429,7 @@ class PPermissionsTableSeeder extends Seeder
             ),
             51 => 
             array (
-                'id' => 154,
+                'id' => '154',
                 'name' => 'admin.kata_alumni.delete',
                 'guard_name' => 'web',
                 'created_at' => '2022-08-09 15:19:35',
@@ -437,7 +437,7 @@ class PPermissionsTableSeeder extends Seeder
             ),
             52 => 
             array (
-                'id' => 155,
+                'id' => '155',
                 'name' => 'member.kata_alumni',
                 'guard_name' => 'web',
                 'created_at' => '2022-08-09 15:22:56',
@@ -445,7 +445,7 @@ class PPermissionsTableSeeder extends Seeder
             ),
             53 => 
             array (
-                'id' => 156,
+                'id' => '156',
                 'name' => 'admin.kontak.faq',
                 'guard_name' => 'web',
                 'created_at' => '2022-08-04 16:05:41',
@@ -453,7 +453,7 @@ class PPermissionsTableSeeder extends Seeder
             ),
             54 => 
             array (
-                'id' => 157,
+                'id' => '157',
                 'name' => 'admin.kontak.faq.insert',
                 'guard_name' => 'web',
                 'created_at' => '2022-08-04 16:05:41',
@@ -461,7 +461,7 @@ class PPermissionsTableSeeder extends Seeder
             ),
             55 => 
             array (
-                'id' => 158,
+                'id' => '158',
                 'name' => 'admin.kontak.faq.update',
                 'guard_name' => 'web',
                 'created_at' => '2022-08-04 16:05:41',
@@ -469,7 +469,7 @@ class PPermissionsTableSeeder extends Seeder
             ),
             56 => 
             array (
-                'id' => 159,
+                'id' => '159',
                 'name' => 'admin.kontak.faq.delete',
                 'guard_name' => 'web',
                 'created_at' => '2022-08-04 16:05:41',
@@ -477,7 +477,7 @@ class PPermissionsTableSeeder extends Seeder
             ),
             57 => 
             array (
-                'id' => 160,
+                'id' => '160',
                 'name' => 'admin.kontak.faq.setting',
                 'guard_name' => 'web',
                 'created_at' => '2022-08-04 16:05:41',
@@ -485,7 +485,7 @@ class PPermissionsTableSeeder extends Seeder
             ),
             58 => 
             array (
-                'id' => 161,
+                'id' => '161',
                 'name' => 'admin.kontak.list',
                 'guard_name' => 'web',
                 'created_at' => '2022-08-04 16:05:41',
@@ -493,7 +493,7 @@ class PPermissionsTableSeeder extends Seeder
             ),
             59 => 
             array (
-                'id' => 162,
+                'id' => '162',
                 'name' => 'admin.kontak.list.insert',
                 'guard_name' => 'web',
                 'created_at' => '2022-08-04 16:05:41',
@@ -501,7 +501,7 @@ class PPermissionsTableSeeder extends Seeder
             ),
             60 => 
             array (
-                'id' => 163,
+                'id' => '163',
                 'name' => 'admin.kontak.list.update',
                 'guard_name' => 'web',
                 'created_at' => '2022-08-04 16:05:41',
@@ -509,7 +509,7 @@ class PPermissionsTableSeeder extends Seeder
             ),
             61 => 
             array (
-                'id' => 164,
+                'id' => '164',
                 'name' => 'admin.kontak.list.delete',
                 'guard_name' => 'web',
                 'created_at' => '2022-08-04 16:05:41',
@@ -517,7 +517,7 @@ class PPermissionsTableSeeder extends Seeder
             ),
             62 => 
             array (
-                'id' => 165,
+                'id' => '165',
                 'name' => 'admin.kontak.list.setting',
                 'guard_name' => 'web',
                 'created_at' => '2022-08-04 16:05:41',
@@ -525,7 +525,7 @@ class PPermissionsTableSeeder extends Seeder
             ),
             63 => 
             array (
-                'id' => 166,
+                'id' => '166',
                 'name' => 'admin.kontak.message',
                 'guard_name' => 'web',
                 'created_at' => '2022-08-04 16:05:41',
@@ -533,7 +533,7 @@ class PPermissionsTableSeeder extends Seeder
             ),
             64 => 
             array (
-                'id' => 167,
+                'id' => '167',
                 'name' => 'admin.kontak.message.setting',
                 'guard_name' => 'web',
                 'created_at' => '2022-08-04 16:05:41',
