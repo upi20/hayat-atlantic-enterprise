@@ -36,14 +36,14 @@ class PMenuTableSeeder extends Seeder
             array (
                 'id' => '346',
                 'parent_id' => NULL,
-                'title' => 'Users',
+                'title' => 'Pengguna Aplikasi',
                 'icon' => 'fas fa-users',
                 'route' => 'admin.user',
                 'sequence' => '15',
                 'active' => '1',
                 'type' => '1',
                 'created_at' => '2022-08-05 23:50:28',
-                'updated_at' => '2022-09-09 13:47:04',
+                'updated_at' => '2022-09-15 21:18:54',
             ),
             2 => 
             array (
@@ -426,14 +426,14 @@ class PMenuTableSeeder extends Seeder
             array (
                 'id' => '410',
                 'parent_id' => NULL,
-                'title' => 'Menu Penduduk',
+                'title' => 'Menu Pengguna',
                 'icon' => NULL,
                 'route' => NULL,
                 'sequence' => '30',
                 'active' => '1',
                 'type' => '0',
                 'created_at' => '2022-09-09 13:44:38',
-                'updated_at' => '2022-09-09 13:47:04',
+                'updated_at' => '2022-09-15 21:17:18',
             ),
             32 => 
             array (
