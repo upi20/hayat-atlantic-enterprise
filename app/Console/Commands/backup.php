@@ -90,6 +90,21 @@ class backup extends Command
             ],
             'other' => [
                 'faq',
+                'customers',
+            ],
+            'barang' => [
+                'barang_jenis',
+                'barang_satuan',
+                'barang',
+                'barang_pengadaan',
+                'barang_pengadaan_list',
+                'barang_pengurangan',
+                'barang_pengurangan_list',
+                'barang_habis_pakai',
+                'barang_habis_pakai_pengadaan',
+                'barang_habis_pakai_pengadaan_list',
+                'barang_habis_pakai_pengurangan',
+                'barang_habis_pakai_pengurangan_list',
             ],
         ];
         if ($opt_users == 1 || $arg_type == 'users') echo shell_exec('php artisan iseed users --force');

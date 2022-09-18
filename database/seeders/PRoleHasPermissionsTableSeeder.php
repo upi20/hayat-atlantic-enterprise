@@ -21,8 +21,8 @@ class PRoleHasPermissionsTableSeeder extends Seeder
         \DB::table('p_role_has_permissions')->insert(array (
             0 => 
             array (
-                'permission_id' => '27',
-                'role_id' => '5',
+                'permission_id' => 27,
+                'role_id' => 5,
             ),
         ));
         

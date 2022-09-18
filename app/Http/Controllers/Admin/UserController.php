@@ -29,7 +29,7 @@ class UserController extends Controller
             ],
             'navigation' => 'user.view',
         ];
-	$user_role = Role::all();
+        $user_role = Role::all();
         return view('admin.user', compact('page_attr', 'user_role'));
     }
 
@@ -74,5 +74,10 @@ class UserController extends Controller
     {
         $user = User::with('roles', 'permissions')->find($request->id);
         return response()->json($user);
+    }
+
+    public function select2(Request $request)
+    {
+        return $this->repository->select2($request);
     }
 }

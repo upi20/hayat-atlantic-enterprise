@@ -42,6 +42,11 @@ use App\Http\Controllers\Admin\Utility\HariBesarNasionalController;
 use App\Http\Controllers\Admin\Utility\NotifAdminAtasController;
 use App\Http\Controllers\Admin\Utility\NotifDepanAtasController;
 
+
+// Administrasi =======================================================================================================
+use App\Http\Controllers\Administrasi\Barang\JenisController;
+use App\Http\Controllers\Administrasi\Barang\SatuanController;
+
 $name = 'admin';
 $prefix = 'dashboard';
 Route::group(
@@ -127,12 +132,6 @@ Route::controller(SocialMediaController::class)->prefix($prefix)->group(function
     Route::delete('/{id}', 'delete')->name("$name.delete")->middleware("permission:$name.delete");
     Route::post('/update', 'update')->name("$name.update")->middleware("permission:$name.update");
 });
-
-
-
-
-
-
 
 $prefix = 'pendaftaran';
 Route::group(['prefix' => $prefix], function () use ($name, $prefix) {
@@ -353,5 +352,29 @@ Route::group(['prefix' => $prefix], function () use ($name, $prefix) {
         $name = "$name.$prefix"; // admin.kontak.message
         Route::get('/', 'index')->name($name)->middleware("permission:$name");
         Route::post('/setting', 'setting')->name("$name.setting")->middleware("permission:$name.setting");
+    });
+});
+
+
+$prefix = 'data_master';
+Route::group(['prefix' => $prefix], function () use ($name, $prefix) {
+    $name = "$name.$prefix"; // admin.data_master
+    $prefix = "jenis";
+    Route::controller(JenisController::class)->prefix($prefix)->group(function () use ($name, $prefix) {
+        $name = "$name.$prefix"; // admin.data_master.jenis
+        Route::get('/', 'index')->name($name)->middleware("permission:$name");
+        Route::post('/', 'insert')->name("$name.insert")->middleware("permission:$name.insert");
+        Route::delete('/{model}', 'delete')->name("$name.delete")->middleware("permission:$name.delete");
+        Route::get('/find', 'find')->name("$name.find")->middleware("permission:$name.update");
+        Route::post('/update', 'update')->name("$name.update")->middleware("permission:$name.update");
+    });
+    $prefix = "satuan";
+    Route::controller(SatuanController::class)->prefix($prefix)->group(function () use ($name, $prefix) {
+        $name = "$name.$prefix"; // admin.data_master.satuan
+        Route::get('/', 'index')->name($name)->middleware("permission:$name");
+        Route::post('/', 'insert')->name("$name.insert")->middleware("permission:$name.insert");
+        Route::delete('/{model}', 'delete')->name("$name.delete")->middleware("permission:$name.delete");
+        Route::get('/find', 'find')->name("$name.find")->middleware("permission:$name.update");
+        Route::post('/update', 'update')->name("$name.update")->middleware("permission:$name.update");
     });
 });

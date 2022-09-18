@@ -3,7 +3,7 @@
 // ====================================================================================================================
 
 use App\Http\Controllers\Admin\Pendaftaran\GFormController;
-
+use App\Http\Controllers\Admin\UserController;
 // ====================================================================================================================
 // utility ============================================================================================================
 use Illuminate\Support\Facades\Redirect;
@@ -43,7 +43,7 @@ Route::get('/', function () {
     if (!auth()->user()) return Redirect::route('login');
     if (auth_has_role(config('app.super_admin_role'))) {
         return Redirect::route('admin.dashboard');
-    } else if(auth_has_role('Penduduk')){
+    } else if (auth_has_role('Penduduk')) {
         return Redirect::route('penduduk.home');
     } else {
         return Redirect::route('member.dashboard');
@@ -128,3 +128,5 @@ Route::get('/frontend', [HomeController::class, 'fronted2'])->name('frontend');
 
 // Gform
 Route::get('/f/{model:slug}', [GFormController::class, 'frontend_detail'])->name("frontend.gform.detail");
+
+Route::post('member_select2', [UserController::class, 'select2'])->middleware('auth:sanctum')->name('member_select2');
