@@ -35,7 +35,33 @@
                                 <div class="panel-body">
                                     <form action="javascript:void(0)" class="ml-md-3 mb-md-3" id="FilterForm">
 
-                                        <div class="form-group float-start me-2" style="min-width: 300px">
+                                        <div class="form-group float-start me-2" style="min-width: 250px">
+                                            <label for="filter_jenis">Jenis</label>
+                                            <br>
+                                            <select class="form-control" id="filter_jenis" name="filter_jenis"
+                                                style="width: 100%;">
+                                                <option value="" selected>Semua</option>
+                                                @foreach ($jenis as $v)
+                                                    <option value="{{ $v['id'] }}">{{ $v['nama'] }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group float-start me-2" style="min-width: 250px">
+                                            <label for="filter_satuan">Satuan</label>
+                                            <br>
+                                            <select class="form-control" id="filter_satuan" name="filter_satuan"
+                                                style="width: 100%;">
+                                                <option value="" selected>Semua</option>
+                                                @foreach ($satuan as $v)
+                                                    <option value="{{ $v['id'] }}">{{ $v['nama'] }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group float-start me-2" style="min-width: 250px">
                                             <label for="created_by">Dibuat Oleh</label>
                                             <br>
                                             <select class="form-control" id="created_by" name="created_by"
@@ -44,7 +70,7 @@
                                             </select>
                                         </div>
 
-                                        <div class="form-group float-start me-2" style="min-width: 300px">
+                                        <div class="form-group float-start me-2" style="min-width: 250px">
                                             <label for="updated_by">Diubah Oleh</label>
                                             <br>
                                             <select class="form-control" id="updated_by" name="updated_by"
@@ -67,11 +93,19 @@
                         <table class="table table-bordered  border-bottom" id="tbl_main">
                             <thead>
                                 <tr>
-                                    <th>No</th>
-                                    <th>Nama</th>
-                                    <th>Keterangan</th>
-                                    <th>Diubah Oleh</th>
-                                    <th>Diubah Tgl.</th>
+                                    <th class="text-nowrap text-center">No</th>
+                                    <th class="text-nowrap text-center">Nama</th>
+                                    <th class="text-nowrap text-center">Kode</th>
+                                    <th class="text-nowrap text-center">Jenis</th>
+                                    <th class="text-nowrap text-center">Satuan</th>
+                                    <th class="text-nowrap text-center">Harga</th>
+                                    <th class="text-nowrap text-center">Ada</th>
+                                    <th class="text-nowrap text-center">Rusak</th>
+                                    <th class="text-nowrap text-center">Disewakan</th>
+                                    <th class="text-nowrap text-center">Total</th>
+                                    <th class="text-nowrap text-center">Keterangan</th>
+                                    <th class="text-nowrap text-center">Diubah Oleh</th>
+                                    <th class="text-nowrap text-center">Diubah Tgl.</th>
                                     {!! $can_delete || $can_update ? '<th>Aksi</th>' : '' !!}
                                 </tr>
                             </thead>
@@ -85,7 +119,7 @@
     <!-- End Row -->
     <div class="modal fade" id="modal-default">
         <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content modal-content-demo">
+            <div class="modal-content modal-content-demo modal-lg">
                 <div class="modal-header">
                     <h6 class="modal-title" id="modal-default-title"></h6><button aria-label="Tutup" class="btn-close"
                         data-bs-dismiss="modal"><span aria-hidden="true">&times;</span></button>
@@ -94,16 +128,67 @@
                     <form action="javascript:void(0)" id="MainForm" name="MainForm" method="POST"
                         enctype="multipart/form-data">
                         <input type="hidden" name="id" id="id">
-                        <div class="form-group">
-                            <label class="form-label" for="nama">Nama <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="nama" name="nama" placeholder="Nama"
-                                required="" />
-                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label class="form-label" for="nama">Nama <span
+                                            class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="nama" name="nama"
+                                        placeholder="Nama" required="" />
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="form-label" for="kode">Kode <span
+                                            class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="kode" name="kode"
+                                        placeholder="Kode" required="" />
+                                </div>
+                            </div>
 
-                        <div class="form-group">
-                            <label class="form-label" for="keterangan">Keterangan</label>
-                            <textarea type="text" class="form-control" rows="3" id="keterangan" name="keterangan"
-                                placeholder="Keterangan"> </textarea>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="form-label" for="harga">Harga <span
+                                            class="text-danger">*</span></label>
+                                    <input type="number" min="1" class="form-control" id="harga"
+                                        name="harga" placeholder="Harga" required="" />
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="form-label" for="jenis">Jenis <span
+                                            class="text-danger">*</span></label>
+                                    <select class="form-control" id="jenis" name="jenis" style="width: 100%;">
+                                        @foreach ($jenis as $v)
+                                            <option value="{{ $v['id'] }}">{{ $v['nama'] }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="form-label" for="satuan">Satuan <span
+                                            class="text-danger">*</span></label>
+                                    <select class="form-control" id="satuan" name="satuan" style="width: 100%;">
+                                        @foreach ($satuan as $v)
+                                            <option value="{{ $v['id'] }}">{{ $v['nama'] }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label class="form-label" for="keterangan">Keterangan</label>
+                                    <textarea type="text" class="form-control" rows="3" id="keterangan" name="keterangan"
+                                        placeholder="Keterangan"> </textarea>
+                                </div>
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -140,7 +225,21 @@
         const can_delete = {{ $can_delete ? 'true' : 'false' }};
         const table_html = $('#tbl_main');
         let isEdit = true;
+        const jenis_kode = new Map();
+        @foreach ($jenis as $v)
+            jenis_kode.set('{{ $v['id'] }}', '{{ $v['kode'] }}');
+        @endforeach
         $(document).ready(function() {
+            $('#filter_jenis').select2();
+            $('#filter_satuan').select2();
+
+            $('#jenis').select2({
+                dropdownParent: $('#modal-default'),
+            });
+            $('#satuan').select2({
+                dropdownParent: $('#modal-default'),
+            });
+
             $('#created_by').select2({
                 ajax: {
                     url: "{{ route('member_select2') }}",
@@ -156,6 +255,7 @@
                     }
                 }
             });
+
             $('#updated_by').select2({
                 ajax: {
                     url: "{{ route('member_select2') }}",
@@ -192,6 +292,8 @@
                     data: function(d) {
                         d['filter[updated_by]'] = $('#updated_by').val();
                         d['filter[created_by]'] = $('#created_by').val();
+                        d['filter[jenis]'] = $('#filter_jenis').val();
+                        d['filter[satuan]'] = $('#filter_satuan').val();
                     }
                 },
                 columns: [{
@@ -201,25 +303,72 @@
                     },
                     {
                         data: 'nama',
-                        name: 'nama'
+                        name: 'nama',
+                        className: 'text-nowrap'
+                    },
+                    {
+                        data: 'kode',
+                        name: 'kode',
+                        className: 'text-nowrap'
+                    },
+                    {
+                        data: 'jenis_str',
+                        name: 'jenis_str',
+                        className: 'text-nowrap'
+                    },
+                    {
+                        data: 'satuan_str',
+                        name: 'satuan_str',
+                        className: 'text-nowrap'
+                    },
+                    {
+                        data: 'harga',
+                        name: 'harga',
+                        render(data, type, full, meta) {
+                            return 'Rp. ' + format_rupiah(data);
+                        },
+                        className: 'text-nowrap text-right'
+                    },
+                    {
+                        data: 'qty_ada',
+                        name: 'qty_ada',
+                        className: 'text-nowrap text-right'
+                    },
+                    {
+                        data: 'qty_rusak',
+                        name: 'qty_rusak',
+                        className: 'text-nowrap text-right'
+                    },
+                    {
+                        data: 'qty_disewakan',
+                        name: 'qty_disewakan',
+                        className: 'text-nowrap text-right'
+                    },
+                    {
+                        data: 'qty_total',
+                        name: 'qty_total',
+                        className: 'text-nowrap text-right'
                     },
                     {
                         data: 'keterangan',
-                        name: 'keterangan'
+                        name: 'keterangan',
+                        className: 'text-nowrap'
                     },
                     {
                         data: 'updated_by_str',
                         name: 'updated_by_str',
                         render(data, type, full, meta) {
                             return data ?? full.created_by_str;
-                        }
+                        },
+                        className: 'text-nowrap'
                     },
                     {
                         data: 'updated',
                         name: 'updated',
                         render(data, type, full, meta) {
                             return data ?? full.created;
-                        }
+                        },
+                        className: 'text-nowrap'
                     },
                     ...(can_update || can_delete ? [{
                         data: 'id',
@@ -233,7 +382,8 @@
                                 </button>` : '';
                             return btn_update + btn_delete;
                         },
-                        orderable: false
+                        orderable: false,
+                        className: 'text-nowrap'
                     }] : []),
                 ],
                 order: [
@@ -311,6 +461,10 @@
                     }
                 });
             });
+
+            $('#jenis').on('select2:select', function(e) {
+                $('#kode').val(jenis_kode.get($(this).val()));
+            });
         });
 
         function add() {
@@ -341,6 +495,10 @@
                     $('#modal-default').modal('show');
                     $('#id').val(data.id);
                     $('#nama').val(data.nama);
+                    $('#kode').val(data.kode);
+                    $('#harga').val(data.harga);
+                    $('#jenis').val(data.jenis).trigger('change');
+                    $('#satuan').val(data.satuan).trigger('change');
                     $('#keterangan').val(data.keterangan);
                 },
                 error: function(data) {

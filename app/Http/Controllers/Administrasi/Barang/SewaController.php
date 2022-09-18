@@ -4,18 +4,23 @@ namespace App\Http\Controllers\Administrasi\Barang;
 
 use App\Http\Controllers\Controller;
 use App\Models\Barang\Jenis;
+use App\Models\Barang\Satuan;
+use App\Models\Barang\Sewa;
 use App\Models\User;
 use Illuminate\Http\Request;
 use League\Config\Exception\ValidationException;
 use Illuminate\Support\Facades\DB;
 use Yajra\Datatables\Datatables;
 
-class JenisController extends Controller
+class SewaController extends Controller
 {
     private $validate_model = [
         'nama' => ['required', 'string', 'max:255'],
+        'kode' => ['required', 'string', 'unique:' . Sewa::tableName . ',kode', 'max:8'],
         'keterangan' => ['nullable', 'string'],
-        'kode' => ['required', 'string', 'unique:' . Jenis::tableName . ',kode', 'max:4'],
+        'jenis' => ['required', 'int'],
+        'satuan' => ['required', 'int'],
+        'harga' => ['required', 'int'],
     ];
     private $query = [];
     public function index(Request $request)
@@ -23,24 +28,28 @@ class JenisController extends Controller
         if (request()->ajax()) {
             return $this->datatable($request);
         }
+
+        $jenis = Jenis::all();
+        $satuan = Satuan::all();
         $page_attr = [
-            'title' => 'Jenis Barang',
-            'breadcrumbs' => [
-                ['name' => 'Master Data'],
-            ]
+            'title' => 'Barang Sewa'
         ];
-        return view('administrasi.data_master.jenis', compact('page_attr'));
+        return view('administrasi.data_master.sewa', compact('page_attr', 'jenis', 'satuan'));
     }
 
     public function insert(Request $request): mixed
     {
         try {
             $request->validate($this->validate_model);
-            $model = new Jenis();
+            $model = new Sewa();
 
             $model->nama = $request->nama;
             $model->kode = $request->kode;
             $model->keterangan = $request->keterangan;
+            $model->jenis = $request->jenis;
+            $model->satuan = $request->satuan;
+            $model->harga = $request->harga;
+
             $model->created_by = auth()->user()->id;
             $model->save();
 
@@ -56,13 +65,17 @@ class JenisController extends Controller
     public function update(Request $request): mixed
     {
         try {
-            $model = Jenis::findOrFail($request->id);
+            $model = Sewa::findOrFail($request->id);
             $this->validate_model['kode'][2] = $this->validate_model['kode'][2] . ",$request->id";
             $request->validate(array_merge(['id' => ['required', 'int']], $this->validate_model));
 
             $model->nama = $request->nama;
             $model->kode = $request->kode;
             $model->keterangan = $request->keterangan;
+            $model->jenis = $request->jenis;
+            $model->satuan = $request->satuan;
+            $model->harga = $request->harga;
+
             $model->updated_by = auth()->user()->id;
 
             $model->save();
@@ -75,7 +88,7 @@ class JenisController extends Controller
         }
     }
 
-    public function delete(Jenis $model): mixed
+    public function delete(Sewa $model): mixed
     {
         try {
             $model->delete();
@@ -90,14 +103,16 @@ class JenisController extends Controller
 
     public function find(Request $request)
     {
-        return Jenis::findOrFail($request->id);
+        return Sewa::findOrFail($request->id);
     }
 
     public function datatable(Request $request): mixed
     {
         // list table
         $t_user = User::tableName;
-        $table = Jenis::tableName;
+        $table = Sewa::tableName;
+        $t_jenis = Jenis::tableName;
+        $t_satuan = Satuan::tableName;
 
         // cusotm query
         // ========================================================================================================
@@ -129,6 +144,17 @@ class JenisController extends Controller
         $t_updated_by = 'c';
         $this->query[$c_updated_by] = "$t_updated_by.name";
         $this->query["{$c_updated_by}_alias"] = $c_updated_by;
+
+        // jenis
+        $c_jenis = 'jenis_str';
+        $this->query[$c_jenis] = "$t_jenis.nama";
+        $this->query["{$c_jenis}_alias"] = $c_jenis;
+
+        // satuan
+        $c_satuan = 'satuan_str';
+        $this->query[$c_satuan] = "$t_satuan.nama";
+        $this->query["{$c_satuan}_alias"] = $c_satuan;
+
         // ========================================================================================================
 
 
@@ -144,6 +170,8 @@ class JenisController extends Controller
             $c_updated_str,
             $c_created_by,
             $c_updated_by,
+            $c_jenis,
+            $c_satuan,
         ];
 
         $to_db_raw = array_map(function ($a) use ($sraa) {
@@ -153,9 +181,11 @@ class JenisController extends Controller
 
 
         // Select =====================================================================================================
-        $model = Jenis::select(array_merge([
+        $model = Sewa::select(array_merge([
             DB::raw("$table.*"),
         ], $to_db_raw))
+            ->leftJoin($t_jenis, "$t_jenis.id", '=', "$table.jenis")
+            ->leftJoin($t_satuan, "$t_satuan.id", '=', "$table.satuan")
             ->leftJoin("$t_user as $t_created_by", "$t_created_by.id", '=', "$table.created_by")
             ->leftJoin("$t_user as $t_updated_by", "$t_updated_by.id", '=', "$table.updated_by");
 
@@ -176,7 +206,7 @@ class JenisController extends Controller
         // }
 
         // filter custom
-        $filters = ['updated_by', 'created_by'];
+        $filters = ['updated_by', 'created_by', 'jenis', 'satuan'];
         foreach ($filters as  $f) {
             if ($f_c($f) !== false) {
                 $model->whereRaw("$table.$f='{$f_c($f)}'");
@@ -205,6 +235,10 @@ class JenisController extends Controller
                 ->whereRaw("(
                     `nama` like '%$request->search%' or
                     `kode` like '%$request->search%' or
+                    `keterangan` like '%$request->search%' or
+                    `jenis` like '%$request->search%' or
+                    `satuan` like '%$request->search%' or
+                    `harga` like '%$request->search%' or
                     `id` like '%$request->search%'
                     )")
                 ->limit(10);

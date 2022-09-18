@@ -1,20 +1,21 @@
 <?php
 
-namespace App\Http\Controllers\Administrasi\Barang;
+namespace App\Http\Controllers\Administrasi\MasterData;
 
 use App\Http\Controllers\Controller;
-use App\Models\Barang\Satuan;
+use App\Models\Barang\Jenis;
 use App\Models\User;
 use Illuminate\Http\Request;
 use League\Config\Exception\ValidationException;
 use Illuminate\Support\Facades\DB;
 use Yajra\Datatables\Datatables;
 
-class SatuanController extends Controller
+class JenisBarangController extends Controller
 {
     private $validate_model = [
         'nama' => ['required', 'string', 'max:255'],
         'keterangan' => ['nullable', 'string'],
+        'kode' => ['required', 'string', 'unique:' . Jenis::tableName . ',kode', 'max:4'],
     ];
     private $query = [];
     public function index(Request $request)
@@ -23,21 +24,22 @@ class SatuanController extends Controller
             return $this->datatable($request);
         }
         $page_attr = [
-            'title' => 'Satuan Barang',
+            'title' => 'Jenis Barang',
             'breadcrumbs' => [
                 ['name' => 'Master Data'],
             ]
         ];
-        return view('administrasi.data_master.satuan', compact('page_attr'));
+        return view('administrasi.data_master.jenis', compact('page_attr'));
     }
 
     public function insert(Request $request): mixed
     {
         try {
             $request->validate($this->validate_model);
-            $model = new Satuan();
+            $model = new Jenis();
 
             $model->nama = $request->nama;
+            $model->kode = $request->kode;
             $model->keterangan = $request->keterangan;
             $model->created_by = auth()->user()->id;
             $model->save();
@@ -54,10 +56,12 @@ class SatuanController extends Controller
     public function update(Request $request): mixed
     {
         try {
-            $model = Satuan::findOrFail($request->id);
+            $model = Jenis::findOrFail($request->id);
+            $this->validate_model['kode'][2] = $this->validate_model['kode'][2] . ",$request->id";
             $request->validate(array_merge(['id' => ['required', 'int']], $this->validate_model));
 
             $model->nama = $request->nama;
+            $model->kode = $request->kode;
             $model->keterangan = $request->keterangan;
             $model->updated_by = auth()->user()->id;
 
@@ -71,7 +75,7 @@ class SatuanController extends Controller
         }
     }
 
-    public function delete(Satuan $model): mixed
+    public function delete(Jenis $model): mixed
     {
         try {
             $model->delete();
@@ -86,14 +90,14 @@ class SatuanController extends Controller
 
     public function find(Request $request)
     {
-        return Satuan::findOrFail($request->id);
+        return Jenis::findOrFail($request->id);
     }
 
     public function datatable(Request $request): mixed
     {
         // list table
         $t_user = User::tableName;
-        $table = Satuan::tableName;
+        $table = Jenis::tableName;
 
         // cusotm query
         // ========================================================================================================
@@ -149,7 +153,7 @@ class SatuanController extends Controller
 
 
         // Select =====================================================================================================
-        $model = Satuan::select(array_merge([
+        $model = Jenis::select(array_merge([
             DB::raw("$table.*"),
         ], $to_db_raw))
             ->leftJoin("$t_user as $t_created_by", "$t_created_by.id", '=', "$table.created_by")
@@ -197,9 +201,10 @@ class SatuanController extends Controller
     public function select2(Request $request)
     {
         try {
-            $model = User::select(['id', DB::raw("nama as text")])
+            $model = User::select(['id', DB::raw("concat(kode,' | ',nama) as text")])
                 ->whereRaw("(
-                    `name` like '%$request->search%' or
+                    `nama` like '%$request->search%' or
+                    `kode` like '%$request->search%' or
                     `id` like '%$request->search%'
                     )")
                 ->limit(10);

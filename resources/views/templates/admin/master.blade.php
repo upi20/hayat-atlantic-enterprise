@@ -100,6 +100,10 @@ $notifikasi = notif_admin_atas();
         .swal2-container {
             z-index: 9999999999 !important;
         }
+
+        .text-right {
+            text-align: right;
+        }
     </style>
 
     @foreach (json_decode(settings()->get(set_admin('meta_list'), '{}')) as $meta)

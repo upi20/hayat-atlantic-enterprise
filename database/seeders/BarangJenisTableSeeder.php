@@ -25,10 +25,10 @@ class BarangJenisTableSeeder extends Seeder
                 'nama' => 'Alat Pesta',
                 'kode' => 'AP',
                 'keterangan' => NULL,
-                'updated_by' => NULL,
+                'updated_by' => 1,
                 'created_by' => 1,
                 'created_at' => '2022-09-17 22:04:43',
-                'updated_at' => NULL,
+                'updated_at' => '2022-09-18 19:23:25',
             ),
             1 => 
             array (
@@ -84,6 +84,17 @@ class BarangJenisTableSeeder extends Seeder
                 'created_by' => 1,
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => NULL,
+            ),
+            6 => 
+            array (
+                'id' => 7,
+                'nama' => 'Alat Pestifal',
+                'kode' => 'AF',
+                'keterangan' => NULL,
+                'updated_by' => 1,
+                'created_by' => 1,
+                'created_at' => '2022-09-18 19:23:49',
+                'updated_at' => '2022-09-18 19:28:16',
             ),
         ));
         

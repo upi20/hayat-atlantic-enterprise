@@ -23,11 +23,11 @@ class BarangSatuanTableSeeder extends Seeder
             array (
                 'id' => 1,
                 'nama' => 'Pcs',
-                'keterangan' => NULL,
-                'updated_by' => NULL,
+                'keterangan' => 'Pieces',
+                'updated_by' => 1,
                 'created_by' => 1,
                 'created_at' => '2022-09-17 22:04:43',
-                'updated_at' => NULL,
+                'updated_at' => '2022-09-18 19:53:44',
             ),
             1 => 
             array (
@@ -43,11 +43,11 @@ class BarangSatuanTableSeeder extends Seeder
             array (
                 'id' => 3,
                 'nama' => 'M',
-                'keterangan' => NULL,
-                'updated_by' => NULL,
+                'keterangan' => 'Meter',
+                'updated_by' => 1,
                 'created_by' => 1,
                 'created_at' => '2022-09-17 22:04:43',
-                'updated_at' => NULL,
+                'updated_at' => '2022-09-18 19:53:11',
             ),
             3 => 
             array (
@@ -83,11 +83,11 @@ class BarangSatuanTableSeeder extends Seeder
             array (
                 'id' => 7,
                 'nama' => 'Lbr',
-                'keterangan' => NULL,
-                'updated_by' => NULL,
+                'keterangan' => 'Lebar',
+                'updated_by' => 1,
                 'created_by' => 1,
                 'created_at' => '2022-09-17 22:04:43',
-                'updated_at' => NULL,
+                'updated_at' => '2022-09-18 19:53:05',
             ),
             7 => 
             array (
@@ -103,41 +103,41 @@ class BarangSatuanTableSeeder extends Seeder
             array (
                 'id' => 9,
                 'nama' => 'Bks',
-                'keterangan' => NULL,
-                'updated_by' => NULL,
+                'keterangan' => 'Bungkus',
+                'updated_by' => 1,
                 'created_by' => 1,
                 'created_at' => '2022-09-17 22:04:43',
-                'updated_at' => NULL,
+                'updated_at' => '2022-09-18 19:52:26',
             ),
             9 => 
             array (
                 'id' => 10,
                 'nama' => 'Btl',
-                'keterangan' => NULL,
-                'updated_by' => NULL,
+                'keterangan' => 'Botol',
+                'updated_by' => 1,
                 'created_by' => 1,
                 'created_at' => '2022-09-17 22:04:43',
-                'updated_at' => NULL,
+                'updated_at' => '2022-09-18 19:52:41',
             ),
             10 => 
             array (
                 'id' => 11,
                 'nama' => 'Kg',
-                'keterangan' => NULL,
-                'updated_by' => NULL,
+                'keterangan' => 'Kilo Gram',
+                'updated_by' => 1,
                 'created_by' => 1,
                 'created_at' => '2022-09-17 22:04:43',
-                'updated_at' => NULL,
+                'updated_at' => '2022-09-18 19:52:50',
             ),
             11 => 
             array (
                 'id' => 12,
                 'nama' => 'L',
-                'keterangan' => NULL,
-                'updated_by' => NULL,
+                'keterangan' => 'Liter',
+                'updated_by' => 1,
                 'created_by' => 1,
                 'created_at' => '2022-09-17 22:04:43',
-                'updated_at' => NULL,
+                'updated_at' => '2022-09-18 19:52:58',
             ),
             12 => 
             array (

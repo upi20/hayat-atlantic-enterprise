@@ -26,6 +26,8 @@ class PRolesTableSeeder extends Seeder
                 'guard_name' => 'web',
                 'created_at' => '2022-08-04 16:05:41',
                 'updated_at' => '2022-08-06 14:36:10',
+                'updated_by' => NULL,
+                'created_by' => NULL,
             ),
             1 => 
             array (
@@ -33,7 +35,9 @@ class PRolesTableSeeder extends Seeder
                 'name' => 'Direktur',
                 'guard_name' => 'web',
                 'created_at' => '2022-09-15 08:24:00',
-                'updated_at' => '2022-09-15 08:24:25',
+                'updated_at' => '2022-09-18 21:05:37',
+                'updated_by' => 5,
+                'created_by' => NULL,
             ),
             2 => 
             array (
@@ -42,6 +46,8 @@ class PRolesTableSeeder extends Seeder
                 'guard_name' => 'web',
                 'created_at' => '2022-09-15 08:25:40',
                 'updated_at' => '2022-09-15 08:25:40',
+                'updated_by' => NULL,
+                'created_by' => NULL,
             ),
             3 => 
             array (
@@ -50,6 +56,8 @@ class PRolesTableSeeder extends Seeder
                 'guard_name' => 'web',
                 'created_at' => '2022-09-15 08:25:50',
                 'updated_at' => '2022-09-15 08:25:50',
+                'updated_by' => NULL,
+                'created_by' => NULL,
             ),
             4 => 
             array (
@@ -57,7 +65,9 @@ class PRolesTableSeeder extends Seeder
                 'name' => 'Administrasi',
                 'guard_name' => 'web',
                 'created_at' => '2022-09-15 08:25:59',
-                'updated_at' => '2022-09-15 11:56:14',
+                'updated_at' => '2022-09-18 21:01:24',
+                'updated_by' => 1,
+                'created_by' => NULL,
             ),
             5 => 
             array (
@@ -65,7 +75,9 @@ class PRolesTableSeeder extends Seeder
                 'name' => 'General Manager',
                 'guard_name' => 'web',
                 'created_at' => '2022-09-15 08:27:03',
-                'updated_at' => '2022-09-15 08:27:03',
+                'updated_at' => '2022-09-18 21:00:07',
+                'updated_by' => 1,
+                'created_by' => NULL,
             ),
             6 => 
             array (
@@ -74,6 +86,8 @@ class PRolesTableSeeder extends Seeder
                 'guard_name' => 'web',
                 'created_at' => '2022-09-15 08:27:24',
                 'updated_at' => '2022-09-15 08:27:24',
+                'updated_by' => NULL,
+                'created_by' => NULL,
             ),
             7 => 
             array (
@@ -82,6 +96,8 @@ class PRolesTableSeeder extends Seeder
                 'guard_name' => 'web',
                 'created_at' => '2022-09-15 08:27:35',
                 'updated_at' => '2022-09-15 08:27:35',
+                'updated_by' => NULL,
+                'created_by' => NULL,
             ),
             8 => 
             array (
@@ -90,6 +106,8 @@ class PRolesTableSeeder extends Seeder
                 'guard_name' => 'web',
                 'created_at' => '2022-09-15 08:27:43',
                 'updated_at' => '2022-09-15 08:27:43',
+                'updated_by' => NULL,
+                'created_by' => NULL,
             ),
             9 => 
             array (
@@ -98,6 +116,8 @@ class PRolesTableSeeder extends Seeder
                 'guard_name' => 'web',
                 'created_at' => '2022-09-15 08:27:50',
                 'updated_at' => '2022-09-15 08:27:50',
+                'updated_by' => NULL,
+                'created_by' => NULL,
             ),
         ));
         

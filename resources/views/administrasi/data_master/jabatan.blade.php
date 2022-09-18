@@ -69,7 +69,6 @@
                                 <tr>
                                     <th>No</th>
                                     <th>Nama</th>
-                                    <th>Keterangan</th>
                                     <th>Diubah Oleh</th>
                                     <th>Diubah Tgl.</th>
                                     {!! $can_delete || $can_update ? '<th>Aksi</th>' : '' !!}
@@ -95,15 +94,9 @@
                         enctype="multipart/form-data">
                         <input type="hidden" name="id" id="id">
                         <div class="form-group">
-                            <label class="form-label" for="nama">Nama <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="nama" name="nama" placeholder="Nama"
+                            <label class="form-label" for="name">Nama <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="name" name="name" placeholder="Nama"
                                 required="" />
-                        </div>
-
-                        <div class="form-group">
-                            <label class="form-label" for="keterangan">Keterangan</label>
-                            <textarea type="text" class="form-control" rows="3" id="keterangan" name="keterangan"
-                                placeholder="Keterangan"> </textarea>
                         </div>
                     </form>
                 </div>
@@ -200,12 +193,8 @@
                         orderable: false,
                     },
                     {
-                        data: 'nama',
-                        name: 'nama'
-                    },
-                    {
-                        data: 'keterangan',
-                        name: 'keterangan'
+                        data: 'name',
+                        name: 'name'
                     },
                     {
                         data: 'updated_by_str',
@@ -340,8 +329,7 @@
                     $('#modal-default-title').html("Ubah {{ $page_attr['title'] }}");
                     $('#modal-default').modal('show');
                     $('#id').val(data.id);
-                    $('#nama').val(data.nama);
-                    $('#keterangan').val(data.keterangan);
+                    $('#name').val(data.name);
                 },
                 error: function(data) {
                     Swal.fire({

@@ -41,11 +41,14 @@ use App\Http\Controllers\Admin\Setting\HomeController;
 use App\Http\Controllers\Admin\Utility\HariBesarNasionalController;
 use App\Http\Controllers\Admin\Utility\NotifAdminAtasController;
 use App\Http\Controllers\Admin\Utility\NotifDepanAtasController;
-
-
 // Administrasi =======================================================================================================
-use App\Http\Controllers\Administrasi\Barang\JenisController;
-use App\Http\Controllers\Administrasi\Barang\SatuanController;
+// Data Master ========================================================================================================
+use App\Http\Controllers\Administrasi\MasterData\JenisBarangController;
+use App\Http\Controllers\Administrasi\MasterData\SatuanBarangController;
+use App\Http\Controllers\Administrasi\MasterData\PegawaiJabatan;
+
+// Data Barang ========================================================================================================
+use App\Http\Controllers\Administrasi\Barang\SewaController;
 
 $name = 'admin';
 $prefix = 'dashboard';
@@ -359,8 +362,9 @@ Route::group(['prefix' => $prefix], function () use ($name, $prefix) {
 $prefix = 'data_master';
 Route::group(['prefix' => $prefix], function () use ($name, $prefix) {
     $name = "$name.$prefix"; // admin.data_master
+
     $prefix = "jenis";
-    Route::controller(JenisController::class)->prefix($prefix)->group(function () use ($name, $prefix) {
+    Route::controller(JenisBarangController::class)->prefix($prefix)->group(function () use ($name, $prefix) {
         $name = "$name.$prefix"; // admin.data_master.jenis
         Route::get('/', 'index')->name($name)->middleware("permission:$name");
         Route::post('/', 'insert')->name("$name.insert")->middleware("permission:$name.insert");
@@ -368,9 +372,35 @@ Route::group(['prefix' => $prefix], function () use ($name, $prefix) {
         Route::get('/find', 'find')->name("$name.find")->middleware("permission:$name.update");
         Route::post('/update', 'update')->name("$name.update")->middleware("permission:$name.update");
     });
+
     $prefix = "satuan";
-    Route::controller(SatuanController::class)->prefix($prefix)->group(function () use ($name, $prefix) {
+    Route::controller(SatuanBarangController::class)->prefix($prefix)->group(function () use ($name, $prefix) {
         $name = "$name.$prefix"; // admin.data_master.satuan
+        Route::get('/', 'index')->name($name)->middleware("permission:$name");
+        Route::post('/', 'insert')->name("$name.insert")->middleware("permission:$name.insert");
+        Route::delete('/{model}', 'delete')->name("$name.delete")->middleware("permission:$name.delete");
+        Route::get('/find', 'find')->name("$name.find")->middleware("permission:$name.update");
+        Route::post('/update', 'update')->name("$name.update")->middleware("permission:$name.update");
+    });
+
+    $prefix = "jabatan";
+    Route::controller(PegawaiJabatan::class)->prefix($prefix)->group(function () use ($name, $prefix) {
+        $name = "$name.$prefix"; // admin.data_master.jabatan
+        Route::get('/', 'index')->name($name)->middleware("permission:$name");
+        Route::post('/', 'insert')->name("$name.insert")->middleware("permission:$name.insert");
+        Route::delete('/{model}', 'delete')->name("$name.delete")->middleware("permission:$name.delete");
+        Route::get('/find', 'find')->name("$name.find")->middleware("permission:$name.update");
+        Route::post('/update', 'update')->name("$name.update")->middleware("permission:$name.update");
+    });
+});
+
+$prefix = 'barang';
+Route::group(['prefix' => $prefix], function () use ($name, $prefix) {
+    $name = "$name.$prefix"; // admin.barang
+
+    $prefix = "sewa";
+    Route::controller(SewaController::class)->prefix($prefix)->group(function () use ($name, $prefix) {
+        $name = "$name.$prefix"; // admin.barang.sewa
         Route::get('/', 'index')->name($name)->middleware("permission:$name");
         Route::post('/', 'insert')->name("$name.insert")->middleware("permission:$name.insert");
         Route::delete('/{model}', 'delete')->name("$name.delete")->middleware("permission:$name.delete");
