@@ -5,18 +5,18 @@ namespace App\Http\Controllers\Administrasi\Barang;
 use App\Http\Controllers\Controller;
 use App\Models\Barang\Jenis;
 use App\Models\Barang\Satuan;
-use App\Models\Barang\Sewa;
+use App\Models\Barang\HabisPakai;
 use App\Models\User;
 use Illuminate\Http\Request;
 use League\Config\Exception\ValidationException;
 use Illuminate\Support\Facades\DB;
 use Yajra\Datatables\Datatables;
 
-class SewaController extends Controller
+class HabisPakaiController extends Controller
 {
     private $validate_model = [
         'nama' => ['required', 'string', 'max:255'],
-        'kode' => ['required', 'string', 'unique:' . Sewa::tableName . ',kode', 'max:8'],
+        'kode' => ['required', 'string', 'unique:' . HabisPakai::tableName . ',kode', 'max:8'],
         'keterangan' => ['nullable', 'string'],
         'jenis' => ['required', 'int'],
         'satuan' => ['required', 'int'],
@@ -32,16 +32,16 @@ class SewaController extends Controller
         $jenis = Jenis::all();
         $satuan = Satuan::all();
         $page_attr = [
-            'title' => 'Barang Sewa'
+            'title' => 'Barang HabisPakai'
         ];
-        return view('administrasi.barang.sewa', compact('page_attr', 'jenis', 'satuan'));
+        return view('administrasi.barang.habis_pakai', compact('page_attr', 'jenis', 'satuan'));
     }
 
     public function insert(Request $request): mixed
     {
         try {
             $request->validate($this->validate_model);
-            $model = new Sewa();
+            $model = new HabisPakai();
 
             $model->nama = $request->nama;
             $model->kode = $request->kode;
@@ -65,7 +65,7 @@ class SewaController extends Controller
     public function update(Request $request): mixed
     {
         try {
-            $model = Sewa::findOrFail($request->id);
+            $model = HabisPakai::findOrFail($request->id);
             $this->validate_model['kode'][2] = $this->validate_model['kode'][2] . ",$request->id";
             $request->validate(array_merge(['id' => ['required', 'int']], $this->validate_model));
 
@@ -88,7 +88,7 @@ class SewaController extends Controller
         }
     }
 
-    public function delete(Sewa $model): mixed
+    public function delete(HabisPakai $model): mixed
     {
         try {
             $model->delete();
@@ -103,14 +103,14 @@ class SewaController extends Controller
 
     public function find(Request $request)
     {
-        return Sewa::findOrFail($request->id);
+        return HabisPakai::findOrFail($request->id);
     }
 
     public function datatable(Request $request): mixed
     {
         // list table
         $t_user = User::tableName;
-        $table = Sewa::tableName;
+        $table = HabisPakai::tableName;
         $t_jenis = Jenis::tableName;
         $t_satuan = Satuan::tableName;
 
@@ -181,7 +181,7 @@ class SewaController extends Controller
 
 
         // Select =====================================================================================================
-        $model = Sewa::select(array_merge([
+        $model = HabisPakai::select(array_merge([
             DB::raw("$table.*"),
         ], $to_db_raw))
             ->leftJoin($t_jenis, "$t_jenis.id", '=', "$table.jenis")

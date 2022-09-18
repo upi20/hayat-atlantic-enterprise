@@ -643,6 +643,70 @@ class PPermissionsTableSeeder extends Seeder
                 'created_at' => '2022-09-18 21:04:56',
                 'updated_at' => '2022-09-18 21:04:56',
             ),
+            78 => 
+            array (
+                'id' => 183,
+                'name' => 'admin.barang.sewa',
+                'guard_name' => 'web',
+                'created_at' => '2022-09-18 22:53:59',
+                'updated_at' => '2022-09-18 22:53:59',
+            ),
+            79 => 
+            array (
+                'id' => 184,
+                'name' => 'admin.barang.sewa.insert',
+                'guard_name' => 'web',
+                'created_at' => '2022-09-18 22:54:27',
+                'updated_at' => '2022-09-18 22:54:27',
+            ),
+            80 => 
+            array (
+                'id' => 185,
+                'name' => 'admin.barang.sewa.update',
+                'guard_name' => 'web',
+                'created_at' => '2022-09-18 22:54:32',
+                'updated_at' => '2022-09-18 22:54:32',
+            ),
+            81 => 
+            array (
+                'id' => 186,
+                'name' => 'admin.barang.sewa.delete',
+                'guard_name' => 'web',
+                'created_at' => '2022-09-18 22:54:36',
+                'updated_at' => '2022-09-18 22:54:36',
+            ),
+            82 => 
+            array (
+                'id' => 187,
+                'name' => 'admin.barang.habis_pakai',
+                'guard_name' => 'web',
+                'created_at' => '2022-09-18 22:54:49',
+                'updated_at' => '2022-09-18 22:54:49',
+            ),
+            83 => 
+            array (
+                'id' => 188,
+                'name' => 'admin.barang.habis_pakai.insert',
+                'guard_name' => 'web',
+                'created_at' => '2022-09-18 22:54:54',
+                'updated_at' => '2022-09-18 22:54:54',
+            ),
+            84 => 
+            array (
+                'id' => 189,
+                'name' => 'admin.barang.habis_pakai.update',
+                'guard_name' => 'web',
+                'created_at' => '2022-09-18 22:54:59',
+                'updated_at' => '2022-09-18 22:54:59',
+            ),
+            85 => 
+            array (
+                'id' => 190,
+                'name' => 'admin.barang.habis_pakai.delete',
+                'guard_name' => 'web',
+                'created_at' => '2022-09-18 22:55:04',
+                'updated_at' => '2022-09-18 22:55:04',
+            ),
         ));
         
         
