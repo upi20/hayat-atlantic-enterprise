@@ -41,8 +41,8 @@ class RouteServiceProvider extends ServiceProvider
                 ->group(base_path('routes/web_admin.php'));
 
             Route::middleware(['web', 'auth:sanctum'])
-                ->prefix('member')
-                ->group(base_path('routes/web_member.php'));
+                ->prefix('pegawai')
+                ->group(base_path('routes/web_pegawai.php'));
         });
     }
 

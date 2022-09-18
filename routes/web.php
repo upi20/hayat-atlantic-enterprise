@@ -43,16 +43,10 @@ Route::get('/', function () {
     if (!auth()->user()) return Redirect::route('login');
     if (auth_has_role(config('app.super_admin_role'))) {
         return Redirect::route('admin.dashboard');
-    } else if (auth_has_role('Penduduk')) {
-        return Redirect::route('penduduk.home');
     } else {
-        return Redirect::route('member.dashboard');
+        return Redirect::route('dashboard');
     }
 })->name("home");
-// // home default =======================================================================================================
-// Route::controller(HomeController::class)->group(function () {
-//     Route::get('/', 'index')->name("home");
-// });
 
 // artikel ============================================================================================================
 $prefix = 'artikel';
@@ -88,12 +82,13 @@ Route::controller(GaleriControllerFrontend::class)->prefix($name)->group(functio
 // dashboard ==========================================================================================================
 Route::get('/dashboard', function () {
     if (!auth()->user()) return Redirect::route('login');
-    if (auth_has_role(config('app.super_admin_role'))) {
+    if (auth_has_role(config('app.super_admin_role')) || auth_has_role('Administrasi')) {
         return Redirect::route('admin.dashboard');
     } else {
-        return Redirect::route('member.dashboard');
+        return Redirect::route('pegawai.dashboard');
     }
 })->name("dashboard");
+
 // ====================================================================================================================
 
 // Utility ============================================================================================================
