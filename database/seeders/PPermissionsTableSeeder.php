@@ -739,6 +739,38 @@ class PPermissionsTableSeeder extends Seeder
                 'created_at' => '2022-09-22 22:27:58',
                 'updated_at' => '2022-09-22 22:27:58',
             ),
+            90 => 
+            array (
+                'id' => 195,
+                'name' => 'admin.customer',
+                'guard_name' => 'web',
+                'created_at' => '2022-09-22 22:59:25',
+                'updated_at' => '2022-09-22 22:59:25',
+            ),
+            91 => 
+            array (
+                'id' => 196,
+                'name' => 'admin.customer.insert',
+                'guard_name' => 'web',
+                'created_at' => '2022-09-22 22:59:30',
+                'updated_at' => '2022-09-22 22:59:30',
+            ),
+            92 => 
+            array (
+                'id' => 197,
+                'name' => 'admin.customer.update',
+                'guard_name' => 'web',
+                'created_at' => '2022-09-22 22:59:36',
+                'updated_at' => '2022-09-22 22:59:36',
+            ),
+            93 => 
+            array (
+                'id' => 198,
+                'name' => 'admin.customer.delete',
+                'guard_name' => 'web',
+                'created_at' => '2022-09-22 22:59:41',
+                'updated_at' => '2022-09-22 22:59:41',
+            ),
         ));
         
         

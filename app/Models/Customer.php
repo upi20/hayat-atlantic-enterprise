@@ -10,6 +10,6 @@ class Customer extends Model
     use HasFactory;
     protected $guarded = [];
     protected $primaryKey = 'id';
-    protected $table = 'customer';
-    const tableName = 'customer';
+    protected $table = 'customers';
+    const tableName = 'customers';
 }
