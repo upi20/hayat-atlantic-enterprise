@@ -42,7 +42,11 @@ use App\Http\Controllers\Admin\Utility\HariBesarNasionalController;
 use App\Http\Controllers\Admin\Utility\NotifAdminAtasController;
 use App\Http\Controllers\Admin\Utility\NotifDepanAtasController;
 use App\Http\Controllers\Administrasi\Barang\HabisPakaiController;
+
+// ====================================================================================================================
 // Administrasi =======================================================================================================
+use App\Http\Controllers\Administrasi\KaryawanController;
+
 // Data Master ========================================================================================================
 use App\Http\Controllers\Administrasi\MasterData\JenisBarangController;
 use App\Http\Controllers\Administrasi\MasterData\SatuanBarangController;
@@ -50,6 +54,7 @@ use App\Http\Controllers\Administrasi\MasterData\PegawaiJabatan;
 
 // Data Barang ========================================================================================================
 use App\Http\Controllers\Administrasi\Barang\SewaController;
+
 
 $name = 'admin';
 $prefix = 'dashboard';
@@ -418,4 +423,14 @@ Route::group(['prefix' => $prefix], function () use ($name, $prefix) {
         Route::get('/find', 'find')->name("$name.find")->middleware("permission:$name.update");
         Route::post('/update', 'update')->name("$name.update")->middleware("permission:$name.update");
     });
+});
+
+$prefix = "karyawan";
+Route::controller(KaryawanController::class)->prefix($prefix)->group(function () use ($name, $prefix) {
+    $name = "$name.$prefix"; // admin.karyawan
+    Route::get('/', 'index')->name($name)->middleware("permission:$name");
+    Route::post('/', 'insert')->name("$name.insert")->middleware("permission:$name.insert");
+    Route::delete('/{model}', 'delete')->name("$name.delete")->middleware("permission:$name.delete");
+    Route::get('/find', 'find')->name("$name.find")->middleware("permission:$name.update");
+    Route::post('/update', 'update')->name("$name.update")->middleware("permission:$name.update");
 });

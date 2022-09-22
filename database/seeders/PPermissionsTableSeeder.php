@@ -707,6 +707,38 @@ class PPermissionsTableSeeder extends Seeder
                 'created_at' => '2022-09-18 22:55:04',
                 'updated_at' => '2022-09-18 22:55:04',
             ),
+            86 => 
+            array (
+                'id' => 191,
+                'name' => 'admin.karyawan',
+                'guard_name' => 'web',
+                'created_at' => '2022-09-22 22:27:25',
+                'updated_at' => '2022-09-22 22:27:25',
+            ),
+            87 => 
+            array (
+                'id' => 192,
+                'name' => 'admin.karyawan.insert',
+                'guard_name' => 'web',
+                'created_at' => '2022-09-22 22:27:48',
+                'updated_at' => '2022-09-22 22:27:48',
+            ),
+            88 => 
+            array (
+                'id' => 193,
+                'name' => 'admin.karyawan.update',
+                'guard_name' => 'web',
+                'created_at' => '2022-09-22 22:27:53',
+                'updated_at' => '2022-09-22 22:27:53',
+            ),
+            89 => 
+            array (
+                'id' => 194,
+                'name' => 'admin.karyawan.delete',
+                'guard_name' => 'web',
+                'created_at' => '2022-09-22 22:27:58',
+                'updated_at' => '2022-09-22 22:27:58',
+            ),
         ));
         
         

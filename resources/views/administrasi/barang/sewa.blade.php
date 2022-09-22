@@ -382,12 +382,12 @@
                                 </button>` : '';
                             return btn_update + btn_delete;
                         },
+                        className: 'text-nowrap',
                         orderable: false,
-                        className: 'text-nowrap'
                     }] : []),
                 ],
                 order: [
-                    [2, 'asc']
+                    [1, 'asc']
                 ]
             });
 

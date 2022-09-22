@@ -146,7 +146,7 @@ class UserRepository
     public function delete(Request $user)
     {
         try {
-            if ($user->id == 1) {
+            if ($user->id == 1 || auth()->user()->id) {
                 return response()->json(false, 500);
             }
             $user = User::find($user->id);

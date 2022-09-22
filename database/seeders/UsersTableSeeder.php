@@ -37,6 +37,8 @@ class UsersTableSeeder extends Seeder
                 'active' => 1,
                 'created_at' => NULL,
                 'updated_at' => '2022-09-15 08:38:55',
+                'updated_by' => NULL,
+                'created_by' => NULL,
             ),
             1 => 
             array (
@@ -56,6 +58,8 @@ class UsersTableSeeder extends Seeder
                 'active' => 1,
                 'created_at' => '2022-09-15 11:53:04',
                 'updated_at' => '2022-09-15 11:53:04',
+                'updated_by' => NULL,
+                'created_by' => NULL,
             ),
             2 => 
             array (
@@ -75,6 +79,8 @@ class UsersTableSeeder extends Seeder
                 'active' => 1,
                 'created_at' => '2022-09-15 11:53:49',
                 'updated_at' => '2022-09-15 11:53:49',
+                'updated_by' => NULL,
+                'created_by' => NULL,
             ),
             3 => 
             array (
@@ -94,6 +100,8 @@ class UsersTableSeeder extends Seeder
                 'active' => 1,
                 'created_at' => '2022-09-15 11:54:33',
                 'updated_at' => '2022-09-15 11:54:33',
+                'updated_by' => NULL,
+                'created_by' => NULL,
             ),
             4 => 
             array (
@@ -113,6 +121,8 @@ class UsersTableSeeder extends Seeder
                 'active' => 1,
                 'created_at' => '2022-09-15 11:55:37',
                 'updated_at' => '2022-09-15 11:55:37',
+                'updated_by' => NULL,
+                'created_by' => NULL,
             ),
             5 => 
             array (
@@ -132,6 +142,8 @@ class UsersTableSeeder extends Seeder
                 'active' => 1,
                 'created_at' => '2022-09-15 11:57:55',
                 'updated_at' => '2022-09-15 11:57:55',
+                'updated_by' => NULL,
+                'created_by' => NULL,
             ),
             6 => 
             array (
@@ -151,6 +163,8 @@ class UsersTableSeeder extends Seeder
                 'active' => 1,
                 'created_at' => '2022-09-15 11:58:28',
                 'updated_at' => '2022-09-15 11:58:28',
+                'updated_by' => NULL,
+                'created_by' => NULL,
             ),
             7 => 
             array (
@@ -170,6 +184,8 @@ class UsersTableSeeder extends Seeder
                 'active' => 1,
                 'created_at' => '2022-09-15 11:59:22',
                 'updated_at' => '2022-09-15 11:59:22',
+                'updated_by' => NULL,
+                'created_by' => NULL,
             ),
             8 => 
             array (
@@ -189,6 +205,8 @@ class UsersTableSeeder extends Seeder
                 'active' => 1,
                 'created_at' => '2022-09-15 11:59:59',
                 'updated_at' => '2022-09-15 11:59:59',
+                'updated_by' => NULL,
+                'created_by' => NULL,
             ),
             9 => 
             array (
@@ -208,6 +226,8 @@ class UsersTableSeeder extends Seeder
                 'active' => 1,
                 'created_at' => '2022-09-15 12:00:57',
                 'updated_at' => '2022-09-15 12:00:57',
+                'updated_by' => NULL,
+                'created_by' => NULL,
             ),
             10 => 
             array (
@@ -227,6 +247,8 @@ class UsersTableSeeder extends Seeder
                 'active' => 1,
                 'created_at' => '2022-09-15 12:01:30',
                 'updated_at' => '2022-09-15 12:01:30',
+                'updated_by' => NULL,
+                'created_by' => NULL,
             ),
             11 => 
             array (
@@ -246,6 +268,8 @@ class UsersTableSeeder extends Seeder
                 'active' => 1,
                 'created_at' => '2022-09-15 12:02:08',
                 'updated_at' => '2022-09-15 12:02:08',
+                'updated_by' => NULL,
+                'created_by' => NULL,
             ),
             12 => 
             array (
@@ -265,6 +289,8 @@ class UsersTableSeeder extends Seeder
                 'active' => 1,
                 'created_at' => '2022-09-15 12:02:42',
                 'updated_at' => '2022-09-15 12:02:42',
+                'updated_by' => NULL,
+                'created_by' => NULL,
             ),
             13 => 
             array (
@@ -284,6 +310,8 @@ class UsersTableSeeder extends Seeder
                 'active' => 1,
                 'created_at' => '2022-09-15 12:03:11',
                 'updated_at' => '2022-09-15 12:03:11',
+                'updated_by' => NULL,
+                'created_by' => NULL,
             ),
             14 => 
             array (
@@ -303,6 +331,8 @@ class UsersTableSeeder extends Seeder
                 'active' => 1,
                 'created_at' => '2022-09-15 12:03:43',
                 'updated_at' => '2022-09-15 12:03:43',
+                'updated_by' => NULL,
+                'created_by' => NULL,
             ),
             15 => 
             array (
@@ -322,6 +352,8 @@ class UsersTableSeeder extends Seeder
                 'active' => 1,
                 'created_at' => '2022-09-15 12:04:11',
                 'updated_at' => '2022-09-15 12:04:11',
+                'updated_by' => NULL,
+                'created_by' => NULL,
             ),
             16 => 
             array (
@@ -340,7 +372,9 @@ class UsersTableSeeder extends Seeder
                 'profile_photo_path' => NULL,
                 'active' => 1,
                 'created_at' => '2022-09-15 12:04:49',
-                'updated_at' => '2022-09-15 12:04:49',
+                'updated_at' => '2022-09-22 22:16:05',
+                'updated_by' => 1,
+                'created_by' => NULL,
             ),
         ));
         
