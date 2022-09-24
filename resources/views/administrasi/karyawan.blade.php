@@ -1,7 +1,6 @@
 @extends('templates.admin.master')
 
 @section('content')
-    <input type="text" id="clipboard" style="position: fixed; top:-50px">
     @php
         $can_insert = auth_can(h_prefix('insert'));
         $can_update = auth_can(h_prefix('update'));
@@ -222,7 +221,9 @@
             $('#filter_role').select2();
             $('#filter_jenis_kelamin').select2();
             $('#filter_active').select2();
-            $('#role').select2();
+            $('#role').select2({
+                dropdownParent: $('#modal-default'),
+            });
 
             $('#created_by').select2({
                 ajax: {

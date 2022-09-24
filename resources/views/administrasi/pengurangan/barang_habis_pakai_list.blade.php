@@ -2,21 +2,26 @@
 
 @section('content')
     @php
-        $can_insert = auth_can(h_prefix('insert'));
-        $can_update = auth_can(h_prefix('update'));
-        $can_delete = auth_can(h_prefix('delete'));
+        $can_insert = auth_can(h_prefix('insert', 1));
+        $can_update = auth_can(h_prefix('update', 1));
+        $can_delete = auth_can(h_prefix('delete', 1));
     @endphp
     <div class="row row-sm">
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header d-md-flex flex-row justify-content-between">
                     <h3 class="card-title">{{ $page_attr['title'] }} Table List</h3>
-                    @if ($can_insert)
-                        <button type="button" class="btn btn-rounded btn-success btn-sm" data-bs-effect="effect-scale"
-                            data-bs-toggle="modal" href="#modal-default" onclick="add()" data-target="#modal-default">
-                            <i class="fas fa-plus"></i> Tambah
-                        </button>
-                    @endif
+                    <div>
+                        <a href="{{ route(h_prefix(null, 2)) }}" class="btn btn-rounded btn-secondary btn-sm">
+                            <i class="fas fa-arrow-left"></i> Kembali
+                        </a>
+                        @if ($can_insert)
+                            <button type="button" class="btn btn-rounded btn-success btn-sm" data-bs-effect="effect-scale"
+                                data-bs-toggle="modal" href="#modal-default" onclick="add()" data-target="#modal-default">
+                                <i class="fas fa-plus"></i> Tambah
+                            </button>
+                        @endif
+                    </div>
                 </div>
                 <div class="card-body">
                     <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
@@ -34,33 +39,7 @@
                                 <div class="panel-body">
                                     <form action="javascript:void(0)" class="ml-md-3 mb-md-3" id="FilterForm">
 
-                                        <div class="form-group float-start me-2" style="min-width: 250px">
-                                            <label for="filter_jenis">Jenis</label>
-                                            <br>
-                                            <select class="form-control" id="filter_jenis" name="filter_jenis"
-                                                style="width: 100%;">
-                                                <option value="" selected>Semua</option>
-                                                @foreach ($jenis as $v)
-                                                    <option value="{{ $v['id'] }}">{{ $v['nama'] }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-
-                                        <div class="form-group float-start me-2" style="min-width: 250px">
-                                            <label for="filter_satuan">Satuan</label>
-                                            <br>
-                                            <select class="form-control" id="filter_satuan" name="filter_satuan"
-                                                style="width: 100%;">
-                                                <option value="" selected>Semua</option>
-                                                @foreach ($satuan as $v)
-                                                    <option value="{{ $v['id'] }}">{{ $v['nama'] }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-
-                                        <div class="form-group float-start me-2" style="min-width: 250px">
+                                        <div class="form-group float-start me-2" style="min-width: 300px">
                                             <label for="created_by">Dibuat Oleh</label>
                                             <br>
                                             <select class="form-control" id="created_by" name="created_by"
@@ -69,7 +48,7 @@
                                             </select>
                                         </div>
 
-                                        <div class="form-group float-start me-2" style="min-width: 250px">
+                                        <div class="form-group float-start me-2" style="min-width: 300px">
                                             <label for="updated_by">Diubah Oleh</label>
                                             <br>
                                             <select class="form-control" id="updated_by" name="updated_by"
@@ -92,19 +71,12 @@
                         <table class="table table-bordered  border-bottom" id="tbl_main">
                             <thead>
                                 <tr>
-                                    <th class="text-nowrap text-center">No</th>
-                                    <th class="text-nowrap text-center">Nama</th>
-                                    <th class="text-nowrap text-center">Kode</th>
-                                    <th class="text-nowrap text-center">Jenis</th>
-                                    <th class="text-nowrap text-center">Satuan</th>
-                                    <th class="text-nowrap text-center">Harga</th>
-                                    <th class="text-nowrap text-center">Ada</th>
-                                    <th class="text-nowrap text-center">Rusak</th>
-                                    <th class="text-nowrap text-center">Disewakan</th>
-                                    <th class="text-nowrap text-center">Total</th>
-                                    <th class="text-nowrap text-center">Keterangan</th>
-                                    <th class="text-nowrap text-center">Diubah Oleh</th>
-                                    <th class="text-nowrap text-center">Diubah Tgl.</th>
+                                    <th>No</th>
+                                    <th>Brg. Kode</th>
+                                    <th>Barang (QTY)</th>
+                                    <th>Qty</th>
+                                    <th>Diubah Oleh</th>
+                                    <th>Diubah Tgl.</th>
                                     {!! $can_delete || $can_update ? '<th>Aksi</th>' : '' !!}
                                 </tr>
                             </thead>
@@ -118,7 +90,7 @@
     <!-- End Row -->
     <div class="modal fade" id="modal-default">
         <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content modal-content-demo modal-lg">
+            <div class="modal-content modal-content-demo">
                 <div class="modal-header">
                     <h6 class="modal-title" id="modal-default-title"></h6><button aria-label="Tutup" class="btn-close"
                         data-bs-dismiss="modal"><span aria-hidden="true">&times;</span></button>
@@ -127,66 +99,32 @@
                     <form action="javascript:void(0)" id="MainForm" name="MainForm" method="POST"
                         enctype="multipart/form-data">
                         <input type="hidden" name="id" id="id">
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="form-group">
-                                    <label class="form-label" for="nama">Nama <span
-                                            class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" id="nama" name="nama"
-                                        placeholder="Nama" required="" />
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label class="form-label" for="kode">Kode <span
-                                            class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" id="kode" name="kode"
-                                        placeholder="Kode" required="" />
-                                </div>
-                            </div>
+                        <input type="hidden" name="pengurangan" id="pengurangan" value="{{ $model->id }}">
+                        <div class="form-group">
+                            <label class="form-label" for="nama">Barang <span class="text-danger">*</span></label>
+                            <select class="form-control" id="barang" name="barang" style="width: 100%;" required>
+                            </select>
+                        </div>
 
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label class="form-label" for="harga">Harga <span
-                                            class="text-danger">*</span></label>
-                                    <input type="number" min="1" class="form-control" id="harga"
-                                        name="harga" placeholder="Harga" required="" />
-                                </div>
+                        <div class="form-group">
+                            <label class="form-label" for="qty">Quantity/Jumlah
+                                <span class="text-danger">*</span></label>
+                            <div class="input-group">
+                                <input type="number" min="1" class="form-control" placeholder="Quantity/Jumlah"
+                                    aria-label="Quantity/Jumlah" id="qty" name="qty"
+                                    aria-describedby="basic-addon1" required>
+                                <span class="input-group-text satuan"></span>
                             </div>
+                        </div>
 
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label class="form-label" for="jenis">Jenis <span
-                                            class="text-danger">*</span></label>
-                                    <select class="form-control" id="jenis" name="jenis" style="width: 100%;">
-                                        @foreach ($jenis as $v)
-                                            <option value="{{ $v['id'] }}">{{ $v['nama'] }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label class="form-label" for="satuan">Satuan <span
-                                            class="text-danger">*</span></label>
-                                    <select class="form-control" id="satuan" name="satuan" style="width: 100%;">
-                                        @foreach ($satuan as $v)
-                                            <option value="{{ $v['id'] }}">{{ $v['nama'] }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-
-
-                            <div class="col-12">
-                                <div class="form-group">
-                                    <label class="form-label" for="keterangan">Keterangan</label>
-                                    <textarea type="text" class="form-control" rows="3" id="keterangan" name="keterangan"
-                                        placeholder="Keterangan"> </textarea>
-                                </div>
+                        <div class="form-group">
+                            <label class="form-label" for="qty_total">Total Quantity/Jumlah Menjadi</label>
+                            <div class="input-group">
+                                <input type="number" min="1" class="form-control"
+                                    placeholder="Total Quantity/Jumlah Menjadi" aria-label="Total Quantity/Jumlah Menjadi"
+                                    id="qty_total" name="qty_total" min="0" aria-describedby="basic-addon1"
+                                    readonly>
+                                <span class="input-group-text satuan"></span>
                             </div>
                         </div>
                     </form>
@@ -224,28 +162,14 @@
         const can_delete = {{ $can_delete ? 'true' : 'false' }};
         const table_html = $('#tbl_main');
         let isEdit = true;
-        const jenis_kode = new Map();
-        @foreach ($jenis as $v)
-            jenis_kode.set('{{ $v['id'] }}', '{{ $v['kode'] }}');
-        @endforeach
+        let qty_total = 0;
+        let qty_total_edit = 0;
+        let qty_total_edit_id = 0;
         $(document).ready(function() {
-            $('#filter_jenis').select2();
-            $('#filter_satuan').select2();
-
-            $('#jenis').select2({
-                dropdownParent: $('#modal-default'),
-            });
-            $('#satuan').select2({
-                dropdownParent: $('#modal-default'),
-            });
-
             $('#created_by').select2({
                 ajax: {
                     url: "{{ route('member_select2') }}",
                     type: "POST",
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
                     data: function(params) {
                         var query = {
                             search: params.term,
@@ -254,29 +178,51 @@
                     }
                 }
             });
-
             $('#updated_by').select2({
                 ajax: {
                     url: "{{ route('member_select2') }}",
                     type: "POST",
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
                     data: function(params) {
                         var query = {
-                            search: params.term,
+                            search: params.term
                         }
                         return query;
                     }
                 }
             });
 
-            // datatable ====================================================================================
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
+            $('#barang').select2({
+                ajax: {
+                    url: "{{ route(h_prefix('barang_select2', 1)) }}",
+                    type: "GET",
+                    data: function(params) {
+                        var query = {
+                            search: params.term,
+                            pengurangan: '{{ $model->id }}',
+                            list_id: $('#id').val()
+                        }
+                        return query;
+                    }
+                },
+                placeholder: "Nama, Kode, Jenis atau Satuan Barang",
+                dropdownParent: $('#modal-default'),
+            }).on('select2:select', function(e) {
+                const data = e.params.data;
+                $('.satuan').html(data.satuan);
+                qty_total = (isEdit && data.id == qty_total_edit_id) ? qty_total_edit : data
+                    .barang_qty_total;
+                refresh_total();
             });
+
+            $('#qty').keyup(e => {
+                refresh_total();
+            })
+
+            $('#qty').change(e => {
+                refresh_total();
+            })
+
+            // datatable ====================================================================================
             const new_table = table_html.DataTable({
                 searchDelay: 500,
                 processing: true,
@@ -287,12 +233,11 @@
                 bAutoWidth: false,
                 type: 'GET',
                 ajax: {
-                    url: "{{ route(h_prefix()) }}",
+                    url: "{{ route(h_prefix('', 1), $model->id) }}",
                     data: function(d) {
                         d['filter[updated_by]'] = $('#updated_by').val();
                         d['filter[created_by]'] = $('#created_by').val();
-                        d['filter[jenis]'] = $('#filter_jenis').val();
-                        d['filter[satuan]'] = $('#filter_satuan').val();
+                        d['filter[pengurangan]'] = '{{ $model->id }}';
                     }
                 },
                 columns: [{
@@ -301,57 +246,23 @@
                         orderable: false,
                     },
                     {
-                        data: 'nama',
-                        name: 'nama',
-                        className: 'text-nowrap'
+                        data: 'barang_kode',
+                        name: 'barang_kode',
+                        className: 'text-nowrap',
                     },
                     {
-                        data: 'kode',
-                        name: 'kode',
-                        className: 'text-nowrap'
-                    },
-                    {
-                        data: 'jenis_str',
-                        name: 'jenis_str',
-                        className: 'text-nowrap'
-                    },
-                    {
-                        data: 'satuan_str',
-                        name: 'satuan_str',
-                        className: 'text-nowrap'
-                    },
-                    {
-                        data: 'harga',
-                        name: 'harga',
+                        data: 'barang_nama',
+                        name: 'barang_nama',
+                        className: 'text-nowrap',
                         render(data, type, full, meta) {
-                            return 'Rp. ' + format_rupiah(data);
+                            return `${data} (${full.barang_qty_total})`;
                         },
-                        className: 'text-nowrap text-right'
                     },
                     {
-                        data: 'qty_ada',
-                        name: 'qty_ada',
+                        data: 'qty',
+                        name: 'qty',
+                        className: 'text-nowrap',
                         className: 'text-nowrap text-right'
-                    },
-                    {
-                        data: 'qty_rusak',
-                        name: 'qty_rusak',
-                        className: 'text-nowrap text-right'
-                    },
-                    {
-                        data: 'qty_disewakan',
-                        name: 'qty_disewakan',
-                        className: 'text-nowrap text-right'
-                    },
-                    {
-                        data: 'qty_total',
-                        name: 'qty_total',
-                        className: 'text-nowrap text-right'
-                    },
-                    {
-                        data: 'keterangan',
-                        name: 'keterangan',
-                        className: 'text-nowrap'
                     },
                     {
                         data: 'updated_by_str',
@@ -359,7 +270,7 @@
                         render(data, type, full, meta) {
                             return data ?? full.created_by_str;
                         },
-                        className: 'text-nowrap'
+                        className: 'text-nowrap',
                     },
                     {
                         data: 'updated',
@@ -367,7 +278,7 @@
                         render(data, type, full, meta) {
                             return data ?? full.created;
                         },
-                        className: 'text-nowrap'
+                        className: 'text-nowrap',
                     },
                     ...(can_update || can_delete ? [{
                         data: 'id',
@@ -381,8 +292,8 @@
                                 </button>` : '';
                             return btn_update + btn_delete;
                         },
-                        className: 'text-nowrap',
                         orderable: false,
+                        className: 'text-nowrap',
                     }] : []),
                 ],
                 order: [
@@ -413,14 +324,11 @@
                 var formData = new FormData(this);
                 setBtnLoading('#btn-save', 'Save Changes');
                 const route = ($('#id').val() == '') ?
-                    "{{ route(h_prefix('insert')) }}" :
-                    "{{ route(h_prefix('update')) }}";
+                    "{{ route(h_prefix('insert', 1), $model->id) }}" :
+                    "{{ route(h_prefix('update', 1), $model->id) }}";
                 $.ajax({
                     type: "POST",
                     url: route,
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
                     data: formData,
                     cache: false,
                     contentType: false,
@@ -460,10 +368,6 @@
                     }
                 });
             });
-
-            $('#jenis').on('select2:select', function(e) {
-                $('#kode').val(jenis_kode.get($(this).val()));
-            });
         });
 
         function add() {
@@ -472,6 +376,11 @@
             $('#modal-default-title').html("Tambah {{ $page_attr['title'] }}");
             $('#modal-default').modal('show');
             $('#id').val('');
+            $('.satuan').html('');
+            $('#barang')
+                .append((new Option('', '', true, true)))
+                .trigger('change');
+            qty_total = 0;
             resetErrorAfterInput();
             isEdit = false;
             return true;
@@ -481,10 +390,7 @@
             $.LoadingOverlay("show");
             $.ajax({
                 type: "GET",
-                url: `{{ route(h_prefix('find')) }}`,
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
+                url: `{{ route(h_prefix('find', 1)) }}`,
                 data: {
                     id
                 },
@@ -492,13 +398,18 @@
                     isEdit = true;
                     $('#modal-default-title').html("Ubah {{ $page_attr['title'] }}");
                     $('#modal-default').modal('show');
+                    qty_total = data.barang_qty_total + data.qty;
+                    qty_total_edit = data.barang_qty_total + data.qty;
+                    qty_total_edit_id = data.barang_id;
+
                     $('#id').val(data.id);
-                    $('#nama').val(data.nama);
-                    $('#kode').val(data.kode);
-                    $('#harga').val(data.harga);
-                    $('#jenis').val(data.jenis).trigger('change');
-                    $('#satuan').val(data.satuan).trigger('change');
-                    $('#keterangan').val(data.keterangan);
+                    $('.satuan').html(data.satuan);
+                    $('#qty').val(data.qty);
+                    $('#barang')
+                        .append((new Option(data.barang_nama, data.barang_id, true, true)))
+                        .trigger('change');
+
+                    refresh_total();
                 },
                 error: function(data) {
                     Swal.fire({
@@ -526,7 +437,7 @@
             }).then(function(result) {
                 if (result.value) {
                     $.ajax({
-                        url: `{{ url(h_prefix_uri()) }}/${id}`,
+                        url: `{{ url(h_prefix_uri('', 1)) }}/${id}`,
                         type: 'DELETE',
                         dataType: 'json',
                         headers: {
@@ -562,6 +473,11 @@
                     });
                 }
             });
+        }
+
+        function refresh_total() {
+            const qty = Number($('#qty').val());
+            $('#qty_total').val(qty_total - qty);
         }
     </script>
 @endsection

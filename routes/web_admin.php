@@ -41,7 +41,6 @@ use App\Http\Controllers\Admin\Setting\HomeController;
 use App\Http\Controllers\Admin\Utility\HariBesarNasionalController;
 use App\Http\Controllers\Admin\Utility\NotifAdminAtasController;
 use App\Http\Controllers\Admin\Utility\NotifDepanAtasController;
-use App\Http\Controllers\Administrasi\Barang\HabisPakaiController;
 
 // ====================================================================================================================
 // Administrasi =======================================================================================================
@@ -55,6 +54,19 @@ use App\Http\Controllers\Administrasi\MasterData\PegawaiJabatan;
 
 // Data Barang ========================================================================================================
 use App\Http\Controllers\Administrasi\Barang\SewaController;
+use App\Http\Controllers\Administrasi\Barang\HabisPakaiController;
+
+// Pengadaan Barang ===================================================================================================
+use App\Http\Controllers\Administrasi\Pengadaan\BarangSewaController;
+use App\Http\Controllers\Administrasi\Pengadaan\BarangSewaListController;
+use App\Http\Controllers\Administrasi\Pengadaan\BarangHabisPakaiController;
+use App\Http\Controllers\Administrasi\Pengadaan\BarangHabisPakaiListController;
+
+// Pengadaan Barang ===================================================================================================
+use App\Http\Controllers\Administrasi\Pengurangan\BarangSewaController as PenguranganBarangSewaController;
+use App\Http\Controllers\Administrasi\Pengurangan\BarangSewaListController as PenguranganBarangSewaListController;
+use App\Http\Controllers\Administrasi\Pengurangan\BarangHabisPakaiController as PenguranganBarangHabisPakaiController;
+use App\Http\Controllers\Administrasi\Pengurangan\BarangHabisPakaiListController as PenguranganBarangHabisPakaiListController;
 
 $name = 'admin';
 $prefix = 'dashboard';
@@ -422,6 +434,104 @@ Route::group(['prefix' => $prefix], function () use ($name, $prefix) {
         Route::delete('/{model}', 'delete')->name("$name.delete")->middleware("permission:$name.delete");
         Route::get('/find', 'find')->name("$name.find")->middleware("permission:$name.update");
         Route::post('/update', 'update')->name("$name.update")->middleware("permission:$name.update");
+    });
+
+    $prefix = 'pengadaan';
+    Route::group(['prefix' => $prefix], function () use ($name, $prefix) {
+        $name = "$name.$prefix"; // admin.pengadaan
+
+        $prefix = "sewa";
+        Route::controller(BarangSewaController::class)->prefix($prefix)->group(function () use ($name, $prefix) {
+            $name = "$name.$prefix"; // admin.barang.pengadaan.sewa
+            Route::get('/', 'index')->name($name)->middleware("permission:$name");
+            Route::post('/', 'insert')->name("$name.insert")->middleware("permission:$name.insert");
+            Route::delete('/{model}', 'delete')->name("$name.delete")->middleware("permission:$name.delete");
+            Route::get('/find', 'find')->name("$name.find")->middleware("permission:$name.update");
+            Route::post('/update', 'update')->name("$name.update")->middleware("permission:$name.update");
+
+            $prefix = 'list';
+            Route::group(['prefix' => $prefix, 'controller' => BarangSewaListController::class], function () use ($name, $prefix) {
+                $name = "$name.$prefix"; // admin.barang.pengadaan.sewa.list
+                Route::get('/find', 'find')->name("$name.find")->middleware("permission:$name.update");
+                Route::get('/barang_select2', 'barang_select2')->name("$name.barang_select2")->middleware("permission:$name.insert|$name.update");
+
+                Route::get('/{model}', 'index')->name($name)->middleware("permission:$name");
+                Route::post('/{model}', 'insert')->name("$name.insert")->middleware("permission:$name.insert");
+                Route::delete('/{model}', 'delete')->name("$name.delete")->middleware("permission:$name.delete");
+                Route::post('/{model}/update', 'update')->name("$name.update")->middleware("permission:$name.update");
+            });
+        });
+
+        $prefix = "habis_pakai";
+        Route::controller(BarangHabisPakaiController::class)->prefix($prefix)->group(function () use ($name, $prefix) {
+            $name = "$name.$prefix"; // admin.barang.pengadaan.habis_pakai
+            Route::get('/', 'index')->name($name)->middleware("permission:$name");
+            Route::post('/', 'insert')->name("$name.insert")->middleware("permission:$name.insert");
+            Route::delete('/{model}', 'delete')->name("$name.delete")->middleware("permission:$name.delete");
+            Route::get('/find', 'find')->name("$name.find")->middleware("permission:$name.update");
+            Route::post('/update', 'update')->name("$name.update")->middleware("permission:$name.update");
+
+            $prefix = 'list';
+            Route::group(['prefix' => $prefix, 'controller' => BarangHabisPakaiListController::class], function () use ($name, $prefix) {
+                $name = "$name.$prefix"; // admin.barang.pengadaan.habis_pakai.list
+                Route::get('/find', 'find')->name("$name.find")->middleware("permission:$name.update");
+                Route::get('/barang_select2', 'barang_select2')->name("$name.barang_select2")->middleware("permission:$name.insert|$name.update");
+
+                Route::get('/{model}', 'index')->name($name)->middleware("permission:$name");
+                Route::post('/{model}', 'insert')->name("$name.insert")->middleware("permission:$name.insert");
+                Route::delete('/{model}', 'delete')->name("$name.delete")->middleware("permission:$name.delete");
+                Route::post('/{model}/update', 'update')->name("$name.update")->middleware("permission:$name.update");
+            });
+        });
+    });
+
+    $prefix = 'pengurangan';
+    Route::group(['prefix' => $prefix], function () use ($name, $prefix) {
+        $name = "$name.$prefix"; // admin.pengurangan
+
+        $prefix = "sewa";
+        Route::controller(PenguranganBarangSewaController::class)->prefix($prefix)->group(function () use ($name, $prefix) {
+            $name = "$name.$prefix"; // admin.barang.pengurangan.sewa
+            Route::get('/', 'index')->name($name)->middleware("permission:$name");
+            Route::post('/', 'insert')->name("$name.insert")->middleware("permission:$name.insert");
+            Route::delete('/{model}', 'delete')->name("$name.delete")->middleware("permission:$name.delete");
+            Route::get('/find', 'find')->name("$name.find")->middleware("permission:$name.update");
+            Route::post('/update', 'update')->name("$name.update")->middleware("permission:$name.update");
+
+            $prefix = 'list';
+            Route::group(['prefix' => $prefix, 'controller' => PenguranganBarangSewaListController::class], function () use ($name, $prefix) {
+                $name = "$name.$prefix"; // admin.barang.pengurangan.sewa.list
+                Route::get('/find', 'find')->name("$name.find")->middleware("permission:$name.update");
+                Route::get('/barang_select2', 'barang_select2')->name("$name.barang_select2")->middleware("permission:$name.insert|$name.update");
+
+                Route::get('/{model}', 'index')->name($name)->middleware("permission:$name");
+                Route::post('/{model}', 'insert')->name("$name.insert")->middleware("permission:$name.insert");
+                Route::delete('/{model}', 'delete')->name("$name.delete")->middleware("permission:$name.delete");
+                Route::post('/{model}/update', 'update')->name("$name.update")->middleware("permission:$name.update");
+            });
+        });
+
+        $prefix = "habis_pakai";
+        Route::controller(PenguranganBarangHabisPakaiController::class)->prefix($prefix)->group(function () use ($name, $prefix) {
+            $name = "$name.$prefix"; // admin.barang.pengurangan.habis_pakai
+            Route::get('/', 'index')->name($name)->middleware("permission:$name");
+            Route::post('/', 'insert')->name("$name.insert")->middleware("permission:$name.insert");
+            Route::delete('/{model}', 'delete')->name("$name.delete")->middleware("permission:$name.delete");
+            Route::get('/find', 'find')->name("$name.find")->middleware("permission:$name.update");
+            Route::post('/update', 'update')->name("$name.update")->middleware("permission:$name.update");
+
+            $prefix = 'list';
+            Route::group(['prefix' => $prefix, 'controller' => PenguranganBarangHabisPakaiListController::class], function () use ($name, $prefix) {
+                $name = "$name.$prefix"; // admin.barang.pengurangan.habis_pakai.list
+                Route::get('/find', 'find')->name("$name.find")->middleware("permission:$name.update");
+                Route::get('/barang_select2', 'barang_select2')->name("$name.barang_select2")->middleware("permission:$name.insert|$name.update");
+
+                Route::get('/{model}', 'index')->name($name)->middleware("permission:$name");
+                Route::post('/{model}', 'insert')->name("$name.insert")->middleware("permission:$name.insert");
+                Route::delete('/{model}', 'delete')->name("$name.delete")->middleware("permission:$name.delete");
+                Route::post('/{model}/update', 'update')->name("$name.update")->middleware("permission:$name.update");
+            });
+        });
     });
 });
 

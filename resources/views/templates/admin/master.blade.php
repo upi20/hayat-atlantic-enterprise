@@ -113,7 +113,7 @@ $notifikasi = notif_admin_atas();
 </head>
 
 <body class="app sidebar-mini ltr light-mode">
-
+    <input type="text" id="clipboard" style="position: fixed; top:-50px">
     @if ($page_attr->loader)
         <!-- GLOBAL-LOADER -->
         <div id="global-loader">

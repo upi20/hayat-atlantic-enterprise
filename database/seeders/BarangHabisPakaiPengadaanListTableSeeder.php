@@ -299,13 +299,13 @@ class BarangHabisPakaiPengadaanListTableSeeder extends Seeder
             array (
                 'id' => 24,
                 'harga' => 6000,
-                'qty' => 2,
+                'qty' => 9,
                 'barang' => 24,
                 'pengadaan' => 1,
-                'updated_by' => NULL,
+                'updated_by' => 1,
                 'created_by' => 1,
                 'created_at' => '2022-09-17 22:04:43',
-                'updated_at' => NULL,
+                'updated_at' => '2022-09-24 17:18:58',
             ),
             24 => 
             array (

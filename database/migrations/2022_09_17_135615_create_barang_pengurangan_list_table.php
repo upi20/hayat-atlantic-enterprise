@@ -15,7 +15,6 @@ return new class extends Migration
     {
         Schema::create('barang_pengurangan_list', function (Blueprint $table) {
             $table->id();
-            $table->integer('harga');
             $table->integer('qty');
 
             $table->bigInteger('barang', false, true);

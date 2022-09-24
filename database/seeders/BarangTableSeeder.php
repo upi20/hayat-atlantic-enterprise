@@ -27,15 +27,15 @@ class BarangTableSeeder extends Seeder
                 'jenis' => 1,
                 'satuan' => 1,
                 'harga' => 100000,
-                'qty_total' => 11,
-                'qty_ada' => 11,
+                'qty_total' => 15,
+                'qty_ada' => 15,
                 'qty_rusak' => 0,
                 'qty_disewakan' => 0,
                 'keterangan' => 'Ditambahkan bersamaan dengan pembuatan aplikasi',
                 'updated_by' => NULL,
                 'created_by' => 1,
                 'created_at' => '2022-09-17 22:04:43',
-                'updated_at' => NULL,
+                'updated_at' => '2022-09-24 17:03:37',
             ),
             1 => 
             array (
@@ -53,7 +53,7 @@ class BarangTableSeeder extends Seeder
                 'updated_by' => NULL,
                 'created_by' => 1,
                 'created_at' => '2022-09-17 22:04:43',
-                'updated_at' => NULL,
+                'updated_at' => '2022-09-24 16:13:34',
             ),
             2 => 
             array (
@@ -773,7 +773,7 @@ class BarangTableSeeder extends Seeder
                 'updated_by' => NULL,
                 'created_by' => 1,
                 'created_at' => '2022-09-17 22:04:43',
-                'updated_at' => NULL,
+                'updated_at' => '2022-09-24 16:13:34',
             ),
             42 => 
             array (

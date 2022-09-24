@@ -30,6 +30,17 @@ class BarangPengadaanTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => NULL,
             ),
+            1 => 
+            array (
+                'id' => 4,
+                'nama' => 'Testing',
+                'keterangan' => NULL,
+                'tanggal' => '2022-09-24 16:23:00',
+                'updated_by' => NULL,
+                'created_by' => 1,
+                'created_at' => '2022-09-24 16:24:02',
+                'updated_at' => '2022-09-24 16:24:02',
+            ),
         ));
         
         

@@ -1,10 +1,10 @@
 @extends('templates.admin.master')
 @section('content')
     @php
-    $can_insert = auth_can(h_prefix('insert'));
-    $can_update = auth_can(h_prefix('update'));
-    $can_delete = auth_can(h_prefix('delete'));
-    $can_save = auth_can(h_prefix('save'));
+        $can_insert = auth_can(h_prefix('insert'));
+        $can_update = auth_can(h_prefix('update'));
+        $can_delete = auth_can(h_prefix('delete'));
+        $can_save = auth_can(h_prefix('save'));
     @endphp
     <div class="row">
         <div class="col-lg-6">

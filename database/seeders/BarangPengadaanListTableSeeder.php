@@ -26,10 +26,10 @@ class BarangPengadaanListTableSeeder extends Seeder
                 'qty' => 11,
                 'barang' => 1,
                 'pengadaan' => 1,
-                'updated_by' => NULL,
+                'updated_by' => 1,
                 'created_by' => 1,
                 'created_at' => '2022-09-17 22:04:43',
-                'updated_at' => NULL,
+                'updated_at' => '2022-09-24 15:25:04',
             ),
             1 => 
             array (
@@ -1410,6 +1410,18 @@ class BarangPengadaanListTableSeeder extends Seeder
                 'created_by' => 1,
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => NULL,
+            ),
+            116 => 
+            array (
+                'id' => 122,
+                'harga' => 100000,
+                'qty' => 5,
+                'barang' => 1,
+                'pengadaan' => 4,
+                'updated_by' => 1,
+                'created_by' => 1,
+                'created_at' => '2022-09-24 16:43:27',
+                'updated_at' => '2022-09-24 16:50:13',
             ),
         ));
         
