@@ -2,55 +2,53 @@
 
 @section('content')
     @php
-    $can_insert = auth_can(h_prefix('insert'));
-    $can_update = auth_can(h_prefix('update'));
-    $can_delete = auth_can(h_prefix('delete'));
+        $can_insert = auth_can(h_prefix('insert'));
+        $can_update = auth_can(h_prefix('update'));
+        $can_delete = auth_can(h_prefix('delete'));
     @endphp
-    <div class="row row-sm">
-        <div class="col-lg-12">
-            <div class="card">
-                <div class="card-header d-md-flex flex-row justify-content-between">
-                    <h3 class="card-title">List Artikel</h3>
-                    @if ($can_insert)
-                        <a class="btn btn-rounded btn-success btn-sm" href="{{ route(h_prefix('add')) }}"
-                            data-bs-effect="effect-scale">
-                            <i class="fas fa-plus"></i> Tambah Artikel
-                        </a>
-                    @endif
+
+    <div class="card">
+        <div class="card-header d-md-flex flex-row justify-content-between">
+            <h3 class="card-title">List Artikel</h3>
+            @if ($can_insert)
+                <a class="btn btn-rounded btn-success btn-sm" href="{{ route(h_prefix('add')) }}"
+                    data-bs-effect="effect-scale">
+                    <i class="fas fa-plus"></i> Tambah Artikel
+                </a>
+            @endif
+        </div>
+        <div class="card-body">
+            <h5 class="h5">Filter Data</h5>
+            <form action="javascript:void(0)" class="form-inline ml-md-3 mb-md-3" id="FilterForm">
+                <div class="form-group me-md-3">
+                    <label for="filter_status">Status</label>
+                    <select class="form-control" id="filter_status" name="filter_status" style="max-width: 200px">
+                        <option value="">All Status</option>
+                        <option value="1">Dipublish</option>
+                        <option value="0">Disimpan</option>
+                    </select>
                 </div>
-                <div class="card-body">
-                    <h5 class="h5">Filter Data</h5>
-                    <form action="javascript:void(0)" class="form-inline ml-md-3 mb-md-3" id="FilterForm">
-                        <div class="form-group me-md-3">
-                            <label for="filter_status">Status</label>
-                            <select class="form-control" id="filter_status" name="filter_status" style="max-width: 200px">
-                                <option value="">All Status</option>
-                                <option value="1">Dipublish</option>
-                                <option value="0">Disimpan</option>
-                            </select>
-                        </div>
-                        <button type="submit" class="btn btn-rounded btn-md btn-info" title="Refresh Filter Table">
-                            <i class="fas fa-sync"></i> Refresh
-                        </button>
-                    </form>
-                    <div class="table-responsive table-striped">
-                        <table class="table table-bordered border-bottom" id="tbl_main">
-                            <thead>
-                                <tr>
-                                    <th>No</th>
-                                    <th>Nama</th>
-                                    <th>Lihat</th>
-                                    <th>Slug</th>
-                                    <th>Kilasan</th>
-                                    <th>Tanggal</th>
-                                    <th>Status</th>
-                                    {!! $can_delete || $can_update ? '<th>Action</th>' : '' !!}
-                                </tr>
-                            </thead>
-                            <tbody> </tbody>
-                        </table>
-                    </div>
-                </div>
+                <button type="submit" class="btn btn-rounded btn-md btn-info" title="Refresh Filter Table">
+                    <i class="fas fa-sync"></i> Refresh
+                </button>
+            </form>
+            <div class="table-responsive table-striped">
+                <table class="table table-bordered border-bottom" id="tbl_main">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Nama</th>
+                            <th>Lihat</th>
+                            <th>Slug</th>
+                            <th>Kilasan</th>
+                            <th>Tanggal</th>
+                            <th>Status</th>
+                            {!! $can_delete || $can_update ? '<th>Action</th>' : '' !!}
+                        </tr>
+                    </thead>
+                    <tbody> </tbody>
+
+                </table>
             </div>
         </div>
     </div>

@@ -6,109 +6,103 @@
         $can_update = auth_can(h_prefix('update'));
         $can_delete = auth_can(h_prefix('delete'));
     @endphp
-    <div class="row row-sm">
-        <div class="col-lg-12">
-            <div class="card">
-                <div class="card-header d-md-flex flex-row justify-content-between">
-                    <h3 class="card-title">{{ $page_attr['title'] }} Table List</h3>
-                    @if ($can_insert)
-                        <button type="button" class="btn btn-rounded btn-success btn-sm" data-bs-effect="effect-scale"
-                            data-bs-toggle="modal" href="#modal-default" onclick="add()" data-target="#modal-default">
-                            <i class="fas fa-plus"></i> Tambah
-                        </button>
-                    @endif
-                </div>
-                <div class="card-body">
-                    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                        <div class="panel panel-default active mb-2">
-                            <div class="panel-heading " role="tab" id="headingOne1">
-                                <h4 class="panel-title">
-                                    <a role="button" data-bs-toggle="collapse" data-bs-parent="#accordion"
-                                        href="#collapse1" aria-expanded="true" aria-controls="collapse1">
-                                        Filter Data
-                                    </a>
-                                </h4>
-                            </div>
-                            <div id="collapse1" class="panel-collapse collapse" role="tabpanel"
-                                aria-labelledby="headingOne1">
-                                <div class="panel-body">
-                                    <form action="javascript:void(0)" class="ml-md-3 mb-md-3" id="FilterForm">
 
-                                        <div class="form-group float-start me-2" style="min-width: 250px">
-                                            <label for="filter_jenis">Jenis</label>
-                                            <br>
-                                            <select class="form-control" id="filter_jenis" name="filter_jenis"
-                                                style="width: 100%;">
-                                                <option value="" selected>Semua</option>
-                                                @foreach ($jenis as $v)
-                                                    <option value="{{ $v['id'] }}">{{ $v['nama'] }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
+    <div class="card">
+        <div class="card-header d-md-flex flex-row justify-content-between">
+            <h3 class="card-title">{{ $page_attr['title'] }} Table List</h3>
+            @if ($can_insert)
+                <button type="button" class="btn btn-rounded btn-success btn-sm" data-bs-effect="effect-scale"
+                    data-bs-toggle="modal" href="#modal-default" onclick="add()" data-target="#modal-default">
+                    <i class="fas fa-plus"></i> Tambah
+                </button>
+            @endif
+        </div>
+        <div class="card-body">
+            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                <div class="panel panel-default active mb-2">
+                    <div class="panel-heading " role="tab" id="headingOne1">
+                        <h4 class="panel-title">
+                            <a role="button" data-bs-toggle="collapse" data-bs-parent="#accordion" href="#collapse1"
+                                aria-expanded="true" aria-controls="collapse1">
+                                Filter Data
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapse1" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne1">
+                        <div class="panel-body">
+                            <form action="javascript:void(0)" class="ml-md-3 mb-md-3" id="FilterForm">
 
-                                        <div class="form-group float-start me-2" style="min-width: 250px">
-                                            <label for="filter_satuan">Satuan</label>
-                                            <br>
-                                            <select class="form-control" id="filter_satuan" name="filter_satuan"
-                                                style="width: 100%;">
-                                                <option value="" selected>Semua</option>
-                                                @foreach ($satuan as $v)
-                                                    <option value="{{ $v['id'] }}">{{ $v['nama'] }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-
-                                        <div class="form-group float-start me-2" style="min-width: 250px">
-                                            <label for="created_by">Dibuat Oleh</label>
-                                            <br>
-                                            <select class="form-control" id="created_by" name="created_by"
-                                                style="width: 100%;">
-                                                <option value="" selected>Semua</option>
-                                            </select>
-                                        </div>
-
-                                        <div class="form-group float-start me-2" style="min-width: 250px">
-                                            <label for="updated_by">Diubah Oleh</label>
-                                            <br>
-                                            <select class="form-control" id="updated_by" name="updated_by"
-                                                style="width: 100%;">
-                                                <option value="" selected>Semua</option>
-                                            </select>
-                                        </div>
-
-                                    </form>
-                                    <div style="clear: both"></div>
-                                    <button type="submit" form="FilterForm" class="btn btn-rounded btn-md btn-info"
-                                        data-toggle="tooltip" title="Refresh Filter Table">
-                                        <i class="bi bi-arrow-repeat"></i> Terapkan filter
-                                    </button>
+                                <div class="form-group float-start me-2" style="min-width: 250px">
+                                    <label for="filter_jenis">Jenis</label>
+                                    <br>
+                                    <select class="form-control" id="filter_jenis" name="filter_jenis" style="width: 100%;">
+                                        <option value="" selected>Semua</option>
+                                        @foreach ($jenis as $v)
+                                            <option value="{{ $v['id'] }}">{{ $v['nama'] }}
+                                            </option>
+                                        @endforeach
+                                    </select>
                                 </div>
-                            </div>
+
+                                <div class="form-group float-start me-2" style="min-width: 250px">
+                                    <label for="filter_satuan">Satuan</label>
+                                    <br>
+                                    <select class="form-control" id="filter_satuan" name="filter_satuan"
+                                        style="width: 100%;">
+                                        <option value="" selected>Semua</option>
+                                        @foreach ($satuan as $v)
+                                            <option value="{{ $v['id'] }}">{{ $v['nama'] }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div class="form-group float-start me-2" style="min-width: 250px">
+                                    <label for="created_by">Dibuat Oleh</label>
+                                    <br>
+                                    <select class="form-control" id="created_by" name="created_by" style="width: 100%;">
+                                        <option value="" selected>Semua</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group float-start me-2" style="min-width: 250px">
+                                    <label for="updated_by">Diubah Oleh</label>
+                                    <br>
+                                    <select class="form-control" id="updated_by" name="updated_by" style="width: 100%;">
+                                        <option value="" selected>Semua</option>
+                                    </select>
+                                </div>
+
+                            </form>
+                            <div style="clear: both"></div>
+                            <button type="submit" form="FilterForm" class="btn btn-rounded btn-md btn-info"
+                                data-toggle="tooltip" title="Refresh Filter Table">
+                                <i class="bi bi-arrow-repeat"></i> Terapkan filter
+                            </button>
                         </div>
                     </div>
-                    <div class="table-responsive table-striped">
-                        <table class="table table-bordered  border-bottom" id="tbl_main">
-                            <thead>
-                                <tr>
-                                    <th class="text-nowrap text-center">No</th>
-                                    <th class="text-nowrap text-center">Nama</th>
-                                    <th class="text-nowrap text-center">Kode</th>
-                                    <th class="text-nowrap text-center">Jenis</th>
-                                    <th class="text-nowrap text-center">Satuan</th>
-                                    <th class="text-nowrap text-center">Harga</th>
-                                    <th class="text-nowrap text-center">Jumlah</th>
-                                    <th class="text-nowrap text-center">Keterangan</th>
-                                    <th class="text-nowrap text-center">Diubah Oleh</th>
-                                    <th class="text-nowrap text-center">Diubah Tgl.</th>
-                                    {!! $can_delete || $can_update ? '<th>Aksi</th>' : '' !!}
-                                </tr>
-                            </thead>
-                            <tbody> </tbody>
-                        </table>
-                    </div>
                 </div>
+            </div>
+            <div class="table-responsive table-striped">
+                <table class="table table-bordered  border-bottom" id="tbl_main">
+                    <thead>
+                        <tr>
+                            <th class="text-nowrap text-center">No</th>
+                            <th class="text-nowrap text-center">Nama</th>
+                            <th class="text-nowrap text-center">Kode</th>
+                            <th class="text-nowrap text-center">Jenis</th>
+                            <th class="text-nowrap text-center">Satuan</th>
+                            <th class="text-nowrap text-center">Harga</th>
+                            <th class="text-nowrap text-center">Jumlah</th>
+                            <th class="text-nowrap text-center">Keterangan</th>
+                            <th class="text-nowrap text-center">Diubah Oleh</th>
+                            <th class="text-nowrap text-center">Diubah Tgl.</th>
+                            {!! $can_delete || $can_update ? '<th>Aksi</th>' : '' !!}
+                        </tr>
+                    </thead>
+                    <tbody> </tbody>
+
+                </table>
             </div>
         </div>
     </div>

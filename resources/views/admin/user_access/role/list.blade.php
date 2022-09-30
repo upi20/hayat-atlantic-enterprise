@@ -2,40 +2,38 @@
 
 @section('content')
     @php
-    $can_insert = auth_can('h_prefix().insert');
-    $can_update = auth_can('h_prefix().update');
-    $can_delete = auth_can('h_prefix().delete');
+        $can_insert = auth_can('h_prefix().insert');
+        $can_update = auth_can('h_prefix().update');
+        $can_delete = auth_can('h_prefix().delete');
     @endphp
     <!-- Row -->
-    <div class="row row-sm">
-        <div class="col-lg-12">
-            <div class="card">
-                <div class="card-header d-md-flex flex-row justify-content-between">
-                    <h3 class="card-title">Permission Table</h3>
-                    @if ($can_insert)
-                        <a type="button" class="btn btn-rounded btn-success btn-sm" href="{{ route(h_prefix('create')) }}">
-                            <i class="fas fa-plus"></i> Add
-                        </a>
-                    @endif
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive table-striped">
-                        <table class="table table-bordered text-nowrap border-bottom" id="tbl_main">
-                            <thead>
-                                <tr>
-                                    <th>No</th>
-                                    <th>Name</th>
-                                    <th>Guard</th>
-                                    <th>Updated At</th>
-                                    @if ($can_update || $can_delete)
-                                        <th>Action</th>
-                                    @endif
-                                </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
-                    </div>
-                </div>
+
+    <div class="card">
+        <div class="card-header d-md-flex flex-row justify-content-between">
+            <h3 class="card-title">Permission Table</h3>
+            @if ($can_insert)
+                <a type="button" class="btn btn-rounded btn-success btn-sm" href="{{ route(h_prefix('create')) }}">
+                    <i class="fas fa-plus"></i> Add
+                </a>
+            @endif
+        </div>
+        <div class="card-body">
+            <div class="table-responsive table-striped">
+                <table class="table table-bordered text-nowrap border-bottom" id="tbl_main">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Name</th>
+                            <th>Guard</th>
+                            <th>Updated At</th>
+                            @if ($can_update || $can_delete)
+                                <th>Action</th>
+                            @endif
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+
+                </table>
             </div>
         </div>
     </div>

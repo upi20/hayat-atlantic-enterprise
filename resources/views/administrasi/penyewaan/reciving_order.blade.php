@@ -9,201 +9,194 @@
         $can_barang_update = auth_can(h_prefix('barang.update', $pre));
         $can_barang_delete = auth_can(h_prefix('barang.delete', $pre));
     @endphp
-    <div class="row row-sm">
-        <div class="col-lg-12">
-            <div class="card">
-                <div class="card-header d-md-flex flex-row justify-content-between">
-                    <h3 class="card-title">Detail Reciving Order</h3>
 
-                    <button type="submit" form="MainForm" class="btn btn-rounded btn-success btn-sm">
-                        <i class="fas fa-save"></i> Simpan Reciving Order
-                    </button>
-                </div>
-                <div class="card-body">
-                    <form action="javascript:void(0)" id="MainForm" name="MainForm" method="POST"
-                        enctype="multipart/form-data">
-                        <div class="row">
-                            <input type="hidden" name="id" id="id" value="{{ $model->id }}">
-                            <input type="hidden" name="is_edit" id="is_edit" value="{{ $is_edit ? 1 : 0 }}">
-                            <div class="col-12">
-                                <div class="form-group">
-                                    <label class="form-label" for="customer">Customer
-                                        <span class="text-danger">*</span></label>
-                                    <select class="form-control" id="customer" name="customer" style="width: 100%;"
-                                        required>
-                                        @if ($model->customer)
-                                            <option value="{{ $model->customer }}" selected>{{ $model->customer_nama }}
-                                            </option>
-                                        @endif
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label class="form-label" for="tanggal_pakai_dari">Tanggal Pakai Dari
-                                        <span class="text-danger">*</span>
-                                    </label>
-                                    <input type="date" class="form-control" id="tanggal_pakai_dari"
-                                        name="tanggal_pakai_dari" value="{{ $model->tanggal_pakai_dari }}" required="" />
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label class="form-label" for="durasi_pakai">Lama Pakai</label>
-                                    <div class="input-group">
-                                        <input type="number" min="1" class="form-control"
-                                            placeholder="Berapa hari ?" aria-label="Berapa hari ?" id="durasi_pakai"
-                                            name="durasi_pakai" value="{{ $model->durasi_pakai }}"
-                                            aria-describedby="basic-addon1" required="">
-                                        <span class="input-group-text">Hari</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label class="form-label" for="tanggal_pakai_sampai">Tanggal Pakai Sampai
-                                        <span class="text-danger">*</span>
-                                    </label>
-                                    <input type="date" class="form-control" id="tanggal_pakai_sampai"
-                                        name="tanggal_pakai_sampai" value="{{ $model->tanggal_pakai_sampai }}"
-                                        required="" />
-                                </div>
-                            </div>
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label class="form-label" for="tanggal_kirim">Tanggal Kirim
-                                        <span class="text-danger">*</span>
-                                    </label>
-                                    <input type="date" class="form-control" id="tanggal_kirim" name="tanggal_kirim"
-                                        value="{{ $model->tanggal_kirim }}" required="" />
-                                </div>
-                            </div>
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label class="form-label" for="tanggal_order">Tanggal Order
-                                        <span class="text-danger">*</span>
-                                    </label>
-                                    <input type="datetime-local" class="form-control" value="" id="tanggal_order"
-                                        name="tanggal_order" value="" required="" />
-                                </div>
-                            </div>
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label class="form-label" for="kepada">Kepada
-                                        <span class="text-danger">*</span>
-                                    </label>
-                                    <input type="text" class="form-control"id="kepada" name="kepada"
-                                        placeholder="Kepada" value="{{ $model->kepada }}" required="" />
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="form-group">
-                                    <label class="form-label" for="lokasi">Lokasi
-                                        <span class="text-danger">*</span></label>
-                                    <textarea type="text" class="form-control" rows="3" id="lokasi" name="lokasi"
-                                        placeholder="Lokasi untuk pengiriman barang" required="">{{ $model->lokasi }}</textarea>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="form-group">
-                                    <label class="form-label" for="total_harga">Total Harga Penyewaan
-                                        <span id="total_harga_disimpan"></span>
-                                    </label>
-                                    <div class="input-group">
-                                        <span class="input-group-text">Rp.</span>
-                                        <input type="number" min="1" class="form-control"
-                                            placeholder="Total Harga Penyewaan" aria-label="Total Harga Penyewaan"
-                                            id="total_harga_head" name="total_harga" value="{{ $model->total_harga }}"
-                                            aria-describedby="basic-addon1" required="">
-                                    </div>
-                                    <small id="total_harga_terbilang" class="fst-italic"></small>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
+    <div class="card">
+        <div class="card-header d-md-flex flex-row justify-content-between">
+            <h3 class="card-title">Detail Reciving Order</h3>
+
+            <button type="submit" form="MainForm" class="btn btn-rounded btn-success btn-sm">
+                <i class="fas fa-save"></i> Simpan Reciving Order
+            </button>
         </div>
-    </div>
-
-    <div class="row row-sm">
-        <div class="col-lg-12">
-            <div class="card">
-                <div class="card-header d-md-flex flex-row justify-content-between">
-                    <h3 class="card-title">{{ $page_attr['title'] }} Barang
-                        <span id="total"></span>
-                    </h3>
-                    @if ($can_barang_insert)
-                        <button type="button" class="btn btn-rounded btn-success btn-sm" data-bs-effect="effect-scale"
-                            data-bs-toggle="modal" href="#modal-default" onclick="add()" data-target="#modal-default">
-                            <i class="fas fa-plus"></i> Tambah
-                        </button>
-                    @endif
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive table-striped">
-                        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                            <div class="panel panel-default active mb-2">
-                                <div class="panel-heading " role="tab" id="headingOne1">
-                                    <h4 class="panel-title">
-                                        <a role="button" data-bs-toggle="collapse" data-bs-parent="#accordion"
-                                            href="#collapse1" aria-expanded="true" aria-controls="collapse1">
-                                            Filter Data
-                                        </a>
-                                    </h4>
-                                </div>
-                                <div id="collapse1" class="panel-collapse collapse" role="tabpanel"
-                                    aria-labelledby="headingOne1">
-                                    <div class="panel-body">
-                                        <form action="javascript:void(0)" class="ml-md-3 mb-md-3" id="FilterForm">
-
-                                            <div class="form-group float-start me-2" style="min-width: 300px">
-                                                <label for="created_by">Dibuat Oleh</label>
-                                                <br>
-                                                <select class="form-control" id="created_by" name="created_by"
-                                                    style="width: 100%;">
-                                                    <option value="" selected>Semua</option>
-                                                </select>
-                                            </div>
-
-                                            <div class="form-group float-start me-2" style="min-width: 300px">
-                                                <label for="updated_by">Diubah Oleh</label>
-                                                <br>
-                                                <select class="form-control" id="updated_by" name="updated_by"
-                                                    style="width: 100%;">
-                                                    <option value="" selected>Semua</option>
-                                                </select>
-                                            </div>
-
-                                        </form>
-                                        <div style="clear: both"></div>
-                                        <button type="submit" form="FilterForm" class="btn btn-rounded btn-md btn-info"
-                                            data-toggle="tooltip" title="Refresh Filter Table">
-                                            <i class="bi bi-arrow-repeat"></i> Terapkan filter
-                                        </button>
-                                    </div>
-                                </div>
+        <div class="card-body">
+            <form action="javascript:void(0)" id="MainForm" name="MainForm" method="POST" enctype="multipart/form-data">
+                <div class="row">
+                    <input type="hidden" name="id" id="id" value="{{ $model->id }}">
+                    <input type="hidden" name="is_edit" id="is_edit" value="{{ $is_edit ? 1 : 0 }}">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label class="form-label" for="customer">Customer
+                                <span class="text-danger">*</span></label>
+                            <select class="form-control" id="customer" name="customer" style="width: 100%;" required>
+                                @if ($model->customer)
+                                    <option value="{{ $model->customer }}" selected>{{ $model->customer_nama }}
+                                    </option>
+                                @endif
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="form-label" for="tanggal_pakai_dari">Tanggal Pakai Dari
+                                <span class="text-danger">*</span>
+                            </label>
+                            <input type="date" class="form-control" id="tanggal_pakai_dari" name="tanggal_pakai_dari"
+                                value="{{ $model->tanggal_pakai_dari }}" required="" />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="form-label" for="durasi_pakai">Lama Pakai</label>
+                            <div class="input-group">
+                                <input type="number" min="1" class="form-control" placeholder="Berapa hari ?"
+                                    aria-label="Berapa hari ?" id="durasi_pakai" name="durasi_pakai"
+                                    value="{{ $model->durasi_pakai }}" aria-describedby="basic-addon1" required="">
+                                <span class="input-group-text">Hari</span>
                             </div>
                         </div>
-                        <table class="table table-bordered  border-bottom" id="tbl_main">
-                            <thead>
-                                <tr>
-                                    <th>No</th>
-                                    <th>Brg. Kode</th>
-                                    <th>Barang (QTY)</th>
-                                    <th>Qty</th>
-                                    <th>Harga</th>
-                                    <th>Total Harga</th>
-                                    <th>Keterangan</th>
-                                    <th>Diubah Oleh</th>
-                                    <th>Diubah Tgl.</th>
-                                    {!! $can_barang_delete || $can_barang_update ? '<th>Aksi</th>' : '' !!}
-                                </tr>
-                            </thead>
-                            <tbody> </tbody>
-                        </table>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="form-label" for="tanggal_pakai_sampai">Tanggal Pakai Sampai
+                                <span class="text-danger">*</span>
+                            </label>
+                            <input type="date" class="form-control" id="tanggal_pakai_sampai" name="tanggal_pakai_sampai"
+                                value="{{ $model->tanggal_pakai_sampai }}" required="" />
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label class="form-label" for="tanggal_kirim">Tanggal Kirim
+                                <span class="text-danger">*</span>
+                            </label>
+                            <input type="date" class="form-control" id="tanggal_kirim" name="tanggal_kirim"
+                                value="{{ $model->tanggal_kirim }}" required="" />
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label class="form-label" for="tanggal_order">Tanggal Order
+                                <span class="text-danger">*</span>
+                            </label>
+                            <input type="datetime-local" class="form-control" value="" id="tanggal_order"
+                                name="tanggal_order" value="" required="" />
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label class="form-label" for="kepada">Kepada
+                                <span class="text-danger">*</span>
+                            </label>
+                            <input type="text" class="form-control"id="kepada" name="kepada" placeholder="Kepada"
+                                value="{{ $model->kepada }}" required="" />
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label class="form-label" for="lokasi">Lokasi
+                                <span class="text-danger">*</span></label>
+                            <textarea type="text" class="form-control" rows="3" id="lokasi" name="lokasi"
+                                placeholder="Lokasi untuk pengiriman barang" required="">{{ $model->lokasi }}</textarea>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label class="form-label" for="total_harga">Total Harga Penyewaan
+                                <span id="total_harga_disimpan"></span>
+                            </label>
+                            <div class="input-group">
+                                <span class="input-group-text">Rp.</span>
+                                <input type="number" min="1" class="form-control"
+                                    placeholder="Total Harga Penyewaan" aria-label="Total Harga Penyewaan"
+                                    id="total_harga_head" name="total_harga" value="{{ $model->total_harga }}"
+                                    aria-describedby="basic-addon1" required="">
+                            </div>
+                            <small id="total_harga_terbilang" class="fst-italic"></small>
+                        </div>
                     </div>
                 </div>
+            </form>
+        </div>
+    </div>
+    </div>
+    </div>
+
+
+    <div class="card">
+        <div class="card-header d-md-flex flex-row justify-content-between">
+            <h3 class="card-title">{{ $page_attr['title'] }} Barang
+                <span id="total"></span>
+            </h3>
+            @if ($can_barang_insert)
+                <button type="button" class="btn btn-rounded btn-success btn-sm" data-bs-effect="effect-scale"
+                    data-bs-toggle="modal" href="#modal-default" onclick="add()" data-target="#modal-default">
+                    <i class="fas fa-plus"></i> Tambah
+                </button>
+            @endif
+        </div>
+        <div class="card-body">
+            <div class="table-responsive table-striped">
+                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                    <div class="panel panel-default active mb-2">
+                        <div class="panel-heading " role="tab" id="headingOne1">
+                            <h4 class="panel-title">
+                                <a role="button" data-bs-toggle="collapse" data-bs-parent="#accordion"
+                                    href="#collapse1" aria-expanded="true" aria-controls="collapse1">
+                                    Filter Data
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapse1" class="panel-collapse collapse" role="tabpanel"
+                            aria-labelledby="headingOne1">
+                            <div class="panel-body">
+                                <form action="javascript:void(0)" class="ml-md-3 mb-md-3" id="FilterForm">
+
+                                    <div class="form-group float-start me-2" style="min-width: 300px">
+                                        <label for="created_by">Dibuat Oleh</label>
+                                        <br>
+                                        <select class="form-control" id="created_by" name="created_by"
+                                            style="width: 100%;">
+                                            <option value="" selected>Semua</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group float-start me-2" style="min-width: 300px">
+                                        <label for="updated_by">Diubah Oleh</label>
+                                        <br>
+                                        <select class="form-control" id="updated_by" name="updated_by"
+                                            style="width: 100%;">
+                                            <option value="" selected>Semua</option>
+                                        </select>
+                                    </div>
+
+                                </form>
+                                <div style="clear: both"></div>
+                                <button type="submit" form="FilterForm" class="btn btn-rounded btn-md btn-info"
+                                    data-toggle="tooltip" title="Refresh Filter Table">
+                                    <i class="bi bi-arrow-repeat"></i> Terapkan filter
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <table class="table table-bordered  border-bottom" id="tbl_main">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Brg. Kode</th>
+                            <th>Barang (QTY)</th>
+                            <th>Qty</th>
+                            <th>Harga</th>
+                            <th>Total Harga</th>
+                            <th>Keterangan</th>
+                            <th>Diubah Oleh</th>
+                            <th>Diubah Tgl.</th>
+                            {!! $can_barang_delete || $can_barang_update ? '<th>Aksi</th>' : '' !!}
+                        </tr>
+                    </thead>
+                    <tbody> </tbody>
+
+                </table>
             </div>
         </div>
     </div>
