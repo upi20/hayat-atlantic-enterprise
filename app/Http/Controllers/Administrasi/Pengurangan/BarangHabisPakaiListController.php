@@ -31,8 +31,9 @@ class BarangHabisPakaiListController extends Controller
         $page_attr = [
             'title' => 'Data Pengurangan Barang Habis Pakai',
             'breadcrumbs' => [
-                ['name' => 'Pengurangan Barang'],
-                ['name' => 'List Barang', 'url' => h_prefix(null, 2)],
+                ['name' => 'Dashboard'],
+                ['name' => 'Pengurangan'],
+                ['name' => 'Barang Habis Pakai', 'url' => h_prefix(null, 2)],
             ],
             'navigation' => h_prefix(null, 2)
         ];

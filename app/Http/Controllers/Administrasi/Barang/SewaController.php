@@ -32,7 +32,10 @@ class SewaController extends Controller
         $jenis = Jenis::all();
         $satuan = Satuan::all();
         $page_attr = [
-            'title' => 'Barang Sewa'
+            'title' => 'Barang Sewa',
+            'breadcrumbs' => [
+                ['name' => 'Dashboard'],
+            ]
         ];
         return view('administrasi.barang.sewa', compact('page_attr', 'jenis', 'satuan'));
     }

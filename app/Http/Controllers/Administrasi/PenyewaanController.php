@@ -46,7 +46,10 @@ class PenyewaanController extends Controller
         }
 
         $page_attr = [
-            'title' => 'Penyewaan'
+            'title' => 'Penyewaan',
+            'breadcrumbs' => [
+                ['name' => 'Dashboard'],
+            ]
         ];
         return view('administrasi.penyewaan.penyewaan', compact('page_attr'));
     }

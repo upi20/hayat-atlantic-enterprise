@@ -28,7 +28,8 @@ class BarangHabisPakaiController extends Controller
         $page_attr = [
             'title' => 'Pengadaan Barang Habis Pakai',
             'breadcrumbs' => [
-                ['name' => 'Pengadaan Barang'],
+                ['name' => 'Dashboard'],
+                ['name' => 'Pengadaan'],
             ]
         ];
         return view('administrasi.pengadaan.barang_habis_pakai', compact('page_attr'));

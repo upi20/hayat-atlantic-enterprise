@@ -32,7 +32,10 @@ class HabisPakaiController extends Controller
         $jenis = Jenis::all();
         $satuan = Satuan::all();
         $page_attr = [
-            'title' => 'Barang HabisPakai'
+            'title' => 'Barang HabisPakai',
+            'breadcrumbs' => [
+                ['name' => 'Dashboard'],
+            ]
         ];
         return view('administrasi.barang.habis_pakai', compact('page_attr', 'jenis', 'satuan'));
     }

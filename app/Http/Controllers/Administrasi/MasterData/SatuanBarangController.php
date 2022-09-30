@@ -25,6 +25,7 @@ class SatuanBarangController extends Controller
         $page_attr = [
             'title' => 'Satuan Barang',
             'breadcrumbs' => [
+                ['name' => 'Dashboard'],
                 ['name' => 'Master Data'],
             ]
         ];

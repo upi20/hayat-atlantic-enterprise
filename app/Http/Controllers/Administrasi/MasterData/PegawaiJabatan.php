@@ -21,6 +21,7 @@ class PegawaiJabatan extends Controller
         $page_attr = [
             'title' => 'Jabatan Pegawai',
             'breadcrumbs' => [
+                ['name' => 'Dashboard'],
                 ['name' => 'Master Data'],
             ]
         ];

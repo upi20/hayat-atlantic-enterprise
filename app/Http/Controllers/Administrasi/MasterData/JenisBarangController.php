@@ -26,6 +26,7 @@ class JenisBarangController extends Controller
         $page_attr = [
             'title' => 'Jenis Barang',
             'breadcrumbs' => [
+                ['name' => 'Dashboard'],
                 ['name' => 'Master Data'],
             ]
         ];

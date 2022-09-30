@@ -28,7 +28,8 @@ class BarangSewaController extends Controller
         $page_attr = [
             'title' => 'Pengadaan Barang Sewa',
             'breadcrumbs' => [
-                ['name' => 'Pengadaan Barang'],
+                ['name' => 'Dashboard'],
+                ['name' => 'Pengadaan'],
             ]
         ];
         return view('administrasi.pengadaan.barang_sewa', compact('page_attr'));

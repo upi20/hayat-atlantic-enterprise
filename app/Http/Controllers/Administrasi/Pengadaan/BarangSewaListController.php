@@ -32,8 +32,9 @@ class BarangSewaListController extends Controller
         $page_attr = [
             'title' => 'Data Pengadaan Barang Sewa',
             'breadcrumbs' => [
-                ['name' => 'Pengadaan Barang'],
-                ['name' => 'List Barang', 'url' => h_prefix(null, 2)],
+                ['name' => 'Dashboard'],
+                ['name' => 'Pengadaan'],
+                ['name' => 'Barang Sewa', 'url' => h_prefix(null, 2)],
             ],
             'navigation' => h_prefix(null, 2)
         ];

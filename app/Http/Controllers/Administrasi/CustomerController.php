@@ -25,7 +25,10 @@ class CustomerController extends Controller
             return $this->datatable($request);
         }
         $page_attr = [
-            'title' => 'Customer'
+            'title' => 'Customer',
+            'breadcrumbs' => [
+                ['name' => 'Dashboard'],
+            ]
         ];
         return view('administrasi.customer', compact('page_attr'));
     }

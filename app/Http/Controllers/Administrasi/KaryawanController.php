@@ -30,7 +30,10 @@ class KaryawanController extends Controller
 
         $user_role = Role::where('id', '<>', 1)->get();
         $page_attr = [
-            'title' => 'Karyawan'
+            'title' => 'Karyawan',
+            'breadcrumbs' => [
+                ['name' => 'Dashboard'],
+            ]
         ];
         return view('administrasi.karyawan', compact('page_attr', 'user_role'));
     }
