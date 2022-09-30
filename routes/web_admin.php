@@ -46,6 +46,7 @@ use App\Http\Controllers\Admin\Utility\NotifDepanAtasController;
 // Administrasi =======================================================================================================
 use App\Http\Controllers\Administrasi\KaryawanController;
 use App\Http\Controllers\Administrasi\CustomerController;
+use App\Http\Controllers\Administrasi\PenyewaanController;
 
 // Data Master ========================================================================================================
 use App\Http\Controllers\Administrasi\MasterData\JenisBarangController;
@@ -67,6 +68,7 @@ use App\Http\Controllers\Administrasi\Pengurangan\BarangSewaController as Pengur
 use App\Http\Controllers\Administrasi\Pengurangan\BarangSewaListController as PenguranganBarangSewaListController;
 use App\Http\Controllers\Administrasi\Pengurangan\BarangHabisPakaiController as PenguranganBarangHabisPakaiController;
 use App\Http\Controllers\Administrasi\Pengurangan\BarangHabisPakaiListController as PenguranganBarangHabisPakaiListController;
+
 
 $name = 'admin';
 $prefix = 'dashboard';
@@ -553,4 +555,33 @@ Route::controller(CustomerController::class)->prefix($prefix)->group(function ()
     Route::delete('/{model}', 'delete')->name("$name.delete")->middleware("permission:$name.delete");
     Route::get('/find', 'find')->name("$name.find")->middleware("permission:$name.update");
     Route::post('/update', 'update')->name("$name.update")->middleware("permission:$name.update");
+});
+
+$prefix = "penyewaan";
+Route::prefix($prefix)->controller(PenyewaanController::class)->group(function () use ($name, $prefix) {
+    $name = "$name.$prefix"; // admin.penyewaan
+    // header
+    Route::get('/', 'index')->name($name)->middleware("permission:$name");
+    Route::get('/customer_select2', 'customer_select2')->name("$name.customer_select2")->middleware("permission:$name");
+    Route::get('/detail', 'detail')->name("$name.detail")->middleware("permission:$name");
+    Route::delete('/{model}', 'delete')->name("$name.delete")->middleware("permission:$name.delete");
+
+    $prefix = "reciving_order";
+    Route::prefix($prefix)->group(function () use ($name, $prefix) {
+        $name = "$name.$prefix"; // admin.penyewaan.reciving_order
+        Route::get('/', 'reciving_order')->name($name)->middleware("permission:$name.insert");
+        Route::post('/save', 'save')->name("$name.save")->middleware("permission:$name.update|$name.update");
+        Route::get('/barang_select2', 'barang_select2')->name("$name.barang_select2")->middleware("permission:$name.update|$name.update");
+        Route::get('/{model}', 'reciving_order_update')->name("$name.update")->middleware("permission:$name.update");
+
+        $prefix = "barang";
+        Route::prefix($prefix)->group(function () use ($name, $prefix) {
+            $name = "$name.$prefix"; // admin.penyewaan.reciving_order.barang
+            Route::get('/', 'reciving_order_barang')->name($name)->middleware("permission:$name");
+            Route::post('/insert', 'reciving_order_barang_insert')->name("$name.insert")->middleware("permission:$name.insert");
+            Route::post('/update', 'reciving_order_barang_update')->name("$name.update")->middleware("permission:$name.update");
+            Route::get('/find', 'reciving_order_barang_find')->name("$name.find")->middleware("permission:$name.update");
+            Route::delete('/{model}', 'reciving_order_barang_delete')->name("$name.delete")->middleware("permission:$name.delete");
+        });
+    });
 });

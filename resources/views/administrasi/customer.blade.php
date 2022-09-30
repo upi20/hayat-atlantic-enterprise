@@ -97,8 +97,8 @@
                         <input type="hidden" name="id" id="id">
                         <div class="form-group">
                             <label class="form-label" for="nama">Nama <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="nama" name="nama"
-                                placeholder="Nama Jenis" required="" />
+                            <input type="text" class="form-control" id="nama" name="nama" placeholder="Nama"
+                                required="" />
                         </div>
 
                         <div class="form-group">
@@ -258,7 +258,7 @@
                     }] : []),
                 ],
                 order: [
-                    [2, 'asc']
+                    [1, 'asc']
                 ]
             });
 

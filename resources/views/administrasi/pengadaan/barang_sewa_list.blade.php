@@ -187,6 +187,7 @@
         let isEdit = true;
         let qty_total = 0;
         let qty_total_edit = 0;
+        let harga_edit = 0;
         let qty_total_edit_id = 0;
         $(document).ready(function() {
             $('#created_by').select2({
@@ -232,7 +233,11 @@
             }).on('select2:select', function(e) {
                 const data = e.params.data;
                 $('.satuan').html(data.satuan);
-                $('#harga').val(data.harga);
+
+                const harga = (isEdit && data.id == qty_total_edit_id) ? harga_edit : data
+                    .harga;
+                $('#harga').val(harga);
+
                 qty_total = (isEdit && data.id == qty_total_edit_id) ? qty_total_edit : data
                     .barang_qty_total;
                 refresh_total();
@@ -454,6 +459,7 @@
                     qty_total = data.barang_qty_total - data.qty;
                     qty_total_edit = data.barang_qty_total - data.qty;
                     qty_total_edit_id = data.barang_id;
+                    harga_edit = data.harga;
 
                     $('#id').val(data.id);
                     $('.satuan').html(data.satuan);

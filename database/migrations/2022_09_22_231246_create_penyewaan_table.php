@@ -17,11 +17,14 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('customer', false, true)->nullable()->default(null);
             $table->text('lokasi')->nullable()->default(null);
+            $table->date('tanggal_kirim')->nullable()->default(null);
             $table->date('tanggal_pakai_dari')->nullable()->default(null);
             $table->date('tanggal_pakai_sampai')->nullable()->default(null);
             $table->string('kepada')->nullable()->default(null);
             $table->dateTime('tanggal_order')->nullable()->default(null);
-            $table->boolean('status')->nullable()->default(1)->comment("1 Faktur penyewaan dibuat, 2 Barang dipilih, 3 Barang Disiapkan Oleh Warehouse, 4 Barang Diabil Oleh delevery, 5 barang dikembalikan oleh delever");
+            $table->boolean('status')->nullable()->default(1)->comment("1 = Penyewaan Dibuat, 2 = Faktur Dibuat, 3 = Barang Diambil, 4 = Barang Dikembalikan, 5 = Selesai");
+            $table->bigInteger('total_harga', false, true)->default(0);
+            $table->bigInteger('dibayar', false, true)->default(0);
             $table->boolean('status_pembayaran')->nullable()->default(0)->comment("1 selesai 0 belum");
 
             $table->bigInteger('updated_by', false, true)->nullable()->default(null);

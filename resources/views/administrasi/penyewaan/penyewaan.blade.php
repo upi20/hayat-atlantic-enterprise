@@ -5,16 +5,16 @@
         $can_insert = auth_can(h_prefix('insert'));
         $can_update = auth_can(h_prefix('update'));
         $can_delete = auth_can(h_prefix('delete'));
+        $is_admin = is_admin();
     @endphp
 
     <div class="card">
         <div class="card-header d-md-flex flex-row justify-content-between">
             <h3 class="card-title">{{ $page_attr['title'] }} Table List</h3>
             @if ($can_insert)
-                <button type="button" class="btn btn-rounded btn-success btn-sm" data-bs-effect="effect-scale"
-                    data-bs-toggle="modal" href="#modal-default" onclick="add()" data-target="#modal-default">
-                    <i class="fas fa-plus"></i> Tambah
-                </button>
+                <a class="btn btn-rounded btn-success btn-sm" href="{{ route('admin.penyewaan.reciving_order') }}">
+                    <i class="fas fa-plus"></i> Reciving Order
+                </a>
             @endif
         </div>
         <div class="card-body">
@@ -31,6 +31,37 @@
                     <div id="collapse1" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne1">
                         <div class="panel-body">
                             <form action="javascript:void(0)" class="ml-md-3 mb-md-3" id="FilterForm">
+                                <div class="form-group float-start me-2" style="min-width: 300px">
+                                    <label for="filter_status_pembayaran">Status Pembayaran</label>
+                                    <br>
+                                    <select class="form-control" id="filter_status_pembayaran"
+                                        name="filter_status_pembayaran" style="width: 100%;">
+                                        <option value="" selected>Semua</option>
+                                        <option value="1">Lunas</option>
+                                        <option value="2">Belum Lunas</option>
+                                    </select>
+                                </div>
+                                <div class="form-group float-start me-2" style="min-width: 300px">
+                                    <label for="filter_status">Status Penyewaan</label>
+                                    <br>
+                                    <select class="form-control" id="filter_status" name="filter_status"
+                                        style="width: 100%;">
+                                        <option value="" selected>Semua</option>
+                                        <option value="1">Penyewaan Dibuat</option>
+                                        <option value="2">Faktur Dibuat</option>
+                                        <option value="3">Barang Diambil</option>
+                                        <option value="4">Barang Dikembalikan</option>
+                                        <option value="5">Selesai</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group float-start me-2" style="min-width: 300px">
+                                    <label for="customer">Customer</label>
+                                    <br>
+                                    <select class="form-control" id="customer" name="customer" style="width: 100%;">
+                                        <option value="" selected>Semua</option>
+                                    </select>
+                                </div>
 
                                 <div class="form-group float-start me-2" style="min-width: 300px">
                                     <label for="created_by">Dibuat Oleh</label>
@@ -63,9 +94,17 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Nama</th>
-                            <th>Kode</th>
-                            <th>Keterangan</th>
+                            <th>Detail</th>
+                            <th>Customer</th>
+                            <th>Lokasi</th>
+                            <th>Tanggal Order</th>
+                            <th>Tanggal Kirim</th>
+                            <th>Tanggal Pakai</th>
+                            <th>Total Harga</th>
+                            <th>Dibayar</th>
+                            <th>Sisa</th>
+                            <th>Status Pembayaran</th>
+                            <th>Status</th>
                             <th>Diubah Oleh</th>
                             <th>Diubah Tgl.</th>
                             {!! $can_delete || $can_update ? '<th>Aksi</th>' : '' !!}
@@ -76,41 +115,18 @@
             </div>
         </div>
     </div>
-    <!-- End Row -->
+
     <div class="modal fade" id="modal-default">
-        <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content modal-content-demo">
                 <div class="modal-header">
-                    <h6 class="modal-title" id="modal-default-title"></h6><button aria-label="Tutup" class="btn-close"
-                        data-bs-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+                    <h6 class="modal-title" id="modal-default-title">Detail Penyewaan</h6><button aria-label="Tutup"
+                        class="btn-close" data-bs-dismiss="modal"><span aria-hidden="true">&times;</span></button>
                 </div>
                 <div class="modal-body">
-                    <form action="javascript:void(0)" id="MainForm" name="MainForm" method="POST"
-                        enctype="multipart/form-data">
-                        <input type="hidden" name="id" id="id">
-                        <div class="form-group">
-                            <label class="form-label" for="nama">Nama <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="nama" name="nama" placeholder="Nama"
-                                required="" />
-                        </div>
 
-                        <div class="form-group">
-                            <label class="form-label" for="kode">Kode <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="kode" name="kode" placeholder="Kode"
-                                required="" />
-                        </div>
-
-                        <div class="form-group">
-                            <label class="form-label" for="keterangan">Keterangan</label>
-                            <textarea type="text" class="form-control" rows="3" id="keterangan" name="keterangan"
-                                placeholder="Keterangan"> </textarea>
-                        </div>
-                    </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary" id="btn-save" form="MainForm">
-                        <li class="fas fa-save mr-1"></li> Simpan
-                    </button>
                     <button class="btn btn-light" data-bs-dismiss="modal">
                         <i class="fas fa-times"></i>
                         Tutup
@@ -138,6 +154,7 @@
     <script>
         const can_update = {{ $can_update ? 'true' : 'false' }};
         const can_delete = {{ $can_delete ? 'true' : 'false' }};
+        const is_admin = {{ $is_admin ? 'true' : 'false' }};
         const table_html = $('#tbl_main');
         let isEdit = true;
         $(document).ready(function() {
@@ -171,13 +188,23 @@
                     }
                 }
             });
+            $('#customer').select2({
+                ajax: {
+                    url: "{{ route(h_prefix('customer_select2')) }}",
+                    type: "GET",
+                    data: function(params) {
+                        var query = {
+                            search: params.term,
+                            semua: 1
+                        }
+                        return query;
+                    }
+                },
+            })
+            $('#filter_status').select2();
+            $('#filter_status_pembayaran').select2();
 
             // datatable ====================================================================================
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
             const new_table = table_html.DataTable({
                 searchDelay: 500,
                 processing: true,
@@ -192,53 +219,137 @@
                     data: function(d) {
                         d['filter[updated_by]'] = $('#updated_by').val();
                         d['filter[created_by]'] = $('#created_by').val();
+                        d['filter[customer]'] = $('#customer').val();
+                        d['filter[status]'] = $('#filter_status').val();
+                        d['filter[status_pembayaran]'] = $('#filter_status_pembayaran').val();
                     }
                 },
                 columns: [{
                         data: null,
                         name: 'id',
                         orderable: false,
+                    }, {
+                        data: 'id',
+                        name: 'id',
+                        render(data, type, full, meta) {
+                            return `<button type="button" class="btn btn-rounded btn-info btn-sm me-1" title="Detail Data" onClick="detailFunc('${data}')">
+                                <i class="fas fa-file-alt"></i> Lihat
+                                </button>`;
+                        },
+                        orderable: false,
                     },
                     {
-                        data: 'nama',
-                        name: 'nama'
+                        data: 'customer_nama',
+                        name: 'customer_nama',
+                        className: 'text-nowrap'
                     },
                     {
-                        data: 'kode',
-                        name: 'kode'
+                        data: 'lokasi',
+                        name: 'lokasi',
+                        className: 'text-nowrap'
                     },
                     {
-                        data: 'keterangan',
-                        name: 'keterangan'
+                        data: 'tanggal_order_str',
+                        name: 'tanggal_order_str',
+                        className: 'text-nowrap'
+                    },
+                    {
+                        data: 'tanggal_kirim_str',
+                        name: 'tanggal_kirim_str',
+                        className: 'text-nowrap'
+                    },
+                    {
+                        data: 'tanggal_pakai_dari_str',
+                        name: 'tanggal_pakai_dari_str',
+                        render(data, type, full, meta) {
+                            if (data == full.tanggal_pakai_sampai_str) {
+                                return data;
+                            } else {
+                                return `${data ?? ''} s/d ${full.tanggal_pakai_sampai_str ?? ''}`;
+                            }
+                        },
+                        className: 'text-nowrap'
+                    },
+
+                    {
+                        data: 'total_harga',
+                        name: 'total_harga',
+                        render(data, type, full, meta) {
+                            return 'Rp. ' + format_rupiah(data);
+                        },
+                        className: 'text-nowrap text-right'
+                    },
+                    {
+                        data: 'dibayar',
+                        name: 'dibayar',
+                        render(data, type, full, meta) {
+                            return 'Rp. ' + format_rupiah(data);
+                        },
+                        className: 'text-nowrap text-right'
+                    },
+                    {
+                        data: 'sisa',
+                        name: 'sisa',
+                        render(data, type, full, meta) {
+                            return 'Rp. ' + format_rupiah(data);
+                        },
+                        className: 'text-nowrap text-right'
+                    },
+                    {
+                        data: 'status_pembayaran_str',
+                        name: 'status_pembayaran_str',
+                        render(data, type, full, meta) {
+                            return `<span class="badge bg-${full.status_pembayaran == 1 ? 'sucess':'danger'}">${data}</span>`;
+                        },
+                        className: 'text-nowrap'
+                    },
+                    {
+                        data: 'status',
+                        name: 'status_str',
+                        render(data, type, full, meta) {
+                            const statusClass = (status) => {
+                                if (status == 1) return 'bg-primary';
+                                else if (status == 2) return 'bg-info';
+                                else if (status == 3) return 'bg-secondary';
+                                else if (status == 4) return 'bg-warning';
+                                else if (status == 5) return 'bg-success';
+                                else return 'bg-danger';
+                            }
+                            return `<span class="badge ${statusClass(data)}">${full.status_str}</span>`;
+                        },
+                        className: 'text-nowrap'
                     },
                     {
                         data: 'updated_by_str',
                         name: 'updated_by_str',
                         render(data, type, full, meta) {
                             return data ?? full.created_by_str;
-                        }
+                        },
+                        className: 'text-nowrap'
                     },
                     {
                         data: 'updated',
                         name: 'updated',
                         render(data, type, full, meta) {
                             return data ?? full.created;
-                        }
+                        },
+                        className: 'text-nowrap'
                     },
-                    ...(can_update || can_delete ? [{
+                    ...((can_update || can_delete || is_admin) ? [{
                         data: 'id',
                         name: 'id',
                         render(data, type, full, meta) {
-                            const btn_update = can_update ? `<button type="button" class="btn btn-rounded btn-primary btn-sm me-1" title="Edit Data" onClick="editFunc('${data}')">
+                            const btn_update = can_update && (full.status == 1 || is_admin) ? `<a href="{{ route('admin.penyewaan.reciving_order') }}/${data}" class="btn btn-rounded btn-primary btn-sm me-1" title="Edit Data">
                                 <i class="fas fa-edit"></i> Ubah
-                                </button>` : '';
-                            const btn_delete = can_delete ? `<button type="button" class="btn btn-rounded btn-danger btn-sm me-1" title="Delete Data" onClick="deleteFunc('${data}')">
+                                </a>` : '';
+                            const btn_delete = can_delete && (full.status == 1 || is_admin) ? `<button type="button" class="btn btn-rounded btn-danger btn-sm me-1" title="Delete Data" onClick="deleteFunc('${data}')">
                                 <i class="fas fa-trash"></i> Hapus
                                 </button>` : '';
                             return btn_update + btn_delete;
                         },
-                        orderable: false
-                    }] : []),
+                        orderable: false,
+                        className: 'text-nowrap'
+                    }] : [])
                 ],
                 order: [
                     [2, 'asc']
@@ -259,110 +370,7 @@
                 var oTable = table_html.dataTable();
                 oTable.fnDraw(false);
             });
-
-
-            // insertForm ===================================================================================
-            $('#MainForm').submit(function(e) {
-                e.preventDefault();
-                resetErrorAfterInput();
-                var formData = new FormData(this);
-                setBtnLoading('#btn-save', 'Save Changes');
-                const route = ($('#id').val() == '') ?
-                    "{{ route(h_prefix('insert')) }}" :
-                    "{{ route(h_prefix('update')) }}";
-                $.ajax({
-                    type: "POST",
-                    url: route,
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    data: formData,
-                    cache: false,
-                    contentType: false,
-                    processData: false,
-                    success: (data) => {
-                        $("#modal-default").modal('hide');
-                        var oTable = table_html.dataTable();
-                        oTable.fnDraw(false);
-                        Swal.fire({
-                            position: 'center',
-                            icon: 'success',
-                            title: 'Data saved successfully',
-                            showConfirmButton: false,
-                            timer: 1500
-                        })
-
-                    },
-                    error: function(data) {
-                        const res = data.responseJSON ?? {};
-                        errorAfterInput = [];
-                        for (const property in res.errors) {
-                            errorAfterInput.push(property);
-                            setErrorAfterInput(res.errors[property], `#${property}`);
-                        }
-                        Swal.fire({
-                            position: 'top-end',
-                            icon: 'error',
-                            title: res.message ?? 'Something went wrong',
-                            showConfirmButton: false,
-                            timer: 1500
-                        })
-                    },
-                    complete: function() {
-                        setBtnLoading('#btn-save',
-                            '<li class="fas fa-save mr-1"></li> Simpan',
-                            false);
-                    }
-                });
-            });
         });
-
-        function add() {
-            if (!isEdit) return false;
-            $('#MainForm').trigger("reset");
-            $('#modal-default-title').html("Tambah {{ $page_attr['title'] }}");
-            $('#modal-default').modal('show');
-            $('#id').val('');
-            resetErrorAfterInput();
-            isEdit = false;
-            return true;
-        }
-
-        function editFunc(id) {
-            $.LoadingOverlay("show");
-            $.ajax({
-                type: "GET",
-                url: `{{ route(h_prefix('find')) }}`,
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                data: {
-                    id
-                },
-                success: (data) => {
-                    isEdit = true;
-                    $('#modal-default-title').html("Ubah {{ $page_attr['title'] }}");
-                    $('#modal-default').modal('show');
-                    $('#id').val(data.id);
-                    $('#nama').val(data.nama);
-                    $('#kode').val(data.kode);
-                    $('#keterangan').val(data.keterangan);
-                },
-                error: function(data) {
-                    Swal.fire({
-                        position: 'top-end',
-                        icon: 'error',
-                        title: 'Something went wrong',
-                        showConfirmButton: false,
-                        timer: 1500
-                    })
-                },
-                complete: function() {
-                    $.LoadingOverlay("hide");
-                }
-            });
-
-        }
 
         function deleteFunc(id) {
             swal.fire({
@@ -410,6 +418,43 @@
                     });
                 }
             });
+        }
+
+        function detailFunc(id) {
+            $.ajax({
+                method: 'get',
+                url: `{{ route(h_prefix('detail')) }}`,
+                data: {
+                    id: id
+                }
+            }).done((data) => {
+                $('#modal-default').modal('show');
+                console.log(data);
+                //     const table_body = $("#tbl_member_body");
+                //     table_body.html('');
+                //     const element_table = $('#tbl_member');
+                //     $(element_table).dataTable().fnDestroy();
+                //     let table_body_html = '';
+                //     let number = 1;
+                //     data.results.forEach(e => {
+                //         table_body_html += `
+            //     <tr>
+
+            //     </tr>
+            //   `;
+                //     });
+                //     table_body.html(table_body_html);
+                //     renderTable(element_table);
+
+            }).fail(($xhr) => {
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'error',
+                    title: 'Something went wrong, try again later',
+                    showConfirmButton: false,
+                    timer: 3500
+                })
+            })
         }
     </script>
 @endsection

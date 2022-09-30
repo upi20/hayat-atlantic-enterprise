@@ -33,9 +33,8 @@
                                 aria-labelledby="headingOne1">
                                 <div class="panel-body">
                                     <form action="javascript:void(0)" class="ml-md-3 mb-md-3" id="FilterForm">
-
                                         <div class="form-group float-start me-2" style="min-width: 250px">
-                                            <label for="filter_role">Jenis</label>
+                                            <label for="filter_role">Jabatan</label>
                                             <br>
                                             <select class="form-control" id="filter_role" name="filter_role"
                                                 style="width: 100%;">
@@ -57,7 +56,7 @@
                                             </select>
                                         </div>
                                         <div class="form-group float-start me-2" style="min-width: 250px">
-                                            <label for="filter_active">Aktctive</label>
+                                            <label for="filter_active">Aktif</label>
                                             <br>
                                             <select class="form-control" id="filter_active" name="filter_active"
                                                 style="width: 100%;">

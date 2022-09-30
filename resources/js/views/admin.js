@@ -207,3 +207,26 @@ function terbilang(nilai) {
 
     return kalimat.trim();
 }
+
+function renderDataTable(element_table) {
+    const tableUser = $(element_table).DataTable({
+        columnDefs: [{
+            orderable: false,
+            targets: [0]
+        }],
+        // "responsive": true,
+        // "lengthChange": true,
+        // "autoWidth": false,
+        order: [
+            [0, 'asc']
+        ]
+    });
+    tableUser.on('draw.dt', function () {
+        var PageInfo = $(element_table).DataTable().page.info();
+        tableUser.column(0, {
+            page: 'current'
+        }).nodes().each(function (cell, i) {
+            cell.innerHTML = i + 1 + PageInfo.start;
+        });
+    });
+}
