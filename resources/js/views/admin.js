@@ -214,9 +214,10 @@ function renderDataTable(element_table) {
             orderable: false,
             targets: [0]
         }],
-        // "responsive": true,
-        // "lengthChange": true,
-        // "autoWidth": false,
+        responsive: true,
+        scrollX: true,
+        aAutoWidth: false,
+        bAutoWidth: false,
         order: [
             [0, 'asc']
         ]

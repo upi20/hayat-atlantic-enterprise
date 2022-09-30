@@ -118,8 +118,6 @@
             </form>
         </div>
     </div>
-    </div>
-    </div>
 
 
     <div class="card">
@@ -179,12 +177,11 @@
                         </div>
                     </div>
                 </div>
-                <table class="table table-bordered  border-bottom" id="tbl_main">
+                <table class="table table-bordered table-hover border-bottom" id="tbl_main">
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Brg. Kode</th>
-                            <th>Barang (QTY)</th>
+                            <th>Kode | Barang</th>
                             <th>Qty</th>
                             <th>Harga</th>
                             <th>Total Harga</th>
@@ -519,22 +516,16 @@
                         orderable: false,
                     },
                     {
-                        data: 'barang_kode',
-                        name: 'barang_kode',
-                        className: 'text-nowrap',
-                    },
-                    {
                         data: 'barang_nama',
                         name: 'barang_nama',
                         className: 'text-nowrap',
                         render(data, type, full, meta) {
-                            return `${data} (${full.barang_qty_total})`;
+                            return `${full.barang_kode} | ${data}`;
                         },
                     },
                     {
                         data: 'qty',
                         name: 'qty',
-                        className: 'text-nowrap',
                         className: 'text-nowrap text-right'
                     },
                     {
@@ -636,8 +627,8 @@
                             title: 'Data saved successfully',
                             showConfirmButton: false,
                             timer: 1500
-                        })
-
+                        });
+                        isEdit = true;
                     },
                     error: function(data) {
                         const res = data.responseJSON ?? {};

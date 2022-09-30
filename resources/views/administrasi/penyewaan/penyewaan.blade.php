@@ -90,7 +90,7 @@
                 </div>
             </div>
             <div class="table-responsive table-striped">
-                <table class="table table-bordered  border-bottom" id="tbl_main">
+                <table class="table table-bordered table-hover border-bottom" id="tbl_main">
                     <thead>
                         <tr>
                             <th>No</th>
@@ -124,7 +124,36 @@
                         class="btn-close" data-bs-dismiss="modal"><span aria-hidden="true">&times;</span></button>
                 </div>
                 <div class="modal-body">
+                    <h3 class="card-title mb-2">Customer</h3>
+                    <div class="row"id="detail_data_customer">
 
+                    </div>
+                    <hr>
+                    <h3 class="card-title mb-2">Data Penyewaan</h3>
+                    <div class="row" id="detail_data_penyewaan">
+
+                    </div>
+                    <hr>
+                    <h3 class="card-title mb-2">Daftar Barang</h3>
+                    <table class="table table-bordered table-hover border-bottom" id="tbl_detail">
+                        <thead>
+                            <tr>
+                                <th class="text-nowrap">No</th>
+                                <th class="text-nowrap">Kode | Barang</th>
+                                <th class="text-nowrap">Qty</th>
+                                <th class="text-nowrap">Harga</th>
+                                <th class="text-nowrap">Total Harga</th>
+                                <th class="text-nowrap">Keterangan</th>
+                                <th class="text-nowrap">Diubah Oleh</th>
+                                <th class="text-nowrap">Diubah Tgl.</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbl_detail_body">
+
+                        </tbody>
+                    </table>
+                    <hr>
+                    <h3 class="card-title mb-2">Daftar Pembayaran</h3>
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-light" data-bs-dismiss="modal">
@@ -307,14 +336,6 @@
                         data: 'status',
                         name: 'status_str',
                         render(data, type, full, meta) {
-                            const statusClass = (status) => {
-                                if (status == 1) return 'bg-primary';
-                                else if (status == 2) return 'bg-info';
-                                else if (status == 3) return 'bg-secondary';
-                                else if (status == 4) return 'bg-warning';
-                                else if (status == 5) return 'bg-success';
-                                else return 'bg-danger';
-                            }
                             return `<span class="badge ${statusClass(data)}">${full.status_str}</span>`;
                         },
                         className: 'text-nowrap'
@@ -420,6 +441,15 @@
             });
         }
 
+        function statusClass(status) {
+            if (status == 1) return 'bg-primary';
+            else if (status == 2) return 'bg-info';
+            else if (status == 3) return 'bg-secondary';
+            else if (status == 4) return 'bg-warning';
+            else if (status == 5) return 'bg-success';
+            else return 'bg-danger';
+        }
+
         function detailFunc(id) {
             $.ajax({
                 method: 'get',
@@ -429,22 +459,71 @@
                 }
             }).done((data) => {
                 $('#modal-default').modal('show');
-                console.log(data);
-                //     const table_body = $("#tbl_member_body");
-                //     table_body.html('');
-                //     const element_table = $('#tbl_member');
-                //     $(element_table).dataTable().fnDestroy();
-                //     let table_body_html = '';
-                //     let number = 1;
-                //     data.results.forEach(e => {
-                //         table_body_html += `
-            //     <tr>
+                const data_customer = $('#detail_data_customer');
+                const data_penyewaan = $('#detail_data_penyewaan');
+                const table = $('#tbl_detail');
+                const table_body = $('#tbl_detail_body');
 
-            //     </tr>
-            //   `;
-                //     });
-                //     table_body.html(table_body_html);
-                //     renderTable(element_table);
+                // data customer
+                data_customer.html(` <div class="col-md-6">
+                            <p>${data.customer}</p>
+                            <p><i class="fas fa-map-marker-alt me-2"></i>${data.customer_alamat}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><i class="fas fa-phone me-2"></i> ${data.customer_no_telepon}</p>
+                            <p><i class="fab fa-whatsapp me-2"></i> ${data.customer_no_whatsapp}</p>
+                        </div> `);
+
+                // data penyewaan
+                const status_pembayaran =
+                    `<span class="badge bg-${data.status_pembayaran == 1 ? 'sucess':'danger'}">${data.status_pembayaran_str}</span>`;
+                const status_penyewaan =
+                    `<span class="badge ${statusClass(data.status)}">${data.status_str}</span>`;
+
+                const tanggal_pakai = data.tanggal_pakai_dari == data.tanggal_pakai_sampai ? data
+                    .tanggal_pakai_dari :
+                    `${data.tanggal_pakai_dari} s/d ${data.tanggal_pakai_sampai} 
+                    (${data.tanggal_pakai_lama} Hari)`;
+
+                const created_at =
+                    `<div class="col-md-6 mb-2"><span class="fw-bold">Ditambahkan Oleh:</span> <br> ${data.created_by_str} | ${data.created_at_str}</div>`;
+                const updated_at =
+                    `<div class="col-md-6 mb-2"><span class="fw-bold">Diubah Oleh:</span> <br> ${data.updated_by_str} | ${data.updated_at_str}</div>`;
+                const timestamp = created_at + (data.updated_by_str ? updated_at : '')
+
+
+                data_penyewaan.html(`
+                <div class="col-md-6 mb-2"><span class="fw-bold">Tanggal Order:</span> <br> ${data.tanggal_order}</div>
+                <div class="col-md-6 mb-2"><span class="fw-bold">Tanggal Kirim:</span> <br> ${data.tanggal_kirim}</div>
+                <div class="col-md-6 mb-2"><span class="fw-bold">Tanggal Pakai:</span> <br> ${tanggal_pakai}</div>
+                <div class="col-md-6 mb-2"><span class="fw-bold">Kepada, Lokasi:</span> <br> <span class="fw-bold">${data.kepada}</span>, ${data.lokasi}</div>
+                <div class="col-md-6 mb-2"><span class="fw-bold">Status Penyewaan:</span> <br> ${status_pembayaran}</div>
+                <div class="col-md-6 mb-2"><span class="fw-bold">Status Pembyaran:</span> <br> ${status_penyewaan}</div>
+                ${timestamp}
+                `);
+
+
+                // data barang
+                table_body.html('');
+                $(table).dataTable().fnDestroy();
+                let table_body_html = '';
+                let number = 1;
+                data.barangs.forEach(e => {
+                    table_body_html += `
+                            <tr>
+                                <td class="text-nowrap">${number}</td>
+                                <td class="text-nowrap">${e.barang_kode} | ${e.barang_nama}</td>
+                                <td class="text-nowrap text-right">${e.qty}</td>
+                                <td class="text-nowrap text-right">Rp. ${format_rupiah(e.harga)}</td>
+                                <td class="text-nowrap text-right">Rp. ${format_rupiah(e.harga_total)}</td>
+                                <td class="text-nowrap">${e.keterangan ??''}</td>
+                                <td class="text-nowrap">${e.updated_by_str ?? e.created_by_str}</td>
+                                <td class="text-nowrap">${e.updated_at_str ?? e.created_at_str}</td>
+                            </tr>
+                    `;
+                });
+                table_body.html(table_body_html);
+                renderDataTable(table);
 
             }).fail(($xhr) => {
                 Swal.fire({

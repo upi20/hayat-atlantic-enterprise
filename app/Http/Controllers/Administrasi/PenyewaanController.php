@@ -240,7 +240,8 @@ class PenyewaanController extends Controller
     {
         $table = Penyewaan::tableName;
         $t_user = User::tableName;
-        $t_barang = PenyewaanBarang::tableName;
+        $t_penyewaan_barang = PenyewaanBarang::tableName;
+        $t_barang = Sewa::tableName;
         $t_customer = Customer::tableName;
         $t_created_by = 'b';
         $t_updated_by = 'c';
@@ -248,6 +249,7 @@ class PenyewaanController extends Controller
         $model = Penyewaan::select([
             DB::raw("$table.id"),
             DB::raw("$table.lokasi"),
+            DB::raw("$table.kepada"),
             DB::raw("$table.total_harga"),
             DB::raw("($table.total_harga - $table.dibayar) as sisa"),
             DB::raw("$table.dibayar"),
@@ -284,12 +286,21 @@ class PenyewaanController extends Controller
         if (is_null($model)) return abort(404);
         // barang list =================================================================================================
         $barangs = PenyewaanBarang::select([
-            DB::raw("$t_barang.*"),
+            DB::raw("$t_penyewaan_barang.id"),
+            DB::raw("$t_penyewaan_barang.qty"),
+            DB::raw("$t_penyewaan_barang.harga"),
+            DB::raw("($t_penyewaan_barang.harga * $t_penyewaan_barang.qty) as harga_total"),
+            DB::raw("$t_barang.kode as barang_kode"),
+            DB::raw("$t_barang.nama as barang_nama"),
+            DB::raw("date_format($t_penyewaan_barang.created_at,'%d-%b-%Y') as created_at_str"),
+            DB::raw("date_format($t_penyewaan_barang.updated_at,'%d-%b-%Y') as updated_at_str"),
             DB::raw("$t_created_by.name as created_by_str"),
             DB::raw("$t_updated_by.name as updated_by_str"),
-        ])->where('penyewaan', $model->id)
-            ->leftJoin("$t_user as $t_created_by", "$t_created_by.id", '=', "$t_barang.created_by")
-            ->leftJoin("$t_user as $t_updated_by", "$t_updated_by.id", '=', "$t_barang.updated_by")
+        ])
+            ->leftJoin("$t_user as $t_created_by", "$t_created_by.id", '=', "$t_penyewaan_barang.created_by")
+            ->leftJoin("$t_user as $t_updated_by", "$t_updated_by.id", '=', "$t_penyewaan_barang.updated_by")
+            ->leftJoin($t_barang, "$t_barang.id", '=', "$t_penyewaan_barang.barang")
+            ->where('penyewaan', $model->id)
             ->get();
         $model->barangs = $barangs;
 
@@ -521,6 +532,9 @@ class PenyewaanController extends Controller
 
             if ($request->is_edit == 0) {
                 $model->status = 1;
+                $model->created_by = auth()->user()->id;
+            } else {
+                $model->updated_by = auth()->user()->id;
             }
 
             $model->customer = $request->customer;
@@ -531,7 +545,6 @@ class PenyewaanController extends Controller
             $model->tanggal_pakai_sampai = $request->tanggal_pakai_sampai;
             $model->tanggal_order = $request->tanggal_order;
             $model->total_harga = $request->total_harga;
-            $model->created_by = auth()->user()->id;
             $model->save();
 
             return response()->json($model);
