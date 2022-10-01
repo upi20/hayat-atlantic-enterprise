@@ -13,10 +13,14 @@
     <div class="card">
         <div class="card-header d-md-flex flex-row justify-content-between">
             <h3 class="card-title">Detail Reciving Order</h3>
-
-            <button type="submit" form="MainForm" class="btn btn-rounded btn-success btn-sm">
-                <i class="fas fa-save"></i> Simpan Reciving Order
-            </button>
+            <div>
+                <a href="{{ route(h_prefix(null, 2)) }}" class="btn btn-rounded btn-secondary btn-sm">
+                    <i class="fas fa-arrow-left"></i> Kembali
+                </a>
+                <button type="submit" form="MainForm" class="btn btn-rounded btn-success btn-sm">
+                    <i class="fas fa-save"></i> Simpan Reciving Order
+                </button>
+            </div>
         </div>
         <div class="card-body">
             <form action="javascript:void(0)" id="MainForm" name="MainForm" method="POST" enctype="multipart/form-data">
@@ -87,8 +91,8 @@
                             <label class="form-label" for="kepada">Kepada
                                 <span class="text-danger">*</span>
                             </label>
-                            <input type="text" class="form-control"id="kepada" name="kepada" placeholder="Kepada"
-                                value="{{ $model->kepada }}" required="" />
+                            <input type="text" class="form-control"id="kepada" name="kepada"
+                                placeholder="Kepada" value="{{ $model->kepada }}" required="" />
                         </div>
                     </div>
                     <div class="col-12">
@@ -125,12 +129,18 @@
             <h3 class="card-title">{{ $page_attr['title'] }} Barang
                 <span id="total"></span>
             </h3>
-            @if ($can_barang_insert)
-                <button type="button" class="btn btn-rounded btn-success btn-sm" data-bs-effect="effect-scale"
-                    data-bs-toggle="modal" href="#modal-default" onclick="add()" data-target="#modal-default">
-                    <i class="fas fa-plus"></i> Tambah
-                </button>
-            @endif
+            <div>
+                <a href="{{ route(h_prefix(null, 2)) }}" class="btn btn-rounded btn-secondary btn-sm">
+                    <i class="fas fa-arrow-left"></i> Kembali
+                </a>
+                @if ($can_barang_insert)
+                    <button type="button" class="btn btn-rounded btn-success btn-sm" data-bs-effect="effect-scale"
+                        data-bs-toggle="modal" href="#modal-default" onclick="add()" data-target="#modal-default">
+                        <i class="fas fa-plus"></i> Tambah
+                    </button>
+                @endif
+            </div>
+
         </div>
         <div class="card-body">
             <div class="table-responsive table-striped">

@@ -23129,7 +23129,7 @@ body:not(.lg-from-hash) .lg-outer.lg-start-zoom .lg-item.lg-complete .lg-object 
     background: linear-gradient(to bottom right, #1ea38f 0%, #5cf9e2 100%)
 }
 
-.growl.growl-sucess {
+.growl.growl-success {
     color: #fff;
     background: #2dce89
 }

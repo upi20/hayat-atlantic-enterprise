@@ -47,6 +47,7 @@ use App\Http\Controllers\Admin\Utility\NotifDepanAtasController;
 use App\Http\Controllers\Administrasi\KaryawanController;
 use App\Http\Controllers\Administrasi\CustomerController;
 use App\Http\Controllers\Administrasi\PenyewaanController;
+use App\Http\Controllers\Administrasi\PembayaranController;
 
 // Data Master ========================================================================================================
 use App\Http\Controllers\Administrasi\MasterData\JenisBarangController;
@@ -583,5 +584,27 @@ Route::prefix($prefix)->controller(PenyewaanController::class)->group(function (
             Route::get('/find', 'reciving_order_barang_find')->name("$name.find")->middleware("permission:$name.update");
             Route::delete('/{model}', 'reciving_order_barang_delete')->name("$name.delete")->middleware("permission:$name.delete");
         });
+    });
+});
+
+$prefix = "pembayaran";
+Route::prefix($prefix)->group(function () use ($name, $prefix) {
+    $name = "$name.$prefix"; // admin.pembayaran
+    Route::controller(PembayaranController::class)->group(function () use ($name) {
+        Route::get('/', 'index')->name($name)->middleware("permission:$name");
+        Route::get('/list/{model}', 'list')->name("$name.list")->middleware("permission:$name");
+        Route::get('/faktur/{model}', 'faktur')->name("$name.faktur")->middleware("permission:$name.faktur");
+        Route::post('/simpan_status/{model}', 'simpan_status')->name("$name.simpan_status")->middleware("permission:$name.simpan_status");
+
+        Route::post('/insert', 'insert')->name("$name.insert")->middleware("permission:$name.insert");
+        Route::post('/update', 'update')->name("$name.update")->middleware("permission:$name.update");
+        Route::get('/find', 'find')->name("$name.find")->middleware("permission:$name.update");
+        Route::delete('/{model}', 'delete')->name("$name.delete")->middleware("permission:$name.delete");
+    });
+
+    Route::controller(PenyewaanController::class)->group(function () use ($name) {
+        Route::get('/datatable', 'index')->name("$name.datatable")->middleware("permission:$name");
+        Route::get('/customer_select2', 'customer_select2')->name("$name.customer_select2")->middleware("permission:$name");
+        Route::get('/detail', 'detail')->name("$name.detail")->middleware("permission:$name");
     });
 });

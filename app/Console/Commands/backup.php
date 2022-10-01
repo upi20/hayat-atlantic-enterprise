@@ -105,6 +105,15 @@ class backup extends Command
                 'barang_habis_pakai_pengadaan_list',
                 'barang_habis_pakai_pengurangan',
                 'barang_habis_pakai_pengurangan_list',
+                'penyewaan',
+                'penyewaan_barang',
+                'penyewaan_pembayaran',
+                'faktur',
+                'surat_jalan',
+                'surat_jalan_barang',
+                'pengembalian',
+                'pengembalian_barang',
+                'faktur_barang',
             ],
         ];
         if ($opt_users == 1 || $arg_type == 'users') echo shell_exec('php artisan iseed users --force');

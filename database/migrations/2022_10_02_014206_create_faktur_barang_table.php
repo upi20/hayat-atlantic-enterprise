@@ -13,23 +13,24 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('faktur', function (Blueprint $table) {
+        Schema::create('faktur_barang', function (Blueprint $table) {
             $table->id();
-            $table->string('no_faktur')->nullable()->default(null);
-            $table->date('tanggal')->nullable()->default(null);
-            $table->bigInteger('jumlah', false, true)->nullable()->default(null);
-            $table->bigInteger('sisa', false, true)->nullable()->default(null);
-            $table->bigInteger('pembayaran_sebelumnya', false, true)->nullable()->default(null);
-            $table->bigInteger('total', false, true)->nullable()->default(null);
-
-            $table->bigInteger('pembayaran', false, true)->nullable()->default(null);
+            $table->bigInteger('faktur', false, true)->nullable()->default(null);
+            $table->bigInteger('barang', false, true)->nullable()->default(null);
+            $table->integer('qty')->nullable()->default(0);
+            $table->integer('harga')->nullable()->default(0);
+            $table->string('keterangan')->nullable()->default(null);
             $table->bigInteger('updated_by', false, true)->nullable()->default(null);
             $table->bigInteger('created_by', false, true)->nullable()->default(null);
             $table->timestamps();
 
-            $table->foreign('pembayaran')
-                ->references('id')->on('penyewaan_pembayaran')
+            $table->foreign('faktur')
+                ->references('id')->on('faktur')
                 ->cascadeOnDelete()
+                ->cascadeOnUpdate();
+            $table->foreign('barang')
+                ->references('id')->on('barang')
+                ->nullOnDelete()
                 ->cascadeOnUpdate();
             $table->foreign('updated_by')
                 ->references('id')->on('users')
@@ -49,6 +50,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('faktur');
+        Schema::dropIfExists('faktur_barang');
     }
 };

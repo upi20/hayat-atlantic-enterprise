@@ -5,17 +5,15 @@
         $can_insert = auth_can(h_prefix('insert'));
         $can_update = auth_can(h_prefix('update'));
         $can_delete = auth_can(h_prefix('delete'));
-        $is_admin = is_admin();
+        $can_batalkan = auth_can(h_prefix('batalkan'));
+        $can_simpan_status = auth_can(h_prefix('simpan_status'));
+        
+        $can_pembayaran = $can_insert || $can_update || $can_batalkan;
     @endphp
 
     <div class="card">
         <div class="card-header d-md-flex flex-row justify-content-between">
             <h3 class="card-title">{{ $page_attr['title'] }} Table List</h3>
-            @if ($can_insert)
-                <a class="btn btn-rounded btn-success btn-sm" href="{{ route('admin.penyewaan.reciving_order') }}">
-                    <i class="fas fa-plus"></i> Reciving Order
-                </a>
-            @endif
         </div>
         <div class="card-body">
             <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
@@ -36,7 +34,7 @@
                                     <br>
                                     <select class="form-control" id="filter_status_pembayaran"
                                         name="filter_status_pembayaran" style="width: 100%;">
-                                        <option value="" selected>Semua</option>
+                                        <option value=""selected>Semua</option>
                                         <option value="1">Lunas</option>
                                         <option value="0">Belum Lunas</option>
                                     </select>
@@ -63,22 +61,6 @@
                                     </select>
                                 </div>
 
-                                <div class="form-group float-start me-2" style="min-width: 300px">
-                                    <label for="created_by">Dibuat Oleh</label>
-                                    <br>
-                                    <select class="form-control" id="created_by" name="created_by" style="width: 100%;">
-                                        <option value="" selected>Semua</option>
-                                    </select>
-                                </div>
-
-                                <div class="form-group float-start me-2" style="min-width: 300px">
-                                    <label for="updated_by">Diubah Oleh</label>
-                                    <br>
-                                    <select class="form-control" id="updated_by" name="updated_by" style="width: 100%;">
-                                        <option value="" selected>Semua</option>
-                                    </select>
-                                </div>
-
                             </form>
                             <div style="clear: both"></div>
                             <button type="submit" form="FilterForm" class="btn btn-rounded btn-md btn-info"
@@ -94,20 +76,16 @@
                     <thead>
                         <tr>
                             <th>No</th>
+                            <th>Status</th>
+                            {!! $can_pembayaran ? '<th>Pembayaran</th>' : '' !!}
                             <th>Detail</th>
                             <th>Customer</th>
                             <th>Lokasi</th>
-                            <th>Tanggal Order</th>
-                            <th>Tanggal Kirim</th>
-                            <th>Tanggal Pakai</th>
                             <th>Total Harga</th>
                             <th>Dibayar</th>
                             <th>Sisa</th>
-                            <th>Status Pembayaran</th>
-                            <th>Status</th>
-                            <th>Diubah Oleh</th>
-                            <th>Diubah Tgl.</th>
-                            {!! $can_delete || $can_update ? '<th>Aksi</th>' : '' !!}
+                            <th>Status Penyewaan</th>
+                            <th>Tanggal Pakai</th>
                         </tr>
                     </thead>
                     <tbody> </tbody>
@@ -181,9 +159,7 @@
     <script src="{{ asset('assets/templates/admin/plugins/select2/js/select2.full.min.js') }}"></script>
 
     <script>
-        const can_update = {{ $can_update ? 'true' : 'false' }};
-        const can_delete = {{ $can_delete ? 'true' : 'false' }};
-        const is_admin = {{ $is_admin ? 'true' : 'false' }};
+        const can_pembayaran = {{ $can_pembayaran ? 'true' : 'false' }};
         const table_html = $('#tbl_main');
         let isEdit = true;
         $(document).ready(function() {
@@ -244,10 +220,8 @@
                 bAutoWidth: false,
                 type: 'GET',
                 ajax: {
-                    url: "{{ route(h_prefix()) }}",
+                    url: "{{ route(h_prefix('datatable')) }}",
                     data: function(d) {
-                        d['filter[updated_by]'] = $('#updated_by').val();
-                        d['filter[created_by]'] = $('#created_by').val();
                         d['filter[customer]'] = $('#customer').val();
                         d['filter[status]'] = $('#filter_status').val();
                         d['filter[status_pembayaran]'] = $('#filter_status_pembayaran').val();
@@ -257,7 +231,26 @@
                         data: null,
                         name: 'id',
                         orderable: false,
-                    }, {
+                    },
+                    {
+                        data: 'status_pembayaran_str',
+                        name: 'status_pembayaran_str',
+                        render(data, type, full, meta) {
+                            return `<span class="badge bg-${full.status_pembayaran == 1 ? 'success':'danger'}">${data}</span>`;
+                        },
+                        className: 'text-nowrap'
+                    },
+                    ...((can_pembayaran) ? [{
+                        data: 'id',
+                        name: 'id',
+                        render(data, type, full, meta) {
+                            return `<a href="{{ url(h_prefix_uri('list')) }}/${data}" class="btn btn-rounded btn-success btn-sm me-1" title="Buat Pembayaran">
+                              <i class="fas fa-dollar-sign"></i> Pembayaran
+                                </a>`;
+                        },
+                        orderable: false,
+                    }, ] : []),
+                    {
                         data: 'id',
                         name: 'id',
                         render(data, type, full, meta) {
@@ -277,29 +270,6 @@
                         name: 'lokasi',
                         className: 'text-nowrap'
                     },
-                    {
-                        data: 'tanggal_order_str',
-                        name: 'tanggal_order_str',
-                        className: 'text-nowrap'
-                    },
-                    {
-                        data: 'tanggal_kirim_str',
-                        name: 'tanggal_kirim_str',
-                        className: 'text-nowrap'
-                    },
-                    {
-                        data: 'tanggal_pakai_dari_str',
-                        name: 'tanggal_pakai_dari_str',
-                        render(data, type, full, meta) {
-                            if (data == full.tanggal_pakai_sampai_str) {
-                                return data;
-                            } else {
-                                return `${data ?? ''} s/d ${full.tanggal_pakai_sampai_str ?? ''}`;
-                            }
-                        },
-                        className: 'text-nowrap'
-                    },
-
                     {
                         data: 'total_harga',
                         name: 'total_harga',
@@ -325,14 +295,6 @@
                         className: 'text-nowrap text-right'
                     },
                     {
-                        data: 'status_pembayaran_str',
-                        name: 'status_pembayaran_str',
-                        render(data, type, full, meta) {
-                            return `<span class="badge bg-${full.status_pembayaran == 1 ? 'success':'danger'}">${data}</span>`;
-                        },
-                        className: 'text-nowrap'
-                    },
-                    {
                         data: 'status',
                         name: 'status_str',
                         render(data, type, full, meta) {
@@ -341,39 +303,20 @@
                         className: 'text-nowrap'
                     },
                     {
-                        data: 'updated_by_str',
-                        name: 'updated_by_str',
+                        data: 'tanggal_pakai_dari_str',
+                        name: 'tanggal_pakai_dari_str',
                         render(data, type, full, meta) {
-                            return data ?? full.created_by_str;
+                            if (data == full.tanggal_pakai_sampai_str) {
+                                return data;
+                            } else {
+                                return `${data ?? ''} s/d ${full.tanggal_pakai_sampai_str ?? ''}`;
+                            }
                         },
                         className: 'text-nowrap'
                     },
-                    {
-                        data: 'updated',
-                        name: 'updated',
-                        render(data, type, full, meta) {
-                            return data ?? full.created;
-                        },
-                        className: 'text-nowrap'
-                    },
-                    ...((can_update || can_delete || is_admin) ? [{
-                        data: 'id',
-                        name: 'id',
-                        render(data, type, full, meta) {
-                            const btn_update = can_update && (full.status == 1 || is_admin) ? `<a href="{{ route('admin.penyewaan.reciving_order') }}/${data}" class="btn btn-rounded btn-primary btn-sm me-1" title="Edit Data">
-                                <i class="fas fa-edit"></i> Ubah
-                                </a>` : '';
-                            const btn_delete = can_delete && (full.status == 1 || is_admin) ? `<button type="button" class="btn btn-rounded btn-danger btn-sm me-1" title="Delete Data" onClick="deleteFunc('${data}')">
-                                <i class="fas fa-trash"></i> Hapus
-                                </button>` : '';
-                            return btn_update + btn_delete;
-                        },
-                        orderable: false,
-                        className: 'text-nowrap'
-                    }] : [])
                 ],
                 order: [
-                    [2, 'asc']
+                    [(can_pembayaran ? 10 : 9), 'desc']
                 ]
             });
 
@@ -392,54 +335,6 @@
                 oTable.fnDraw(false);
             });
         });
-
-        function deleteFunc(id) {
-            swal.fire({
-                title: 'Apakah anda yakin?',
-                text: "Apakah anda yakin akan menghapus data ini ?",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Yes'
-            }).then(function(result) {
-                if (result.value) {
-                    $.ajax({
-                        url: `{{ url(h_prefix_uri()) }}/${id}`,
-                        type: 'DELETE',
-                        dataType: 'json',
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        },
-                        beforeSend: function() {
-                            swal.fire({
-                                title: 'Please Wait..!',
-                                text: 'Is working..',
-                                onOpen: function() {
-                                    Swal.showLoading()
-                                }
-                            })
-                        },
-                        success: function(data) {
-                            Swal.fire({
-                                position: 'center',
-                                icon: 'success',
-                                title: '{{ $page_attr['title'] }} berhasil dihapus',
-                                showConfirmButton: false,
-                                timer: 1500
-                            })
-                            var oTable = table_html.dataTable();
-                            oTable.fnDraw(false);
-                        },
-                        complete: function() {
-                            swal.hideLoading();
-                        },
-                        error: function(jqXHR, textStatus, errorThrown) {
-                            swal.hideLoading();
-                            swal.fire("!Opps ", "Something went wrong, try again later", "error");
-                        }
-                    });
-                }
-            });
-        }
 
         function statusClass(status) {
             if (status == 1) return 'bg-primary';

@@ -434,7 +434,7 @@ class PenyewaanController extends Controller
         $this->query["{$c_barang_kode}_alias"] = $c_barang_kode;
 
         $c_barang_qty_total = 'barang_qty_total';
-        $this->query[$c_barang_qty_total] = "$t_barang.qty_total";
+        $this->query[$c_barang_qty_total] = "($t_barang.qty_total-$t_barang.qty_rusak)";
         $this->query["{$c_barang_qty_total}_alias"] = $c_barang_qty_total;
 
         $c_total_harga = 'total_harga';
@@ -612,9 +612,9 @@ class PenyewaanController extends Controller
 
             $model = Sewa::selectRaw("
                 $t_barang.id,
-                concat($t_barang.kode,' | ',$t_barang.nama, ' (', $t_barang.qty_total, ') ') as text,
+                concat($t_barang.kode,' | ',$t_barang.nama, ' (', ($t_barang.qty_total-$t_barang.qty_rusak), ') ') as text,
                 $t_barang.harga,
-                ($t_barang.qty_total - $query_stok_pada_tanggal) as barang_qty_total,
+                (($t_barang.qty_total-$t_barang.qty_rusak) - $query_stok_pada_tanggal) as barang_qty_total,
                 `$t_jenis`.`nama` as jenis, 
                 `$t_satuan`.`nama` as satuan,
                 ('$penyewaan_model->tanggal') as pada_tanggal")
@@ -700,8 +700,8 @@ class PenyewaanController extends Controller
             $table.harga,
             $table.qty,
             $t_barang.id as barang_id, 
-            $t_barang.qty_total as barang_qty_total,
-            concat($t_barang.kode,' | ',$t_barang.nama, ' (', $t_barang.qty_total, ') ') as barang_nama, 
+            ($t_barang.qty_total-$t_barang.qty_rusak) as barang_qty_total,
+            concat($t_barang.kode,' | ',$t_barang.nama, ' (', ($t_barang.qty_total-$t_barang.qty_rusak), ') ') as barang_nama, 
             `$t_jenis`.`nama` as jenis, 
             `$t_satuan`.`nama` as satuan")
             ->leftJoin($t_barang, "$t_barang.id", '=', "$table.barang")
