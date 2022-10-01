@@ -75,21 +75,7 @@
             }
         }
 
-        .b-left {
-            border-left: 2px solid #000;
-        }
 
-        .b-right {
-            border-right: 2px solid #000;
-        }
-
-        .b-top {
-            border-top: 2px solid #000;
-        }
-
-        .b-bottom {
-            border-bottom: 2px solid #000;
-        }
 
         table,
         th,
@@ -109,6 +95,24 @@
             opacity: 1;
             border-radius: 4px;
         }
+
+        .my-table td,
+        .my-table th {
+            border: 1px solid #000;
+        }
+
+        .text-right {
+            text-align: right;
+        }
+
+        .no-border {
+            border: 0 !important;
+            padding: 2px
+        }
+
+        .table-detail td {
+            padding: 2px
+        }
     </style>
 </head>
 
@@ -126,72 +130,120 @@
                     </div>
                 </div>
                 <hr class="garis">
-                <h4 style="text-align: center; margin-bottom: 8px">FAKTUR PENYEWAAN</h4>
-                <table>
+                <h4 style="text-align: center; margin-bottom: 8px">FAKTUR PEMBAYARAN PENYEWAAN</h4>
+                <table class="table-detail">
                     <tr>
-                        <td>Nomor</td>
+                        <td>Nomor Faktur</td>
                         <td>:</td>
-                        <td>123456</td>
+                        <td>{{ $faktur->no_faktur }}</td>
                     </tr>
                     <tr>
-                        <td>Tanggal</td>
+                        <td>Tanggal Faktur</td>
                         <td>:</td>
-                        <td>123456</td>
+                        <td>{{ $faktur->tanggal_str }}</td>
+                    </tr>
+                    <tr>
+                        <td>Tanggal Kirim</td>
+                        <td>:</td>
+                        <td>{{ $penyewaan->tanggal_kirim }}</td>
+                    </tr>
+                    <tr>
+                        <td>Tanggal Pakai</td>
+                        <td>:</td>
+                        <td>
+                            {{ $penyewaan->tanggal_pakai_dari }}
+                            @if ($penyewaan->tanggal_pakai_dari != $penyewaan->tanggal_pakai_sampai)
+                                s/d {{ $penyewaan->tanggal_pakai_sampai }} ( {{ $penyewaan->pakai_hari }} hari)
+                            @endif
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Kepada</td>
+                        <td>:</td>
+                        <td>Yth. {{ $penyewaan->kepada }}</td>
+                    </tr>
+                    <tr>
+                        <td>Lokasi</td>
+                        <td>:</td>
+                        <td>{{ $penyewaan->lokasi }}</td>
                     </tr>
                 </table>
                 <p style="margin-bottom: 4px">Daftar barang yang disewakan:</p>
-                <table style="width: 100%; border-collapse:collapse">
-                    <tr style="font-weight: bold;">
-                        <td style="width: 24px;" class="b-left b-top b-bottom">I.</td>
-                        <td class="b-top b-bottom  b-right">ANAMNESIS :</td>
-                    </tr>
-                    <tr style="font-weight: bold;">
-                        <td style="padding-bottom: 0; width: 24px;" class="b-left b-top">II.</td>
-                        <td style="padding-bottom: 0;" class="b-top b-right">IDENTITAS PASIEN :</td>
-                    </tr>
+                <table style="width: 100%; border-collapse:collapse" class="my-table">
+                    <thead>
+                        <th>No</th>
+                        <th>Nama Barang</th>
+                        <th>Keterangan</th>
+                        <th>Qty</th>
+                        <th>Harga</th>
+                        <th>Total Harga</th>
+                    </thead>
+                    <tbody>
+                        @foreach ($barangs as $key => $barang)
+                            <tr>
+                                <td>{{ $key + 1 }}</td>
+                                <td>{{ $barang->barang_nama }}</td>
+                                <td>{{ $barang->keterangan }}</td>
+                                <td class="text-right">{{ $barang->qty }}</td>
+                                <td class="text-right format_rupiah">{{ $barang->harga }}</td>
+                                <td class="text-right format_rupiah">{{ $barang->harga_total }}</td>
+                            </tr>
+                        @endforeach
+                        <tr>
+                            <td colspan="5" class="text-right no-border">Total:</td>
+                            <td class="no-border text-right format_rupiah">{{ $faktur->total }}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="5" class="text-right no-border">{{ $model->nama }}:</td>
+                            <td class="no-border text-right format_rupiah">{{ $faktur->jumlah }}</td>
+                        </tr>
+                        @if ($faktur->pembayaran_sebelumnya > 0)
+                            <tr>
+                                <td colspan="5" class="text-right no-border">Pembayaran Sebelumnya:</td>
+                                <td class="no-border text-right format_rupiah">{{ $faktur->pembayaran_sebelumnya }}
+                                </td>
+                            </tr>
+                        @endif
+                        <tr>
+                            <td colspan="5" class="text-right no-border">Sisa:</td>
+                            <td class="no-border text-right format_rupiah">{{ $faktur->sisa }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <table class="my-table" style="width: 15cm; border-collapse:collapse">
                     <tr>
-                        <td style="padding: 0;" class="b-left"></td>
-                        <td style="padding: 0;" class="b-right">
-                            <table style="padding: 0;">
-                                <tr>
-                                    <td style=" vertical-align: top;">NAMA</td>
-                                    <td>:</td>
-                                    <td>wkwk</td>
-                                </tr>
-                                <tr>
-                                    <td style=" vertical-align: top;">UMUR</td>
-                                    <td>:</td>
-                                    <td>wkwk?> TAHUN</td>
-                                </tr>
-                                <tr>
-                                    <td style=" vertical-align: top;">JENIS KELAMIN</td>
-                                    <td>:</td>
-                                    <td>wkwk</td>
-                                </tr>
-                                <tr>
-                                    <td style=" vertical-align: top;">ALAMAT</td>
-                                    <td>:</td>
-                                    <td>wkwk</td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-                    <tr style="font-weight: bold; height:85mm; vertical-align: top;">
-                        <td style="width: 24px;" class="b-left b-top b-bottom">III.</td>
-                        <td class="b-top b-bottom  b-right">DIAGNOSA :</td>
-                    </tr>
-                    <tr style="font-weight: bold; height:85mm; vertical-align: top;">
-                        <td style="width: 24px;" class="b-left b-top b-bottom">IV.</td>
-                        <td class="b-top b-bottom  b-right">OBAT :</td>
+                        <td>Terbilang: <small><i id="terbilang"></i></small></td>
                     </tr>
                 </table>
+
+                <br>
+                <p>Hormat Kami</p>
+                <br><br>
+                <p>Hayat Pesta</p>
+
             </div>
         </div>
     </div>
 
     <script src="{{ url('loader/js/admin.js') }}"></script>
     <script>
-        // window.print();
+        // format rupiah
+        if (format_rupiah.length > 0) {
+            Array.from(document.getElementsByClassName("format_rupiah")).forEach(function(item) {
+                const val = Number(item.innerHTML);
+                const rupiah = (val > 0) ? format_rupiah(val) : 0
+                item.innerHTML = `Rp. ${rupiah}`;
+            });
+        }
+
+        // terbilang
+        document.getElementById('terbilang').innerHTML = `${terbilang('{{ $faktur->jumlah }}')} Rupiah`;
+
+
+        setTimeout(() => {
+            window.print();
+        }, 500);
     </script>
 </body>
 

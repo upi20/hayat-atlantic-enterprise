@@ -10,7 +10,7 @@
     [x] status pembayaran (lunas/belum lunas)
     [x] crud pembayaran
     [x] status lunas role jika ada pembayaran bisa di jadiin lunas, jika total pembayaran sama dengan total harga maka otomatis status akan lunas.
-    [] cetak faktur dari per pembayaran
+    [x] cetak faktur dari per pembayaran
     [] nomor faktur dari timestamp pencetakan faktur
     [] pembayaran jika (faktur tinggal 1 dan status sudah >= 3) dan pembayaran pertama daengan created at paling kecil tidak bisa dihapus 
     [] buat pembatalan di setiap crud

@@ -11,12 +11,14 @@ use App\Models\Barang\Sewa;
 
 use App\Models\Customer;
 use App\Models\Faktur;
+use App\Models\FakturBarang;
 use App\Models\Penyewaan;
 use App\Models\PenyewaanBarang;
 use App\Models\PenyewaanPembayaran;
 use App\Models\User;
 use League\Config\Exception\ValidationException;
 use Illuminate\Support\Facades\DB;
+use Termwind\Components\Raw;
 use Yajra\Datatables\Datatables;
 
 class PembayaranController extends Controller
@@ -88,14 +90,44 @@ class PembayaranController extends Controller
             $model->created_by = auth()->user()->id;
             $model->save();
 
+
             // update penyewaan
             $penyewaan = Penyewaan::find($request->penyewaan);
             $penyewaan->dibayar = $penyewaan->dibayar + $model->nominal;
 
-            if ($penyewaan->status == 0 && $penyewaan->total_harga >= $penyewaan->dibayar) {
-                $penyewaan->status = 1;
+            if ($penyewaan->status_pembayaran == 0 && $penyewaan->total_harga >= $penyewaan->dibayar) {
+                $penyewaan->status_pembayaran = 1;
+            }
+
+            if ($penyewaan->status == 1) {
+                $penyewaan->status = 2;
             }
             $penyewaan->save();
+
+
+            // simpan ke faktur
+            $faktur = new Faktur();
+            $faktur->no_faktur = time();
+            $faktur->tanggal = $model->tanggal;
+            $faktur->jumlah = $model->nominal;
+            $faktur->sisa = $penyewaan->total_harga - $penyewaan->dibayar;
+            $faktur->pembayaran = $model->id;
+            $faktur->total = $penyewaan->total_harga;
+            $faktur->pembayaran_sebelumnya = $penyewaan->dibayar - $model->nominal;
+            $faktur->save();
+
+            // simpan ke faktur barang
+            $penyewaan_barang = PenyewaanBarang::where('penyewaan', $model->penyewaan)->get();
+            foreach ($penyewaan_barang as $p_barang) {
+                $faktur_b = new FakturBarang();
+                $faktur_b->faktur = $faktur->id;
+                $faktur_b->barang = $p_barang->barang;
+                $faktur_b->qty = $p_barang->qty;
+                $faktur_b->harga = $p_barang->harga;
+                $faktur_b->keterangan = $p_barang->keterangan;
+                $faktur_b->created_by = auth()->user()->id;
+                $faktur_b->save();
+            }
 
             DB::commit();
             return response()->json($model);
@@ -110,37 +142,8 @@ class PembayaranController extends Controller
 
     public function update(Request $request)
     {
-        try {
-            $request->validate(array_merge(['id' => ['required', 'int']], $this->validate_model));
-            DB::beginTransaction();
-            $model = PenyewaanPembayaran::findOrFail($request->id);;
-
-            // update penyewaan
-            $penyewaan = Penyewaan::find($request->penyewaan);
-            $penyewaan->dibayar = $penyewaan->dibayar - $model->nominal + $request->nominal;
-
-            $model->penyewaan = $request->penyewaan;
-            $model->nama = $request->nama;
-            $model->tanggal = $request->tanggal;
-            $model->nominal = $request->nominal;
-            $model->keterangan = $request->keterangan;
-            $model->updated_by = auth()->user()->id;
-            $model->save();
-            if ($penyewaan->status_pembayaran == 0 && $penyewaan->total_harga >= $penyewaan->dibayar) {
-                $penyewaan->status_pembayaran = 1;
-            }
-
-            $penyewaan->save();
-
-            DB::commit();
-            return response()->json($model);
-        } catch (ValidationException $error) {
-            return response()->json([
-                'message' => 'Something went wrong',
-                'error' => $error,
-            ], 500);
-        }
-        return response()->json($model);
+        // dibatalkan
+        return response()->json([], 500);
     }
 
     public function find(Request $request)
@@ -150,6 +153,9 @@ class PembayaranController extends Controller
 
     public function delete(PenyewaanPembayaran $model): mixed
     {
+        // hanya admin
+        // hapus faktur
+        // hapus faktur barang
         try {
             DB::beginTransaction();
             $penyewaan = Penyewaan::find($model->penyewaan);
@@ -283,10 +289,38 @@ class PembayaranController extends Controller
 
     public function faktur(PenyewaanPembayaran $model, Request $request)
     {
-        // $faktur = Faktur::where('pembayaran', $model->id);
+        $t_barang = Sewa::tableName;
+        $t_faktur = Faktur::tableName;
+        $t_penyewaan = Penyewaan::tableName;
+        $table = FakturBarang::tableName;
+
+        $faktur = Faktur::select([
+            DB::raw("$t_faktur.*"),
+            DB::raw("date_format($t_faktur.tanggal, '%W, %d %M %Y') as tanggal_str"),
+        ])->where('pembayaran', $model->id)->first();
+
+        $penyewaan = Penyewaan::select([
+            DB::raw("$t_penyewaan.*"),
+            DB::raw("date_format(tanggal_kirim, '%W, %d %M %Y') as tanggal_kirim"),
+            DB::raw("date_format(tanggal_pakai_dari, '%W, %d %M %Y') as tanggal_pakai_dari"),
+            DB::raw("date_format(tanggal_pakai_sampai, '%W, %d %M %Y') as tanggal_pakai_sampai"),
+            DB::raw("(DATEDIFF(tanggal_pakai_sampai, tanggal_pakai_dari)+1) as pakai_hari"),
+        ])->where('id', $model->penyewaan)->first();
+
+        $barangs = FakturBarang::select([
+            DB::raw("$table.*"),
+            DB::raw("$t_barang.nama as barang_nama"),
+            DB::raw("($table.qty * $table.harga) as harga_total"),
+        ])
+            ->where('faktur', $faktur->id)
+            ->leftJoin($t_barang, "$t_barang.id", "$table.barang")
+            ->get();
+
+        // dd($barang);
+        // dd($faktur);
 
 
 
-        return view('administrasi.pembayaran.faktur');
+        return view('administrasi.pembayaran.faktur', compact('faktur', 'barangs', 'model', 'penyewaan'));
     }
 }
