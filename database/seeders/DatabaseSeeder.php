@@ -68,5 +68,14 @@ class DatabaseSeeder extends Seeder
         $this->call(BarangHabisPakaiPengadaanListTableSeeder::class);
         $this->call(BarangHabisPakaiPenguranganTableSeeder::class);
         $this->call(BarangHabisPakaiPenguranganListTableSeeder::class);
+        $this->call(PenyewaanTableSeeder::class);
+        $this->call(PenyewaanBarangTableSeeder::class);
+        $this->call(PenyewaanPembayaranTableSeeder::class);
+        $this->call(FakturTableSeeder::class);
+        $this->call(SuratJalanTableSeeder::class);
+        $this->call(SuratJalanBarangTableSeeder::class);
+        $this->call(PengembalianTableSeeder::class);
+        $this->call(PengembalianBarangTableSeeder::class);
+        $this->call(FakturBarangTableSeeder::class);
     }
 }

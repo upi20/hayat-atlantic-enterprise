@@ -1139,6 +1139,14 @@ class PRoleHasMenuTableSeeder extends Seeder
                 'created_at' => '2022-09-25 13:51:35',
                 'updated_at' => '2022-09-25 13:51:35',
             ),
+            140 => 
+            array (
+                'id' => 215,
+                'role_id' => 5,
+                'menu_id' => 436,
+                'created_at' => '2022-10-01 12:50:57',
+                'updated_at' => '2022-10-01 12:50:57',
+            ),
         ));
         
         
