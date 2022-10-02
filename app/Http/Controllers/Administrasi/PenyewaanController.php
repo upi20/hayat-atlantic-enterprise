@@ -273,7 +273,8 @@ class PenyewaanController extends Controller
                 if($table.status = 2,'Faktur Dibuat', 
                 if($table.status = 3,'Barang Diambil', 
                 if($table.status = 4,'Barang Dikembalikan', 
-                if($table.status = 5,'Selesai',  'Tidak Diketahui')))))) as status_str
+                if($table.status = 5,'Selesai',  
+                if($table.status = 9,'Dibatalkan',  'Tidak Diketahui')))))))as status_str
             SQL),
             DB::raw("$table.status_pembayaran"),
             DB::raw("(if($table.status_pembayaran = 1,'Lunas', 'Belum Lunas')) as status_pembayaran_str"),
