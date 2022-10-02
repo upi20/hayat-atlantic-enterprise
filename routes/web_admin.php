@@ -48,6 +48,8 @@ use App\Http\Controllers\Administrasi\KaryawanController;
 use App\Http\Controllers\Administrasi\CustomerController;
 use App\Http\Controllers\Administrasi\PenyewaanController;
 use App\Http\Controllers\Administrasi\PembayaranController;
+use App\Http\Controllers\Administrasi\PengambilanBarangController;
+use App\Http\Controllers\Administrasi\PengembalianBarangController;
 
 // Data Master ========================================================================================================
 use App\Http\Controllers\Administrasi\MasterData\JenisBarangController;
@@ -63,7 +65,6 @@ use App\Http\Controllers\Administrasi\Pengadaan\BarangSewaController;
 use App\Http\Controllers\Administrasi\Pengadaan\BarangSewaListController;
 use App\Http\Controllers\Administrasi\Pengadaan\BarangHabisPakaiController;
 use App\Http\Controllers\Administrasi\Pengadaan\BarangHabisPakaiListController;
-
 // Pengadaan Barang ===================================================================================================
 use App\Http\Controllers\Administrasi\Pengurangan\BarangSewaController as PenguranganBarangSewaController;
 use App\Http\Controllers\Administrasi\Pengurangan\BarangSewaListController as PenguranganBarangSewaListController;
@@ -592,6 +593,46 @@ $prefix = "pembayaran";
 Route::prefix($prefix)->group(function () use ($name, $prefix) {
     $name = "$name.$prefix"; // admin.pembayaran
     Route::controller(PembayaranController::class)->group(function () use ($name) {
+        Route::get('/', 'index')->name($name)->middleware("permission:$name");
+        Route::get('/list/{model}', 'list')->name("$name.list")->middleware("permission:$name");
+        Route::get('/faktur/{model}', 'faktur')->name("$name.faktur")->middleware("permission:$name.faktur");
+        Route::post('/simpan_status/{model}', 'simpan_status')->name("$name.simpan_status")->middleware("permission:$name.simpan_status");
+
+        Route::post('/insert', 'insert')->name("$name.insert")->middleware("permission:$name.insert");
+        Route::post('/batalkan', 'batalkan')->name("$name.batalkan")->middleware("permission:$name.batalkan");
+        Route::get('/find', 'find')->name("$name.find")->middleware("permission:$name.update");
+        Route::delete('/{model}', 'delete')->name("$name.delete")->middleware("permission:$name.delete");
+    });
+
+    Route::controller(PenyewaanController::class)->group(function () use ($name) {
+        Route::get('/datatable', 'index')->name("$name.datatable")->middleware("permission:$name");
+        Route::get('/customer_select2', 'customer_select2')->name("$name.customer_select2")->middleware("permission:$name");
+        Route::get('/detail', 'detail')->name("$name.detail")->middleware("permission:$name");
+    });
+});
+
+
+$prefix = "pengambilan";
+Route::prefix($prefix)->group(function () use ($name, $prefix) {
+    $name = "$name.$prefix"; // admin.pengambilan
+    Route::controller(PengambilanBarangController::class)->group(function () use ($name) {
+        Route::get('/', 'index')->name($name)->middleware("permission:$name");
+        Route::get('/list/{model}', 'list')->name("$name.list")->middleware("permission:$name");
+        Route::get('/surat_jalan/{model}', 'surat_jalan')->name("$name.surat_jalan")->middleware("permission:$name.surat_jalan");
+        Route::post('/simpan/{model}', 'simpan')->name("$name.simpan")->middleware("permission:$name.simpan");
+    });
+
+    Route::controller(PenyewaanController::class)->group(function () use ($name) {
+        Route::get('/datatable', 'index')->name("$name.datatable")->middleware("permission:$name");
+        Route::get('/customer_select2', 'customer_select2')->name("$name.customer_select2")->middleware("permission:$name");
+        Route::get('/detail', 'detail')->name("$name.detail")->middleware("permission:$name");
+    });
+});
+
+$prefix = "pengembalian";
+Route::prefix($prefix)->group(function () use ($name, $prefix) {
+    $name = "$name.$prefix"; // admin.pengembalian
+    Route::controller(PengembalianBarangController::class)->group(function () use ($name) {
         Route::get('/', 'index')->name($name)->middleware("permission:$name");
         Route::get('/list/{model}', 'list')->name("$name.list")->middleware("permission:$name");
         Route::get('/faktur/{model}', 'faktur')->name("$name.faktur")->middleware("permission:$name.faktur");

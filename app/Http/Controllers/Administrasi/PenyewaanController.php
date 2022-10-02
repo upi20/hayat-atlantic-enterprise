@@ -8,6 +8,7 @@ use App\Models\Barang\Satuan;
 use App\Models\Barang\Sewa;
 
 use App\Models\Customer;
+use App\Models\Pengambilan;
 use App\Models\Penyewaan;
 use App\Models\PenyewaanBarang;
 use App\Models\PenyewaanPembayaran;
@@ -61,6 +62,7 @@ class PenyewaanController extends Controller
         $t_user = User::tableName;
         $table = Penyewaan::tableName;
         $t_customer = Customer::tableName;
+        $t_pengambilan = Pengambilan::tableName;
 
         // cusotm query
         // ========================================================================================================
@@ -132,10 +134,15 @@ class PenyewaanController extends Controller
         SQL;
         $this->query["{$c_sisa}_alias"] = $c_sisa;
 
-        // customer
+        // pakai hari
         $c_pakai_hari = 'pakai_hari';
         $this->query[$c_pakai_hari] = '(DATEDIFF(tanggal_pakai_sampai, tanggal_pakai_dari)+1)';
         $this->query["{$c_pakai_hari}_alias"] = $c_pakai_hari;
+
+        // tanggal_pengambilan
+        $c_tanggal_pengambilan = 'tanggal_pengambilan';
+        $this->query[$c_tanggal_pengambilan] = "date_format($t_pengambilan.tanggal, '%d-%b-%Y')";
+        $this->query["{$c_tanggal_pengambilan}_alias"] = $c_tanggal_pengambilan;
         // ========================================================================================================
 
 
@@ -159,7 +166,8 @@ class PenyewaanController extends Controller
             $c_tanggal_kirim_str,
             $c_status_str,
             $c_status_pembayaran_str,
-            $c_sisa
+            $c_sisa,
+            $c_tanggal_pengambilan
         ];
 
         $to_db_raw = array_map(function ($a) use ($sraa) {
@@ -174,6 +182,7 @@ class PenyewaanController extends Controller
         ], $to_db_raw))
             ->leftJoin("$t_user as $t_created_by", "$t_created_by.id", '=', "$table.created_by")
             ->leftJoin("$t_user as $t_updated_by", "$t_updated_by.id", '=', "$table.updated_by")
+            ->leftJoin($t_pengambilan, "$t_pengambilan.penyewaan", '=', "$table.id")
             ->leftJoin($t_customer, "$t_customer.id", '=', "$table.customer");
 
         // Filter =====================================================================================================
@@ -627,7 +636,7 @@ class PenyewaanController extends Controller
                         (y.tanggal_pakai_dari >= '$penyewaan_model->dari' && y.tanggal_pakai_dari <= '$penyewaan_model->sampai') or 
                         (y.tanggal_pakai_sampai >= '$penyewaan_model->dari' && y.tanggal_pakai_sampai <= '$penyewaan_model->sampai') 
                     )) 
-                    and (y.id != '$penyewaan' and (y.status <> 0 or y.status <> 6))),0))
+                    and (y.id != '$penyewaan' and ((y.status = 1 or y.status = 2) and (y.status <> 9)))),0))
             SQL;
 
             $model = Sewa::selectRaw("

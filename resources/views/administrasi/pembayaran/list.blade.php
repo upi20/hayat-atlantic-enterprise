@@ -7,7 +7,6 @@
         $can_batalkan = auth_can(h_prefix('batalkan', 2)) && $model->status != 9;
         $can_faktur = auth_can(h_prefix('faktur', 2));
         $can_simpan_status = auth_can(h_prefix('simpan_status', 2)) && $model->status != 9;
-        
         $can_action = $can_delete || $can_batalkan;
     @endphp
 

@@ -77,5 +77,7 @@ class DatabaseSeeder extends Seeder
         $this->call(PengembalianTableSeeder::class);
         $this->call(PengembalianBarangTableSeeder::class);
         $this->call(FakturBarangTableSeeder::class);
+        $this->call(PengambilanTableSeeder::class);
+        $this->call(PengambilanBarangTableSeeder::class);
     }
 }

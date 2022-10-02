@@ -2,10 +2,10 @@
 
 @section('content')
     @php
-        $can_insert = auth_can(h_prefix('insert'));
-        $can_update = auth_can(h_prefix('update'));
-        $can_delete = auth_can(h_prefix('delete'));
-        $can_pembayaran = $can_insert || $can_update;
+        $can_simpan = auth_can(h_prefix('simpan'));
+        $can_surat_jalan = auth_can(h_prefix('surat_jalan'));
+        $can_pengambilan = $can_simpan || $can_surat_jalan;
+        
     @endphp
 
     <div class="card">
@@ -27,7 +27,7 @@
                         <div class="panel-body">
                             <form action="javascript:void(0)" class="ml-md-3 mb-md-3" id="FilterForm">
                                 <div class="form-group float-start me-2" style="min-width: 300px">
-                                    <label for="filter_status_pembayaran">Status Pembayaran</label>
+                                    <label for="filter_status_pembayaran">Status Pengambilan</label>
                                     <br>
                                     <select class="form-control" id="filter_status_pembayaran"
                                         name="filter_status_pembayaran" style="width: 100%;">
@@ -41,9 +41,9 @@
                                     <br>
                                     <select class="form-control" id="filter_status" name="filter_status"
                                         style="width: 100%;">
-                                        <option value="" selected>Semua</option>
+                                        <option value="">Semua</option>
                                         <option value="1">Penyewaan Dibuat</option>
-                                        <option value="2">Faktur Dibuat</option>
+                                        <option value="2" selected>Faktur Dibuat</option>
                                         <option value="3">Barang Diambil</option>
                                         <option value="4">Barang Dikembalikan</option>
                                         <option value="5">Selesai</option>
@@ -74,16 +74,13 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Status</th>
-                            {!! $can_pembayaran ? '<th>Pembayaran</th>' : '' !!}
+                            {!! $can_pengambilan ? '<th>Pengambilan</th>' : '' !!}
                             <th>Detail</th>
                             <th>Customer</th>
                             <th>Lokasi</th>
-                            <th>Total Harga</th>
-                            <th>Dibayar</th>
-                            <th>Sisa</th>
-                            <th>Status Penyewaan</th>
+                            <th>Tanggal Kirim</th>
                             <th>Tanggal Pakai</th>
+                            <th>Status Penyewaan</th>
                         </tr>
                     </thead>
                     <tbody> </tbody>
@@ -129,7 +126,7 @@
                         </tbody>
                     </table>
                     <hr>
-                    <h3 class="card-title mb-2">Daftar Pembayaran</h3>
+                    <h3 class="card-title mb-2">Daftar Pengambilan</h3>
                     <table class="table table-bordered table-hover border-bottom" id="tbl_pembayaran">
                         <thead>
                             <tr>
@@ -173,7 +170,7 @@
     <script src="{{ asset('assets/templates/admin/plugins/select2/js/select2.full.min.js') }}"></script>
 
     <script>
-        const can_pembayaran = {{ $can_pembayaran ? 'true' : 'false' }};
+        const can_pengambilan = {{ $can_pengambilan ? 'true' : 'false' }};
         const table_html = $('#tbl_main');
         let isEdit = true;
         $(document).ready(function() {
@@ -248,20 +245,12 @@
                         name: 'id',
                         orderable: false,
                     },
-                    {
-                        data: 'status_pembayaran_str',
-                        name: 'status_pembayaran_str',
-                        render(data, type, full, meta) {
-                            return `<span class="badge bg-${full.status_pembayaran == 1 ? 'success':'danger'}">${data}</span>`;
-                        },
-                        className: 'text-nowrap'
-                    },
-                    ...((can_pembayaran) ? [{
+                    ...((can_pengambilan) ? [{
                         data: 'id',
                         name: 'id',
                         render(data, type, full, meta) {
-                            return `<a href="{{ url(h_prefix_uri('list')) }}/${data}" class="btn btn-rounded btn-success btn-sm me-1" title="Buat Pembayaran">
-                              <i class="fas fa-dollar-sign"></i> Pembayaran
+                            return `<a href="{{ url(h_prefix_uri('list')) }}/${data}" class="btn btn-rounded btn-success btn-sm me-1" title="Buat Pengambilan">
+                              <i class="fas fa-sign-out-alt"></i> Pengambilan
                                 </a>`;
                         },
                         orderable: false,
@@ -287,35 +276,8 @@
                         className: 'text-nowrap'
                     },
                     {
-                        data: 'total_harga',
-                        name: 'total_harga',
-                        render(data, type, full, meta) {
-                            return 'Rp. ' + format_rupiah(data);
-                        },
-                        className: 'text-nowrap text-right'
-                    },
-                    {
-                        data: 'dibayar',
-                        name: 'dibayar',
-                        render(data, type, full, meta) {
-                            return 'Rp. ' + format_rupiah(data);
-                        },
-                        className: 'text-nowrap text-right'
-                    },
-                    {
-                        data: 'sisa',
-                        name: 'sisa',
-                        render(data, type, full, meta) {
-                            return 'Rp. ' + format_rupiah(data);
-                        },
-                        className: 'text-nowrap text-right'
-                    },
-                    {
-                        data: 'status',
-                        name: 'status_str',
-                        render(data, type, full, meta) {
-                            return `<span class="badge ${statusClass(data)}">${full.status_str}</span>`;
-                        },
+                        data: 'tanggal_kirim_str',
+                        name: 'tanggal_kirim_str',
                         className: 'text-nowrap'
                     },
                     {
@@ -330,9 +292,17 @@
                         },
                         className: 'text-nowrap'
                     },
+                    {
+                        data: 'status',
+                        name: 'status_str',
+                        render(data, type, full, meta) {
+                            return `<span class="badge ${statusClass(data)}">${full.status_str}</span>`;
+                        },
+                        className: 'text-nowrap'
+                    },
                 ],
                 order: [
-                    [(can_pembayaran ? 10 : 9), 'desc']
+                    [(can_pengambilan ? 5 : 4), 'desc']
                 ]
             });
 
@@ -412,7 +382,7 @@
                 <div class="col-md-6 mb-2"><span class="fw-bold">Tanggal Kirim:</span> <br> ${data.tanggal_kirim}</div>
                 <div class="col-md-6 mb-2"><span class="fw-bold">Tanggal Pakai:</span> <br> ${tanggal_pakai}</div>
                 <div class="col-md-6 mb-2"><span class="fw-bold">Kepada, Lokasi:</span> <br> <span class="fw-bold">${data.kepada}</span>, ${data.lokasi}</div>
-                <div class="col-md-6 mb-2"><span class="fw-bold">Status Pembayaran:</span> <br> ${status_pembayaran}</div>
+                <div class="col-md-6 mb-2"><span class="fw-bold">Status Pengambilan:</span> <br> ${status_pembayaran}</div>
                 <div class="col-md-6 mb-2"><span class="fw-bold">Status Penyewaan:</span> <br> ${status_penyewaan}</div>
                 ${timestamp}
                 `);
