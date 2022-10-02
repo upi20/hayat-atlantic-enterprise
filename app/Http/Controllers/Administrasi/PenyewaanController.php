@@ -10,6 +10,7 @@ use App\Models\Barang\Sewa;
 use App\Models\Customer;
 use App\Models\Penyewaan;
 use App\Models\PenyewaanBarang;
+use App\Models\PenyewaanPembayaran;
 use App\Models\User;
 use Illuminate\Http\Request;
 use League\Config\Exception\ValidationException;
@@ -112,7 +113,8 @@ class PenyewaanController extends Controller
             if($table.status = 2,'Faktur Dibuat', 
             if($table.status = 3,'Barang Diambil', 
             if($table.status = 4,'Barang Dikembalikan', 
-            if($table.status = 5,'Selesai',  'Tidak Diketahui'))))))
+            if($table.status = 5,'Selesai',  
+            if($table.status = 9,'Dibatalkan',  'Tidak Diketahui')))))))
         SQL;
         $this->query["{$c_status_str}_alias"] = $c_status_str;
 
@@ -243,6 +245,7 @@ class PenyewaanController extends Controller
         $t_penyewaan_barang = PenyewaanBarang::tableName;
         $t_barang = Sewa::tableName;
         $t_customer = Customer::tableName;
+        $t_pembayaran = PenyewaanPembayaran::tableName;
         $t_created_by = 'b';
         $t_updated_by = 'c';
 
@@ -304,6 +307,22 @@ class PenyewaanController extends Controller
             ->get();
         $model->barangs = $barangs;
 
+        $pembayarans = PenyewaanPembayaran::select([
+            DB::raw("$t_pembayaran.id"),
+            DB::raw("$t_pembayaran.nama"),
+            DB::raw("$t_pembayaran.nominal"),
+            DB::raw("$t_pembayaran.keterangan"),
+            DB::raw("date_format($t_pembayaran.tanggal,'%d-%b-%Y') as tanggal"),
+            DB::raw("date_format($t_pembayaran.created_at,'%d-%b-%Y') as created_at_str"),
+            DB::raw("date_format($t_pembayaran.updated_at,'%d-%b-%Y') as updated_at_str"),
+            DB::raw("$t_created_by.name as created_by_str"),
+            DB::raw("$t_updated_by.name as updated_by_str"),
+        ])
+            ->leftJoin("$t_user as $t_created_by", "$t_created_by.id", '=', "$t_pembayaran.created_by")
+            ->leftJoin("$t_user as $t_updated_by", "$t_updated_by.id", '=', "$t_pembayaran.updated_by")
+            ->where('penyewaan', $model->id)
+            ->get();
+        $model->pembayarans = $pembayarans;
 
         return $model;
     }
@@ -607,7 +626,7 @@ class PenyewaanController extends Controller
                         (y.tanggal_pakai_dari >= '$penyewaan_model->dari' && y.tanggal_pakai_dari <= '$penyewaan_model->sampai') or 
                         (y.tanggal_pakai_sampai >= '$penyewaan_model->dari' && y.tanggal_pakai_sampai <= '$penyewaan_model->sampai') 
                     )) 
-                    and (y.id != '$penyewaan' and y.status <> 0)),0))
+                    and (y.id != '$penyewaan' and (y.status <> 0 or y.status <> 6))),0))
             SQL;
 
             $model = Sewa::selectRaw("
@@ -716,5 +735,23 @@ class PenyewaanController extends Controller
 
         $model->pada_tanggal = $penyewaan_model->tanggal;
         return $model;
+    }
+
+    public function batalkan(Request $request)
+    {
+        $request->validate([
+            'id' => 'required|integer',
+            'alasan' => 'required|string',
+        ]);
+        DB::beginTransaction();
+        $model = Penyewaan::findOrFail($request->id);
+        $model->status = 9;
+        $model->batal_keterangan = $request->keterangan;
+        $model->batal_tanggal = date('Y-m-d H:i:s');
+        $model->batal_oleh = auth()->user()->id;
+        $model->save();
+
+        DB::commit();
+        return response()->json($model);
     }
 }

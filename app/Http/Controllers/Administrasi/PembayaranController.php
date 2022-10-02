@@ -4,12 +4,8 @@ namespace App\Http\Controllers\Administrasi;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
-use App\Models\Barang\Jenis;
-use App\Models\Barang\Satuan;
 use App\Models\Barang\Sewa;
 
-use App\Models\Customer;
 use App\Models\Faktur;
 use App\Models\FakturBarang;
 use App\Models\Penyewaan;
@@ -18,7 +14,6 @@ use App\Models\PenyewaanPembayaran;
 use App\Models\User;
 use League\Config\Exception\ValidationException;
 use Illuminate\Support\Facades\DB;
-use Termwind\Components\Raw;
 use Yajra\Datatables\Datatables;
 
 class PembayaranController extends Controller
@@ -140,10 +135,26 @@ class PembayaranController extends Controller
         return response()->json($model);
     }
 
-    public function update(Request $request)
+    public function batalkan(Request $request)
     {
-        // dibatalkan
-        return response()->json([], 500);
+        $request->validate([
+            'id' => 'required|integer',
+            'alasan' => 'required|string',
+        ]);
+        DB::beginTransaction();
+        $model = PenyewaanPembayaran::findOrFail($request->id);
+        $model->batal_keterangan = $request->keterangan;
+        $model->batal_tanggal = date('Y-m-d H:i:s');
+        $model->batal_oleh = auth()->user()->id;
+        $model->save();
+
+        // kurangi pembayaran
+        $penyewaan = Penyewaan::find($model->penyewaan);
+        $penyewaan->dibayar = $penyewaan->dibayar - $model->nominal;
+        $penyewaan->save();
+
+        DB::commit();
+        return response()->json($model);
     }
 
     public function find(Request $request)
@@ -211,6 +222,11 @@ class PembayaranController extends Controller
         $t_updated_by = 'c';
         $this->query[$c_updated_by] = "$t_updated_by.name";
         $this->query["{$c_updated_by}_alias"] = $c_updated_by;
+
+        // updated_by
+        $c_dibatalkan = 'dibatalkan';
+        $this->query[$c_dibatalkan] = "if($table.batal_tanggal is null, 'Ya', 'Tidak')";
+        $this->query["{$c_dibatalkan}_alias"] = $c_dibatalkan;
         // ========================================================================================================
 
 
@@ -226,7 +242,8 @@ class PembayaranController extends Controller
             $c_updated_str,
             $c_created_by,
             $c_updated_by,
-            $c_tanggal_str
+            $c_tanggal_str,
+            $c_dibatalkan
         ];
 
         $to_db_raw = array_map(function ($a) use ($sraa) {
@@ -250,13 +267,13 @@ class PembayaranController extends Controller
         };
 
         // filter ini menurut data model filter
-        // $f = [$c_created_by, $c_updated_by];
-        // // loop filter
-        // foreach ($f as $v) {
-        //     if ($f_c($v)) {
-        //         $model->whereRaw("{$this->query[$v]}='{$f_c($v)}'");
-        //     }
-        // }
+        $f = [$c_dibatalkan];
+        // loop filter
+        foreach ($f as $v) {
+            if ($f_c($v)) {
+                $model->whereRaw("{$this->query[$v]}='{$f_c($v)}'");
+            }
+        }
 
         // filter custom
         $filters = ['updated_by', 'created_by'];

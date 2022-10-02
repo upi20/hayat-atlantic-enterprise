@@ -20,6 +20,10 @@ return new class extends Migration
             $table->text('keterangan')->nullable()->default(null);
             $table->bigInteger('nominal', false, true)->nullable()->default(0);
             $table->bigInteger('penyewaan', false, true)->nullable()->default(null);
+            $table->text('batal_keterangan')->nullable()->default(null);
+            $table->dateTime('batal_tanggal')->nullable()->default(null);
+            $table->bigInteger('batal_oleh', false, true)->nullable()->default(null);
+
             $table->bigInteger('updated_by', false, true)->nullable()->default(null);
             $table->bigInteger('created_by', false, true)->nullable()->default(null);
             $table->timestamps();
@@ -32,6 +36,10 @@ return new class extends Migration
                 ->nullOnDelete()
                 ->cascadeOnUpdate();
             $table->foreign('created_by')
+                ->references('id')->on('users')
+                ->nullOnDelete()
+                ->cascadeOnUpdate();
+            $table->foreign('batal_oleh')
                 ->references('id')->on('users')
                 ->nullOnDelete()
                 ->cascadeOnUpdate();

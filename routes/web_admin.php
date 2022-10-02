@@ -565,6 +565,7 @@ Route::prefix($prefix)->controller(PenyewaanController::class)->group(function (
     Route::get('/', 'index')->name($name)->middleware("permission:$name");
     Route::get('/customer_select2', 'customer_select2')->name("$name.customer_select2")->middleware("permission:$name");
     Route::get('/detail', 'detail')->name("$name.detail")->middleware("permission:$name");
+    Route::post('/batalkan', 'batalkan')->name("$name.batalkan")->middleware("permission:$name.batalkan");
     Route::delete('/{model}', 'delete')->name("$name.delete")->middleware("permission:$name.delete");
 
     $prefix = "reciving_order";
@@ -597,7 +598,7 @@ Route::prefix($prefix)->group(function () use ($name, $prefix) {
         Route::post('/simpan_status/{model}', 'simpan_status')->name("$name.simpan_status")->middleware("permission:$name.simpan_status");
 
         Route::post('/insert', 'insert')->name("$name.insert")->middleware("permission:$name.insert");
-        Route::post('/update', 'update')->name("$name.update")->middleware("permission:$name.update");
+        Route::post('/batalkan', 'batalkan')->name("$name.batalkan")->middleware("permission:$name.batalkan");
         Route::get('/find', 'find')->name("$name.find")->middleware("permission:$name.update");
         Route::delete('/{model}', 'delete')->name("$name.delete")->middleware("permission:$name.delete");
     });

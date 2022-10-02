@@ -75,8 +75,6 @@
             }
         }
 
-
-
         table,
         th,
         td {
@@ -194,8 +192,10 @@
                             <td class="no-border text-right format_rupiah">{{ $faktur->total }}</td>
                         </tr>
                         <tr>
-                            <td colspan="5" class="text-right no-border">{{ $model->nama }}:</td>
-                            <td class="no-border text-right format_rupiah">{{ $faktur->jumlah }}</td>
+                            <td colspan="5" class="text-right no-border" style="font-weight: bold;">
+                                {{ $model->nama }}:</td>
+                            <td class="no-border text-right format_rupiah" style="font-weight: bold;">
+                                {{ $faktur->jumlah }}</td>
                         </tr>
                         @if ($faktur->pembayaran_sebelumnya > 0)
                             <tr>
@@ -239,7 +239,6 @@
 
         // terbilang
         document.getElementById('terbilang').innerHTML = `${terbilang('{{ $faktur->jumlah }}')} Rupiah`;
-
 
         setTimeout(() => {
             window.print();

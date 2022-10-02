@@ -2,19 +2,22 @@
 
 @section('content')
     @php
-        $can_insert = auth_can(h_prefix('insert', 2));
-        $can_update = auth_can(h_prefix('update', 2));
-        $can_delete = auth_can(h_prefix('delete', 2));
-        $can_batalkan = auth_can(h_prefix('batalkan', 2));
+        $can_insert = auth_can(h_prefix('insert', 2)) && $model->status != 9;
+        $can_delete = auth_can(h_prefix('delete', 2)) && $model->status != 9;
+        $can_batalkan = auth_can(h_prefix('batalkan', 2)) && $model->status != 9;
         $can_faktur = auth_can(h_prefix('faktur', 2));
-        $can_simpan_status = auth_can(h_prefix('simpan_status', 2));
+        $can_simpan_status = auth_can(h_prefix('simpan_status', 2)) && $model->status != 9;
         
-        $can_action = $can_delete || $can_update || $can_batalkan;
+        $can_action = $can_delete || $can_batalkan;
     @endphp
 
     <div class="card">
         <div class="card-header d-md-flex flex-row justify-content-between">
-            <h3 class="card-title">Detail Pembayaran Penyewaan</h3>
+            <h3 class="card-title">Detail Pembayaran Penyewaan
+                @if ($model->status == 9)
+                    <span class="badge bg-danger">Dibatalkan</span>
+                @endif
+            </h3>
             <div>
                 <a href="{{ route(h_prefix(null, 2)) }}" class="btn btn-rounded btn-secondary btn-sm">
                     <i class="fas fa-arrow-left"></i> Kembali
@@ -106,6 +109,16 @@
                             <form action="javascript:void(0)" class="ml-md-3 mb-md-3" id="FilterForm">
 
                                 <div class="form-group float-start me-2" style="min-width: 300px">
+                                    <label for="dibatalkan">Dibatalkan</label>
+                                    <br>
+                                    <select class="form-control" id="dibatalkan" name="dibatalkan" style="width: 100%;">
+                                        <option value="" selected>Semua</option>
+                                        <option value="Ya">Ya</option>
+                                        <option value="Tidak">Tidak</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group float-start me-2" style="min-width: 300px">
                                     <label for="created_by">Dibuat Oleh</label>
                                     <br>
                                     <select class="form-control" id="created_by" name="created_by" style="width: 100%;">
@@ -148,6 +161,40 @@
                     </thead>
                     <tbody> </tbody>
                 </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal-batalkan">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content modal-content-demo">
+                <div class="modal-header">
+                    <h6 class="modal-title" id="modal-batalkan-title">Batalkan Pembayaran</h6>
+                    <button aria-label="Tutup" class="btn-close" data-bs-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="javascript:void(0)" id="BatalkanForm" method="POST" enctype="multipart/form-data">
+                        <input type="hidden" name="id" id="batalkan_id">
+                        <div class="form-group">
+                            <label class="form-label" for="alasan">Alasan pembatalan
+                                <span class="text-danger">*</span>
+                            </label>
+                            <textarea type="text" class="form-control" rows="3" id="alasan" name="alasan"
+                                placeholder="Alasan pembatalan" required></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" form="BatalkanForm">
+                        <li class="fas fa-save mr-1"></li> Simpan
+                    </button>
+                    <button class="btn btn-light" data-bs-dismiss="modal">
+                        <i class="fas fa-times"></i>
+                        Tutup
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -263,7 +310,7 @@
 
     <script>
         const can_insert = {{ $can_insert ? 'true' : 'false' }};
-        const can_update = {{ $can_update ? 'true' : 'false' }};
+        const can_batalkan = {{ $can_batalkan ? 'true' : 'false' }};
         const can_delete = {{ $can_delete ? 'true' : 'false' }};
         const can_action = {{ $can_action ? 'true' : 'false' }};
         const can_faktur = {{ $can_faktur ? 'true' : 'false' }};
@@ -328,6 +375,7 @@
             });
 
             // Pembayaran list ========================================================================================
+            $('#dibatalkan').select2();
             $('#created_by').select2({
                 ajax: {
                     url: "{{ route('member_select2') }}",
@@ -374,6 +422,9 @@
                     url: "{{ url(h_prefix_uri()) }}",
                     data: function(d) {
                         d['filter[penyewaan]'] = '{{ $model->id }}';
+                        d['filter[updated_by]'] = $('#updated_by').val();
+                        d['filter[created_by]'] = $('#created_by').val();
+                        d['filter[dibatalkan]'] = $('#dibatalkan').val();
                     },
                     complete: (res) => {
                         if (res.status == 200) {
@@ -396,6 +447,10 @@
                     {
                         data: 'nama',
                         name: 'nama',
+                        render(data, type, full, meta) {
+                            const batal = full.batal_tanggal != null;
+                            return `<span class="${batal ?'text-danger' : '' }">${data} ${batal ?'(Dibatalkan)' : '' }</span>`;
+                        },
                         className: 'text-nowrap'
                     },
                     {
@@ -447,13 +502,14 @@
                         data: 'id',
                         name: 'id',
                         render(data, type, full, meta) {
-                            const btn_update = can_update ? `<button type="button" class="btn btn-rounded btn-primary btn-sm me-1" title="Edit Data" onClick="editFunc('${data}')">
-                                <i class="fas fa-edit"></i> Ubah
+                            const btn_batalkan = can_batalkan && full.batal_tanggal == null ? `<button type="button" class="btn btn-rounded btn-warning btn-sm me-1" title="Batalkan" onClick="batalFunc('${data}')">
+                                <i class="fas fa-times"></i> Batalkan
                                 </button>` : '';
+
                             const btn_delete = can_delete ? `<button type="button" class="btn btn-rounded btn-danger btn-sm me-1" title="Delete Data" onClick="deleteFunc('${data}')">
                                 <i class="fas fa-trash"></i> Hapus
                                 </button>` : '';
-                            return btn_update + btn_delete;
+                            return btn_batalkan + btn_delete;
                         },
                         orderable: false,
                         className: 'text-nowrap'
@@ -489,12 +545,9 @@
                 resetErrorAfterInput();
                 var formData = new FormData(this);
                 setBtnLoading('#btn-save', 'Save Changes');
-                const route = ($('#id').val() == '') ?
-                    "{{ route(h_prefix('insert', 2)) }}" :
-                    "{{ route(h_prefix('update', 2)) }}";
                 $.ajax({
                     type: "POST",
-                    url: route,
+                    url: "{{ route(h_prefix('insert', 2)) }}",
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
@@ -532,6 +585,57 @@
                     },
                     complete: function() {
                         setBtnLoading('#btn-save',
+                            '<li class="fas fa-save mr-1"></li> Simpan',
+                            false);
+                    }
+                });
+            });
+
+            $('#BatalkanForm').submit(function(e) {
+                e.preventDefault();
+                resetErrorAfterInput();
+                var formData = new FormData(this);
+                setBtnLoading('button[form=BatalkanForm]', 'Save Changes');
+                $.ajax({
+                    type: "POST",
+                    url: "{{ route(h_prefix('batalkan', 2)) }}",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: formData,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: (data) => {
+                        $("#modal-batalkan").modal('hide');
+                        var oTable = table_html.dataTable();
+                        oTable.fnDraw(false);
+                        Swal.fire({
+                            position: 'center',
+                            icon: 'success',
+                            title: 'Data saved successfully',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                        isEdit = true;
+                    },
+                    error: function(data) {
+                        const res = data.responseJSON ?? {};
+                        errorAfterInput = [];
+                        for (const property in res.errors) {
+                            errorAfterInput.push(property);
+                            setErrorAfterInput(res.errors[property], `#${property}`);
+                        }
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'error',
+                            title: res.message ?? 'Something went wrong',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                    },
+                    complete: function() {
+                        setBtnLoading('button[form=BatalkanForm]',
                             '<li class="fas fa-save mr-1"></li> Simpan',
                             false);
                     }
@@ -593,55 +697,11 @@
 
         }
 
-        function deleteFunc(id) {
-            swal.fire({
-                title: 'Apakah anda yakin?',
-                text: "Apakah anda yakin akan menghapus data ini ?",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Yes'
-            }).then(function(result) {
-                if (result.value) {
-                    $.ajax({
-                        url: `{{ url(h_prefix_uri(null, 2)) }}/${id}`,
-                        type: 'DELETE',
-                        dataType: 'json',
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        },
-                        beforeSend: function() {
-                            swal.fire({
-                                title: 'Please Wait..!',
-                                text: 'Is working..',
-                                onOpen: function() {
-                                    Swal.showLoading()
-                                }
-                            })
-                        },
-                        success: function(data) {
-                            Swal.fire({
-                                position: 'center',
-                                icon: 'success',
-                                title: '{{ $page_attr['title'] }} berhasil dihapus',
-                                showConfirmButton: false,
-                                timer: 1500
-                            })
-                            var oTable = table_html.dataTable();
-                            oTable.fnDraw(false);
-                        },
-                        complete: function() {
-                            swal.hideLoading();
-                        },
-                        error: function(jqXHR, textStatus, errorThrown) {
-                            swal.hideLoading();
-                            swal.fire("!Opps ", "Something went wrong, try again later", "error");
-                        }
-                    });
-                }
-            });
+        function batalFunc(id) {
+            $('#modal-batalkan').modal('show');
+            $('#batalkan_id').val(id);
+            $('#alasan').val('');
         }
-
-
 
         function setStatusPembayaran(value) {
             if (value == '0' || value == '1') {
@@ -689,6 +749,54 @@
             $('#total_yang_harus_dibayar').val(format_rupiah(pembayaran_total));
             terbilang_str = pembayaran_total > 0 ? (terbilang(pembayaran_total) + ' Rupiah') : "";
             $('#total_yang_harus_dibayar_terbilang').html(terbilang_str);
+        }
+
+        function deleteFunc(id) {
+            swal.fire({
+                title: 'Apakah anda yakin?',
+                text: "Apakah anda yakin akan menghapus data ini ?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes'
+            }).then(function(result) {
+                if (result.value) {
+                    $.ajax({
+                        url: `{{ url(h_prefix_uri(null, 2)) }}/${id}`,
+                        type: 'DELETE',
+                        dataType: 'json',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        beforeSend: function() {
+                            swal.fire({
+                                title: 'Please Wait..!',
+                                text: 'Is working..',
+                                onOpen: function() {
+                                    Swal.showLoading()
+                                }
+                            })
+                        },
+                        success: function(data) {
+                            Swal.fire({
+                                position: 'center',
+                                icon: 'success',
+                                title: '{{ $page_attr['title'] }} berhasil dihapus',
+                                showConfirmButton: false,
+                                timer: 1500
+                            })
+                            var oTable = table_html.dataTable();
+                            oTable.fnDraw(false);
+                        },
+                        complete: function() {
+                            swal.hideLoading();
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            swal.hideLoading();
+                            swal.fire("!Opps ", "Something went wrong, try again later", "error");
+                        }
+                    });
+                }
+            });
         }
     </script>
 @endsection

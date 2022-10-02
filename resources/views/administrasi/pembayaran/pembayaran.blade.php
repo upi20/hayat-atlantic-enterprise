@@ -132,6 +132,22 @@
                     </table>
                     <hr>
                     <h3 class="card-title mb-2">Daftar Pembayaran</h3>
+                    <table class="table table-bordered table-hover border-bottom" id="tbl_pembayaran">
+                        <thead>
+                            <tr>
+                                <th class="text-nowrap">No</th>
+                                <th class="text-nowrap">Nama</th>
+                                <th class="text-nowrap">Tanggal</th>
+                                <th class="text-nowrap">Nominal</th>
+                                <th class="text-nowrap">Keterangan</th>
+                                <th class="text-nowrap">Diubah Oleh</th>
+                                <th class="text-nowrap">Diubah Tgl.</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbl_pembayaran_body">
+
+                        </tbody>
+                    </table>
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-light" data-bs-dismiss="modal">
@@ -222,6 +238,8 @@
                 ajax: {
                     url: "{{ route(h_prefix('datatable')) }}",
                     data: function(d) {
+                        d['filter[updated_by]'] = $('#updated_by').val();
+                        d['filter[created_by]'] = $('#created_by').val();
                         d['filter[customer]'] = $('#customer').val();
                         d['filter[status]'] = $('#filter_status').val();
                         d['filter[status_pembayaran]'] = $('#filter_status_pembayaran').val();
@@ -360,6 +378,9 @@
                 const table = $('#tbl_detail');
                 const table_body = $('#tbl_detail_body');
 
+                const table_pembayaran = $('#tbl_pembayaran');
+                const table_pembayaran_body = $('#tbl_pembayaran_body');
+
                 // data customer
                 data_customer.html(` <div class="col-md-6">
                             <p>${data.customer}</p>
@@ -420,6 +441,25 @@
                 });
                 table_body.html(table_body_html);
                 renderDataTable(table);
+
+                // data pembayaran
+                table_pembayaran_body.html('');
+                $(table_pembayaran).dataTable().fnDestroy();
+                let table_pembayaran_body_html = '';
+                number = 1;
+                data.pembayarans.forEach(e => {
+                    table_pembayaran_body_html += `<tr>
+                                <td class="text-nowrap">${number}</td>
+                                <td class="text-nowrap">${e.nama}</td>
+                                <td class="text-nowrap">${e.tanggal}</td>
+                                <td class="text-nowrap text-right">Rp. ${format_rupiah(e.nominal)}</td>
+                                <td class="text-nowrap">${e.keterangan ?? ''}</td>
+                                <td class="text-nowrap">${e.updated_by_str ?? e.created_by_str}</td>
+                                <td class="text-nowrap">${e.updated_at_str ?? e.created_at_str}</td>
+                            </tr>`;
+                });
+                table_pembayaran_body.html(table_pembayaran_body_html);
+                renderDataTable(table_pembayaran);
                 $.LoadingOverlay("hide");
             }).fail(($xhr) => {
                 Swal.fire({

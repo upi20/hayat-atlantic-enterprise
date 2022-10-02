@@ -5,7 +5,7 @@
         $can_insert = auth_can(h_prefix('insert'));
         $can_update = auth_can(h_prefix('update'));
         $can_delete = auth_can(h_prefix('delete'));
-        $is_admin = is_admin();
+        $can_batalkan = auth_can(h_prefix('batalkan'));
     @endphp
 
     <div class="card">
@@ -52,6 +52,7 @@
                                         <option value="3">Barang Diambil</option>
                                         <option value="4">Barang Dikembalikan</option>
                                         <option value="5">Selesai</option>
+                                        <option value="9">Dibatalkan</option>
                                     </select>
                                 </div>
 
@@ -107,7 +108,7 @@
                             <th>Status</th>
                             <th>Diubah Oleh</th>
                             <th>Diubah Tgl.</th>
-                            {!! $can_delete || $can_update ? '<th>Aksi</th>' : '' !!}
+                            {!! $can_delete || $can_update || $can_batalkan ? '<th>Aksi</th>' : '' !!}
                         </tr>
                     </thead>
                     <tbody> </tbody>
@@ -154,8 +155,58 @@
                     </table>
                     <hr>
                     <h3 class="card-title mb-2">Daftar Pembayaran</h3>
+                    <table class="table table-bordered table-hover border-bottom" id="tbl_pembayaran">
+                        <thead>
+                            <tr>
+                                <th class="text-nowrap">No</th>
+                                <th class="text-nowrap">Nama</th>
+                                <th class="text-nowrap">Tanggal</th>
+                                <th class="text-nowrap">Nominal</th>
+                                <th class="text-nowrap">Keterangan</th>
+                                <th class="text-nowrap">Diubah Oleh</th>
+                                <th class="text-nowrap">Diubah Tgl.</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbl_pembayaran_body">
+
+                        </tbody>
+                    </table>
                 </div>
                 <div class="modal-footer">
+                    <button class="btn btn-light" data-bs-dismiss="modal">
+                        <i class="fas fa-times"></i>
+                        Tutup
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal-batalkan">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content modal-content-demo">
+                <div class="modal-header">
+                    <h6 class="modal-title" id="modal-batalkan-title">Batalkan Penyewaan</h6>
+                    <button aria-label="Tutup" class="btn-close" data-bs-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="javascript:void(0)" id="BatalkanForm" method="POST" enctype="multipart/form-data">
+                        <input type="hidden" name="id" id="batalkan_id">
+                        <div class="form-group">
+                            <label class="form-label" for="alasan">Alasan pembatalan
+                                <span class="text-danger">*</span>
+                            </label>
+                            <textarea type="text" class="form-control" rows="3" id="alasan" name="alasan"
+                                placeholder="Alasan pembatalan" required></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" form="BatalkanForm">
+                        <li class="fas fa-save mr-1"></li> Simpan
+                    </button>
                     <button class="btn btn-light" data-bs-dismiss="modal">
                         <i class="fas fa-times"></i>
                         Tutup
@@ -181,9 +232,9 @@
     <script src="{{ asset('assets/templates/admin/plugins/select2/js/select2.full.min.js') }}"></script>
 
     <script>
+        const can_batalkan = {{ $can_batalkan ? 'true' : 'false' }};
         const can_update = {{ $can_update ? 'true' : 'false' }};
         const can_delete = {{ $can_delete ? 'true' : 'false' }};
-        const is_admin = {{ $is_admin ? 'true' : 'false' }};
         const table_html = $('#tbl_main');
         let isEdit = true;
         $(document).ready(function() {
@@ -299,7 +350,6 @@
                         },
                         className: 'text-nowrap'
                     },
-
                     {
                         data: 'total_harga',
                         name: 'total_harga',
@@ -356,17 +406,22 @@
                         },
                         className: 'text-nowrap'
                     },
-                    ...((can_update || can_delete || is_admin) ? [{
+                    ...((can_update || can_delete || can_batalkan) ? [{
                         data: 'id',
                         name: 'id',
                         render(data, type, full, meta) {
-                            const btn_update = can_update && (full.status == 1 || is_admin) ? `<a href="{{ route('admin.penyewaan.reciving_order') }}/${data}" class="btn btn-rounded btn-primary btn-sm me-1" title="Edit Data">
+                            const btn_batalkan = (can_batalkan && full.status != 9) ? `<button type="button" class="btn btn-rounded btn-warning btn-sm me-1" title="Batalkan" onClick="batalFunc('${data}')">
+                                <i class="fas fa-times"></i> Batalkan
+                                </button>` : '';
+
+                            const btn_update = (can_update && full.status <= 2) ? `<a href="{{ route('admin.penyewaan.reciving_order') }}/${data}" class="btn btn-rounded btn-primary btn-sm me-1" title="Edit Data">
                                 <i class="fas fa-edit"></i> Ubah
                                 </a>` : '';
-                            const btn_delete = can_delete && (full.status == 1 || is_admin) ? `<button type="button" class="btn btn-rounded btn-danger btn-sm me-1" title="Delete Data" onClick="deleteFunc('${data}')">
+
+                            const btn_delete = (can_delete && full.status <= 2) ? `<button type="button" class="btn btn-rounded btn-danger btn-sm me-1" title="Delete Data" onClick="deleteFunc('${data}')">
                                 <i class="fas fa-trash"></i> Hapus
                                 </button>` : '';
-                            return btn_update + btn_delete;
+                            return btn_batalkan + btn_update + btn_delete;
                         },
                         orderable: false,
                         className: 'text-nowrap'
@@ -390,6 +445,57 @@
                 e.preventDefault();
                 var oTable = table_html.dataTable();
                 oTable.fnDraw(false);
+            });
+
+            $('#BatalkanForm').submit(function(e) {
+                e.preventDefault();
+                resetErrorAfterInput();
+                var formData = new FormData(this);
+                setBtnLoading('button[form=BatalkanForm]', 'Save Changes');
+                $.ajax({
+                    type: "POST",
+                    url: "{{ route(h_prefix('batalkan')) }}",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: formData,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: (data) => {
+                        $("#modal-batalkan").modal('hide');
+                        var oTable = table_html.dataTable();
+                        oTable.fnDraw(false);
+                        Swal.fire({
+                            position: 'center',
+                            icon: 'success',
+                            title: 'Data saved successfully',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                        isEdit = true;
+                    },
+                    error: function(data) {
+                        const res = data.responseJSON ?? {};
+                        errorAfterInput = [];
+                        for (const property in res.errors) {
+                            errorAfterInput.push(property);
+                            setErrorAfterInput(res.errors[property], `#${property}`);
+                        }
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'error',
+                            title: res.message ?? 'Something went wrong',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                    },
+                    complete: function() {
+                        setBtnLoading('button[form=BatalkanForm]',
+                            '<li class="fas fa-save mr-1"></li> Simpan',
+                            false);
+                    }
+                });
             });
         });
 
@@ -470,6 +576,9 @@
                 const table = $('#tbl_detail');
                 const table_body = $('#tbl_detail_body');
 
+                const table_pembayaran = $('#tbl_pembayaran');
+                const table_pembayaran_body = $('#tbl_pembayaran_body');
+
                 // data customer
                 data_customer.html(` <div class="col-md-6">
                             <p>${data.customer}</p>
@@ -530,6 +639,25 @@
                 });
                 table_body.html(table_body_html);
                 renderDataTable(table);
+
+                // data pembayaran
+                table_pembayaran_body.html('');
+                $(table_pembayaran).dataTable().fnDestroy();
+                let table_pembayaran_body_html = '';
+                number = 1;
+                data.pembayarans.forEach(e => {
+                    table_pembayaran_body_html += `<tr>
+                                <td class="text-nowrap">${number}</td>
+                                <td class="text-nowrap">${e.nama}</td>
+                                <td class="text-nowrap">${e.tanggal}</td>
+                                <td class="text-nowrap text-right">Rp. ${format_rupiah(e.nominal)}</td>
+                                <td class="text-nowrap">${e.keterangan ?? ''}</td>
+                                <td class="text-nowrap">${e.updated_by_str ?? e.created_by_str}</td>
+                                <td class="text-nowrap">${e.updated_at_str ?? e.created_at_str}</td>
+                            </tr>`;
+                });
+                table_pembayaran_body.html(table_pembayaran_body_html);
+                renderDataTable(table_pembayaran);
                 $.LoadingOverlay("hide");
             }).fail(($xhr) => {
                 Swal.fire({
@@ -541,6 +669,12 @@
                 })
                 $.LoadingOverlay("hide");
             })
+        }
+
+        function batalFunc(id) {
+            $('#modal-batalkan').modal('show');
+            $('#batalkan_id').val(id);
+            $('#alasan').val('');
         }
     </script>
 @endsection
