@@ -29,10 +29,18 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group">
-                            <input type="hidden" name="tanggal">
+                            <input type="hidden" name="pengambilan" value="{{ $pengambilan->id }}">
                             <label class="form-label" for="tanggal">Tanggal barang diambil
                                 <span class="text-danger">*</span></label>
-                            <input type="date" class="form-control" name="tanggal" required="" />
+                            <input type="date" class="form-control" name="tanggal" value="{{ $pengambilan->tanggal }}"
+                                required="" />
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            <label class="form-label" for="tanggal">Keterangan </label>
+                            <input type="text" class="form-control" name="tanggal"
+                                value="{{ $pengambilan->keterangan }}" />
                         </div>
                     </div>
                 </div>

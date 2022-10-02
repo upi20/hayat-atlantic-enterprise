@@ -3,7 +3,6 @@
 @section('content')
     @php
         $pre = $is_edit ? 1 : 0;
-        
         $can_save = auth_can(h_prefix('insert', $pre + 1)) || auth_can(h_prefix('update', $pre + 1));
         $can_barang_insert = auth_can(h_prefix('barang.insert', $pre));
         $can_barang_update = auth_can(h_prefix('barang.update', $pre));
@@ -14,7 +13,7 @@
         <div class="card-header d-md-flex flex-row justify-content-between">
             <h3 class="card-title">Detail Reciving Order</h3>
             <div>
-                <a href="{{ route(h_prefix(null, 2)) }}" class="btn btn-rounded btn-secondary btn-sm">
+                <a href="{{ route(h_prefix(null, $pre - 1)) }}" class="btn btn-rounded btn-secondary btn-sm">
                     <i class="fas fa-arrow-left"></i> Kembali
                 </a>
                 <button type="submit" form="MainForm" class="btn btn-rounded btn-success btn-sm">
@@ -123,14 +122,13 @@
         </div>
     </div>
 
-
     <div class="card">
         <div class="card-header d-md-flex flex-row justify-content-between">
             <h3 class="card-title">{{ $page_attr['title'] }} Barang
                 <span id="total"></span>
             </h3>
             <div>
-                <a href="{{ route(h_prefix(null, 2)) }}" class="btn btn-rounded btn-secondary btn-sm">
+                <a href="{{ route(h_prefix(null, $pre - 1)) }}" class="btn btn-rounded btn-secondary btn-sm">
                     <i class="fas fa-arrow-left"></i> Kembali
                 </a>
                 @if ($can_barang_insert)

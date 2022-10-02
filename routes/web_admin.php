@@ -611,7 +611,6 @@ Route::prefix($prefix)->group(function () use ($name, $prefix) {
     });
 });
 
-
 $prefix = "pengambilan";
 Route::prefix($prefix)->group(function () use ($name, $prefix) {
     $name = "$name.$prefix"; // admin.pengambilan

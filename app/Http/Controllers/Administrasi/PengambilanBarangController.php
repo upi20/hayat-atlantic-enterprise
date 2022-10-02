@@ -8,6 +8,8 @@ use App\Models\Barang\Sewa;
 
 use App\Models\Faktur;
 use App\Models\FakturBarang;
+use App\Models\Pengambilan;
+use App\Models\PengambilanBarang;
 use App\Models\Penyewaan;
 use App\Models\PenyewaanBarang;
 use App\Models\PenyewaanPembayaran;
@@ -58,6 +60,30 @@ class PengambilanBarangController extends Controller
             ->leftJoin($t_barang, "$t_barang.id", "=", "$table.barang")
             ->where("$table.penyewaan", $model->id)->get();
 
-        return view('administrasi.pengambilan.list', compact('page_attr', 'model', 'barangs'));
+        // buat data pengambilan
+        $pengambilan = Pengambilan::where('penyewaan', $model->id)->first();
+        if (is_null($pengambilan)) {
+            $pengambilan = new Pengambilan();
+            $pengambilan->penyewaan = $model->id;
+            $pengambilan->save();
+        }
+        $pengambilan->tanggal = is_null($pengambilan->tanggal) ? date('Y-m-d') : $pengambilan->tanggal;
+
+        // buat pengambilan list barang
+        $pengambilan_barangs = PengambilanBarang::where('pengambilan', $pengambilan->id)->get();
+        $penyewaan_barangs_count = $barangs->count();
+
+        // cek pengambilan 
+        if ($penyewaan_barangs_count != $pengambilan_barangs->count()) {
+        }
+
+        // dd($penyewaan_barangs_count);
+
+        // dd($pengambilan_barangs->count());
+
+
+
+
+        return view('administrasi.pengambilan.list', compact('page_attr', 'model', 'barangs', 'pengambilan'));
     }
 }
