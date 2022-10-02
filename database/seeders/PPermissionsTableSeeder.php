@@ -1027,6 +1027,118 @@ class PPermissionsTableSeeder extends Seeder
                 'created_at' => '2022-09-24 18:15:43',
                 'updated_at' => '2022-09-24 18:15:43',
             ),
+            126 => 
+            array (
+                'id' => 231,
+                'name' => 'admin.penyewaan',
+                'guard_name' => 'web',
+                'created_at' => '2022-08-04 16:05:42',
+                'updated_at' => '2022-08-04 16:05:42',
+            ),
+            127 => 
+            array (
+                'id' => 232,
+                'name' => 'admin.penyewaan.delete',
+                'guard_name' => 'web',
+                'created_at' => '2022-08-04 16:05:42',
+                'updated_at' => '2022-08-04 16:05:42',
+            ),
+            128 => 
+            array (
+                'id' => 233,
+                'name' => 'admin.penyewaan.batalkan',
+                'guard_name' => 'web',
+                'created_at' => '2022-08-04 16:05:42',
+                'updated_at' => '2022-08-04 16:05:42',
+            ),
+            129 => 
+            array (
+                'id' => 234,
+                'name' => 'admin.penyewaan.reciving_order',
+                'guard_name' => 'web',
+                'created_at' => '2022-08-04 16:05:42',
+                'updated_at' => '2022-08-04 16:05:42',
+            ),
+            130 => 
+            array (
+                'id' => 235,
+                'name' => 'admin.penyewaan.reciving_order.barang',
+                'guard_name' => 'web',
+                'created_at' => '2022-08-04 16:05:42',
+                'updated_at' => '2022-08-04 16:05:42',
+            ),
+            131 => 
+            array (
+                'id' => 236,
+                'name' => 'admin.penyewaan.reciving_order.barang.insert',
+                'guard_name' => 'web',
+                'created_at' => '2022-08-04 16:05:42',
+                'updated_at' => '2022-08-04 16:05:42',
+            ),
+            132 => 
+            array (
+                'id' => 237,
+                'name' => 'admin.penyewaan.reciving_order.barang.update',
+                'guard_name' => 'web',
+                'created_at' => '2022-08-04 16:05:42',
+                'updated_at' => '2022-08-04 16:05:42',
+            ),
+            133 => 
+            array (
+                'id' => 238,
+                'name' => 'admin.penyewaan.reciving_order.barang.delete',
+                'guard_name' => 'web',
+                'created_at' => '2022-08-04 16:05:42',
+                'updated_at' => '2022-08-04 16:05:42',
+            ),
+            134 => 
+            array (
+                'id' => 239,
+                'name' => 'admin.pembayaran',
+                'guard_name' => 'web',
+                'created_at' => '2022-08-04 16:05:42',
+                'updated_at' => '2022-08-04 16:05:42',
+            ),
+            135 => 
+            array (
+                'id' => 240,
+                'name' => 'admin.pembayaran.faktur',
+                'guard_name' => 'web',
+                'created_at' => '2022-08-04 16:05:42',
+                'updated_at' => '2022-08-04 16:05:42',
+            ),
+            136 => 
+            array (
+                'id' => 241,
+                'name' => 'admin.pembayaran.faktur.simpan_status',
+                'guard_name' => 'web',
+                'created_at' => '2022-08-04 16:05:42',
+                'updated_at' => '2022-08-04 16:05:42',
+            ),
+            137 => 
+            array (
+                'id' => 242,
+                'name' => 'admin.pembayaran.insert',
+                'guard_name' => 'web',
+                'created_at' => '2022-08-04 16:05:42',
+                'updated_at' => '2022-08-04 16:05:42',
+            ),
+            138 => 
+            array (
+                'id' => 243,
+                'name' => 'admin.pembayaran.delete',
+                'guard_name' => 'web',
+                'created_at' => '2022-08-04 16:05:42',
+                'updated_at' => '2022-08-04 16:05:42',
+            ),
+            139 => 
+            array (
+                'id' => 244,
+                'name' => 'admin.pembayaran.batalkan',
+                'guard_name' => 'web',
+                'created_at' => '2022-08-04 16:05:42',
+                'updated_at' => '2022-08-04 16:05:42',
+            ),
         ));
         
         

@@ -45,18 +45,17 @@
 ## pastikan semua breadcumb berjalan dengan baik
 
 ## Perijinan
-    admin.penyewaan
-    admin.penyewaan.delete
-    admin.penyewaan.batalkan
-    admin.penyewaan.reciving_order
-    admin.penyewaan.reciving_order.barang
-    admin.penyewaan.reciving_order.barang.insert
-    admin.penyewaan.reciving_order.barang.update
-    admin.penyewaan.reciving_order.barang.delete
-
-    admin.pembayaran
-    admin.pembayaran.faktur
-    admin.pembayaran.faktur.simpan_status
-    admin.pembayaran.insert
-    admin.pembayaran.delete
-    admin.pembayaran.batalkan
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
