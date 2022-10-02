@@ -420,7 +420,7 @@
                         data: 'id',
                         name: 'id',
                         render(data, type, full, meta) {
-                            return `<a href="{{ url(h_prefix_uri('faktur', 2)) }}/${data}" class="btn btn-rounded btn-primary btn-sm me-1" title="Cetak Faktur">
+                            return `<a href="{{ url(h_prefix_uri('faktur', 2)) }}/${data}" target="_blank" class="btn btn-rounded btn-primary btn-sm me-1" title="Cetak Faktur">
                                 <i class="fas fa-file-alt"></i> Cetak
                                 </a>`;
                         },

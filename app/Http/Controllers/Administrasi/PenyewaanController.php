@@ -224,7 +224,7 @@ class PenyewaanController extends Controller
                 return response()->json($model);
             } else {
                 return response()->json([
-                    'message' => 'Peyewaan tidak dapat dihapus karena faktur sudah dibuat.',
+                    'message' => 'Peyewaan tidak dapat dihapus karena faktur sudah dibuat. silahkan batalkan saja.',
                     'error' => '',
                 ], 500);
             }

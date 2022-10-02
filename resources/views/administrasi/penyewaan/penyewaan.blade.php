@@ -433,8 +433,13 @@
                             swal.hideLoading();
                         },
                         error: function(jqXHR, textStatus, errorThrown) {
+                            let error = null;
+                            if (jqXHR.responseJSON) {
+                                error = jqXHR.responseJSON.message;
+                            }
                             swal.hideLoading();
-                            swal.fire("!Opps ", "Something went wrong, try again later", "error");
+                            swal.fire("!Opps ", error ?? "Something went wrong, try again later",
+                                "error");
                         }
                     });
                 }

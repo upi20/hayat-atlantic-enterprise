@@ -11,9 +11,7 @@
     [x] crud pembayaran
     [x] status lunas role jika ada pembayaran bisa di jadiin lunas, jika total pembayaran sama dengan total harga maka otomatis status akan lunas.
     [x] cetak faktur dari per pembayaran
-    [] nomor faktur dari timestamp pencetakan faktur
-    [] pembayaran jika (faktur tinggal 1 dan status sudah >= 3) dan pembayaran pertama daengan created at paling kecil tidak bisa dihapus 
-    [] buat pembatalan di setiap crud
+    [x] nomor faktur dari timestamp pencetakan faktur
     [] Buat settingan faktur
 
 ## Buat teknis pembatalan
@@ -47,14 +45,20 @@
 ## pastikan peijinan berjalan dengan baik
 ## pastikan semua breadcumb berjalan dengan baik
 
+## Perijinan
+    admin.penyewaan
+    admin.penyewaan.delete
+    admin.penyewaan.batalkan
+    admin.penyewaan.reciving_order
+    admin.penyewaan.reciving_order.barang
+    admin.penyewaan.reciving_order.barang.insert
+    admin.penyewaan.reciving_order.barang.update
+    admin.penyewaan.reciving_order.barang.delete
 
-## Faktur
-    - Nomor
-    - Tanggal
-    - Jumlah Pembayaran
-    - Sisa
-    - List Barang
-    - Kepada, Lokasi
-    - Customer
-    - Terbilang
-    - Identitas
+    admin.pembayaran
+    admin.pembayaran.faktur
+    admin.pembayaran.faktur.simpan_status
+    admin.pembayaran.insert
+    admin.pembayaran.update
+    admin.pembayaran.delete
+    admin.pembayaran.batalkan
