@@ -21,7 +21,7 @@ class PenyewaanPembayaranTableSeeder extends Seeder
         \DB::table('penyewaan_pembayaran')->insert(array (
             0 => 
             array (
-                'id' => 5,
+                'id' => 6,
                 'tanggal' => '2022-10-02',
                 'nama' => 'DP',
                 'keterangan' => NULL,
@@ -32,8 +32,24 @@ class PenyewaanPembayaranTableSeeder extends Seeder
                 'batal_oleh' => NULL,
                 'updated_by' => NULL,
                 'created_by' => 1,
-                'created_at' => '2022-10-02 14:22:54',
-                'updated_at' => '2022-10-02 14:22:54',
+                'created_at' => '2022-10-02 16:50:15',
+                'updated_at' => '2022-10-02 16:50:15',
+            ),
+            1 => 
+            array (
+                'id' => 7,
+                'tanggal' => '2022-10-02',
+                'nama' => 'Pembayaran Ke 2',
+                'keterangan' => NULL,
+                'nominal' => 1000000,
+                'penyewaan' => 5,
+                'batal_keterangan' => NULL,
+                'batal_tanggal' => NULL,
+                'batal_oleh' => NULL,
+                'updated_by' => NULL,
+                'created_by' => 1,
+                'created_at' => '2022-10-02 16:53:11',
+                'updated_at' => '2022-10-02 16:53:11',
             ),
         ));
         
