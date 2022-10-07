@@ -209,7 +209,7 @@ class PenyewaanController extends Controller
             }
         }
 
-        $model->where('status', '<>', 0);
+        $model->where("$table.status", '<>', 0);
         // ========================================================================================================
 
 

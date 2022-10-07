@@ -48,14 +48,29 @@
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
+# Jumat, 07 Oktober 2022
+## Pengambilan Barang
+    [x] Filter status Penyewaan di hide
+    [x] Detail Daftar Pengambilan -> Daftar Pembayaran  
+    [x] Buat Desain Detail Pengambilan Barang
+    [x] Buat Menampilkan data
+    [x] Buat fungsi simpan
+    [] Buat Surat Jalan
+        [] Buat Logo
+        [] Buat halaman konsep
+    [] Pengirim di surat jalan
+    [] Pengambilan barang bisa di klik table -> tr nya langsung
+    [] Buat status pengambilan barang (Datatable)
+    [] semua tanggal ada str nya
+    [] Crud Setting Surat Jalan
+
+## Buat Lagi konsep sesuai dengan yang ada di kledo
+
+### Pengambilan Barang 
+    1. Admin Menyimpan list data barang yang akan diambil (Surat Bisa di cetak kalau list barang sudah disimpan, dan bisa mengubah nya jika warehouse belum mengkonfirmasi barang diambil.).
+    2. Admin mencetak surat jalan.
+    3. Warehouse Mengkonfirmasi Barang diambil
+    4. Data pengambilan Barang -> List barang otomatis tidak bisa di ubah lagi (Disimpan, dikunci);
+
     
     

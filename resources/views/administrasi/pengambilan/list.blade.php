@@ -18,67 +18,84 @@
                 <a href="{{ route(h_prefix(null, 2)) }}" class="btn btn-rounded btn-secondary btn-sm">
                     <i class="fas fa-arrow-left"></i> Kembali
                 </a>
+                @if ($can_surat_jalan)
+                    <a href="{{ route(h_prefix('surat_jalan', 2), $model->id) }}" target="_blank" id="btn-surat-jalan"
+                        class="btn btn-rounded btn-success btn-sm"
+                        style="{{ $pengambilan->status == 0 ? 'display:none' : '' }}">
+                        <i class="fas fa-print"></i> Cetak Surat Jalan
+                    </a>
+                @endif
             </div>
         </div>
         <div class="card-body">
-            <form action="javascript:void(0)" id="DetailForm" name="DetailForm" method="POST" enctype="multipart/form-data">
-                <div class="form-group">
-                    <div class="form-label">Kepada, Lokasi:</div>
-                    <span class="fw-bold">{{ $model->kepada }}</span>,{{ $model->lokasi }}
-                </div>
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <input type="hidden" name="pengambilan" value="{{ $pengambilan->id }}">
-                            <label class="form-label" for="tanggal">Tanggal barang diambil
-                                <span class="text-danger">*</span></label>
-                            <input type="date" class="form-control" name="tanggal" value="{{ $pengambilan->tanggal }}"
-                                required="" />
-                        </div>
-                    </div>
-                    <div class="col-md-8">
-                        <div class="form-group">
-                            <label class="form-label" for="tanggal">Keterangan </label>
-                            <input type="text" class="form-control" name="tanggal"
-                                value="{{ $pengambilan->keterangan }}" />
-                        </div>
+            <form action="javascript:void(0)" id="MainForm" name="MainForm" method="POST" enctype="multipart/form-data">
+                <input type="hidden" name="pengambilan" value="{{ $pengambilan->id }}">
+                <div class=" row mb-4">
+                    <label class="form-label col-md-3 ">Kepada:</label>
+                    <div class="col-md-9">
+                        <i class="fas fa-user"></i> {{ $model->kepada }} <br>
+                        <i class="fas fa-map-marker-alt"></i> {{ $model->lokasi }} <br>
+                        <i class="fab fa-whatsapp"></i> {{ $customer->no_whatsapp }}
+                        <i class="fas fa-phone-alt ms-3"></i> {{ $customer->no_telepon }} <br>
                     </div>
                 </div>
-                <p>List data barang yang akan diambil sesuai dengan pemensanan sebelumnya.</p>
-                @foreach ($barangs as $key => $barang)
-                    <hr>
-                    <h5>{{ $barang->barang_kode }} | {{ $barang->barang_nama }}</h5>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <input type="hidden" name="id[]">
-                                <label class="form-label" for="qty[]">Barang Diambil
-                                    <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" name="qty[]" required="" />
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label class="form-label" for="qty_db_{{ $key }}">
-                                    Barang QTY Penyewaan (Di Faktur)
-                                    <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" id="qty_db_{{ $key }}"
-                                    name="qty_db_{{ $key }}" required="" />
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label class="form-label" for="stok_db_{{ $key }}">
-                                    Stok barang di gudang
-                                    <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" id="stok_db_{{ $key }}"
-                                    name="stok_db_{{ $key }}" required="" />
-                            </div>
-                        </div>
+                <div class=" row mb-4">
+                    <label class="form-label col-md-3">Tanggal barang kirim/diambil:
+                        <span class="text-danger">*</span></label>
+                    <div class="col-md-9">
+                        <input type="date" class="form-control date-input-str" name="tanggal" id="tanggal"
+                            value="{{ $pengambilan->tanggal }}" required="" />
                     </div>
-                @endforeach
+                </div>
+                <div class=" row mb-4">
+                    <label class="form-label col-md-3 ">Keterangan/Catatan:
+                        <span class="text-danger">*</span></label>
+                    <div class="col-md-9">
+                        <textarea class="form-control" name="keterangan" id="keterangan" cols="20" rows="7">{{ $pengambilan->keterangan }}</textarea>
+                    </div>
+                </div>
+                <div class=" row mb-4">
+                    <label class="form-label col-md-3 ">Status Pengambilan</label>
+                    <div class="col-md-9">
+                        <span id="status-pengambilan"
+                            class="badge bg-{{ $pengambilan->status == 1 ? 'primary' : ($pengambilan->status == 2 ? 'success' : 'warning') }}">
+                            {{ $pengambilan->status == 1 ? 'Data Disimpan' : ($pengambilan->status == 2 ? 'Barang Dikirim' : 'Data Dibuat') }}
+                        </span>
+                    </div>
+                </div>
 
+                <p>List data barang yang akan diambil sesuai dengan penyewaan yang sudah dibuat.</p>
+                <table class="table">
+                    <thead>
+                        <th>Nama Barang</th>
+                        <th>Jml. Diambil <span class="text-danger">*</span></th>
+                        <th class="text-right">Jml. Disewa</th>
+                        <th class="text-right">Jml. Digudang</th>
+                    </thead>
+                    <tbody>
+                        @foreach ($pengambilan_barangs as $key => $barang)
+                            <tr>
+                                <td>{{ $barang->barang_nama }}<br><small>{{ $barang->barang_kode }}</small></td>
+                                <td>
+                                    <div class="input-group">
+                                        <input type="number" min="0" value="{{ $barang->qty }}"
+                                            class="form-control" style="max-width: 100px" name="qtys[{{ $barang->id }}]"
+                                            required="" />
+                                        <div class="input-group-text">{{ $barang->barang_satuan }}</div>
+                                    </div>
+                                </td>
+                                <td class="text-right">{{ $barang->barang_disewa_qty }} {{ $barang->barang_satuan }}</td>
+                                <td class="text-right">{{ $barang->barang_stok }} {{ $barang->barang_satuan }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
             </form>
+        </div>
+        <div class="card-footer" id="btn-simpan" style="{{ $pengambilan->status == 2 ? 'display:none' : '' }}">
+            <button type="submit" class="btn btn-primary" form="MainForm">
+                <li class="fas fa-save"></li> Simpan
+            </button>
         </div>
     </div>
 @endsection
@@ -99,7 +116,73 @@
 
     <script>
         $(document).ready(function() {
+            $('#MainForm').submit(function(e) {
+                e.preventDefault();
+                var formData = new FormData(this);
+                setBtnLoading('button[type=submit][form=MainForm]', 'Simpan');
+                $.ajax({
+                    type: "POST",
+                    url: "{{ route(h_prefix('save', 2)) }}",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: formData,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: (data) => {
+                        Swal.fire({
+                            position: 'center',
+                            icon: 'success',
+                            title: 'Data Berhasil Disimpan',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
 
+                        // jika status 1 maka set status teks, print, simpan
+                        if (data.status != undefined) {
+                            // set status
+                            const status = data.status
+                            const status_el = $('#status-pengambilan');
+                            const status_color = (status == 1) ? 'primary' : (status == 2 ?
+                                'success' : 'warning');
+                            const status_str = (status == 1) ? 'Data Disimpan' : (status == 2 ?
+                                'Barang Dikirim' : 'Data Dibuat');
+
+                            status_el.attr('class', `badge bg-${status_color}`);
+                            status_el.html(status_str);
+
+                            if (status == 0 || status == 1) {
+                                $('#btn-simpan').fadeIn();
+                            } else {
+                                $('#btn-simpan').fadeOut();
+                            }
+
+                            if (status != 0) {
+                                $('#btn-surat-jalan').fadeIn();
+                            } else {
+                                $('#btn-surat-jalan').fadeOut();
+                            }
+                        }
+
+
+                    },
+                    error: function(data) {
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'error',
+                            title: 'Something went wrong',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                    },
+                    complete: function() {
+                        setBtnLoading('button[type=submit][form=MainForm]',
+                            '<i class="fas fa-save"></i> Simpan',
+                            false);
+                    }
+                });
+            });
         });
     </script>
 @endsection

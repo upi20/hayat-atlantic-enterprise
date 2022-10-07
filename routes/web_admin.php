@@ -618,7 +618,7 @@ Route::prefix($prefix)->group(function () use ($name, $prefix) {
         Route::get('/', 'index')->name($name)->middleware("permission:$name");
         Route::get('/list/{model}', 'list')->name("$name.list")->middleware("permission:$name");
         Route::get('/surat_jalan/{model}', 'surat_jalan')->name("$name.surat_jalan")->middleware("permission:$name.surat_jalan");
-        Route::post('/simpan/{model}', 'simpan')->name("$name.simpan")->middleware("permission:$name.simpan");
+        Route::post('/save', 'save')->name("$name.save")->middleware("permission:$name.save");
     });
 
     Route::controller(PenyewaanController::class)->group(function () use ($name) {
@@ -634,13 +634,7 @@ Route::prefix($prefix)->group(function () use ($name, $prefix) {
     Route::controller(PengembalianBarangController::class)->group(function () use ($name) {
         Route::get('/', 'index')->name($name)->middleware("permission:$name");
         Route::get('/list/{model}', 'list')->name("$name.list")->middleware("permission:$name");
-        Route::get('/faktur/{model}', 'faktur')->name("$name.faktur")->middleware("permission:$name.faktur");
-        Route::post('/simpan_status/{model}', 'simpan_status')->name("$name.simpan_status")->middleware("permission:$name.simpan_status");
-
-        Route::post('/insert', 'insert')->name("$name.insert")->middleware("permission:$name.insert");
-        Route::post('/batalkan', 'batalkan')->name("$name.batalkan")->middleware("permission:$name.batalkan");
-        Route::get('/find', 'find')->name("$name.find")->middleware("permission:$name.update");
-        Route::delete('/{model}', 'delete')->name("$name.delete")->middleware("permission:$name.delete");
+        Route::post('/save', 'save')->name("$name.save")->middleware("permission:$name.save");
     });
 
     Route::controller(PenyewaanController::class)->group(function () use ($name) {

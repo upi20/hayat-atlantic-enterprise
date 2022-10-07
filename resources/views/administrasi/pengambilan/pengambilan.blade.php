@@ -126,7 +126,7 @@
                         </tbody>
                     </table>
                     <hr>
-                    <h3 class="card-title mb-2">Daftar Pengambilan</h3>
+                    <h3 class="card-title mb-2">Daftar Pembayaran</h3>
                     <table class="table table-bordered table-hover border-bottom" id="tbl_pembayaran">
                         <thead>
                             <tr>

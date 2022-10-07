@@ -18,10 +18,10 @@ return new class extends Migration
             $table->bigInteger('penyewaan', false, true)->nullable()->default(null);
             $table->date('tanggal')->nullable()->default(null);
             $table->string('keterangan')->nullable()->default(null);
+            $table->boolean('status')->nullable()->default(0)->comment('0 Dibuat, 1 Disimpan, 2 Diambil');
             $table->bigInteger('updated_by', false, true)->nullable()->default(null);
             $table->bigInteger('created_by', false, true)->nullable()->default(null);
             $table->timestamps();
-
 
             $table->foreign('penyewaan')
                 ->references('id')->on('penyewaan')

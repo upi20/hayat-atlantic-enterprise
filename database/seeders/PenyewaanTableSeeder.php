@@ -44,6 +44,28 @@ class PenyewaanTableSeeder extends Seeder
             1 => 
             array (
                 'id' => 6,
+                'customer' => 2,
+                'lokasi' => 'Alamat 2',
+                'tanggal_kirim' => '2022-10-07',
+                'tanggal_pakai_dari' => '2022-10-08',
+                'tanggal_pakai_sampai' => '2022-10-08',
+                'kepada' => 'Customer 2',
+                'tanggal_order' => '2022-10-07 15:26:00',
+                'status' => 1,
+                'total_harga' => 100000,
+                'dibayar' => 0,
+                'status_pembayaran' => 0,
+                'batal_keterangan' => NULL,
+                'batal_tanggal' => NULL,
+                'batal_oleh' => NULL,
+                'updated_by' => NULL,
+                'created_by' => 1,
+                'created_at' => '2022-10-02 16:44:01',
+                'updated_at' => '2022-10-07 15:27:21',
+            ),
+            2 => 
+            array (
+                'id' => 7,
                 'customer' => NULL,
                 'lokasi' => NULL,
                 'tanggal_kirim' => NULL,
@@ -60,8 +82,8 @@ class PenyewaanTableSeeder extends Seeder
                 'batal_oleh' => NULL,
                 'updated_by' => NULL,
                 'created_by' => 1,
-                'created_at' => '2022-10-02 16:44:01',
-                'updated_at' => '2022-10-02 16:44:01',
+                'created_at' => '2022-10-07 16:53:04',
+                'updated_at' => '2022-10-07 16:53:04',
             ),
         ));
         

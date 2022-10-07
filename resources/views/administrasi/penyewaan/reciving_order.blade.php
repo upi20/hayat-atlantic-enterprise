@@ -13,7 +13,7 @@
         <div class="card-header d-md-flex flex-row justify-content-between">
             <h3 class="card-title">Detail Reciving Order</h3>
             <div>
-                <a href="{{ route(h_prefix(null, $pre - 1)) }}" class="btn btn-rounded btn-secondary btn-sm">
+                <a href="{{ route(h_prefix(null, $pre - ($is_edit ? 0 : 1))) }}" class="btn btn-rounded btn-secondary btn-sm">
                     <i class="fas fa-arrow-left"></i> Kembali
                 </a>
                 <button type="submit" form="MainForm" class="btn btn-rounded btn-success btn-sm">
@@ -43,8 +43,8 @@
                             <label class="form-label" for="tanggal_pakai_dari">Tanggal Pakai Dari
                                 <span class="text-danger">*</span>
                             </label>
-                            <input type="date" class="form-control" id="tanggal_pakai_dari" name="tanggal_pakai_dari"
-                                value="{{ $model->tanggal_pakai_dari }}" required="" />
+                            <input type="date" class="date-input-str form-control" id="tanggal_pakai_dari"
+                                name="tanggal_pakai_dari" value="{{ $model->tanggal_pakai_dari }}" required="" />
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -63,8 +63,10 @@
                             <label class="form-label" for="tanggal_pakai_sampai">Tanggal Pakai Sampai
                                 <span class="text-danger">*</span>
                             </label>
-                            <input type="date" class="form-control" id="tanggal_pakai_sampai" name="tanggal_pakai_sampai"
+                            <input type="date" class="date-input-str form-control tanggal-refresh"
+                                data-id_str="tanggal_pakai_sampai_str" id="tanggal_pakai_sampai" name="tanggal_pakai_sampai"
                                 value="{{ $model->tanggal_pakai_sampai }}" required="" />
+                            <small id="tanggal_pakai_sampai_str"></small>
                         </div>
                     </div>
                     <div class="col-lg-4">
@@ -72,8 +74,8 @@
                             <label class="form-label" for="tanggal_kirim">Tanggal Kirim
                                 <span class="text-danger">*</span>
                             </label>
-                            <input type="date" class="form-control" id="tanggal_kirim" name="tanggal_kirim"
-                                value="{{ $model->tanggal_kirim }}" required="" />
+                            <input type="date" class="date-input-str form-control" id="tanggal_kirim"
+                                name="tanggal_kirim" value="{{ $model->tanggal_kirim }}" required="" />
                         </div>
                     </div>
                     <div class="col-lg-4">
@@ -128,7 +130,8 @@
                 <span id="total"></span>
             </h3>
             <div>
-                <a href="{{ route(h_prefix(null, $pre - 1)) }}" class="btn btn-rounded btn-secondary btn-sm">
+                <a href="{{ route(h_prefix(null, $pre - ($is_edit ? 0 : 1))) }}"
+                    class="btn btn-rounded btn-secondary btn-sm">
                     <i class="fas fa-arrow-left"></i> Kembali
                 </a>
                 @if ($can_barang_insert)
@@ -138,8 +141,8 @@
                     </button>
                 @endif
             </div>
-
         </div>
+
         <div class="card-body">
             <div class="table-responsive table-striped">
                 <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
@@ -205,7 +208,6 @@
             </div>
         </div>
     </div>
-
 
     <!-- End Row -->
     <div class="modal fade" id="modal-default">
