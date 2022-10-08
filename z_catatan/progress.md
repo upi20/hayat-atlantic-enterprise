@@ -69,6 +69,20 @@
     2. Admin mencetak surat jalan.
     3. Warehouse Mengkonfirmasi Barang diambil
     4. Data pengambilan Barang -> List barang otomatis tidak bisa di ubah lagi (Disimpan, dikunci);
+   
+## Pengambilan Barang
+    [] Data sotk barang berkurang.
+
+## Pengembalian Barang
+    [x] Pengembalian Barang Datatable
+    [] Pengembalian Barang List barang
+    [] Pengembalian Barang pemakaian barang habis pakai
+    [] Laporan pengembalian barang
+
+### Perbaiki logic
+    [] Ketika reciving order dibuat maka buat surat jalan
+    [] Detail Penyewaan Status Ada yang di perbaiki dan ada yang ditambah
+
 
     
     

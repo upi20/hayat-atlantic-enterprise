@@ -237,8 +237,25 @@ class PengambilanBarangController extends Controller
 
     public function konfirmasi(SuratJalan $model)
     {
+        DB::beginTransaction();
         $model->status = 2;
         $model->save();
+
+        // penyewaan
+        $penyewaan = Penyewaan::findOrFail($model->penyewaan);
+        $penyewaan->status = 3;
+        $penyewaan->save();
+
+        // Data barang sewa berubah
+        $barangs = SuratJalanBarang::where('surat_jalan', $model->id)->get();
+        foreach ($barangs as $j_barang) {
+            $barang = Sewa::findOrFail($j_barang->barang);
+            $barang->qty_ada = $barang->qty_ada - $j_barang->qty;
+            $barang->qty_disewakan = $barang->qty_disewakan + $j_barang->qty;
+            $barang->save();
+        }
+
+        DB::commit();
         return ($model);
     }
 }

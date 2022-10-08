@@ -4,7 +4,7 @@
     @php
         $can_simpan = auth_can(h_prefix('simpan'));
         $can_surat_jalan = auth_can(h_prefix('surat_jalan'));
-        $can_pengambilan = $can_simpan || $can_surat_jalan;
+        $can_pengemblian = $can_simpan || $can_surat_jalan;
         
     @endphp
 
@@ -31,21 +31,21 @@
                                     <br>
                                     <select class="form-control" id="filter_status_pengambilan"
                                         name="filter_status_pengambilan" style="width: 100%;">
-                                        <option value="" selected>Semua</option>
-                                        <option value="Barang Dikirim">Barang Dikirim</option>
+                                        <option value="">Semua</option>
+                                        <option value="Barang Dikirim" selected>Barang Dikirim</option>
                                         <option value="Data Disimpan">Data Disimpan</option>
                                         <option value="Data Dibuat">Data Dibuat</option>
                                     </select>
                                 </div>
-                                <div class="form-group float-start me-2" style="min-width: 300px;">
+                                <div class="form-group float-start me-2" style="min-width: 300px">
                                     <label for="filter_status">Status Penyewaan</label>
                                     <br>
                                     <select class="form-control" id="filter_status" name="filter_status"
                                         style="width: 100%;">
                                         <option value="">Semua</option>
                                         <option value="1">Penyewaan Dibuat</option>
-                                        <option value="2" selected>Faktur Dibuat</option>
-                                        <option value="3">Barang Diambil</option>
+                                        <option value="2">Faktur Dibuat</option>
+                                        <option value="3" selected>Barang Diambil</option>
                                         <option value="4">Barang Dikembalikan</option>
                                         <option value="5">Selesai</option>
                                         <option value="9">Dibatalkan</option>
@@ -76,7 +76,7 @@
                         <tr>
                             <th>No</th>
                             <th>Status</th>
-                            {!! $can_pengambilan ? '<th>Pengambilan</th>' : '' !!}
+                            {!! $can_pengemblian ? '<th>Pengembalian</th>' : '' !!}
                             <th>Detail</th>
                             <th>Customer</th>
                             <th>Lokasi</th>
@@ -172,7 +172,7 @@
     <script src="{{ asset('assets/templates/admin/plugins/select2/js/select2.full.min.js') }}"></script>
 
     <script>
-        const can_pengambilan = {{ $can_pengambilan ? 'true' : 'false' }};
+        const can_pengemblian = {{ $can_pengemblian ? 'true' : 'false' }};
         const table_html = $('#tbl_main');
         let isEdit = true;
         $(document).ready(function() {
@@ -256,12 +256,12 @@
                             return `<span class="badge bg-${status_color}">${full.status_pengambilan_str}</span>`;
                         }
                     },
-                    ...((can_pengambilan) ? [{
+                    ...((can_pengemblian) ? [{
                         data: 'id',
                         name: 'id',
                         render(data, type, full, meta) {
                             return `<a href="{{ url(h_prefix_uri('list')) }}/${data}" class="btn btn-rounded btn-success btn-sm me-1" title="Buat Pengambilan">
-                              <i class="fas fa-sign-out-alt"></i> Pengambilan
+                              <i class="fas fa-sign-in-alt"></i> Pengambilan
                                 </a>`;
                         },
                         orderable: false,

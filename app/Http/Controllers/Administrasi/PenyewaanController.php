@@ -207,16 +207,16 @@ class PenyewaanController extends Controller
         };
 
         // filter ini menurut data model filter
-        // $f = [$c_created_by, $c_updated_by];
-        // // loop filter
-        // foreach ($f as $v) {
-        //     if ($f_c($v)) {
-        //         $model->whereRaw("{$this->query[$v]}='{$f_c($v)}'");
-        //     }
-        // }
+        $f = [$c_status_pengambilan_str];
+        // loop filter
+        foreach ($f as $v) {
+            if ($f_c($v)) {
+                $model->whereRaw("{$this->query[$v]}='{$f_c($v)}'");
+            }
+        }
 
         // filter custom
-        $filters = ['updated_by', 'created_by', 'customer', 'status', 'status_pembayaran'];
+        $filters = ['updated_by', 'created_by', 'customer', 'status', 'status_pembayaran', 'status_pengembalian'];
         foreach ($filters as  $f) {
             if ($f_c($f) !== false) {
                 $model->whereRaw("$table.$f='{$f_c($f)}'");
