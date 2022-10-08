@@ -111,8 +111,6 @@ class backup extends Command
                 'faktur',
                 'surat_jalan',
                 'surat_jalan_barang',
-                'pengembalian',
-                'pengembalian_barang',
                 'faktur_barang',
             ],
         ];

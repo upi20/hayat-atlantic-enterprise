@@ -43,8 +43,6 @@
 
 ## Perijinan
     
-    
-    
 # Jumat, 07 Oktober 2022
 ## Pengambilan Barang
     [x] Filter status Penyewaan di hide
@@ -71,18 +69,22 @@
     4. Data pengambilan Barang -> List barang otomatis tidak bisa di ubah lagi (Disimpan, dikunci);
    
 ## Pengambilan Barang
-    [] Data sotk barang berkurang.
+    [x] Data sotk barang berkurang.
 
 ## Pengembalian Barang
     [x] Pengembalian Barang Datatable
+    [] Atur status str sesuai dengan migrasi
     [] Pengembalian Barang List barang
     [] Pengembalian Barang pemakaian barang habis pakai
     [] Laporan pengembalian barang
+    [] tanggal kembali
+    [] penerima barang
 
-### Perbaiki logic
+### Refactore
+    [] Pembuatan konsep Seluruhan
+    [] Rancangan database
     [] Ketika reciving order dibuat maka buat surat jalan
     [] Detail Penyewaan Status Ada yang di perbaiki dan ada yang ditambah
-
-
-    
-    
+    [] Penyewaan Konfirmasi oleh
+    [] Penyewaan Dikirm oleh
+    [] Penyewaan Kembali oleh

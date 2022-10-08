@@ -17,6 +17,9 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('barang', false, true)->nullable()->default(null);
             $table->integer('qty')->nullable()->default(0);
+            $table->integer('pengembalian_qty')->nullable()->default(0);
+            $table->integer('pengembalian_hilang')->nullable()->default(0);
+            $table->integer('pengembalian_rusak')->nullable()->default(0);
             $table->bigInteger('surat_jalan', false, true)->nullable()->default(null);
             $table->bigInteger('updated_by', false, true)->nullable()->default(null);
             $table->bigInteger('created_by', false, true)->nullable()->default(null);

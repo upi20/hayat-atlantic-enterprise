@@ -19,9 +19,13 @@ return new class extends Migration
             $table->string('penerima')->nullable()->default(null);
             $table->text('keterangan')->nullable()->default(null);
             $table->date('tanggal')->nullable()->default(null);
-            $table->boolean('status')->nullable()->default(0)->comment('0 Dibuat, 1 Disimpan, 2 Diambil');
+            $table->date('tanggal_kembali')->nullable()->default(null);
+            $table->boolean('status')->nullable()->default(0)->comment('0 Pengambilan Dibuat, 1 Pengambilan Disimpan, 2 Barang Dikirim, 3 Pengembalian Disimpan');
 
             $table->bigInteger('penyewaan', false, true)->nullable()->default(null);
+            $table->bigInteger('konfirmasi_oleh', false, true)->nullable()->default(null);
+            $table->bigInteger('kirim_oleh', false, true)->nullable()->default(null);
+            $table->bigInteger('kembali_oleh', false, true)->nullable()->default(null);
             $table->bigInteger('updated_by', false, true)->nullable()->default(null);
             $table->bigInteger('created_by', false, true)->nullable()->default(null);
             $table->timestamps();
@@ -33,7 +37,15 @@ return new class extends Migration
                 ->references('id')->on('users')
                 ->nullOnDelete()
                 ->cascadeOnUpdate();
-            $table->foreign('created_by')
+            $table->foreign('konfirmasi_oleh')
+                ->references('id')->on('users')
+                ->nullOnDelete()
+                ->cascadeOnUpdate();
+            $table->foreign('kirim_oleh')
+                ->references('id')->on('users')
+                ->nullOnDelete()
+                ->cascadeOnUpdate();
+            $table->foreign('kembali_oleh')
                 ->references('id')->on('users')
                 ->nullOnDelete()
                 ->cascadeOnUpdate();

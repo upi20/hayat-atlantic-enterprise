@@ -2,17 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\Barang\HabisPakai;
-use App\Models\Barang\HabisPakai\Pengadaan as HabisPakaiPengadaan;
-use App\Models\Barang\HabisPakai\PengadaanList as HabisPakaiPengadaanList;
-use App\Models\Barang\Jenis;
-use App\Models\Barang\Satuan;
-use App\Models\Barang\Sewa;
-use App\Models\Barang\Sewa\Pengadaan;
-use App\Models\Barang\Sewa\PengadaanList;
-use App\Models\User;
+
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
@@ -75,9 +66,5 @@ class DatabaseSeeder extends Seeder
         $this->call(SuratJalanTableSeeder::class);
         $this->call(SuratJalanBarangTableSeeder::class);
         $this->call(FakturBarangTableSeeder::class);
-        $this->call(PengambilanTableSeeder::class);
-        $this->call(PengambilanBarangTableSeeder::class);
-        $this->call(PengembalianTableSeeder::class);
-        $this->call(PengembalianBarangTableSeeder::class);
     }
 }

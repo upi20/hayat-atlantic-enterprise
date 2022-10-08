@@ -114,7 +114,7 @@ class PengambilanBarangController extends Controller
             $model = SuratJalan::findOrFail($request->surat_jalan);
 
             // jika barang sudah di kirim
-            if ($model->status == 2) {
+            if ($model->status > 1) {
                 return response()->json([
                     'message' => 'Barang sudah diambil tidak bisa di ubah lagi.',
                     'error' => null,

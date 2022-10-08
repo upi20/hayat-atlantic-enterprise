@@ -47,14 +47,14 @@
                         <span class="text-danger">*</span></label>
                     <div class="col-md-9">
                         <input type="date" class="form-control date-input-str" name="tanggal" id="tanggal"
-                            value="{{ $surat_jalan->tanggal }}" required="" />
+                            value="{{ $surat_jalan->tanggal }}" required="" style="display: none" />
                     </div>
                 </div>
                 <div class=" row mb-4">
                     <label class="form-label col-md-3 ">Keterangan/Catatan:
                         <span class="text-danger">*</span></label>
                     <div class="col-md-9">
-                        <textarea class="form-control" name="keterangan" id="keterangan" cols="20" rows="7">{{ $surat_jalan->keterangan }}</textarea>
+                        <p>{{ $surat_jalan->keterangan }}</p>
                     </div>
                 </div>
                 <div class=" row mb-4">
@@ -70,32 +70,77 @@
                 <p>List data barang yang akan diambil sesuai dengan penyewaan yang sudah dibuat.</p>
                 <table class="table">
                     <thead>
-                        <th>Nama Barang</th>
-                        <th>Jml. Diambil <span class="text-danger">*</span></th>
-                        <th class="text-right">Jml. Disewa</th>
-                        <th class="text-right">Jml. Digudang</th>
+                        <tr>
+                            <th rowspan="2" class="align-middle">Nama Barang</th>
+                            <th rowspan="2" class="text-right align-middle">Jml. Disewa</th>
+                            <th colspan="3" class="text-center">Kondisi Barang Saat Dikembalikan</th>
+                            <th rowspan="2" class="align-middle">Total</th>
+                        </tr>
+                        <tr>
+                            <th>Baik <span class="text-danger">*</span></th>
+                            <th>Rusak <span class="text-danger">*</span></th>
+                            <th>Hilang <span class="text-danger">*</span></th>
+                        </tr>
                     </thead>
                     <tbody>
                         @foreach ($surat_jalan_barangs as $key => $barang)
                             <tr>
-                                <td>{{ $barang->barang_nama }}<br><small>{{ $barang->barang_kode }}</small></td>
+                                <td>
+                                    {{ $barang->barang_nama }}<br>
+                                    <small>{{ $barang->barang_kode }}</small>
+                                </td>
+                                <td class="text-right">{{ $barang->qty }} {{ $barang->barang_satuan }}</td>
                                 <td>
                                     <div class="input-group">
-                                        <input type="number" min="0" value="{{ $barang->qty }}"
-                                            class="form-control" style="max-width: 100px" name="qtys[{{ $barang->id }}]"
-                                            required="" />
+                                        <input onkeyup="refresh_total('{{ $barang->id }}')"
+                                            onchange="refresh_total('{{ $barang->id }}')"
+                                            onclick="refresh_total('{{ $barang->id }}')" type="number" min="0"
+                                            max="{{ $barang->qty }}"
+                                            value="{{ $surat_jalan->status == 3 ? $barang->pengembalian_qty : $barang->qty }}"
+                                            class="form-control" style="max-width: 100px" name="baik[{{ $barang->id }}]"
+                                            id="baik-{{ $barang->id }}" required="" />
                                         <div class="input-group-text">{{ $barang->barang_satuan }}</div>
                                     </div>
                                 </td>
-                                <td class="text-right">{{ $barang->barang_disewa_qty }} {{ $barang->barang_satuan }}</td>
-                                <td class="text-right">{{ $barang->barang_stok }} {{ $barang->barang_satuan }}</td>
+                                <td class="text-right">
+                                    <div class="input-group">
+                                        <input onkeyup="refresh_total('{{ $barang->id }}')"
+                                            onchange="refresh_total('{{ $barang->id }}')"
+                                            onclick="refresh_total('{{ $barang->id }}')" type="number" min="0"
+                                            max="{{ $barang->qty }}"
+                                            value="{{ $surat_jalan->status == 3 ? $barang->pengembalian_hilang : 0 }}"
+                                            class="form-control" style="max-width: 100px" name="rusak[{{ $barang->id }}]"
+                                            id="rusak-{{ $barang->id }}" required="" />
+                                        <div class="input-group-text">{{ $barang->barang_satuan }}</div>
+                                    </div>
+                                </td>
+                                <td class="text-right">
+                                    <div class="input-group">
+                                        <input onkeyup="refresh_total('{{ $barang->id }}')"
+                                            onchange="refresh_total('{{ $barang->id }}')"
+                                            onclick="refresh_total('{{ $barang->id }}')" type="number" min="0"
+                                            max="{{ $barang->qty }}"
+                                            value="{{ $surat_jalan->status == 3 ? $barang->pengembalian_rusak : 0 }}"
+                                            class="form-control" style="max-width: 100px"
+                                            name="hilang[{{ $barang->id }}]" id="hilang-{{ $barang->id }}"
+                                            required="" />
+                                        <input type="hidden" id="disewa-{{ $barang->id }}"
+                                            value="{{ $barang->qty }}" />
+                                        <div class="input-group-text">{{ $barang->barang_satuan }}</div>
+                                    </div>
+                                </td>
+                                <td class="text-right">
+                                    <span id="total-{{ $barang->id }}"></span>
+                                    {{ $barang->barang_satuan }}
+                                    <span id="barang-{{ $barang->id }}"></span>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
             </form>
         </div>
-        <div class="card-footer" id="btn-simpan" style="{{ $surat_jalan->status == 2 ? 'display:none' : '' }}">
+        <div class="card-footer" id="btn-simpan" style="{{ $surat_jalan->status == 4 ? 'display:none' : '' }}">
             <button type="submit" class="btn btn-primary" form="MainForm">
                 <li class="fas fa-save"></li> Simpan
             </button>
@@ -103,7 +148,7 @@
                 <button type="button" class="btn btn-success" id="btn-konfirmasi"
                     onclick="konfirmasiFun('{{ $surat_jalan->id }}')"
                     style="{{ $surat_jalan->status != 1 ? 'display:none' : '' }}">
-                    <li class="fas fa-check"></li> Konfirmasi Pengambilan Barang
+                    <li class="fas fa-check"></li> Konfirmasi Penyewaan Selesai
                 </button>
             @endif
         </div>
@@ -126,6 +171,9 @@
 
     <script>
         $(document).ready(function() {
+            setTimeout(() => {
+                $('#tanggal').next().attr('class', 'h6')
+            }, 1000);
             $('#MainForm').submit(function(e) {
                 e.preventDefault();
                 var formData = new FormData(this);
@@ -156,12 +204,17 @@
                         }
                     },
                     error: function(data) {
+                        let err_text = null;
+                        if (data.responseJSON) {
+                            err_text = data.responseJSON.message;
+                        }
+
                         Swal.fire({
-                            position: 'top-end',
+                            position: 'center',
                             icon: 'error',
-                            title: 'Something went wrong',
-                            showConfirmButton: false,
-                            timer: 1500
+                            title: err_text ?? 'Something went wrong',
+                            showConfirmButton: true,
+                            timer: 10000
                         })
                     },
                     complete: function() {
@@ -183,7 +236,7 @@
             status_el.attr('class', `badge bg-${status_color}`);
             status_el.html(status_str);
 
-            if (status == 0 || status == 1) {
+            if (status != 4) {
                 $('#btn-simpan').fadeIn();
             } else {
                 $('#btn-simpan').fadeOut();
@@ -253,5 +306,24 @@
                 }
             });
         }
+
+        function refresh_total(id) {
+            const baik = Number($(`#baik-${id}`).val());
+            const rusak = Number($(`#rusak-${id}`).val());
+            const hilang = Number($(`#hilang-${id}`).val());
+            const total = (baik + hilang + rusak);
+            const disewa = Number($(`#disewa-${id}`).val());
+            if (total != disewa) {
+                $(`#barang-${id}`).html(`<i class="far fa-times-circle text-danger"></i>`);
+            } else {
+                $(`#barang-${id}`).html(`<i class="far fa-check-circle text-success"></i>`);
+            }
+            $(`#total-${id}`).html(total);
+        }
     </script>
+    @foreach ($surat_jalan_barangs as $barang)
+        <script>
+            refresh_total('{{ $barang->id }}')
+        </script>
+    @endforeach;
 @endsection
