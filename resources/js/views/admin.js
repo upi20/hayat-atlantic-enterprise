@@ -274,7 +274,7 @@ function format_tanggal(tanggal_input) {
 }
 
 function render_tanggal(e) {
-    const tanggal = format_tanggal(e.value).tanggal;
+    const tanggal = format_tanggal($(e).val()).tanggal;
     if ($(e).next().is('small')) {
         $(e).next().html(tanggal);
     } else {

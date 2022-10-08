@@ -3,6 +3,7 @@
 @section('content')
     @php
         $can_surat_jalan = auth_can(h_prefix('surat_jalan', 2));
+        $can_konfirmasi = auth_can(h_prefix('konfirmasi', 2));
         $can_simpan = auth_can(h_prefix('simpan', 2));
         $can_action = $can_simpan || $can_surat_jalan;
     @endphp
@@ -21,7 +22,7 @@
                 @if ($can_surat_jalan)
                     <a href="{{ route(h_prefix('surat_jalan', 2), $model->id) }}" target="_blank" id="btn-surat-jalan"
                         class="btn btn-rounded btn-success btn-sm"
-                        style="{{ $pengambilan->status == 0 ? 'display:none' : '' }}">
+                        style="{{ $surat_jalan->status == 0 ? 'display:none' : '' }}">
                         <i class="fas fa-print"></i> Cetak Surat Jalan
                     </a>
                 @endif
@@ -29,37 +30,39 @@
         </div>
         <div class="card-body">
             <form action="javascript:void(0)" id="MainForm" name="MainForm" method="POST" enctype="multipart/form-data">
-                <input type="hidden" name="pengambilan" value="{{ $pengambilan->id }}">
+                <input type="hidden" name="surat_jalan" value="{{ $surat_jalan->id }}">
                 <div class=" row mb-4">
                     <label class="form-label col-md-3 ">Kepada:</label>
                     <div class="col-md-9">
-                        <i class="fas fa-user"></i> {{ $model->kepada }} <br>
-                        <i class="fas fa-map-marker-alt"></i> {{ $model->lokasi }} <br>
-                        <i class="fab fa-whatsapp"></i> {{ $customer->no_whatsapp }}
-                        <i class="fas fa-phone-alt ms-3"></i> {{ $customer->no_telepon }} <br>
+                        <p><i class="fas fa-user"></i> {{ $model->kepada }} </p>
+                        <p><i class="fas fa-map-marker-alt"></i> {{ $model->lokasi }} </p>
+                        <p><i class="fab fa-whatsapp"></i> {{ $customer->no_whatsapp }}
+                            <i class="fas fa-phone-alt ms-3"></i> {{ $customer->no_telepon }}
+                        </p>
+
                     </div>
                 </div>
                 <div class=" row mb-4">
-                    <label class="form-label col-md-3">Tanggal barang kirim/diambil:
+                    <label class="form-label col-md-3">Tanggal Surat Jalan:
                         <span class="text-danger">*</span></label>
                     <div class="col-md-9">
                         <input type="date" class="form-control date-input-str" name="tanggal" id="tanggal"
-                            value="{{ $pengambilan->tanggal }}" required="" />
+                            value="{{ $surat_jalan->tanggal }}" required="" />
                     </div>
                 </div>
                 <div class=" row mb-4">
                     <label class="form-label col-md-3 ">Keterangan/Catatan:
                         <span class="text-danger">*</span></label>
                     <div class="col-md-9">
-                        <textarea class="form-control" name="keterangan" id="keterangan" cols="20" rows="7">{{ $pengambilan->keterangan }}</textarea>
+                        <textarea class="form-control" name="keterangan" id="keterangan" cols="20" rows="7">{{ $surat_jalan->keterangan }}</textarea>
                     </div>
                 </div>
                 <div class=" row mb-4">
                     <label class="form-label col-md-3 ">Status Pengambilan</label>
                     <div class="col-md-9">
-                        <span id="status-pengambilan"
-                            class="badge bg-{{ $pengambilan->status == 1 ? 'primary' : ($pengambilan->status == 2 ? 'success' : 'warning') }}">
-                            {{ $pengambilan->status == 1 ? 'Data Disimpan' : ($pengambilan->status == 2 ? 'Barang Dikirim' : 'Data Dibuat') }}
+                        <span id="status-surat_jalan"
+                            class="badge bg-{{ $surat_jalan->status == 1 ? 'primary' : ($surat_jalan->status == 2 ? 'success' : 'warning') }}">
+                            {{ $surat_jalan->status == 1 ? 'Data Disimpan' : ($surat_jalan->status == 2 ? 'Barang Dikirim' : 'Data Dibuat') }}
                         </span>
                     </div>
                 </div>
@@ -73,7 +76,7 @@
                         <th class="text-right">Jml. Digudang</th>
                     </thead>
                     <tbody>
-                        @foreach ($pengambilan_barangs as $key => $barang)
+                        @foreach ($surat_jalan_barangs as $key => $barang)
                             <tr>
                                 <td>{{ $barang->barang_nama }}<br><small>{{ $barang->barang_kode }}</small></td>
                                 <td>
@@ -92,10 +95,17 @@
                 </table>
             </form>
         </div>
-        <div class="card-footer" id="btn-simpan" style="{{ $pengambilan->status == 2 ? 'display:none' : '' }}">
+        <div class="card-footer" id="btn-simpan" style="{{ $surat_jalan->status == 2 ? 'display:none' : '' }}">
             <button type="submit" class="btn btn-primary" form="MainForm">
                 <li class="fas fa-save"></li> Simpan
             </button>
+            @if ($can_konfirmasi)
+                <button type="button" class="btn btn-success" id="btn-konfirmasi"
+                    onclick="konfirmasiFun('{{ $surat_jalan->id }}')"
+                    style="{{ $surat_jalan->status != 1 ? 'display:none' : '' }}">
+                    <li class="fas fa-check"></li> Konfirmasi Pengambilan Barang
+                </button>
+            @endif
         </div>
     </div>
 @endsection
@@ -142,30 +152,8 @@
                         // jika status 1 maka set status teks, print, simpan
                         if (data.status != undefined) {
                             // set status
-                            const status = data.status
-                            const status_el = $('#status-pengambilan');
-                            const status_color = (status == 1) ? 'primary' : (status == 2 ?
-                                'success' : 'warning');
-                            const status_str = (status == 1) ? 'Data Disimpan' : (status == 2 ?
-                                'Barang Dikirim' : 'Data Dibuat');
-
-                            status_el.attr('class', `badge bg-${status_color}`);
-                            status_el.html(status_str);
-
-                            if (status == 0 || status == 1) {
-                                $('#btn-simpan').fadeIn();
-                            } else {
-                                $('#btn-simpan').fadeOut();
-                            }
-
-                            if (status != 0) {
-                                $('#btn-surat-jalan').fadeIn();
-                            } else {
-                                $('#btn-surat-jalan').fadeOut();
-                            }
+                            set_status(data.status);
                         }
-
-
                     },
                     error: function(data) {
                         Swal.fire({
@@ -184,5 +172,86 @@
                 });
             });
         });
+
+        function set_status(status) {
+            const status_el = $('#status-surat_jalan');
+            const status_color = (status == 1) ? 'primary' : (status == 2 ?
+                'success' : 'warning');
+            const status_str = (status == 1) ? 'Data Disimpan' : (status == 2 ?
+                'Barang Dikirim' : 'Data Dibuat');
+
+            status_el.attr('class', `badge bg-${status_color}`);
+            status_el.html(status_str);
+
+            if (status == 0 || status == 1) {
+                $('#btn-simpan').fadeIn();
+            } else {
+                $('#btn-simpan').fadeOut();
+            }
+
+            if (status != 0) {
+                $('#btn-surat-jalan').fadeIn();
+            } else {
+                $('#btn-surat-jalan').fadeOut();
+            }
+
+            if (status == 1) {
+                $('#btn-konfirmasi').fadeIn();
+            } else {
+                $('#btn-konfirmasi').fadeOut();
+            }
+        }
+
+        function konfirmasiFun(id) {
+            swal.fire({
+                title: 'Apakah anda yakin?',
+                text: "Untuk mengkofirmsi pengmabilan barang. ?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes'
+            }).then(function(result) {
+                if (result.value) {
+                    $.ajax({
+                        url: `{{ url(h_prefix_uri('konfirmasi', 2)) }}/${id}`,
+                        type: 'POST',
+                        dataType: 'json',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        beforeSend: function() {
+                            swal.fire({
+                                title: 'Please Wait..!',
+                                text: 'Is working..',
+                                onOpen: function() {
+                                    Swal.showLoading()
+                                }
+                            })
+                        },
+                        success: function(data) {
+                            Swal.fire({
+                                position: 'center',
+                                icon: 'success',
+                                title: 'Konfirmasi pengmabilan barang berhasil.',
+                                showConfirmButton: false,
+                                timer: 2000
+                            });
+                            set_status(data.status);
+                        },
+                        complete: function() {
+                            swal.hideLoading();
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            let error = null;
+                            if (jqXHR.responseJSON) {
+                                error = jqXHR.responseJSON.message;
+                            }
+                            swal.hideLoading();
+                            swal.fire("!Opps ", error ?? "Something went wrong, try again later",
+                                "error");
+                        }
+                    });
+                }
+            });
+        }
     </script>
 @endsection

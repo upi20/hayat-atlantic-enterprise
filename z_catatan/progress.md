@@ -21,11 +21,8 @@
     [x] Pembayaran crud
 
 ## Pengambilan Barang
-    [] List penyewaan yang status nya sudah 2
-    [] Tombol surat jalan masuk ke halaman buat surat jalan list barang dan jumlah yang akan di kirim dan detail surat jalan
-
-## Pengembalian Barang
-    [] List penyewaan yang status nya sudah 2
+    [x] List penyewaan yang status nya sudah 2
+    [x] Tombol surat jalan masuk ke halaman buat surat jalan list barang dan jumlah yang akan di kirim dan detail surat jalan
 
 ## Fitur Lain
     [] Bisa tambahkan diskon
@@ -55,14 +52,15 @@
     [x] Buat Desain Detail Pengambilan Barang
     [x] Buat Menampilkan data
     [x] Buat fungsi simpan
-    [] Buat Surat Jalan
-        [] Buat Logo
-        [] Buat halaman konsep
-    [] Pengirim di surat jalan
+    [x] Buat Surat Jalan
+        [x] Buat Logo
+        [x] Buat halaman konsep
+    [x] Pengirim di surat jalan
     [] Pengambilan barang bisa di klik table -> tr nya langsung
     [] Buat status pengambilan barang (Datatable)
     [] semua tanggal ada str nya
     [] Crud Setting Surat Jalan
+    [] Konfirmasi Pengambilan Barang (Oleh Warehouse)
 
 ## Buat Lagi konsep sesuai dengan yang ada di kledo
 

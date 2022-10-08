@@ -25,80 +25,123 @@
     <meta name="theme-color" content="#0191D7">
     <meta name="msapplication-TileImage" content="{{ public_path('favicon/icon-144x144.png') }}">
     <title>Surat Jalan</title>
-    <style>
-        * {
-            box-sizing: border-box;
-            -moz-box-sizing: border-box;
-        }
-
-        .page {
-            width: 21cm;
-            min-height: 29.7cm;
-            padding: .5cm;
-            margin: 0.5cm auto;
-            background-color: #fff;
-            /* border: 1px #D3D3D3 solid;
-            border-radius: 5px;
-            background: white;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); */
-        }
-
-        .subpage {
-            /* padding: 1cm; */
-            /* border: 5px red solid; */
-            height: 286mm;
-            /* outline: 0.5cm #FFEAEA solid; */
-        }
-
-        table,
-        th,
-        td {
-            padding: 8px 4px;
-        }
-
-        .p-title {
-            margin: 4px;
-        }
-
-        .garis {
-            border: none;
-            height: 2px !important;
-            color: #000;
-            background-color: #000;
-            opacity: 1;
-            border-radius: 4px;
-        }
-
-        .my-table td,
-        .my-table th {
-            border: 1px solid #000;
-        }
-
-        .text-right {
-            text-align: right;
-        }
-
-        .no-border {
-            border: 0 !important;
-            padding: 2px
-        }
-
-        .table-detail td {
-            padding: 2px
-        }
-    </style>
+    @include('templates.admin.pdf_style')
 </head>
 
 <body>
     <table>
         <tr>
             <td>
-                <img src="{{ public_path('assets/logo-panjang.png') }}" alt="" style="height: 25mm;">
+                <img src="{{ public_path(settings()->get(set_admin('app.foto_light_mode'))) }}" alt=""
+                    style="height: 30mm;">
             </td>
             <td>
-                <h2 class="p-title">HAYAT ATLANTIC ENTERPRISE</h2>
+                <h2 class="p-title">CV. HAYAT ATLANTIC ENTERPRISE</h2>
                 <p class="p-title">Jl. Lodaya No.27, Malabar, Kec. Lengkong, Kota Bandung, Jawa Barat 40262</p>
-                <p class="p-title">Telp: 022 7303759 – 0227900502 / WA: 081214886315 – 081214939435</p>
+                <p class="p-title">Telp:
+                    <a href="tel:0227303759">0227303759</a> –
+                    <a href="tel:0227900502">0227900502</a> /
+                    WA: <a href="https://wa.me/081214886315">081214886315</a> –
+                    <a href="https://wa.me/081214939435">081214939435</a>
+                </p>
+                <p class="p-title">Website: <a href="http://hayatpesta.com">hayatpesta.com</a>
+                    / Email: <a href="mailto:INFO@HAYATPESTA.COM">info@hayatpesta.com</a></p>
+            </td>
+        </tr>
+    </table>
+    <hr class="garis">
+    <h2 class="text-center">Surat Jalan</h2>
+
+    <table class="tbl-10 w-100">
+        <tr>
+            <td class="b-all w-50">
+                <table class="tbl-10">
+                    <tr>
+                        <td class="fw-bold" style="">Nomor Surat</td>
+                        <td class="fw-bold" style="padding: 8px 10px!important">:</td>
+                        <td class="fw-bold" style="">{{ $surat_jalan->no_surat_jalan }}</td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold" style="">Tanggal Surat</td>
+                        <td class="fw-bold" style="padding: 8px 10px!important">:</td>
+                        <td class="fw-bold" style="">{{ $surat_jalan->tanggal_str }}</td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold" style="">Tanggal Pakai</td>
+                        <td class="fw-bold" style="padding: 8px 10px!important">:</td>
+                        <td class="fw-bold" style="">{{ $surat_jalan->tanggal_pakai }}</td>
+                    </tr>
+                </table>
+            </td>
+            <td class="b-all w-50">
+                <table class="tbl-10">
+                    <tr>
+                        <td class="fw-bold" style="">Customer</td>
+                        <td class="fw-bold" style="padding: 8px 10px!important">:</td>
+                        <td class="fw-bold" style="">{{ $customer->nama }}, {{ $customer->alamat }}</td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold" style="">Kepada</td>
+                        <td class="fw-bold" style="padding: 8px 10px!important">:</td>
+                        <td class="fw-bold" style="">{{ $model->kepada }}</td>
+                    </tr>
+                    <tr>
+                        <td class="fw-bold" style="">Alamat Kirim</td>
+                        <td class="fw-bold" style="padding: 8px 10px!important">:</td>
+                        <td class="fw-bold" style="">{{ $model->lokasi }}</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+
+    <table class="tbl-10 w-100">
+        <thead>
+            <tr>
+
+                <th class="b-all" style="max-width: 10px">No</th>
+                <th class="b-all">Barang</th>
+                <th class="b-all">Qty</th>
+                <th class="b-all">Satuan</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($surat_jalan_barangs as $key => $barangs)
+                <tr>
+                    <td class="b-all"style="text-align: center">{{ $key + 1 }}</td>
+                    <td class="b-all"style="padding: 8px 10px!important">{{ $barangs->barang_nama }}</td>
+                    <td class="text-right b-all" style="padding: 8px 10px!important">{{ $barangs->qty }}</td>
+                    <td class="b-all" style="padding: 8px 10px!important">{{ $barangs->barang_satuan }}</td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
+
+    <table class="w-100">
+        <tr>
+            <td class="w-50" style="padding: 0 20px!important">
+                <h4>Catatan:</h4>
+                <h4 style="text-align: justify">{{ $surat_jalan->keterangan }}</h4>
+            </td>
+            <td class="w-50">
+                <table class="w-100 tbl-2">
+                    <tr>
+                        <td class="text-center b-all">Diterima Oleh</td>
+                        <td class="text-center b-all">Pengirim</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center b-all">
+                            <br><br><br><br><br><br>
+                        </td>
+                        <td class="text-center b-all">
+                            <br><br><br><br><br><br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-center b-all">(......................)</td>
+                        <td class="text-center b-all">(......................)</td>
+                    </tr>
+                </table>
             </td>
         </tr>
     </table>

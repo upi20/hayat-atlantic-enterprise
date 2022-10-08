@@ -249,10 +249,10 @@
                         orderable: false,
                     },
                     {
-                        data: 'status_pembayaran_str',
-                        name: 'status_pembayaran_str',
+                        data: 'status_pembayaran',
+                        name: 'status_pembayaran',
                         render(data, type, full, meta) {
-                            return `<span class="badge bg-${full.status_pembayaran == 1 ? 'success':'danger'}">${data}</span>`;
+                            return `<span class="badge bg-${data == 1 ? 'success':'danger'}">${full.status_pembayaran_str}</span>`;
                         },
                         className: 'text-nowrap'
                     },
@@ -332,7 +332,7 @@
                     },
                 ],
                 order: [
-                    [(can_pembayaran ? 10 : 9), 'desc']
+                    [1, 'asc']
                 ]
             });
 

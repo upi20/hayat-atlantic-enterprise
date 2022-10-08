@@ -74,6 +74,7 @@
                     <thead>
                         <tr>
                             <th>No</th>
+                            <th>Status</th>
                             {!! $can_pengambilan ? '<th>Pengambilan</th>' : '' !!}
                             <th>Detail</th>
                             <th>Customer</th>
@@ -245,6 +246,15 @@
                         name: 'id',
                         orderable: false,
                     },
+                    {
+                        data: 'status_pengambilan',
+                        name: 'status_pengambilan',
+                        render(data, type, full, meta) {
+                            const status_color = (data == 1) ? 'primary' : (data == 2 ?
+                                'success' : 'warning');
+                            return `<span class="badge bg-${status_color}">${full.status_pengambilan_str}</span>`;
+                        }
+                    },
                     ...((can_pengambilan) ? [{
                         data: 'id',
                         name: 'id',
@@ -302,7 +312,7 @@
                     },
                 ],
                 order: [
-                    [(can_pengambilan ? 5 : 4), 'desc']
+                    [1, 'asc']
                 ]
             });
 

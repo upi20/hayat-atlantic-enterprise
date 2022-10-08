@@ -209,7 +209,7 @@
                     <form action="javascript:void(0)" id="MainForm" name="MainForm" method="POST"
                         enctype="multipart/form-data">
                         <input type="hidden" name="id" id="id">
-                        <input type="hidden" name="penyewaan" value="{{ $model->id }}">
+                        <input type="hidden" name="penyewaan" id="penyewaan" value="{{ $model->id }}">
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="form-group">
@@ -222,8 +222,8 @@
                                 <div class="form-group">
                                     <label class="form-label" for="tanggal">Tanggal
                                         <span class="text-danger">*</span></label>
-                                    <input type="date" class="form-control" id="tanggal" name="tanggal"
-                                        required="" />
+                                    <input type="date" class="form-control date-input-str" id="tanggal"
+                                        name="tanggal" required="" />
                                 </div>
 
                                 <div class="form-group">
@@ -420,7 +420,7 @@
                 ajax: {
                     url: "{{ url(h_prefix_uri()) }}",
                     data: function(d) {
-                        d['filter[penyewaan]'] = '{{ $model->id }}';
+                        d['filter[penyewaan]'] = $('#penyewaan').val();
                         d['filter[updated_by]'] = $('#updated_by').val();
                         d['filter[created_by]'] = $('#created_by').val();
                         d['filter[dibatalkan]'] = $('#dibatalkan').val();
@@ -650,6 +650,7 @@
             $('#modal-default').modal('show');
             $('#id').val('');
             $('#tanggal').val(today);
+            render_tanggal($('#tanggal'));
             resetErrorAfterInput();
             isEdit = false;
             refreshNominal();
@@ -678,6 +679,7 @@
                     $('#tanggal').val(data.tanggal);
                     $('#nominal').val(data.nominal);
                     $('#keterangan').val(data.keterangan);
+                    render_tanggal($('#tanggal'));
                     refreshNominal();
                 },
                 error: function(data) {
@@ -717,7 +719,8 @@
             setStatusPembayaran(pembayaran_status);
             $('#detail_dibayar').html(format_rupiah(pembayaran_dibayar));
             $('#detail_total_harga').html(format_rupiah(pembayaran_total));
-            $('#detail_sisa').html(format_rupiah(pembayaran_total - pembayaran_dibayar));
+            const sisa = pembayaran_total - pembayaran_dibayar;
+            $('#detail_sisa').html(format_rupiah(sisa < 0 ? 0 : sisa));
             $('#detail_customer').html(`<span class="fw-bold">${pembayaran_kepada}</span>, ${pembayaran_lokasi}`);
         }
         refreshDetailPembayaran();

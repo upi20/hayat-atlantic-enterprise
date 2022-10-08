@@ -8,10 +8,10 @@ use App\Models\Barang\Satuan;
 use App\Models\Barang\Sewa;
 
 use App\Models\Customer;
-use App\Models\Pengambilan;
 use App\Models\Penyewaan;
 use App\Models\PenyewaanBarang;
 use App\Models\PenyewaanPembayaran;
+use App\Models\SuratJalan;
 use App\Models\User;
 use Illuminate\Http\Request;
 use League\Config\Exception\ValidationException;
@@ -62,7 +62,7 @@ class PenyewaanController extends Controller
         $t_user = User::tableName;
         $table = Penyewaan::tableName;
         $t_customer = Customer::tableName;
-        $t_pengambilan = Pengambilan::tableName;
+        $t_surat_jalan = SuratJalan::tableName;
 
         // cusotm query
         // ========================================================================================================
@@ -127,6 +127,18 @@ class PenyewaanController extends Controller
         SQL;
         $this->query["{$c_status_pembayaran_str}_alias"] = $c_status_pembayaran_str;
 
+        // status_pengambilan
+        $c_status_pengambilan_str = 'status_pengambilan_str';
+        $this->query[$c_status_pengambilan_str] = <<<SQL
+            (if($t_surat_jalan.status = 1,'Data Disimpan', 
+            if($t_surat_jalan.status = 2,'Barang Dikirim', 'Data Dibuat')))
+        SQL;
+        $this->query["{$c_status_pengambilan_str}_alias"] = $c_status_pengambilan_str;
+
+        $c_status_pengambilan = 'status_pengambilan';
+        $this->query[$c_status_pengambilan] = "$t_surat_jalan.status";
+        $this->query["{$c_status_pengambilan}_alias"] = $c_status_pengambilan;
+
         // sisa
         $c_sisa = 'sisa';
         $this->query[$c_sisa] = <<<SQL
@@ -141,7 +153,7 @@ class PenyewaanController extends Controller
 
         // tanggal_pengambilan
         $c_tanggal_pengambilan = 'tanggal_pengambilan';
-        $this->query[$c_tanggal_pengambilan] = "date_format($t_pengambilan.tanggal, '%d-%b-%Y')";
+        $this->query[$c_tanggal_pengambilan] = "date_format($t_surat_jalan.tanggal, '%d-%b-%Y')";
         $this->query["{$c_tanggal_pengambilan}_alias"] = $c_tanggal_pengambilan;
         // ========================================================================================================
 
@@ -167,7 +179,9 @@ class PenyewaanController extends Controller
             $c_status_str,
             $c_status_pembayaran_str,
             $c_sisa,
-            $c_tanggal_pengambilan
+            $c_tanggal_pengambilan,
+            $c_status_pengambilan,
+            $c_status_pengambilan_str
         ];
 
         $to_db_raw = array_map(function ($a) use ($sraa) {
@@ -182,7 +196,7 @@ class PenyewaanController extends Controller
         ], $to_db_raw))
             ->leftJoin("$t_user as $t_created_by", "$t_created_by.id", '=', "$table.created_by")
             ->leftJoin("$t_user as $t_updated_by", "$t_updated_by.id", '=', "$table.updated_by")
-            ->leftJoin($t_pengambilan, "$t_pengambilan.penyewaan", '=', "$table.id")
+            ->leftJoin($t_surat_jalan, "$t_surat_jalan.penyewaan", '=', "$table.id")
             ->leftJoin($t_customer, "$t_customer.id", '=', "$table.customer");
 
         // Filter =====================================================================================================

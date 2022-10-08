@@ -43,7 +43,7 @@ class PembayaranController extends Controller
     public function list(Penyewaan $model, Request $request)
     {
         if (request()->ajax()) {
-            return $this->datatable($request);
+            return $this->datatable($model, $request);
         }
         $page_attr = [
             'title' => 'Pembayaran List',
@@ -91,7 +91,7 @@ class PembayaranController extends Controller
             $penyewaan = Penyewaan::find($request->penyewaan);
             $penyewaan->dibayar = $penyewaan->dibayar + $model->nominal;
 
-            if ($penyewaan->status_pembayaran == 0 && $penyewaan->total_harga >= $penyewaan->dibayar) {
+            if ($penyewaan->status_pembayaran == 0 && $penyewaan->dibayar >= $penyewaan->total_harga) {
                 $penyewaan->status_pembayaran = 1;
             }
 
@@ -106,7 +106,8 @@ class PembayaranController extends Controller
             $faktur->no_faktur = time();
             $faktur->tanggal = $model->tanggal;
             $faktur->jumlah = $model->nominal;
-            $faktur->sisa = $penyewaan->total_harga - $penyewaan->dibayar;
+            $sisa = $penyewaan->total_harga - $penyewaan->dibayar;
+            $faktur->sisa = $sisa < 0 ? 0 : $sisa;
             $faktur->pembayaran = $model->id;
             $faktur->total = $penyewaan->total_harga;
             $faktur->pembayaran_sebelumnya = $penyewaan->dibayar - $model->nominal;
@@ -152,6 +153,11 @@ class PembayaranController extends Controller
         // kurangi pembayaran
         $penyewaan = Penyewaan::find($model->penyewaan);
         $penyewaan->dibayar = $penyewaan->dibayar - $model->nominal;
+        if ($penyewaan->dibayar >= $penyewaan->total_harga) {
+            $penyewaan->status_pembayaran = 1;
+        } else {
+            $penyewaan->status_pembayaran = 0;
+        }
         $penyewaan->save();
 
         DB::commit();
@@ -172,6 +178,11 @@ class PembayaranController extends Controller
             DB::beginTransaction();
             $penyewaan = Penyewaan::find($model->penyewaan);
             $penyewaan->dibayar = $penyewaan->dibayar - $model->nominal;
+            if ($penyewaan->dibayar >= $penyewaan->total_harga) {
+                $penyewaan->status_pembayaran = 1;
+            } else {
+                $penyewaan->status_pembayaran = 0;
+            }
             $penyewaan->save();
 
             $model->delete();
@@ -185,7 +196,7 @@ class PembayaranController extends Controller
         }
     }
 
-    public function datatable(Request $request): mixed
+    public function datatable($penyewaan, Request $request): mixed
     {
         // list table
         $t_user = User::tableName;
@@ -277,7 +288,7 @@ class PembayaranController extends Controller
         }
 
         // filter custom
-        $filters = ['updated_by', 'created_by'];
+        $filters = ['updated_by', 'created_by', 'penyewaan'];
         foreach ($filters as  $f) {
             if ($f_c($f) !== false) {
                 $model->whereRaw("$table.$f='{$f_c($f)}'");
@@ -295,11 +306,9 @@ class PembayaranController extends Controller
             });
         }
 
+
         // create datatable
         $result = $datatable->make(true)->getData();
-
-        // total penyewaan
-        $penyewaan = Penyewaan::find($request->filter['penyewaan'])->first();
 
         $result->penyewaan = $penyewaan;
         return $result;

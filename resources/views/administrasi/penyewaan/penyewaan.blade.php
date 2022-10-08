@@ -308,7 +308,8 @@
                         data: null,
                         name: 'id',
                         orderable: false,
-                    }, {
+                    },
+                    {
                         data: 'id',
                         name: 'id',
                         render(data, type, full, meta) {
@@ -339,13 +340,13 @@
                         className: 'text-nowrap'
                     },
                     {
-                        data: 'tanggal_pakai_dari_str',
-                        name: 'tanggal_pakai_dari_str',
+                        data: 'tanggal_pakai_dari',
+                        name: 'tanggal_pakai_dari',
                         render(data, type, full, meta) {
-                            if (data == full.tanggal_pakai_sampai_str) {
+                            if (full.tanggal_pakai_dari_str == full.tanggal_pakai_sampai_str) {
                                 return data;
                             } else {
-                                return `${data ?? ''} s/d ${full.tanggal_pakai_sampai_str ?? ''}`;
+                                return `${full.tanggal_pakai_dari_str ?? ''} s/d ${full.tanggal_pakai_sampai_str ?? ''}`;
                             }
                         },
                         className: 'text-nowrap'
@@ -428,7 +429,7 @@
                     }] : [])
                 ],
                 order: [
-                    [2, 'asc']
+                    [6, 'desc']
                 ]
             });
 
