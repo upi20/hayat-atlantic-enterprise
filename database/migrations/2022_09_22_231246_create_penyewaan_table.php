@@ -21,7 +21,7 @@ return new class extends Migration
             $table->date('tanggal_pakai_dari')->nullable()->default(null);
             $table->date('tanggal_pakai_sampai')->nullable()->default(null);
             $table->string('kepada')->nullable()->default(null);
-            $table->date('tanggal')->nullable()->default(null);
+            $table->date('tanggal_order')->nullable()->default(null);
             $table->boolean('status')->nullable()->default(1)->comment("1 = Penyewaan Dibuat, 2 = Faktur Dibuat, 3 = Barang Diambil, 4 = Barang Dikembalikan, 5 = Selesai, 9 Dibatalkan");
             $table->bigInteger('total_harga', false, true)->default(0);
             $table->bigInteger('dibayar', false, true)->default(0);
