@@ -90,30 +90,29 @@
                     </div>
                 </div>
             </div>
-            <div class="table-responsive table-striped">
-                <table class="table table-bordered table-hover border-bottom" id="tbl_main">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Detail</th>
-                            <th>Customer</th>
-                            <th>Lokasi</th>
-                            <th>Tanggal Order</th>
-                            <th>Tanggal Kirim</th>
-                            <th>Tanggal Pakai</th>
-                            <th>Total Harga</th>
-                            <th>Dibayar</th>
-                            <th>Sisa</th>
-                            <th>Status Pembayaran</th>
-                            <th>Status</th>
-                            <th>Diubah Oleh</th>
-                            <th>Diubah Tgl.</th>
-                            {!! $can_delete || $can_update || $can_batalkan ? '<th>Aksi</th>' : '' !!}
-                        </tr>
-                    </thead>
-                    <tbody> </tbody>
-                </table>
-            </div>
+            <table class="table text-nowrap text-md-nowrap table-hover table-bordered border-bottom" id="tbl_main">
+                <thead>
+                    <tr>
+                        <th rowspan="2" class="align-middle text-center">No</th>
+                        <th rowspan="2" class="align-middle text-center">Aksi</th>
+                        <th rowspan="2" class="align-middle text-center">Customer</th>
+                        <th rowspan="2" class="align-middle text-center">Status</th>
+                        <th class="text-center" colspan="3">Tanggal</th>
+                        <th class="text-center" colspan="4">Pembayaran</th>
+                        <th rowspan="2" class="align-middle text-center">Diubah</th>
+                    </tr>
+                    <tr>
+                        <th>Order</th>
+                        <th>Kirim</th>
+                        <th>Pakai</th>
+                        <th>Total</th>
+                        <th>Dibayar</th>
+                        <th>Sisa</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody> </tbody>
+            </table>
         </div>
     </div>
 
@@ -313,20 +312,41 @@
                         data: 'id',
                         name: 'id',
                         render(data, type, full, meta) {
-                            return `<button type="button" class="btn btn-rounded btn-info btn-sm me-1" title="Detail Data" onClick="detailFunc('${data}')">
-                                <i class="fas fa-file-alt"></i> Lihat
-                                </button>`;
+                            let br_counter = 0;
+                            const btn_detail = `<button type="button" class="btn btn-rounded btn-info btn-sm me-1 mt-1" title="Detail Data" onClick="detailFunc('${data}')">
+                                <i class="fas fa-file-alt"></i> Deatail
+                                </button> ${(++br_counter %2==0)? '<br>':''}`;
+
+                            const btn_batalkan = (full.status <= 2) && can_batalkan ? `<button type="button" class="btn btn-rounded btn-warning btn-sm me-1 mt-1" title="Batalkan" onClick="batalFunc('${data}')">
+                                <i class="fas fa-times"></i> Batalkan
+                                </button>${(++br_counter %2==0)? '<br>':''}` : '';
+
+                            const btn_update = (can_update && full.status <= 2) ? `<a href="{{ route('admin.penyewaan.reciving_order') }}/${data}" class="btn btn-rounded btn-primary btn-sm me-1 mt-1" title="Edit Data">
+                                <i class="fas fa-edit"></i> Ubah
+                                </a>${(++br_counter %2==0)? '<br>':''}` : '';
+
+                            const btn_delete = (can_delete && full.status <= 2) ? `<button type="button" class="btn btn-rounded btn-danger btn-sm me-1 mt-1" title="Delete Data" onClick="deleteFunc('${data}')">
+                                <i class="fas fa-trash"></i> Hapus
+                                </button>${(++br_counter %2==0)? '<br>':''}` : '';
+
+                            return btn_detail + btn_batalkan + btn_update + btn_delete;
                         },
                         orderable: false,
+                        className: 'text-nowrap'
                     },
                     {
                         data: 'customer_nama',
                         name: 'customer_nama',
-                        className: 'text-nowrap'
+                        render(data, type, full, meta) {
+                            return `${data}<br><small>${full.lokasi}</small>`;
+                        }
                     },
                     {
-                        data: 'lokasi',
-                        name: 'lokasi',
+                        data: 'status',
+                        name: 'status_str',
+                        render(data, type, full, meta) {
+                            return `<span class="badge ${statusClass(data)}">${full.status_str}</span>`;
+                        },
                         className: 'text-nowrap'
                     },
                     {
@@ -346,7 +366,7 @@
                             if (full.tanggal_pakai_dari_str == full.tanggal_pakai_sampai_str) {
                                 return data;
                             } else {
-                                return `${full.tanggal_pakai_dari_str ?? ''} s/d ${full.tanggal_pakai_sampai_str ?? ''}`;
+                                return `${full.tanggal_pakai_dari_str ?? ''} s/d <br> ${full.tanggal_pakai_sampai_str ?? ''}`;
                             }
                         },
                         className: 'text-nowrap'
@@ -384,49 +404,15 @@
                         className: 'text-nowrap'
                     },
                     {
-                        data: 'status',
-                        name: 'status_str',
-                        render(data, type, full, meta) {
-                            return `<span class="badge ${statusClass(data)}">${full.status_str}</span>`;
-                        },
-                        className: 'text-nowrap'
-                    },
-                    {
-                        data: 'updated_by_str',
+                        data: 'updated',
                         name: 'updated_by_str',
                         render(data, type, full, meta) {
-                            return data ?? full.created_by_str;
+                            const tanggal = data ?? full.created;
+                            const oleh = full.updated_by_str ?? full.created_by_str
+                            return `${oleh}<br><small>${tanggal}</small>`;
                         },
                         className: 'text-nowrap'
-                    },
-                    {
-                        data: 'updated',
-                        name: 'updated',
-                        render(data, type, full, meta) {
-                            return data ?? full.created;
-                        },
-                        className: 'text-nowrap'
-                    },
-                    ...((can_update || can_delete || can_batalkan) ? [{
-                        data: 'id',
-                        name: 'id',
-                        render(data, type, full, meta) {
-                            const btn_batalkan = (can_batalkan && full.status != 9) ? `<button type="button" class="btn btn-rounded btn-warning btn-sm me-1" title="Batalkan" onClick="batalFunc('${data}')">
-                                <i class="fas fa-times"></i> Batalkan
-                                </button>` : '';
-
-                            const btn_update = (can_update && full.status <= 2) ? `<a href="{{ route('admin.penyewaan.reciving_order') }}/${data}" class="btn btn-rounded btn-primary btn-sm me-1" title="Edit Data">
-                                <i class="fas fa-edit"></i> Ubah
-                                </a>` : '';
-
-                            const btn_delete = (can_delete && full.status <= 2) ? `<button type="button" class="btn btn-rounded btn-danger btn-sm me-1" title="Delete Data" onClick="deleteFunc('${data}')">
-                                <i class="fas fa-trash"></i> Hapus
-                                </button>` : '';
-                            return btn_batalkan + btn_update + btn_delete;
-                        },
-                        orderable: false,
-                        className: 'text-nowrap'
-                    }] : [])
+                    }
                 ],
                 order: [
                     [6, 'desc']
@@ -582,7 +568,7 @@
 
                 // data customer
                 data_customer.html(` <div class="col-md-6">
-                            <p>${data.customer}</p>
+                            <p><i class="fas fa-user me-2"></i>${data.customer}</p>
                             <p><i class="fas fa-map-marker-alt me-2"></i>${data.customer_alamat}</p>
                         </div>
                         <div class="col-md-6">

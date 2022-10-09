@@ -57,38 +57,50 @@
             <td class="b-all w-50">
                 <table class="tbl-10">
                     <tr>
-                        <td class="fw-bold" style="">Nomor Surat</td>
-                        <td class="fw-bold" style="padding: 8px 10px!important">:</td>
-                        <td class="fw-bold" style="">{{ $surat_jalan->no_surat_jalan }}</td>
+                        <td class="fw-bold" style="padding: 4px 4px!important; white-space: nowrap">Nomor Surat</td>
+                        <td class="fw-bold" style="padding: 4px 4px!important;">:</td>
+                        <td class="fw-bold" style="padding: 4px 4px!important;">
+                            {{ $surat_jalan->no_surat_jalan }}
+                        </td>
                     </tr>
                     <tr>
-                        <td class="fw-bold" style="">Tanggal Surat</td>
-                        <td class="fw-bold" style="padding: 8px 10px!important">:</td>
-                        <td class="fw-bold" style="">{{ $surat_jalan->tanggal_str }}</td>
+                        <td class="fw-bold" style="padding: 4px 4px!important; white-space: nowrap">Tanggal Surat</td>
+                        <td class="fw-bold" style="padding: 4px 4px!important;">:</td>
+                        <td class="fw-bold" style="padding: 4px 4px!important;">
+                            {{ $surat_jalan->tanggal_str }}
+                        </td>
                     </tr>
                     <tr>
-                        <td class="fw-bold" style="">Tanggal Pakai</td>
-                        <td class="fw-bold" style="padding: 8px 10px!important">:</td>
-                        <td class="fw-bold" style="">{{ $surat_jalan->tanggal_pakai }}</td>
+                        <td class="fw-bold" style="padding: 4px 4px!important; white-space: nowrap">Tanggal Pakai</td>
+                        <td class="fw-bold" style="padding: 4px 4px!important;">:</td>
+                        <td class="fw-bold" style="padding: 4px 4px!important;">
+                            {{ $surat_jalan->tanggal_pakai }}
+                        </td>
                     </tr>
                 </table>
             </td>
             <td class="b-all w-50">
                 <table class="tbl-10">
                     <tr>
-                        <td class="fw-bold" style="">Customer</td>
-                        <td class="fw-bold" style="padding: 8px 10px!important">:</td>
-                        <td class="fw-bold" style="">{{ $customer->nama }}, {{ $customer->alamat }}</td>
+                        <td class="fw-bold" style="padding: 4px 4px!important; white-space: nowrap">Customer</td>
+                        <td class="fw-bold" style="padding: 4px 4px!important;">:</td>
+                        <td class="fw-bold" style="padding: 4px 4px!important;">
+                            {{ $customer->nama }}, {{ $customer->alamat }}
+                        </td>
                     </tr>
                     <tr>
-                        <td class="fw-bold" style="">Kepada</td>
-                        <td class="fw-bold" style="padding: 8px 10px!important">:</td>
-                        <td class="fw-bold" style="">{{ $model->kepada }}</td>
+                        <td class="fw-bold" style="padding: 4px 4px!important; white-space: nowrap">Kepada</td>
+                        <td class="fw-bold" style="padding: 4px 4px!important;">:</td>
+                        <td class="fw-bold" style="padding: 4px 4px!important;">
+                            {{ $model->kepada }}
+                        </td>
                     </tr>
                     <tr>
-                        <td class="fw-bold" style="">Alamat Kirim</td>
-                        <td class="fw-bold" style="padding: 8px 10px!important">:</td>
-                        <td class="fw-bold" style="">{{ $model->lokasi }}</td>
+                        <td class="fw-bold" style="padding: 4px 4px!important; white-space: nowrap">Alamat Kirim</td>
+                        <td class="fw-bold" style="padding: 4px 4px!important;">:</td>
+                        <td class="fw-bold" style="padding: 4px 4px!important;">
+                            {{ $model->lokasi }}
+                        </td>
                     </tr>
                 </table>
             </td>

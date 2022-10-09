@@ -13,7 +13,7 @@
         <div class="card-header d-md-flex flex-row justify-content-between">
             <h3 class="card-title">Detail Reciving Order</h3>
             <div>
-                <a href="{{ route(h_prefix(null, $pre - ($is_edit ? 0 : 1))) }}" class="btn btn-rounded btn-secondary btn-sm">
+                <a href="{{ route(h_prefix(null, $is_edit ? 2 : 1)) }}" class="btn btn-rounded btn-secondary btn-sm">
                     <i class="fas fa-arrow-left"></i> Kembali
                 </a>
                 <button type="submit" form="MainForm" class="btn btn-rounded btn-success btn-sm">
@@ -130,8 +130,7 @@
                 <span id="total"></span>
             </h3>
             <div>
-                <a href="{{ route(h_prefix(null, $pre - ($is_edit ? 0 : 1))) }}"
-                    class="btn btn-rounded btn-secondary btn-sm">
+                <a href="{{ route(h_prefix(null, $is_edit ? 2 : 1)) }}" class="btn btn-rounded btn-secondary btn-sm">
                     <i class="fas fa-arrow-left"></i> Kembali
                 </a>
                 @if ($can_barang_insert)
@@ -192,13 +191,12 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Kode | Barang</th>
+                            <th>Barang</th>
                             <th>Qty</th>
                             <th>Harga</th>
                             <th>Total Harga</th>
                             <th>Keterangan</th>
-                            <th>Diubah Oleh</th>
-                            <th>Diubah Tgl.</th>
+                            <th>Diubah</th>
                             {!! $can_barang_delete || $can_barang_update ? '<th>Aksi</th>' : '' !!}
                         </tr>
                     </thead>
@@ -530,7 +528,7 @@
                         name: 'barang_nama',
                         className: 'text-nowrap',
                         render(data, type, full, meta) {
-                            return `${full.barang_kode} | ${data}`;
+                            return `${data} <br> <small>${full.barang_kode}</small>`;
                         },
                     },
                     {
@@ -559,20 +557,14 @@
                         name: 'keterangan',
                     },
                     {
-                        data: 'updated_by_str',
+                        data: 'updated',
                         name: 'updated_by_str',
                         render(data, type, full, meta) {
-                            return data ?? full.created_by_str;
+                            const tanggal = data ?? full.created;
+                            const oleh = full.updated_by_str ?? full.created_by_str
+                            return `${oleh}<br><small>${tanggal}</small>`;
                         },
-                        className: 'text-nowrap',
-                    },
-                    {
-                        data: 'updated',
-                        name: 'updated',
-                        render(data, type, full, meta) {
-                            return data ?? full.created;
-                        },
-                        className: 'text-nowrap',
+                        className: 'text-nowrap'
                     },
                     ...(can_update || can_delete ? [{
                         data: 'id',

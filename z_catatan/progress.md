@@ -1,8 +1,6 @@
 ## Penyewaan
     [x] CRUD penyewaan
     [x] Penyewaan detail
-    [] Penyewaan detail Pembayaran
-    [] Survey
 
 ## Pembayaran
     [x] datatable list penyewaan yang status nya >= 1
@@ -12,7 +10,6 @@
     [x] status lunas role jika ada pembayaran bisa di jadiin lunas, jika total pembayaran sama dengan total harga maka otomatis status akan lunas.
     [x] cetak faktur dari per pembayaran
     [x] nomor faktur dari timestamp pencetakan faktur
-    [] Buat settingan faktur
 
 ## Buat teknis pembatalan
     [x] Penyewaan db
@@ -24,17 +21,6 @@
     [x] List penyewaan yang status nya sudah 2
     [x] Tombol surat jalan masuk ke halaman buat surat jalan list barang dan jumlah yang akan di kirim dan detail surat jalan
 
-## Fitur Lain
-    [] Bisa tambahkan diskon
-    [] barang penyewaan jika status 1 maka tidak bisa dihapus kecuali oleh super admin
-    [] Modal keterangan pembatalan
-
-## Penghapusan barang sewa dan barang habis
-    data barang tidak bisa di hapus jika sudah tercatat dalam transaksi lain maka status nya akan di nonaktifkan/arsipkan. untuk meminimalisir error. logikanya jika barang di hapus maka akan mengecek ke database data barang apakah sudah tercatat di tabel lain jika sudah maka akan di nonaktifkan.
-    [] barang habis pakai tambah status aktif/nonaktif
-    [] barang habis pakai crud
-    [] barang sewa tambah status aktif/nonaktif
-    [] barang sewa crud
 
 ## penyewaan status
 
@@ -54,11 +40,7 @@
         [x] Buat Logo
         [x] Buat halaman konsep
     [x] Pengirim di surat jalan
-    [] Pengambilan barang bisa di klik table -> tr nya langsung
-    [] Buat status pengambilan barang (Datatable)
-    [] semua tanggal ada str nya
-    [] Crud Setting Surat Jalan
-    [] Konfirmasi Pengambilan Barang (Oleh Warehouse)
+
 
 ## Buat Lagi konsep sesuai dengan yang ada di kledo
 
@@ -82,9 +64,40 @@
 
 ### Refactore
     [] Pembuatan konsep Seluruhan
+    [] Penyewaan -> Pemesanan
+    [] Pembayaran
+    [] Pengambilan -> Pengiriman
+    [] Pengembalian
+    [] Nomor faktur jadi invoice IN
+
     [] Rancangan database
     [] Ketika reciving order dibuat maka buat surat jalan
     [] Detail Penyewaan Status Ada yang di perbaiki dan ada yang ditambah
     [] Penyewaan Konfirmasi oleh
     [] Penyewaan Dikirm oleh
     [] Penyewaan Kembali oleh
+
+### Masalah/Error/Harus di perbaiki
+    [x] Halaman Penyewaan
+        [z] Customer, lokasi disatukan
+        [x] diubah oleh dan tanggal disatukan thead nya jadi diubah
+        [x] status pembayaran -> Pembayaran
+        [x] Aksi Pindah ke kiri
+        [x] tanggal order dipindah ke ujung
+        [x] Tombol detail di pindah ke aksi
+
+    [x] Halaman Penyewaan -> Reciving order
+        [x] diubah oleh dan tanggal disatukan thead nya jadi diubah
+
+    [x] Halaman Penyewaan -> Detail
+        [x] diubah oleh dan tanggal disatukan thead nya jadi diubah
+        [z] Nama customer tambah icon user
+
+    [] data barang tidak bisa di hapus jika sudah tercatat dalam transaksi lain maka status nya akan di nonaktifkan/arsipkan. untuk meminimalisir error. logikanya jika barang di hapus maka akan mengecek ke database data barang apakah sudah tercatat di tabel lain jika sudah maka akan di nonaktifkan.
+    [] barang habis pakai tambah status aktif/nonaktif
+    [] barang habis pakai crud
+    [] barang sewa tambah status aktif/nonaktif
+    [] barang sewa crud
+    [] semua tanggal ada str nya
+    [] Crud Setting Surat Jalan
+    [] Konfirmasi Pengambilan Barang (Oleh Warehouse)

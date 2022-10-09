@@ -200,7 +200,7 @@ class PengambilanBarangController extends Controller
 
         // tanggal pakai
         if ($surat_jalan->tanggal_pakai_dari != $surat_jalan->tanggal_pakai_sampai) {
-            $surat_jalan->tanggal_pakai = "$surat_jalan->tanggal_pakai_dari s/d $surat_jalan->tanggal_pakai_sampai ($surat_jalan->tanggal_pakai_hari hari)";
+            $surat_jalan->tanggal_pakai = "$surat_jalan->tanggal_pakai_dari s/d $surat_jalan->tanggal_pakai_sampai ($surat_jalan->pakai_hari hari)";
         } else {
             $surat_jalan->tanggal_pakai = $surat_jalan->tanggal_pakai_dari;
         }
