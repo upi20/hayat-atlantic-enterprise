@@ -20,8 +20,8 @@
                     <i class="fas fa-arrow-left"></i> Kembali
                 </a>
                 @if ($can_surat_jalan)
-                    <a href="{{ route(h_prefix('surat_jalan', 2), $model->id) }}" target="_blank" id="btn-surat-jalan"
-                        class="btn btn-rounded btn-success btn-sm"
+                    <a href="{{ route(h_prefix('pengambilan.surat_jalan', 3), $model->id) }}" target="_blank"
+                        id="btn-surat-jalan" class="btn btn-rounded btn-success btn-sm"
                         style="{{ $surat_jalan->status == 0 ? 'display:none' : '' }}">
                         <i class="fas fa-print"></i> Cetak Surat Jalan
                     </a>
@@ -60,10 +60,7 @@
                 <div class=" row mb-4">
                     <label class="form-label col-md-3 ">Status Pengambilan</label>
                     <div class="col-md-9">
-                        <span id="status-surat_jalan"
-                            class="badge bg-{{ $surat_jalan->status == 1 ? 'primary' : ($surat_jalan->status == 2 ? 'success' : 'warning') }}">
-                            {{ $surat_jalan->status == 1 ? 'Data Disimpan' : ($surat_jalan->status == 2 ? 'Barang Dikirim' : 'Data Dibuat') }}
-                        </span>
+                        <span id="status-surat_jalan" class="">{{ $surat_jalan->status }}</span>
                     </div>
                 </div>
 
@@ -148,7 +145,7 @@
                 <button type="button" class="btn btn-success" id="btn-konfirmasi"
                     onclick="konfirmasiFun('{{ $surat_jalan->id }}')"
                     style="{{ $surat_jalan->status != 1 ? 'display:none' : '' }}">
-                    <li class="fas fa-check"></li> Konfirmasi Penyewaan Selesai
+                    <li class="fas fa-check"></li> Konfirmasi Pengembalian Barang Selesai
                 </button>
             @endif
         </div>
@@ -228,15 +225,13 @@
 
         function set_status(status) {
             const status_el = $('#status-surat_jalan');
-            const status_color = (status == 1) ? 'primary' : (status == 2 ?
-                'success' : 'warning');
-            const status_str = (status == 1) ? 'Data Disimpan' : (status == 2 ?
-                'Barang Dikirim' : 'Data Dibuat');
+            const status_color = colorClass(status);
+            const status_str = statusPengamblian(status);
 
             status_el.attr('class', `badge bg-${status_color}`);
             status_el.html(status_str);
 
-            if (status != 4) {
+            if (status < 4) {
                 $('#btn-simpan').fadeIn();
             } else {
                 $('#btn-simpan').fadeOut();
@@ -248,7 +243,7 @@
                 $('#btn-surat-jalan').fadeOut();
             }
 
-            if (status == 1) {
+            if (status == 3) {
                 $('#btn-konfirmasi').fadeIn();
             } else {
                 $('#btn-konfirmasi').fadeOut();
@@ -320,6 +315,7 @@
             }
             $(`#total-${id}`).html(total);
         }
+        set_status($('#status-surat_jalan').html());
     </script>
     @foreach ($surat_jalan_barangs as $barang)
         <script>

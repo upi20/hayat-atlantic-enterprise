@@ -83,8 +83,8 @@
                             <label class="form-label" for="tanggal_order">Tanggal Order
                                 <span class="text-danger">*</span>
                             </label>
-                            <input type="datetime-local" class="form-control" value="" id="tanggal_order"
-                                name="tanggal_order" value="" required="" />
+                            <input type="date" class="form-control date-input-str" id="tanggal_order"
+                                name="tanggal_order" value="{{ $model->tanggal_order }}" required="" />
                         </div>
                     </div>
                     <div class="col-lg-4">
@@ -314,8 +314,6 @@
         const table_html = $('#tbl_main');
         let total_harga_current = 0;
         $(document).ready(() => {
-            $('#tanggal_order').val(parseTanggalOrder('{{ $model->tanggal_order }}'));
-
             $('#customer').select2({
                 ajax: {
                     url: "{{ route(h_prefix('customer_select2', $pre + 1)) }}",
@@ -671,6 +669,7 @@
                     kirim.val(date_calc(dari, -1).toISOString().split('T')[0]);
                 }
             }
+            refresh_tanggal_str();
         }
 
         function refresh_sampai() {
@@ -681,6 +680,13 @@
                 const result = date_diff(sampai, dari);
                 durasi.val(result + 1);
             }
+            refresh_tanggal_str()
+        }
+
+        function refresh_tanggal_str() {
+            render_tanggal('#tanggal_pakai_dari');
+            render_tanggal('#tanggal_pakai_sampai');
+            render_tanggal('#tanggal_kirim');
         }
 
         function date_calc(from, val) {
@@ -698,17 +704,6 @@
             const operate = date_from1.getTime() - date_from2.getTime();
 
             return operate / day;
-        }
-
-        function parseTanggalOrder(date_source) {
-            const dates = new Date(date_source);
-            const addZero = (num) => (num < 10 ? `0${num}` : num);
-            const year = dates.getFullYear();
-            const month = addZero(dates.getMonth() + 1);
-            const date = addZero(dates.getDate());
-            const hours = addZero(dates.getHours());
-            const minutes = addZero(dates.getMinutes());
-            return `${year}-${month}-${date}T${hours}:${minutes}`;
         }
 
         // datatable ====================================================================================

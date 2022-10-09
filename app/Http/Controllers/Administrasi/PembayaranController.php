@@ -344,7 +344,7 @@ class PembayaranController extends Controller
             ->get();
         view()->share('administrasi.pembayaran.faktur', compact('faktur', 'barangs', 'model', 'penyewaan'));
         $pdf = PDF::loadView('administrasi.pembayaran.faktur', compact('faktur', 'barangs', 'model', 'penyewaan'))
-            ->setPaper('a4', 'landscape');;
+            ->setPaper('a4', 'potrait');;
         $name = "$faktur->no_faktur $penyewaan->kepada.pdf";
         return $pdf->stream($name);
         exit();

@@ -135,17 +135,16 @@
                     </div>
                     <hr>
                     <h3 class="card-title mb-2">Daftar Barang</h3>
-                    <table class="table table-bordered table-hover border-bottom" id="tbl_detail">
+                    <table class="table table-hover border-bottom table-responsive" id="tbl_detail">
                         <thead>
                             <tr>
                                 <th class="text-nowrap">No</th>
-                                <th class="text-nowrap">Kode | Barang</th>
-                                <th class="text-nowrap">Qty</th>
-                                <th class="text-nowrap">Harga</th>
-                                <th class="text-nowrap">Total Harga</th>
+                                <th class="text-nowrap">Barang</th>
+                                <th class="text-nowrap text-center">Qty</th>
+                                <th class="text-nowrap text-center">Harga</th>
+                                <th class="text-nowrap text-center">Total Harga</th>
                                 <th class="text-nowrap">Keterangan</th>
-                                <th class="text-nowrap">Diubah Oleh</th>
-                                <th class="text-nowrap">Diubah Tgl.</th>
+                                <th class="text-nowrap">Diubah</th>
                             </tr>
                         </thead>
                         <tbody id="tbl_detail_body">
@@ -154,16 +153,15 @@
                     </table>
                     <hr>
                     <h3 class="card-title mb-2">Daftar Pembayaran</h3>
-                    <table class="table table-bordered table-hover border-bottom" id="tbl_pembayaran">
+                    <table class="table table-hover border-bottom table-responsive" id="tbl_pembayaran">
                         <thead>
                             <tr>
                                 <th class="text-nowrap">No</th>
                                 <th class="text-nowrap">Nama</th>
                                 <th class="text-nowrap">Tanggal</th>
-                                <th class="text-nowrap">Nominal</th>
+                                <th class="text-nowrap text-center">Nominal</th>
                                 <th class="text-nowrap">Keterangan</th>
-                                <th class="text-nowrap">Diubah Oleh</th>
-                                <th class="text-nowrap">Diubah Tgl.</th>
+                                <th class="text-nowrap">Diubah</th>
                             </tr>
                         </thead>
                         <tbody id="tbl_pembayaran_body">
@@ -613,19 +611,18 @@
                 data.barangs.forEach(e => {
                     table_body_html += `
                             <tr>
-                                <td class="text-nowrap">${number}</td>
-                                <td class="text-nowrap">${e.barang_kode} | ${e.barang_nama}</td>
+                                <td class="text-nowrap">${number++}</td>
+                                <td class="text-nowrap">${e.barang_nama}<br><small>${e.barang_kode}</small></td>
                                 <td class="text-nowrap text-right">${e.qty}</td>
                                 <td class="text-nowrap text-right">Rp. ${format_rupiah(e.harga)}</td>
                                 <td class="text-nowrap text-right">Rp. ${format_rupiah(e.harga_total)}</td>
                                 <td class="text-nowrap">${e.keterangan ??''}</td>
-                                <td class="text-nowrap">${e.updated_by_str ?? e.created_by_str}</td>
-                                <td class="text-nowrap">${e.updated_at_str ?? e.created_at_str}</td>
+                                <td class="text-nowrap">${e.updated_by_str ?? e.created_by_str}<br><small>${e.updated_at_str ?? e.created_at_str}</small></td>
                             </tr>
                     `;
                 });
                 table_body.html(table_body_html);
-                renderDataTable(table);
+                // renderDataTable(table);
 
                 // data pembayaran
                 table_pembayaran_body.html('');
@@ -634,17 +631,16 @@
                 number = 1;
                 data.pembayarans.forEach(e => {
                     table_pembayaran_body_html += `<tr>
-                                <td class="text-nowrap">${number}</td>
-                                <td class="text-nowrap">${e.nama}</td>
+                                <td class="text-nowrap">${number++}</td>
+                                <td class="text-nowrap">${e.nama}<br><small>Faktur: ${e.no_faktur}</small></td>
                                 <td class="text-nowrap">${e.tanggal}</td>
                                 <td class="text-nowrap text-right">Rp. ${format_rupiah(e.nominal)}</td>
                                 <td class="text-nowrap">${e.keterangan ?? ''}</td>
-                                <td class="text-nowrap">${e.updated_by_str ?? e.created_by_str}</td>
-                                <td class="text-nowrap">${e.updated_at_str ?? e.created_at_str}</td>
+                                <td class="text-nowrap">${e.updated_by_str ?? e.created_by_str}<br><small>${e.updated_at_str ?? e.created_at_str}</small></td>
                             </tr>`;
                 });
                 table_pembayaran_body.html(table_pembayaran_body_html);
-                renderDataTable(table_pembayaran);
+                // renderDataTable(table_pembayaran);
                 $.LoadingOverlay("hide");
             }).fail(($xhr) => {
                 Swal.fire({

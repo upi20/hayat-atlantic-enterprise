@@ -92,6 +92,8 @@
     [x] Halaman Penyewaan -> Detail
         [x] diubah oleh dan tanggal disatukan thead nya jadi diubah
         [z] Nama customer tambah icon user
+    
+    [] Halaman pengembalian -> status
 
     [] data barang tidak bisa di hapus jika sudah tercatat dalam transaksi lain maka status nya akan di nonaktifkan/arsipkan. untuk meminimalisir error. logikanya jika barang di hapus maka akan mengecek ke database data barang apakah sudah tercatat di tabel lain jika sudah maka akan di nonaktifkan.
     [] barang habis pakai tambah status aktif/nonaktif
@@ -101,3 +103,4 @@
     [] semua tanggal ada str nya
     [] Crud Setting Surat Jalan
     [] Konfirmasi Pengambilan Barang (Oleh Warehouse)
+    [] Format Nomor Penyewaan jadi (SP/00000)

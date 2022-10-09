@@ -20,7 +20,7 @@ return new class extends Migration
             $table->text('keterangan')->nullable()->default(null);
             $table->date('tanggal')->nullable()->default(null);
             $table->date('tanggal_kembali')->nullable()->default(null);
-            $table->boolean('status')->nullable()->default(0)->comment('0 Pengambilan Dibuat, 1 Pengambilan Disimpan, 2 Barang Dikirim, 3 Pengembalian Disimpan');
+            $table->boolean('status')->nullable()->default(0)->comment('0 Pengambilan Dibuat, 1 Pengambilan Disimpan, 2 Barang Dikirim, 3 Pengembalian Disimpan, 4 Pengembalian Selesai');
 
             $table->bigInteger('penyewaan', false, true)->nullable()->default(null);
             $table->bigInteger('konfirmasi_oleh', false, true)->nullable()->default(null);

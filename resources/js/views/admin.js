@@ -281,3 +281,21 @@ function render_tanggal(e) {
         $(`<small>${tanggal}</small>`).insertAfter(e);
     }
 }
+
+function colorClass(number) {
+    if (number == 0) return 'warning';
+    else if (number == 1) return 'info';
+    else if (number == 2) return 'secondary';
+    else if (number == 3) return 'primary';
+    else if (number == 4) return 'success';
+    else return 'danger';
+}
+
+function statusPengamblian(status) {
+    if (status == 0) return 'Data Dibuat';
+    else if (status == 4) return 'Pengembalian Selesai';
+    else if (status == 3) return 'Pengembalian Disimpan';
+    else if (status == 2) return 'Barang Dikirim';
+    else if (status == 1) return 'Data Disimpan';
+    else return 'Data Dibuat';
+}

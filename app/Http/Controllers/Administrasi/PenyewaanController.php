@@ -8,6 +8,7 @@ use App\Models\Barang\Satuan;
 use App\Models\Barang\Sewa;
 
 use App\Models\Customer;
+use App\Models\Faktur;
 use App\Models\Penyewaan;
 use App\Models\PenyewaanBarang;
 use App\Models\PenyewaanPembayaran;
@@ -89,7 +90,7 @@ class PenyewaanController extends Controller
         $this->query = array_merge($this->query, $date_format_fun('tanggal_pakai_dari', '%d-%b-%Y', $c_tanggal_pakai_dari_str));
         $this->query = array_merge($this->query, $date_format_fun('tanggal_pakai_sampai', '%d-%b-%Y', $c_tanggal_pakai_sampai_str));
         $this->query = array_merge($this->query, $date_format_fun('tanggal_kirim', '%d-%b-%Y', $c_tanggal_kirim_str));
-        $this->query = array_merge($this->query, $date_format_fun('tanggal_order', '%d-%b-%Y %H:%i:%s', $c_tanggal_order_str));
+        $this->query = array_merge($this->query, $date_format_fun('tanggal_order', '%d-%b-%Y', $c_tanggal_order_str));
 
         // created_by
         $c_created_by = 'created_by_str';
@@ -131,9 +132,22 @@ class PenyewaanController extends Controller
         $c_status_pengambilan_str = 'status_pengambilan_str';
         $this->query[$c_status_pengambilan_str] = <<<SQL
             (if($t_surat_jalan.status = 1,'Data Disimpan', 
-            if($t_surat_jalan.status = 2,'Barang Dikirim', 'Data Dibuat')))
+            if($t_surat_jalan.status = 2,'Barang Dikirim',
+            if($t_surat_jalan.status = 3,'Pengembalian Disimpan',
+            if($t_surat_jalan.status = 4,'Pengembalian Selesai', 'Data Dibuat')))))
         SQL;
         $this->query["{$c_status_pengambilan_str}_alias"] = $c_status_pengambilan_str;
+
+        // proses_penyewaan
+        $c_proses_penyewaan = 'proses_penyewaan';
+        $this->query[$c_proses_penyewaan] = <<<SQL
+            (if($t_surat_jalan.status = 0,'pengiriman', 
+            if($t_surat_jalan.status = 1,'pengiriman',
+            if($t_surat_jalan.status = 2,'pengembalian',
+            if($t_surat_jalan.status = 3,'pengembalian', 
+            if($t_surat_jalan.status = 4,'pengembalian', 'pengiriman'))))))
+        SQL;
+        $this->query["{$c_proses_penyewaan}_alias"] = $c_proses_penyewaan;
 
         $c_status_pengambilan = 'status_pengambilan';
         $this->query[$c_status_pengambilan] = "$t_surat_jalan.status";
@@ -181,7 +195,8 @@ class PenyewaanController extends Controller
             $c_sisa,
             $c_tanggal_pengambilan,
             $c_status_pengambilan,
-            $c_status_pengambilan_str
+            $c_status_pengambilan_str,
+            $c_proses_penyewaan
         ];
 
         $to_db_raw = array_map(function ($a) use ($sraa) {
@@ -207,7 +222,7 @@ class PenyewaanController extends Controller
         };
 
         // filter ini menurut data model filter
-        $f = [$c_status_pengambilan_str];
+        $f = [$c_status_pengambilan_str, $c_proses_penyewaan];
         // loop filter
         foreach ($f as $v) {
             if ($f_c($v)) {
@@ -265,6 +280,7 @@ class PenyewaanController extends Controller
     {
         $table = Penyewaan::tableName;
         $t_user = User::tableName;
+        $t_faktur = Faktur::tableName;
         $t_penyewaan_barang = PenyewaanBarang::tableName;
         $t_barang = Sewa::tableName;
         $t_customer = Customer::tableName;
@@ -288,7 +304,7 @@ class PenyewaanController extends Controller
             DB::raw("date_format($table.tanggal_pakai_dari,'%d-%b-%Y') as tanggal_pakai_dari"),
             DB::raw("date_format($table.tanggal_pakai_sampai,'%d-%b-%Y') as tanggal_pakai_sampai"),
             DB::raw("date_format($table.tanggal_kirim,'%d-%b-%Y') as tanggal_kirim"),
-            DB::raw("date_format($table.tanggal_order,'%d-%b-%Y %H:%i:%s') as tanggal_order"),
+            DB::raw("date_format($table.tanggal_order,'%d-%b-%Y') as tanggal_order"),
             DB::raw("(DATEDIFF($table.tanggal_pakai_sampai, $table.tanggal_pakai_sampai)+1) as tanggal_pakai_lama"),
             DB::raw("$table.status"),
             DB::raw(<<<SQL
@@ -336,6 +352,9 @@ class PenyewaanController extends Controller
             DB::raw("$t_pembayaran.nama"),
             DB::raw("$t_pembayaran.nominal"),
             DB::raw("$t_pembayaran.keterangan"),
+            DB::raw("$t_faktur.no_faktur"),
+            DB::raw("$t_faktur.jumlah"),
+            DB::raw("$t_faktur.sisa"),
             DB::raw("date_format($t_pembayaran.tanggal,'%d-%b-%Y') as tanggal"),
             DB::raw("date_format($t_pembayaran.created_at,'%d-%b-%Y') as created_at_str"),
             DB::raw("date_format($t_pembayaran.updated_at,'%d-%b-%Y') as updated_at_str"),
@@ -344,6 +363,7 @@ class PenyewaanController extends Controller
         ])
             ->leftJoin("$t_user as $t_created_by", "$t_created_by.id", '=', "$t_pembayaran.created_by")
             ->leftJoin("$t_user as $t_updated_by", "$t_updated_by.id", '=', "$t_pembayaran.updated_by")
+            ->leftJoin($t_faktur, "$t_faktur.pembayaran", '=', "$t_pembayaran.id")
             ->where('penyewaan', $model->id)
             ->get();
         $model->pembayarans = $pembayarans;
@@ -379,7 +399,7 @@ class PenyewaanController extends Controller
         }
 
         if (is_null($model->tanggal_order)) {
-            $model->tanggal_order = date('Y-m-d H:i:s');
+            $model->tanggal_order = date('Y-m-d');
         }
 
         $page_attr = [
@@ -390,7 +410,6 @@ class PenyewaanController extends Controller
             ],
             'navigation' => h_prefix(null, 1)
         ];
-
         $is_edit = false;
         return view('administrasi.penyewaan.reciving_order', compact('page_attr', 'model', 'is_edit'));
     }
