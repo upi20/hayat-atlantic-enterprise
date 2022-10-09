@@ -182,17 +182,18 @@ class PengembalianBarangController extends Controller
         $barangs = SuratJalanBarang::where('surat_jalan', $model->id)->get();
         $hilang_cek = false;
         foreach ($barangs as $j_barang) {
-            if ($j_barang->pengembalian_rusak > 0) $hilang_cek = true;
+            if ($j_barang->pengembalian_hilang > 0) $hilang_cek = true;
         }
 
         if ($hilang_cek) {
             $pengurangan = new Pengurangan();
-            $pengurangan->nama = "Barang Hilang Saat Penyewaan Dengan Surat Jalan Nomor";
+            $no_surat_jalan = 'SJ/' . str_pad($model->no_surat_jalan, 5, '0', STR_PAD_LEFT);
+            $pengurangan->nama = "Barang Hilang Saat Penyewaan Dengan Surat Jalan Nomor $no_surat_jalan";
             $pengurangan->tanggal = $model->tanggal;
             $tanggal_penyewaan = $penyewaan->tanggal_pakai_dari == $penyewaan->tanggal_pakai_sampai
                 ? $penyewaan->tanggal_pakai_dari :
                 "$penyewaan->tanggal_pakai_dari s/d $penyewaan->tanggal_pakai_sampai";
-            $pengurangan->keterangan = "Penyewaan Tanggal $tanggal_penyewaan, Di $penyewaan->kepada Lokasi $penyewaan->lokasi";
+            $pengurangan->keterangan = "Tanggal $tanggal_penyewaan, Di $penyewaan->kepada Lokasi $penyewaan->lokasi";
             $pengurangan->created_by = auth()->user()->id;
             $pengurangan->save();
         }
@@ -209,13 +210,14 @@ class PengembalianBarangController extends Controller
             $barang->qty_rusak = $barang->qty_rusak + $j_barang->pengembalian_rusak;
 
             // jika hilang maka kurangi total
-            $barang->qty_rusak = $barang->qty_rusak - $j_barang->pengembalian_hilang;
+            $barang->qty_total = $barang->qty_total - $j_barang->pengembalian_hilang;
 
             // kemudian masukan ke pengurangan barang
             if ($j_barang->pengembalian_hilang > 0) {
                 $pengurangan_barang = new PenguranganList();
                 $pengurangan_barang->pengurangan = $pengurangan->id;
                 $pengurangan_barang->barang = $j_barang->barang;
+                $pengurangan_barang->qty = $j_barang->pengembalian_rusak;
                 $pengurangan_barang->created_by = auth()->user()->id;
                 $pengurangan_barang->save();
             }

@@ -121,6 +121,13 @@ class PengambilanBarangController extends Controller
                 ], 401);
             }
 
+            // nomor surat
+            if (is_null($model->no_surat_jalan)) {
+                $nomor = SuratJalan::max('no_surat_jalan') ?? 0;
+                $model->no_surat_jalan = ($nomor) + 1;
+                $model->save();
+            }
+
             // belum sinkron dengan tanggal pengiriman di tabel panyewaan
             $model->tanggal = $request->tanggal;
             $model->status = 1;
@@ -196,6 +203,7 @@ class PengambilanBarangController extends Controller
             $surat_jalan->no_surat_jalan = ($nomor) + 1;
             $surat_jalan->save();
         }
+
         $surat_jalan->no_surat_jalan = 'SJ/' . str_pad($surat_jalan->no_surat_jalan, 5, '0', STR_PAD_LEFT);
 
         // tanggal pakai

@@ -110,6 +110,19 @@ class PenyewaanBarangTableSeeder extends Seeder
                 'created_at' => '2022-10-09 21:33:31',
                 'updated_at' => '2022-10-09 21:33:31',
             ),
+            7 => 
+            array (
+                'id' => 20,
+                'penyewaan' => 10,
+                'barang' => 4,
+                'qty' => 5,
+                'harga' => 750000,
+                'keterangan' => NULL,
+                'updated_by' => NULL,
+                'created_by' => 1,
+                'created_at' => '2022-10-10 00:08:25',
+                'updated_at' => '2022-10-10 00:08:25',
+            ),
         ));
         
         

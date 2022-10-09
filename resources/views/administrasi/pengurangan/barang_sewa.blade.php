@@ -68,9 +68,7 @@
                             <th>Tanggal</th>
                             <th>Brg. Jml.</th>
                             <th>Brg. Qty</th>
-                            <th>Keterangan</th>
-                            <th>Diubah Oleh</th>
-                            <th>Diubah Tgl.</th>
+                            <th>Diubah</th>
                             {!! $can_delete || $can_update ? '<th>Aksi</th>' : '' !!}
                         </tr>
                     </thead>
@@ -207,7 +205,9 @@
                     {
                         data: 'nama',
                         name: 'nama',
-                        className: 'text-nowrap',
+                        render(data, type, full, meta) {
+                            return `${data}<br><small>${full.keterangan}</small>`;
+                        },
                     },
                     {
                         data: 'tanggal_str',
@@ -228,43 +228,33 @@
                         className: 'text-nowrap text-right'
                     },
                     {
-                        data: 'keterangan',
-                        name: 'keterangan',
-                        className: 'text-nowrap',
-                    },
-                    {
-                        data: 'updated_by_str',
+                        data: 'updated',
                         name: 'updated_by_str',
                         render(data, type, full, meta) {
-                            return data ?? full.created_by_str;
+                            const tanggal = data ?? full.created;
+                            const oleh = full.updated_by_str ?? full.created_by_str
+                            return `${oleh}<br><small>${tanggal}</small>`;
                         },
-                        className: 'text-nowrap',
-                    },
-                    {
-                        data: 'updated',
-                        name: 'updated',
-                        render(data, type, full, meta) {
-                            return data ?? full.created;
-                        },
-                        className: 'text-nowrap',
+                        className: 'text-nowrap'
                     },
                     ...(can_update || can_delete ? [{
                         data: 'id',
                         name: 'id',
                         render(data, type, full, meta) {
-                            const btn_barang = can_barang_list ? `<a class="btn btn-rounded btn-info btn-sm me-1" title="List Data Barang" href="{{ url(h_prefix_uri('list')) }}/${data}">
+                            let br_counter = 0;
+                            const btn_barang = can_barang_list ? `<a class="btn btn-rounded btn-info btn-sm me-1 mt-1" title="List Data Barang" href="{{ url(h_prefix_uri('list')) }}/${data}">
                               <i class="fas fa-file-alt"></i> Barang
-                                </a>` : '';
-                            const btn_update = can_update ? `<button type="button" class="btn btn-rounded btn-primary btn-sm me-1" title="Edit Data" onClick="editFunc('${data}')">
+                                </a> ${(++br_counter %2==0)? '<br>':''}` : '';
+                            const btn_update = can_update ? `<button type="button" class="btn btn-rounded btn-primary btn-sm me-1 mt-1" title="Edit Data" onClick="editFunc('${data}')">
                                 <i class="fas fa-edit"></i> Ubah
-                                </button>` : '';
-                            const btn_delete = can_delete ? `<button type="button" class="btn btn-rounded btn-danger btn-sm me-1" title="Delete Data" onClick="deleteFunc('${data}')">
+                                </button> ${(++br_counter %2==0)? '<br>':''}` : '';
+                            const btn_delete = can_delete ? `<button type="button" class="btn btn-rounded btn-danger btn-sm me-1 mt-1" title="Delete Data" onClick="deleteFunc('${data}')">
                                 <i class="fas fa-trash"></i> Hapus
-                                </button>` : '';
+                                </button> ${(++br_counter %2==0)? '<br>':''}` : '';
                             return btn_barang + btn_update + btn_delete;
                         },
                         orderable: false,
-                        className: 'text-nowrap',
+                        className: 'text-nowrap'
                     }] : []),
                 ],
                 order: [

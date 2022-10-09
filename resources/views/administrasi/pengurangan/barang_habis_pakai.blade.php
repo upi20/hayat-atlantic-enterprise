@@ -68,7 +68,6 @@
                             <th>Tanggal</th>
                             <th>Brg. Jml.</th>
                             <th>Brg. Qty</th>
-                            <th>Keterangan</th>
                             <th>Diubah Oleh</th>
                             <th>Diubah Tgl.</th>
                             {!! $can_delete || $can_update ? '<th>Aksi</th>' : '' !!}
@@ -207,7 +206,9 @@
                     {
                         data: 'nama',
                         name: 'nama',
-                        className: 'text-nowrap',
+                        render(data, type, full, meta) {
+                            return `${data}<br><small>${full.keterangan}</small>`;
+                        },
                     },
                     {
                         data: 'tanggal_str',
@@ -226,11 +227,6 @@
                             return data ?? 0;
                         },
                         className: 'text-nowrap text-right'
-                    },
-                    {
-                        data: 'keterangan',
-                        name: 'keterangan',
-                        className: 'text-nowrap',
                     },
                     {
                         data: 'updated_by_str',
