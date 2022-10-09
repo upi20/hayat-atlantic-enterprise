@@ -342,9 +342,10 @@ class PembayaranController extends Controller
             ->where('faktur', $faktur->id)
             ->leftJoin($t_barang, "$t_barang.id", "$table.barang")
             ->get();
+        // return view('administrasi.pembayaran.faktur', compact('faktur', 'barangs', 'model', 'penyewaan'));
         view()->share('administrasi.pembayaran.faktur', compact('faktur', 'barangs', 'model', 'penyewaan'));
         $pdf = PDF::loadView('administrasi.pembayaran.faktur', compact('faktur', 'barangs', 'model', 'penyewaan'))
-            ->setPaper('a4', 'potrait');;
+            ->setPaper('a4', 'landscape');
         $name = "$faktur->no_faktur $penyewaan->kepada.pdf";
         return $pdf->stream($name);
         exit();

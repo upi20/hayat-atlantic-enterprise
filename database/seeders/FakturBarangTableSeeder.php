@@ -162,6 +162,71 @@ class FakturBarangTableSeeder extends Seeder
                 'created_at' => '2022-10-09 21:35:45',
                 'updated_at' => '2022-10-09 21:35:45',
             ),
+            11 => 
+            array (
+                'id' => 31,
+                'faktur' => 12,
+                'barang' => 4,
+                'qty' => 5,
+                'harga' => 750000,
+                'keterangan' => NULL,
+                'updated_by' => NULL,
+                'created_by' => 1,
+                'created_at' => '2022-10-10 00:33:26',
+                'updated_at' => '2022-10-10 00:33:26',
+            ),
+            12 => 
+            array (
+                'id' => 32,
+                'faktur' => 13,
+                'barang' => 1,
+                'qty' => 5,
+                'harga' => 100000,
+                'keterangan' => NULL,
+                'updated_by' => NULL,
+                'created_by' => 1,
+                'created_at' => '2022-10-10 01:14:49',
+                'updated_at' => '2022-10-10 01:14:49',
+            ),
+            13 => 
+            array (
+                'id' => 33,
+                'faktur' => 13,
+                'barang' => 3,
+                'qty' => 100,
+                'harga' => 4000,
+                'keterangan' => 'Warna Hitam',
+                'updated_by' => NULL,
+                'created_by' => 1,
+                'created_at' => '2022-10-10 01:14:49',
+                'updated_at' => '2022-10-10 01:14:49',
+            ),
+            14 => 
+            array (
+                'id' => 34,
+                'faktur' => 13,
+                'barang' => 6,
+                'qty' => 100,
+                'harga' => 5000,
+                'keterangan' => NULL,
+                'updated_by' => NULL,
+                'created_by' => 1,
+                'created_at' => '2022-10-10 01:14:49',
+                'updated_at' => '2022-10-10 01:14:49',
+            ),
+            15 => 
+            array (
+                'id' => 35,
+                'faktur' => 13,
+                'barang' => 100,
+                'qty' => 120,
+                'harga' => 12500,
+                'keterangan' => NULL,
+                'updated_by' => NULL,
+                'created_by' => 1,
+                'created_at' => '2022-10-10 01:14:49',
+                'updated_at' => '2022-10-10 01:14:49',
+            ),
         ));
         
         

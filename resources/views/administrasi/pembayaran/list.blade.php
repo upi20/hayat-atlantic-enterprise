@@ -2,11 +2,11 @@
 
 @section('content')
     @php
-        $can_insert = auth_can(h_prefix('insert', 2)) && $model->status != 9;
-        $can_delete = auth_can(h_prefix('delete', 2)) && $model->status != 9;
-        $can_batalkan = auth_can(h_prefix('batalkan', 2)) && $model->status != 9;
+        $can_insert = auth_can(h_prefix('insert', 2)) && ($model->status != 9 && $model->status != 5);
+        $can_delete = auth_can(h_prefix('delete', 2)) && ($model->status != 9 && $model->status != 5);
+        $can_batalkan = auth_can(h_prefix('batalkan', 2)) && ($model->status != 9 && $model->status != 5);
         $can_faktur = auth_can(h_prefix('faktur', 2));
-        $can_simpan_status = auth_can(h_prefix('simpan_status', 2)) && $model->status != 9;
+        $can_simpan_status = auth_can(h_prefix('simpan_status', 2)) && ($model->status != 9 && $model->status != 5);
         $can_action = $can_delete || $can_batalkan;
     @endphp
 

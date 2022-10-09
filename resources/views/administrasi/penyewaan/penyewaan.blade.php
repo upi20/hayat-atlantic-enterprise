@@ -5,6 +5,7 @@
         $can_insert = auth_can(h_prefix('insert'));
         $can_update = auth_can(h_prefix('update'));
         $can_delete = auth_can(h_prefix('delete'));
+        $can_selesai = auth_can(h_prefix('selesai'));
         $can_batalkan = auth_can(h_prefix('batalkan'));
     @endphp
 
@@ -231,6 +232,7 @@
     <script>
         const can_batalkan = {{ $can_batalkan ? 'true' : 'false' }};
         const can_update = {{ $can_update ? 'true' : 'false' }};
+        const can_selesai = {{ $can_selesai ? 'true' : 'false' }};
         const can_delete = {{ $can_delete ? 'true' : 'false' }};
         const table_html = $('#tbl_main');
         let isEdit = true;
@@ -327,7 +329,13 @@
                                 <i class="fas fa-trash"></i> Hapus
                                 </button>${(++br_counter %2==0)? '<br>':''}` : '';
 
-                            return btn_detail + btn_batalkan + btn_update + btn_delete;
+                            const btn_selesai = (can_selesai &&
+                                (full.status_pembayaran == 1) &&
+                                (full.status != 5)) ? `<br><button type="button" class="btn btn-rounded btn-success btn-sm me-1 mt-1" title="Penyewaan Selesai" onClick="selesaiFunc('${data}')">
+                                <i class="fas fa-check"></i> Set Selesai
+                                </button>` : '';
+
+                            return btn_detail + btn_batalkan + btn_update + btn_delete + btn_selesai;
                         },
                         orderable: false,
                         className: 'text-nowrap'
@@ -496,6 +504,59 @@
                     $.ajax({
                         url: `{{ url(h_prefix_uri()) }}/${id}`,
                         type: 'DELETE',
+                        dataType: 'json',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        beforeSend: function() {
+                            swal.fire({
+                                title: 'Please Wait..!',
+                                text: 'Is working..',
+                                onOpen: function() {
+                                    Swal.showLoading()
+                                }
+                            })
+                        },
+                        success: function(data) {
+                            Swal.fire({
+                                position: 'center',
+                                icon: 'success',
+                                title: '{{ $page_attr['title'] }} berhasil dihapus',
+                                showConfirmButton: false,
+                                timer: 1500
+                            })
+                            var oTable = table_html.dataTable();
+                            oTable.fnDraw(false);
+                        },
+                        complete: function() {
+                            swal.hideLoading();
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            let error = null;
+                            if (jqXHR.responseJSON) {
+                                error = jqXHR.responseJSON.message;
+                            }
+                            swal.hideLoading();
+                            swal.fire("!Opps ", error ?? "Something went wrong, try again later",
+                                "error");
+                        }
+                    });
+                }
+            });
+        }
+
+        function selesaiFunc(id) {
+            swal.fire({
+                title: 'Apakah anda yakin?',
+                text: "Untuk menyelesaikan data penyewaan ini ?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes'
+            }).then(function(result) {
+                if (result.value) {
+                    $.ajax({
+                        url: `{{ url(h_prefix_uri('selesai')) }}/${id}`,
+                        type: 'POST',
                         dataType: 'json',
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

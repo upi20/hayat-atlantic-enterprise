@@ -797,4 +797,20 @@ class PenyewaanController extends Controller
         DB::commit();
         return response()->json($model);
     }
+
+    public function selesai(Penyewaan $model)
+    {
+        try {
+            DB::beginTransaction();
+            $model->status = 5;
+            $model->save();
+            DB::commit();
+            return response()->json($model);
+        } catch (ValidationException $error) {
+            return response()->json([
+                'message' => 'Something went wrong',
+                'error' => $error,
+            ], 500);
+        }
+    }
 }

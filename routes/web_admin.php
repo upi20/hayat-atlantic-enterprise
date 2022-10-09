@@ -567,6 +567,7 @@ Route::prefix($prefix)->controller(PenyewaanController::class)->group(function (
     Route::get('/customer_select2', 'customer_select2')->name("$name.customer_select2")->middleware("permission:$name");
     Route::get('/detail', 'detail')->name("$name.detail")->middleware("permission:$name");
     Route::post('/batalkan', 'batalkan')->name("$name.batalkan")->middleware("permission:$name.batalkan");
+    Route::post('/selesai/{model}', 'selesai')->name("$name.selesai")->middleware("permission:$name.selesai");
     Route::delete('/{model}', 'delete')->name("$name.delete")->middleware("permission:$name.delete");
 
     $prefix = "reciving_order";
