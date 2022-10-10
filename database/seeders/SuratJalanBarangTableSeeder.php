@@ -131,6 +131,48 @@ class SuratJalanBarangTableSeeder extends Seeder
                 'created_at' => '2022-10-10 00:08:55',
                 'updated_at' => '2022-10-10 00:09:58',
             ),
+            8 => 
+            array (
+                'id' => 24,
+                'barang' => 4,
+                'qty' => 20,
+                'pengembalian_qty' => 20,
+                'pengembalian_hilang' => 0,
+                'pengembalian_rusak' => 0,
+                'surat_jalan' => 8,
+                'updated_by' => 6,
+                'created_by' => 1,
+                'created_at' => '2022-10-10 12:58:59',
+                'updated_at' => '2022-10-10 13:14:09',
+            ),
+            9 => 
+            array (
+                'id' => 25,
+                'barang' => 3,
+                'qty' => 500,
+                'pengembalian_qty' => 500,
+                'pengembalian_hilang' => 0,
+                'pengembalian_rusak' => 0,
+                'surat_jalan' => 8,
+                'updated_by' => 6,
+                'created_by' => 1,
+                'created_at' => '2022-10-10 12:58:59',
+                'updated_at' => '2022-10-10 13:14:09',
+            ),
+            10 => 
+            array (
+                'id' => 26,
+                'barang' => 8,
+                'qty' => 10,
+                'pengembalian_qty' => 10,
+                'pengembalian_hilang' => 0,
+                'pengembalian_rusak' => 0,
+                'surat_jalan' => 8,
+                'updated_by' => 6,
+                'created_by' => 1,
+                'created_at' => '2022-10-10 12:58:59',
+                'updated_at' => '2022-10-10 13:14:09',
+            ),
         ));
         
         

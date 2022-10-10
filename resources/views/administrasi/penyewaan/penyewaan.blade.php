@@ -316,7 +316,7 @@
                                 <i class="fas fa-file-alt"></i> Deatail
                                 </button> ${(++br_counter %2==0)? '<br>':''}`;
 
-                            const btn_batalkan = (full.status <= 2) && can_batalkan ? `<button type="button" class="btn btn-rounded btn-warning btn-sm me-1 mt-1" title="Batalkan" onClick="batalFunc('${data}')">
+                            const btn_batalkan = (full.status <= 2 && can_batalkan) ? `<button type="button" class="btn btn-rounded btn-warning btn-sm me-1 mt-1" title="Batalkan" onClick="batalFunc('${data}')">
                                 <i class="fas fa-times"></i> Batalkan
                                 </button>${(++br_counter %2==0)? '<br>':''}` : '';
 
@@ -330,7 +330,7 @@
 
                             const btn_selesai = (can_selesai &&
                                 (full.status_pembayaran == 1) &&
-                                (full.status != 5)) ? `<br><button type="button" class="btn btn-rounded btn-success btn-sm me-1 mt-1" title="Penyewaan Selesai" onClick="selesaiFunc('${data}')">
+                                (full.status == 4)) ? `<br><button type="button" class="btn btn-rounded btn-success btn-sm me-1 mt-1" title="Penyewaan Selesai" onClick="selesaiFunc('${data}')">
                                 <i class="fas fa-check"></i> Set Selesai
                                 </button>` : '';
 

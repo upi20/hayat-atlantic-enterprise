@@ -2,10 +2,9 @@
 
 @section('content')
     @php
-        $can_simpan = auth_can(h_prefix('simpan'));
-        $can_surat_jalan = auth_can(h_prefix('surat_jalan'));
-        $can_pengambilan = $can_simpan || $can_surat_jalan;
-        
+        $can_save = auth_can(h_prefix('save'));
+        $can_konfirmasi = auth_can(h_prefix('konfirmasi'));
+        $can_pengambilan = $can_save || $can_konfirmasi;
     @endphp
 
     <div class="card">

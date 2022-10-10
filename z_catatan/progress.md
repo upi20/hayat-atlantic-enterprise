@@ -104,3 +104,9 @@
 
 ### Penyewaan Selesai
     [] Jika pembayaran selesai makan tombol selesai muncul.
+
+# Senin, 10 Oktober 2022
+### Testing
+    [] Pembatalan Reciving order
+    [] Di pembayaran jika penyewaan sudah selesai maka pembayaran akan di tutup
+    [] Buat template untuk default pengambilan barang

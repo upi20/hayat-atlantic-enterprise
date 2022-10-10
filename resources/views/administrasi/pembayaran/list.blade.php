@@ -2,11 +2,11 @@
 
 @section('content')
     @php
-        $can_insert = auth_can(h_prefix('insert', 2)) && ($model->status != 9 && $model->status != 5);
-        $can_delete = auth_can(h_prefix('delete', 2)) && ($model->status != 9 && $model->status != 5);
-        $can_batalkan = auth_can(h_prefix('batalkan', 2)) && ($model->status != 9 && $model->status != 5);
-        $can_faktur = auth_can(h_prefix('faktur', 2));
-        $can_simpan_status = auth_can(h_prefix('simpan_status', 2)) && ($model->status != 9 && $model->status != 5);
+        $is_selesai = $model->status != 9 && $model->status != 5;
+        $can_insert = auth_can(h_prefix('insert', 2)) && $is_selesai;
+        $can_delete = auth_can(h_prefix('delete', 2)) && $is_selesai;
+        $can_batalkan = auth_can(h_prefix('batalkan', 2)) && $is_selesai;
+        $can_simpan_status = auth_can(h_prefix('simpan_status', 2)) && $is_selesai;
         $can_action = $can_delete || $can_batalkan;
     @endphp
 
@@ -70,8 +70,6 @@
                         <label class="form-label">Kepada, Lokasi </label>
                         <p id="detail_customer"></p>
                     </div>
-
-
                 </div>
             </form>
         </div>
@@ -152,9 +150,8 @@
                             <th>Tanggal</th>
                             <th>Nominal</th>
                             <th>Keterangan</th>
-                            {!! $can_faktur ? '<th>Faktur</th>' : '' !!}
-                            <th>Diubah Oleh</th>
-                            <th>Diubah Tgl.</th>
+                            <th>Faktur</th>
+                            <th>Diubah</th>
                             {!! $can_batalkan ? '<th>Aksi</th>' : '' !!}
                         </tr>
                     </thead>
@@ -312,7 +309,6 @@
         const can_batalkan = {{ $can_batalkan ? 'true' : 'false' }};
         const can_delete = {{ $can_delete ? 'true' : 'false' }};
         const can_action = {{ $can_action ? 'true' : 'false' }};
-        const can_faktur = {{ $can_faktur ? 'true' : 'false' }};
         const table_html = $('#tbl_main');
         let isEdit = true;
 
@@ -470,7 +466,7 @@
                         name: 'keterangan',
                         className: 'text-nowrap'
                     },
-                    ...((can_faktur) ? [{
+                    {
                         data: 'id',
                         name: 'id',
                         render(data, type, full, meta) {
@@ -479,21 +475,15 @@
                                 </a>`;
                         },
                         orderable: false,
-                        className: 'text-nowrap'
-                    }] : []),
-                    {
-                        data: 'updated_by_str',
-                        name: 'updated_by_str',
-                        render(data, type, full, meta) {
-                            return data ?? full.created_by_str;
-                        },
-                        className: 'text-nowrap'
+                        className: 'text-nowrap',
                     },
                     {
                         data: 'updated',
-                        name: 'updated',
+                        name: 'updated_by_str',
                         render(data, type, full, meta) {
-                            return data ?? full.created;
+                            const tanggal = data ?? full.created;
+                            const oleh = full.updated_by_str ?? full.created_by_str
+                            return `${oleh}<br><small>${tanggal}</small>`;
                         },
                         className: 'text-nowrap'
                     },

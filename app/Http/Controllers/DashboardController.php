@@ -9,9 +9,6 @@ class DashboardController extends Controller
     public function index(Request $request)
     {
         $page_attr = ['title' => 'Dashboard'];
-        return view('member.dashborard', compact(
-            'total_anggota',
-            'page_attr',
-        ));
+        return view('member.dashborard');
     }
 }

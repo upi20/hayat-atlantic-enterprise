@@ -1101,21 +1101,13 @@ class PPermissionsTableSeeder extends Seeder
             ),
             135 => 
             array (
-                'id' => 240,
-                'name' => 'admin.pembayaran.faktur',
+                'id' => 241,
+                'name' => 'admin.pembayaran.simpan_status',
                 'guard_name' => 'web',
                 'created_at' => '2022-08-04 16:05:42',
-                'updated_at' => '2022-08-04 16:05:42',
+                'updated_at' => '2022-10-10 12:20:50',
             ),
             136 => 
-            array (
-                'id' => 241,
-                'name' => 'admin.pembayaran.faktur.simpan_status',
-                'guard_name' => 'web',
-                'created_at' => '2022-08-04 16:05:42',
-                'updated_at' => '2022-08-04 16:05:42',
-            ),
-            137 => 
             array (
                 'id' => 242,
                 'name' => 'admin.pembayaran.insert',
@@ -1123,15 +1115,7 @@ class PPermissionsTableSeeder extends Seeder
                 'created_at' => '2022-08-04 16:05:42',
                 'updated_at' => '2022-08-04 16:05:42',
             ),
-            138 => 
-            array (
-                'id' => 243,
-                'name' => 'admin.pembayaran.delete',
-                'guard_name' => 'web',
-                'created_at' => '2022-08-04 16:05:42',
-                'updated_at' => '2022-08-04 16:05:42',
-            ),
-            139 => 
+            137 => 
             array (
                 'id' => 244,
                 'name' => 'admin.pembayaran.batalkan',
@@ -1139,7 +1123,7 @@ class PPermissionsTableSeeder extends Seeder
                 'created_at' => '2022-08-04 16:05:42',
                 'updated_at' => '2022-08-04 16:05:42',
             ),
-            140 => 
+            138 => 
             array (
                 'id' => 245,
                 'name' => 'admin.penyewaan.selesai',
@@ -1147,13 +1131,69 @@ class PPermissionsTableSeeder extends Seeder
                 'created_at' => '2022-10-10 11:21:14',
                 'updated_at' => '2022-10-10 11:21:14',
             ),
-            141 => 
+            139 => 
             array (
                 'id' => 246,
                 'name' => 'admin.penyewaan.reciving_order.save',
                 'guard_name' => 'web',
                 'created_at' => '2022-10-10 11:39:29',
                 'updated_at' => '2022-10-10 11:39:29',
+            ),
+            140 => 
+            array (
+                'id' => 248,
+                'name' => 'admin.pembayaran.delete',
+                'guard_name' => 'web',
+                'created_at' => '2022-10-10 12:17:34',
+                'updated_at' => '2022-10-10 12:17:34',
+            ),
+            141 => 
+            array (
+                'id' => 249,
+                'name' => 'admin.pengambilan',
+                'guard_name' => 'web',
+                'created_at' => '2022-10-10 12:57:19',
+                'updated_at' => '2022-10-10 12:57:19',
+            ),
+            142 => 
+            array (
+                'id' => 250,
+                'name' => 'admin.pengambilan.save',
+                'guard_name' => 'web',
+                'created_at' => '2022-10-10 12:57:24',
+                'updated_at' => '2022-10-10 12:57:24',
+            ),
+            143 => 
+            array (
+                'id' => 251,
+                'name' => 'admin.pengambilan.konfirmasi',
+                'guard_name' => 'web',
+                'created_at' => '2022-10-10 12:57:36',
+                'updated_at' => '2022-10-10 12:57:36',
+            ),
+            144 => 
+            array (
+                'id' => 252,
+                'name' => 'admin.pengembalian',
+                'guard_name' => 'web',
+                'created_at' => '2022-10-10 13:09:44',
+                'updated_at' => '2022-10-10 13:09:44',
+            ),
+            145 => 
+            array (
+                'id' => 253,
+                'name' => 'admin.pengembalian.konfirmasi',
+                'guard_name' => 'web',
+                'created_at' => '2022-10-10 13:09:56',
+                'updated_at' => '2022-10-10 13:09:56',
+            ),
+            146 => 
+            array (
+                'id' => 254,
+                'name' => 'admin.pengembalian.save',
+                'guard_name' => 'web',
+                'created_at' => '2022-10-10 13:10:04',
+                'updated_at' => '2022-10-10 13:10:04',
             ),
         ));
         

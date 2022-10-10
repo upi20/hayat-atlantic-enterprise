@@ -2,10 +2,8 @@
 
 @section('content')
     @php
-        $can_surat_jalan = auth_can(h_prefix('surat_jalan', 2));
+        $can_save = auth_can(h_prefix('save', 2));
         $can_konfirmasi = auth_can(h_prefix('konfirmasi', 2));
-        $can_simpan = auth_can(h_prefix('simpan', 2));
-        $can_action = $can_simpan || $can_surat_jalan;
     @endphp
 
     <div class="card">
@@ -19,13 +17,11 @@
                 <a href="{{ route(h_prefix(null, 2)) }}" class="btn btn-rounded btn-secondary btn-sm">
                     <i class="fas fa-arrow-left"></i> Kembali
                 </a>
-                @if ($can_surat_jalan)
-                    <a href="{{ route(h_prefix('pengambilan.surat_jalan', 3), $model->id) }}" target="_blank"
-                        id="btn-surat-jalan" class="btn btn-rounded btn-success btn-sm"
-                        style="{{ $surat_jalan->status == 0 ? 'display:none' : '' }}">
-                        <i class="fas fa-print"></i> Cetak Surat Jalan
-                    </a>
-                @endif
+                <a href="{{ route(h_prefix('pengambilan.surat_jalan', 3), $model->id) }}" target="_blank" id="btn-surat-jalan"
+                    class="btn btn-rounded btn-success btn-sm"
+                    style="{{ $surat_jalan->status == 0 ? 'display:none' : '' }}">
+                    <i class="fas fa-print"></i> Cetak Surat Jalan
+                </a>
             </div>
         </div>
         <div class="card-body">
@@ -138,9 +134,11 @@
             </form>
         </div>
         <div class="card-footer" id="btn-simpan" style="{{ $surat_jalan->status == 4 ? 'display:none' : '' }}">
-            <button type="submit" class="btn btn-primary" form="MainForm">
-                <li class="fas fa-save"></li> Simpan
-            </button>
+            @if ($can_save)
+                <button type="submit" class="btn btn-primary" form="MainForm">
+                    <li class="fas fa-save"></li> Simpan
+                </button>
+            @endif
             @if ($can_konfirmasi)
                 <button type="button" class="btn btn-success" id="btn-konfirmasi"
                     onclick="konfirmasiFun('{{ $surat_jalan->id }}')"

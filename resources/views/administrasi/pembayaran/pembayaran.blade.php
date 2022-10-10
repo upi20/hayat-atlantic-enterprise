@@ -3,9 +3,10 @@
 @section('content')
     @php
         $can_insert = auth_can(h_prefix('insert'));
-        $can_update = auth_can(h_prefix('update'));
         $can_delete = auth_can(h_prefix('delete'));
-        $can_pembayaran = $can_insert || $can_update;
+        $can_batalkan = auth_can(h_prefix('batalkan'));
+        $can_simpan_status = auth_can(h_prefix('simpan_status'));
+        $can_pembayaran = $can_insert || $can_delete || $can_batalkan || $can_simpan_status;
     @endphp
 
     <div class="card">

@@ -71,7 +71,7 @@ class BarangTableSeeder extends Seeder
                 'updated_by' => NULL,
                 'created_by' => 1,
                 'created_at' => '2022-09-17 22:04:43',
-                'updated_at' => '2022-10-10 00:11:38',
+                'updated_at' => '2022-10-10 13:14:55',
             ),
             3 => 
             array (
@@ -89,7 +89,7 @@ class BarangTableSeeder extends Seeder
                 'updated_by' => NULL,
                 'created_by' => 1,
                 'created_at' => '2022-09-17 22:04:43',
-                'updated_at' => '2022-10-10 00:11:24',
+                'updated_at' => '2022-10-10 13:14:55',
             ),
             4 => 
             array (
@@ -161,7 +161,7 @@ class BarangTableSeeder extends Seeder
                 'updated_by' => NULL,
                 'created_by' => 1,
                 'created_at' => '2022-09-17 22:04:43',
-                'updated_at' => NULL,
+                'updated_at' => '2022-10-10 13:14:55',
             ),
             8 => 
             array (
