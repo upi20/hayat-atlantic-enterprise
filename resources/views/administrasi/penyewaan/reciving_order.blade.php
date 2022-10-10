@@ -3,7 +3,8 @@
 @section('content')
     @php
         $pre = $is_edit ? 1 : 0;
-        $can_save = auth_can(h_prefix('insert', $pre + 1)) || auth_can(h_prefix('update', $pre + 1));
+        $can_save = auth_can(h_prefix('save', $pre));
+        $can_barang = auth_can(h_prefix('barang', $pre));
         $can_barang_insert = auth_can(h_prefix('barang.insert', $pre));
         $can_barang_update = auth_can(h_prefix('barang.update', $pre));
         $can_barang_delete = auth_can(h_prefix('barang.delete', $pre));
@@ -16,9 +17,11 @@
                 <a href="{{ route(h_prefix(null, $is_edit ? 2 : 1)) }}" class="btn btn-rounded btn-secondary btn-sm">
                     <i class="fas fa-arrow-left"></i> Kembali
                 </a>
-                <button type="submit" form="MainForm" class="btn btn-rounded btn-success btn-sm">
-                    <i class="fas fa-save"></i> Simpan Reciving Order
-                </button>
+                @if ($can_save)
+                    <button type="submit" form="MainForm" class="btn btn-rounded btn-success btn-sm">
+                        <i class="fas fa-save"></i> Simpan Reciving Order
+                    </button>
+                @endif
             </div>
         </div>
         <div class="card-body">
@@ -124,170 +127,175 @@
         </div>
     </div>
 
-    <div class="card">
-        <div class="card-header d-md-flex flex-row justify-content-between">
-            <h3 class="card-title">{{ $page_attr['title'] }} Barang
-                <span id="total"></span>
-            </h3>
-            <div>
-                <a href="{{ route(h_prefix(null, $is_edit ? 2 : 1)) }}" class="btn btn-rounded btn-secondary btn-sm">
-                    <i class="fas fa-arrow-left"></i> Kembali
-                </a>
-                @if ($can_barang_insert)
-                    <button type="button" class="btn btn-rounded btn-success btn-sm" data-bs-effect="effect-scale"
-                        data-bs-toggle="modal" href="#modal-default" onclick="add()" data-target="#modal-default">
-                        <i class="fas fa-plus"></i> Tambah
-                    </button>
-                @endif
+    @if ($can_barang)
+        <div class="card">
+            <div class="card-header d-md-flex flex-row justify-content-between">
+                <h3 class="card-title">{{ $page_attr['title'] }} Barang
+                    <span id="total"></span>
+                </h3>
+                <div>
+                    <a href="{{ route(h_prefix(null, $is_edit ? 2 : 1)) }}" class="btn btn-rounded btn-secondary btn-sm">
+                        <i class="fas fa-arrow-left"></i> Kembali
+                    </a>
+                    @if ($can_barang_insert)
+                        <button type="button" class="btn btn-rounded btn-success btn-sm" data-bs-effect="effect-scale"
+                            data-bs-toggle="modal" href="#modal-default" onclick="add()" data-target="#modal-default">
+                            <i class="fas fa-plus"></i> Tambah
+                        </button>
+                    @endif
+                </div>
             </div>
-        </div>
 
-        <div class="card-body">
-            <div class="table-responsive table-striped">
-                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                    <div class="panel panel-default active mb-2">
-                        <div class="panel-heading " role="tab" id="headingOne1">
-                            <h4 class="panel-title">
-                                <a role="button" data-bs-toggle="collapse" data-bs-parent="#accordion"
-                                    href="#collapse1" aria-expanded="true" aria-controls="collapse1">
-                                    Filter Data
-                                </a>
-                            </h4>
-                        </div>
-                        <div id="collapse1" class="panel-collapse collapse" role="tabpanel"
-                            aria-labelledby="headingOne1">
-                            <div class="panel-body">
-                                <form action="javascript:void(0)" class="ml-md-3 mb-md-3" id="FilterForm">
+            <div class="card-body">
+                <div class="table-responsive table-striped">
+                    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                        <div class="panel panel-default active mb-2">
+                            <div class="panel-heading " role="tab" id="headingOne1">
+                                <h4 class="panel-title">
+                                    <a role="button" data-bs-toggle="collapse" data-bs-parent="#accordion"
+                                        href="#collapse1" aria-expanded="true" aria-controls="collapse1">
+                                        Filter Data
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapse1" class="panel-collapse collapse" role="tabpanel"
+                                aria-labelledby="headingOne1">
+                                <div class="panel-body">
+                                    <form action="javascript:void(0)" class="ml-md-3 mb-md-3" id="FilterForm">
 
-                                    <div class="form-group float-start me-2" style="min-width: 300px">
-                                        <label for="created_by">Dibuat Oleh</label>
-                                        <br>
-                                        <select class="form-control" id="created_by" name="created_by"
-                                            style="width: 100%;">
-                                            <option value="" selected>Semua</option>
-                                        </select>
-                                    </div>
+                                        <div class="form-group float-start me-2" style="min-width: 300px">
+                                            <label for="created_by">Dibuat Oleh</label>
+                                            <br>
+                                            <select class="form-control" id="created_by" name="created_by"
+                                                style="width: 100%;">
+                                                <option value="" selected>Semua</option>
+                                            </select>
+                                        </div>
 
-                                    <div class="form-group float-start me-2" style="min-width: 300px">
-                                        <label for="updated_by">Diubah Oleh</label>
-                                        <br>
-                                        <select class="form-control" id="updated_by" name="updated_by"
-                                            style="width: 100%;">
-                                            <option value="" selected>Semua</option>
-                                        </select>
-                                    </div>
+                                        <div class="form-group float-start me-2" style="min-width: 300px">
+                                            <label for="updated_by">Diubah Oleh</label>
+                                            <br>
+                                            <select class="form-control" id="updated_by" name="updated_by"
+                                                style="width: 100%;">
+                                                <option value="" selected>Semua</option>
+                                            </select>
+                                        </div>
 
-                                </form>
-                                <div style="clear: both"></div>
-                                <button type="submit" form="FilterForm" class="btn btn-rounded btn-md btn-info"
-                                    data-toggle="tooltip" title="Refresh Filter Table">
-                                    <i class="bi bi-arrow-repeat"></i> Terapkan filter
-                                </button>
+                                    </form>
+                                    <div style="clear: both"></div>
+                                    <button type="submit" form="FilterForm" class="btn btn-rounded btn-md btn-info"
+                                        data-toggle="tooltip" title="Refresh Filter Table">
+                                        <i class="bi bi-arrow-repeat"></i> Terapkan filter
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <table class="table table-bordered table-hover border-bottom" id="tbl_main">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Barang</th>
-                            <th>Qty</th>
-                            <th>Harga</th>
-                            <th>Total Harga</th>
-                            <th>Keterangan</th>
-                            <th>Diubah</th>
-                            {!! $can_barang_delete || $can_barang_update ? '<th>Aksi</th>' : '' !!}
-                        </tr>
-                    </thead>
-                    <tbody> </tbody>
+                    <table class="table table-bordered table-hover border-bottom" id="tbl_main">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Barang</th>
+                                <th>Qty</th>
+                                <th>Harga</th>
+                                <th>Total Harga</th>
+                                <th>Keterangan</th>
+                                <th>Diubah</th>
+                                {!! $can_barang_delete || $can_barang_update ? '<th>Aksi</th>' : '' !!}
+                            </tr>
+                        </thead>
+                        <tbody> </tbody>
 
-                </table>
+                    </table>
+                </div>
             </div>
         </div>
-    </div>
 
-    <!-- End Row -->
-    <div class="modal fade" id="modal-default">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content modal-content-demo">
-                <div class="modal-header">
-                    <h6 class="modal-title" id="modal-default-title"></h6><button aria-label="Tutup" class="btn-close"
-                        data-bs-dismiss="modal"><span aria-hidden="true">&times;</span></button>
-                </div>
-                <div class="modal-body">
-                    <form action="javascript:void(0)" id="BarangForm" name="BarangForm" method="POST"
-                        enctype="multipart/form-data">
-                        <input type="hidden" name="id" id="barang_id">
-                        <input type="hidden" name="penyewaan" id="penyewaan" value="{{ $model->id }}">
-                        <div class="form-group">
-                            <label class="form-label" for="nama">Barang <span class="text-danger">*</span></label>
-                            <select class="form-control" id="barang" name="barang" style="width: 100%;" required>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="form-label" for="harga">Harga <span class="text-danger">*</span></label>
-                            <div class="input-group">
-                                <span class="input-group-text">Rp </span>
-                                <input type="number" min="1" class="form-control" placeholder="Harga"
-                                    aria-label="Harga" id="harga" name="harga" aria-describedby="basic-addon1"
+        <!-- End Row -->
+        <div class="modal fade" id="modal-default">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content modal-content-demo">
+                    <div class="modal-header">
+                        <h6 class="modal-title" id="modal-default-title"></h6><button aria-label="Tutup"
+                            class="btn-close" data-bs-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="javascript:void(0)" id="BarangForm" name="BarangForm" method="POST"
+                            enctype="multipart/form-data">
+                            <input type="hidden" name="id" id="barang_id">
+                            <input type="hidden" name="penyewaan" id="penyewaan" value="{{ $model->id }}">
+                            <div class="form-group">
+                                <label class="form-label" for="nama">Barang <span
+                                        class="text-danger">*</span></label>
+                                <select class="form-control" id="barang" name="barang" style="width: 100%;"
                                     required>
+                                </select>
                             </div>
-                            <small id="harga_terbilang" class="fst-italic"></small>
-                        </div>
 
-                        <div class="form-group">
-                            <label class="form-label" for="qty">Quantity/Jumlah
-                                <span class="text-danger">*</span></label>
-                            <div class="input-group">
-                                <input type="number" min="1" class="form-control" placeholder="Quantity/Jumlah"
-                                    aria-label="Quantity/Jumlah" id="qty" name="qty"
-                                    aria-describedby="basic-addon1" required>
-                                <span class="input-group-text satuan"></span>
+                            <div class="form-group">
+                                <label class="form-label" for="harga">Harga <span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <span class="input-group-text">Rp </span>
+                                    <input type="number" min="1" class="form-control" placeholder="Harga"
+                                        aria-label="Harga" id="harga" name="harga" aria-describedby="basic-addon1"
+                                        required>
+                                </div>
+                                <small id="harga_terbilang" class="fst-italic"></small>
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            <label class="form-label" for="keterangan">Keterangan</label>
-                            <input type="text" class="form-control" placeholder="Keterangan" aria-label="Keterangan"
-                                id="keterangan" name="keterangan">
-                        </div>
+                            <div class="form-group">
+                                <label class="form-label" for="qty">Quantity/Jumlah
+                                    <span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <input type="number" min="1" class="form-control"
+                                        placeholder="Quantity/Jumlah" aria-label="Quantity/Jumlah" id="qty"
+                                        name="qty" aria-describedby="basic-addon1" required>
+                                    <span class="input-group-text satuan"></span>
+                                </div>
+                            </div>
 
-                        <hr>
-                        <h6 class="fw-bold h5">Total</h6>
-                        <div class="form-group">
-                            <label class="form-label" for="total_harga">Total Harga</label>
-                            <div class="input-group">
-                                <span class="input-group-text">Rp </span>
-                                <input type="text" class="form-control" placeholder="Total Harga" aria-label="Harga"
-                                    id="total_harga" aria-describedby="basic-addon1" readonly>
+                            <div class="form-group">
+                                <label class="form-label" for="keterangan">Keterangan</label>
+                                <input type="text" class="form-control" placeholder="Keterangan"
+                                    aria-label="Keterangan" id="keterangan" name="keterangan">
                             </div>
-                        </div>
-                        <small id="total_harga_terbilang" class="fst-italic"></small>
-                        <div class="form-group">
-                            <label class="form-label" for="qty_total" id="pada_tanggal"></label>
-                            <div class="input-group">
-                                <input type="number" min="1" class="form-control"
-                                    placeholder="Total Quantity/Jumlah Menjadi" aria-label="Total Quantity/Jumlah Menjadi"
-                                    id="qty_total" name="qty_total" aria-describedby="basic-addon1" readonly>
-                                <span class="input-group-text satuan"></span>
+
+                            <hr>
+                            <h6 class="fw-bold h5">Total</h6>
+                            <div class="form-group">
+                                <label class="form-label" for="total_harga">Total Harga</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">Rp </span>
+                                    <input type="text" class="form-control" placeholder="Total Harga"
+                                        aria-label="Harga" id="total_harga" aria-describedby="basic-addon1" readonly>
+                                </div>
                             </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary" id="btn-save" form="BarangForm">
-                        <li class="fas fa-save mr-1"></li> Simpan
-                    </button>
-                    <button class="btn btn-light" data-bs-dismiss="modal">
-                        <i class="fas fa-times"></i>
-                        Tutup
-                    </button>
+                            <small id="total_harga_terbilang" class="fst-italic"></small>
+                            <div class="form-group">
+                                <label class="form-label" for="qty_total" id="pada_tanggal"></label>
+                                <div class="input-group">
+                                    <input type="number" min="1" class="form-control"
+                                        placeholder="Total Quantity/Jumlah Menjadi"
+                                        aria-label="Total Quantity/Jumlah Menjadi" id="qty_total" name="qty_total"
+                                        aria-describedby="basic-addon1" readonly>
+                                    <span class="input-group-text satuan"></span>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" id="btn-save" form="BarangForm">
+                            <li class="fas fa-save mr-1"></li> Simpan
+                        </button>
+                        <button class="btn btn-light" data-bs-dismiss="modal">
+                            <i class="fas fa-times"></i>
+                            Tutup
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    @endif
 @endsection
 
 @section('javascript')

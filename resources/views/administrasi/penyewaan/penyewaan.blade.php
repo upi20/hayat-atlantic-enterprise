@@ -2,8 +2,7 @@
 
 @section('content')
     @php
-        $can_insert = auth_can(h_prefix('insert'));
-        $can_update = auth_can(h_prefix('update'));
+        $can_reciving_order = auth_can(h_prefix('reciving_order'));
         $can_delete = auth_can(h_prefix('delete'));
         $can_selesai = auth_can(h_prefix('selesai'));
         $can_batalkan = auth_can(h_prefix('batalkan'));
@@ -12,7 +11,7 @@
     <div class="card">
         <div class="card-header d-md-flex flex-row justify-content-between">
             <h3 class="card-title">{{ $page_attr['title'] }} Table List</h3>
-            @if ($can_insert)
+            @if ($can_reciving_order)
                 <a class="btn btn-rounded btn-success btn-sm" href="{{ route('admin.penyewaan.reciving_order') }}">
                     <i class="fas fa-plus"></i> Reciving Order
                 </a>
@@ -231,7 +230,7 @@
 
     <script>
         const can_batalkan = {{ $can_batalkan ? 'true' : 'false' }};
-        const can_update = {{ $can_update ? 'true' : 'false' }};
+        const can_reciving_order = {{ $can_reciving_order ? 'true' : 'false' }};
         const can_selesai = {{ $can_selesai ? 'true' : 'false' }};
         const can_delete = {{ $can_delete ? 'true' : 'false' }};
         const table_html = $('#tbl_main');
@@ -321,7 +320,7 @@
                                 <i class="fas fa-times"></i> Batalkan
                                 </button>${(++br_counter %2==0)? '<br>':''}` : '';
 
-                            const btn_update = (can_update && full.status <= 2) ? `<a href="{{ route('admin.penyewaan.reciving_order') }}/${data}" class="btn btn-rounded btn-primary btn-sm me-1 mt-1" title="Edit Data">
+                            const btn_update = (can_reciving_order && full.status <= 2) ? `<a href="{{ route('admin.penyewaan.reciving_order') }}/${data}" class="btn btn-rounded btn-primary btn-sm me-1 mt-1" title="Edit Data">
                                 <i class="fas fa-edit"></i> Ubah
                                 </a>${(++br_counter %2==0)? '<br>':''}` : '';
 
@@ -348,10 +347,10 @@
                         }
                     },
                     {
-                        data: 'status',
-                        name: 'status_str',
+                        data: 'status_str',
+                        name: 'status',
                         render(data, type, full, meta) {
-                            return `<span class="badge ${statusClass(data)}">${full.status_str}</span>`;
+                            return `<span class="badge ${statusClass(full.status)}">${data}</span>`;
                         },
                         className: 'text-nowrap'
                     },
@@ -370,7 +369,7 @@
                         name: 'tanggal_pakai_dari',
                         render(data, type, full, meta) {
                             if (full.tanggal_pakai_dari_str == full.tanggal_pakai_sampai_str) {
-                                return data;
+                                return full.tanggal_pakai_dari_str;
                             } else {
                                 return `${full.tanggal_pakai_dari_str ?? ''} s/d <br> ${full.tanggal_pakai_sampai_str ?? ''}`;
                             }

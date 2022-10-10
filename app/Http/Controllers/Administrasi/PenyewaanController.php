@@ -416,7 +416,7 @@ class PenyewaanController extends Controller
 
     public function reciving_order_update(Penyewaan $model, Request $request)
     {
-        if (!is_admin() && $model->status != 1) {
+        if (!is_admin() && $model->status > 2) {
             return abort(404);
         }
 

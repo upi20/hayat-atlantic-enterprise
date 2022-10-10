@@ -573,10 +573,10 @@ Route::prefix($prefix)->controller(PenyewaanController::class)->group(function (
     $prefix = "reciving_order";
     Route::prefix($prefix)->group(function () use ($name, $prefix) {
         $name = "$name.$prefix"; // admin.penyewaan.reciving_order
-        Route::get('/', 'reciving_order')->name($name)->middleware("permission:$name.reciving_order");
-        Route::post('/save', 'save')->name("$name.save")->middleware("permission:$name.reciving_order");
-        Route::get('/barang_select2', 'barang_select2')->name("$name.barang_select2")->middleware("permission:$name.reciving_order");
-        Route::get('/{model}', 'reciving_order_update')->name("$name.update")->middleware("permission:$name.reciving_order");
+        Route::get('/', 'reciving_order')->name($name)->middleware("permission:$name");
+        Route::post('/save', 'save')->name("$name.save")->middleware("permission:$name.save");
+        Route::get('/barang_select2', 'barang_select2')->name("$name.barang_select2")->middleware("permission:$name");
+        Route::get('/{model}', 'reciving_order_update')->name("$name.update")->middleware("permission:$name");
 
         $prefix = "barang";
         Route::prefix($prefix)->group(function () use ($name, $prefix) {
