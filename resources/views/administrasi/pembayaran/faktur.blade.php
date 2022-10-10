@@ -24,83 +24,126 @@
     <meta name="msapplication-TileColor" content="#fff">
     <meta name="theme-color" content="#0191D7">
     <meta name="msapplication-TileImage" content="{{ public_path('favicon/icon-144x144.png') }}">
-    <title>Invoice</title>
-    @include('templates.admin.pdf_style')
+    <title>Faktur {{ $faktur->no_faktur }}</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+        }
+
+        .page {
+            width: 21cm;
+            min-height: 29.7cm;
+            padding: .5cm;
+            margin: 0.5cm auto;
+            background-color: #fff;
+            /* border: 1px #D3D3D3 solid;
+            border-radius: 5px;
+            background: white;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); */
+        }
+
+        .subpage {
+            /* padding: 1cm; */
+            /* border: 5px red solid; */
+            height: 286mm;
+            /* outline: 0.5cm #FFEAEA solid; */
+        }
+
+        table,
+        th,
+        td {
+            padding: 8px 4px;
+        }
+
+        .p-title {
+            margin: 4px;
+        }
+
+        .garis {
+            border: none;
+            height: 2px !important;
+            color: #000;
+            background-color: #000;
+            opacity: 1;
+            border-radius: 4px;
+        }
+
+        .my-table td,
+        .my-table th {
+            border: 1px solid #000;
+        }
+
+        .text-right {
+            text-align: right;
+        }
+
+        .no-border {
+            border: 0 !important;
+            padding: 2px
+        }
+
+        .table-detail td {
+            padding: 2px
+        }
+    </style>
 </head>
 
-
 <body>
-    <table style="width: 100%" class="tbl-2">
+    <table>
         <tr>
-            <td style="width: 33%; padding: 2px 2px; ">
-                <h3 class="p-title">CV. Hayat Atlantic Enterprise</h3>
-                <span>Jalan Lodaya No. 27</span><br>
-                <span>Bandung, Jawa Barat</span>
+            <td>
+                <img src="{{ public_path(settings()->get(set_admin('app.foto_light_mode'))) }}" alt=""
+                    style="height: 25mm;">
             </td>
-            <td style="width: 33%; padding: 2px 2px;  vertical-align: middle; text-align: center">
-                <h1 style="margin: 0; font-size: 2.5em">INVOICE</h1>
-                <span>Referensi : </span>
-            </td>
-            <td style="width: 33%; padding: 2px 2px; ">
-                <table class="tbl-2">
-                    <tr>
-                        <td>Surat Jalan </td>
-                        <td>:</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>Pemesanan </td>
-                        <td>:</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>Penawaran </td>
-                        <td>:</td>
-                        <td></td>
-                    </tr>
-                    <tr style="font-weight: bold">
-                        <td>Referensi </td>
-                        <td>:</td>
-                        <td></td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-    </table>
-    <table style="width: 100%" class="tbl-2">
-        <tr>
-            <td style="width: 50%">
-                <table class="tbl-2">
-                    <tr>
-                        <td>No. Telepon </td>
-                        <td>:</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>Tanggal </td>
-                        <td>:</td>
-                        <td></td>
-                    </tr>
-                </table>
-            </td>
-            <td style="width: 50%">
-                <table>
-                    <tr>
-                        <td>Pelanggan</td>
-                        <td>:</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        {{-- alamat --}}
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                </table>
+            <td>
+                <h2 class="p-title">HAYAT ATLANTIC ENTERPRISE</h2>
+                <p class="p-title">Jl. Lodaya No.27, Malabar, Kec. Lengkong, Kota Bandung, Jawa Barat 40262</p>
+                <p class="p-title">Telp: 022 7303759 – 0227900502 / WA: 081214886315 – 081214939435</p>
             </td>
         </tr>
     </table>
 
+    <hr class="garis">
+    <h4 style="text-align: center; margin-bottom: 8px">FAKTUR PEMBAYARAN PENYEWAAN</h4>
+    <table class="table-detail">
+        <tr>
+            <td>Nomor Faktur</td>
+            <td>:</td>
+            <td>{{ $faktur->no_faktur }}</td>
+        </tr>
+        <tr>
+            <td>Tanggal Faktur</td>
+            <td>:</td>
+            <td>{{ $faktur->tanggal_str }}</td>
+        </tr>
+        <tr>
+            <td>Tanggal Kirim</td>
+            <td>:</td>
+            <td>{{ $penyewaan->tanggal_kirim }}</td>
+        </tr>
+        <tr>
+            <td>Tanggal Pakai</td>
+            <td>:</td>
+            <td>
+                {{ $penyewaan->tanggal_pakai_dari }}
+                @if ($penyewaan->tanggal_pakai_dari != $penyewaan->tanggal_pakai_sampai)
+                    s/d {{ $penyewaan->tanggal_pakai_sampai }} ( {{ $penyewaan->pakai_hari }} hari)
+                @endif
+            </td>
+        </tr>
+        <tr>
+            <td>Kepada</td>
+            <td>:</td>
+            <td>Yth. {{ $penyewaan->kepada }}</td>
+        </tr>
+        <tr>
+            <td>Lokasi</td>
+            <td>:</td>
+            <td>{{ $penyewaan->lokasi }}</td>
+        </tr>
+    </table>
+    <p style="margin-bottom: 4px">Daftar barang yang disewakan:</p>
     <table style="width: 100%; border-collapse:collapse" class="my-table">
         <thead>
             <th>No</th>
