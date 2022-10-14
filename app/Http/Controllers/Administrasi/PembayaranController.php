@@ -16,6 +16,8 @@ use League\Config\Exception\ValidationException;
 use Illuminate\Support\Facades\DB;
 use Yajra\Datatables\Datatables;
 use PDF;
+use App\Models\Customer;
+use App\Models\SuratJalan;
 
 class PembayaranController extends Controller
 {
@@ -319,6 +321,8 @@ class PembayaranController extends Controller
         $t_barang = Sewa::tableName;
         $t_faktur = Faktur::tableName;
         $t_penyewaan = Penyewaan::tableName;
+        $t_customer = Customer::tableName;
+        $t_surat_jalan = SuratJalan::tableName;
         $table = FakturBarang::tableName;
 
         $faktur = Faktur::select([
@@ -328,11 +332,21 @@ class PembayaranController extends Controller
 
         $penyewaan = Penyewaan::select([
             DB::raw("$t_penyewaan.*"),
+            DB::raw("$t_surat_jalan.no_surat_jalan"),
+            DB::raw("$t_customer.nama as customer_nama"),
+            DB::raw("$t_customer.alamat as customer_alamat"),
+            DB::raw("$t_customer.no_telepon as customer_no_telepon"),
             DB::raw("date_format(tanggal_kirim, '%W, %d %M %Y') as tanggal_kirim"),
             DB::raw("date_format(tanggal_pakai_dari, '%W, %d %M %Y') as tanggal_pakai_dari"),
             DB::raw("date_format(tanggal_pakai_sampai, '%W, %d %M %Y') as tanggal_pakai_sampai"),
             DB::raw("(DATEDIFF(tanggal_pakai_sampai, tanggal_pakai_dari)+1) as pakai_hari"),
-        ])->where('id', $model->penyewaan)->first();
+        ])
+        ->leftJoin($t_surat_jalan, "$t_surat_jalan.penyewaan", '=', "$t_penyewaan.id")
+        ->leftJoin($t_customer, "$t_customer.id", '=', "$t_penyewaan.customer")
+        ->where("$t_penyewaan.id", $model->penyewaan)->first();
+
+        $penyewaan->no_surat_jalan = 'SJ/' . str_pad($penyewaan->no_surat_jalan, 5, '0', STR_PAD_LEFT);
+        $penyewaan->no = 'PM/' . str_pad($penyewaan->id, 5, '0', STR_PAD_LEFT);
 
         $barangs = FakturBarang::select([
             DB::raw("$table.*"),
@@ -343,6 +357,7 @@ class PembayaranController extends Controller
             ->leftJoin($t_barang, "$t_barang.id", "$table.barang")
             ->get();
         // return view('administrasi.pembayaran.faktur', compact('faktur', 'barangs', 'model', 'penyewaan'));
+        $faktur->no = 'IN/' . str_pad($faktur->id, 5, '0', STR_PAD_LEFT);
         view()->share('administrasi.pembayaran.faktur', compact('faktur', 'barangs', 'model', 'penyewaan'));
         $pdf = PDF::loadView('administrasi.pembayaran.faktur', compact('faktur', 'barangs', 'model', 'penyewaan'))
             ->setPaper('a4', 'landscape');
