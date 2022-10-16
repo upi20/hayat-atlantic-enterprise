@@ -244,12 +244,33 @@ class PenyewaanController extends Controller
 
         // ========================================================================================================
         $datatable = Datatables::of($model)->addIndexColumn();
-        foreach ($model_filter as $v) {
-            // custom pencarian
-            $datatable->filterColumn($this->query["{$v}_alias"], function ($query, $keyword) use ($v) {
-                $query->whereRaw("({$this->query[$v]} like '%$keyword%')");
-            });
-        }
+
+        // search
+        // ========================================================================================================
+        $query_filter = $this->query;
+        $datatable->filter(function ($query) use ($model_filter, $query_filter, $table) {
+            $search = request('search');
+            $search = isset($search['value']) ? $search['value'] : null;
+            if ((is_null($search) || $search == '') && count($model_filter) > 0) return false;
+
+            // tambah pencarian
+            $search_add = ['customer', 'lokasi', 'tanggal_kirim', 'tanggal_pakai_dari', 'tanggal_pakai_sampai', 'kepada', 'tanggal_order', 'status', 'total_harga', 'dibayar', 'status_pembayaran', 'batal_keterangan', 'batal_tanggal', 'batal_oleh', 'updated_by', 'created_by'];
+            $search_add = array_map(function ($v) use ($table) {
+                return "$table.$v";
+            }, $search_add);
+            $search_arr = array_merge($model_filter, $search_add);
+
+            // pake or where
+            $search_str = "(";
+            foreach ($search_arr as $k => $v) {
+                $or = (($k + 1) < count($search_arr)) ? 'or' : '';
+                $column = isset($query_filter[$v]) ? $query_filter[$v] : $v;
+                $search_str .= "$column like '%$search%' $or ";
+            }
+
+            $search_str .= ")";
+            $query->whereRaw($search_str);
+        });
 
         // create datatable
         return $datatable->make(true);
@@ -587,9 +608,8 @@ class PenyewaanController extends Controller
         try {
             $request->validate($this->validate_model);
             $model = Penyewaan::find($request->id);
-
             if (!is_admin() && $model->status != 1) {
-                return abort(404);
+                return abort(400);
             }
 
             if ($request->is_edit == 0) {
@@ -606,7 +626,7 @@ class PenyewaanController extends Controller
             $model->tanggal_pakai_dari = $request->tanggal_pakai_dari;
             $model->tanggal_pakai_sampai = $request->tanggal_pakai_sampai;
             $model->tanggal_order = $request->tanggal_order;
-            $model->total_harga = $request->total_harga;
+            $model->total_harga = $request->total_harga ?? 0;
             $model->save();
 
             return response()->json($model);
@@ -629,7 +649,8 @@ class PenyewaanController extends Controller
                     `no_telepon` like '%$request->search%' or
                     `id` like '%$request->search%'
                     )")
-                ->limit(10)->get()->toArray();
+                ->limit(50)
+                ->orderBy('updated_at', 'desc')->get()->toArray();
 
             if ($request->semua = 1) {
                 $model = array_merge([['id' => '', 'text' => 'Semua']], $model);
@@ -691,7 +712,7 @@ class PenyewaanController extends Controller
                     `$t_barang`.`id` like '%$request->search%'
                     ) and (($t_barang.id not in (SELECT barang FROM `$t_penyewaan_barang` WHERE `$t_penyewaan_barang`.`penyewaan` = '$penyewaan')) or $t_barang.id = '$barang')
                 SQL)
-                ->limit(10);
+                ->limit(50);
 
             $result = $model->get()->toArray();
             return response()->json(['results' => $result]);

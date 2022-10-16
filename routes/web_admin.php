@@ -638,6 +638,17 @@ Route::prefix($prefix)->group(function () use ($name, $prefix) {
         Route::get('/list/{model}', 'list')->name("$name.list")->middleware("permission:$name");
         Route::post('/konfirmasi/{model}', 'konfirmasi')->name("$name.konfirmasi")->middleware("permission:$name.konfirmasi");
         Route::post('/save', 'save')->name("$name.save")->middleware("permission:$name.save");
+        $prefix = "barang_habis_pakai";
+        Route::prefix($prefix)->group(function () use ($name, $prefix) {
+            $name = "$name.$prefix"; // admin.pengembalian.barang_habis_pakai
+            $bhs = "barang_habis_pakai";
+            Route::post('/', "{$bhs}_list")->name($name)->middleware("permission:$name");
+            Route::get('/select2', "{$bhs}_select2")->name("$name.select2")->middleware("permission:$name");
+            Route::post('/insert', "{$bhs}_insert")->name("$name.insert")->middleware("permission:$name.insert");
+            Route::get('/find', "{$bhs}_find")->name("$name.find")->middleware("permission:$name.update");
+            Route::post('/update', "{$bhs}_update")->name("$name.update")->middleware("permission:$name.update");
+            Route::delete('/{model}', "{$bhs}_delete")->name("$name.delete")->middleware("permission:$name.delete");
+        });
     });
 
     Route::controller(PenyewaanController::class)->group(function () use ($name) {

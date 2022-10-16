@@ -1,3 +1,58 @@
+=======================================================================================================================
+# 15 Oktober 2022
+
+## Tabel Pengurangan barang ditambah kolom penyewaan
+    [x] Barang sewa
+    [x] Barang habis pakai
+
+## Pengembalian barang
+    [] Surat pengembalian barang
+
+## Pengembalian tambah barang habis pakai
+    [x] Display
+    [x] Funsngsi simpan
+    [x] Simpan ke ganti rugi, ganti rugi barang
+
+## Ganti Rugi
+    [] Buat tabel
+        [] Ganti rugi
+        [] ganti rugi pembayaran
+        [] ganti rugi barang
+    [] List barang yang ada data hilang dan rusak
+        [] Penggantian
+            [] Uang
+            [] Barang
+
+    * Spesifikasi ganti rugi
+        - Ketika admin mengkonfirmasi pengembalian barang:
+          - Ganti rugi muncul jika ada barang yang hilang atau rusak
+          - Data barang untuk ganti rugi akan diambil dari data pengembalian yang barangnya hilang atau rusak
+          - Harga barang untuk ganti rugi diambil dari data barang yang ada di gudang
+        - Terdapat 2 metode ganti rugi
+          - Pembayaran (Dengan uang)
+            - Ganti rugi dengan uang dapat di angsur beberapa kali.
+            - Ada invoice nya (Faktur)
+          - Ganti barang
+            - Diganti dengan barang dan kualitas yang sama
+            - Terdapat surat serah terima dan pengecekan barang
+          - Ganti barang dan uang
+
+## Dashboard
+    [] Penyewaan Range tanggal Default Bulan sekarang dan Berdasarkan status
+    [] Pembayaran Range tanggal Default Bulan sekarang dan Berdasarkan status
+    [] Barang Keluar Range tanggal Default Bulan sekarang dan Berdasarkan status
+    [] Ganti rugi Range tanggal Default Bulan sekarang dan Berdasarkan status
+
+## Printilan
+    [] Created dan updated
+    [] Date time str
+    [] Semua status tidak menggunakan badge tapi menggunakan circle
+
+## Frontend
+    [] Home
+    [] List Data barang Sewa
+
+=======================================================================================================================
 ## Penyewaan
     [x] CRUD penyewaan
     [x] Penyewaan detail
@@ -109,4 +164,5 @@
 ### Testing
     [] Pembatalan Reciving order
     [] Di pembayaran jika penyewaan sudah selesai maka pembayaran akan di tutup
-    [] Buat template untuk default pengambilan barang
+    [] Buat template untuk default keterangan pengambilan barang
+    

@@ -115,7 +115,7 @@ class KategoriController extends Controller
         try {
             $model = Kategori::select(['id', DB::raw('nama as text')])
                 ->whereRaw("(`nama` like '%$request->search%' or `id` like '%$request->search%')")
-                ->limit(10);
+                ->limit(50);
 
             $result = $model->get()->toArray();
             if ($request->with_empty && $request->search) {

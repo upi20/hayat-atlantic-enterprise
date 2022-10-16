@@ -80,7 +80,6 @@
                             {!! $can_pengambilan ? '<th>Pengambilan</th>' : '' !!}
                             <th>Detail</th>
                             <th>Customer</th>
-                            <th>Lokasi</th>
                             <th>Tanggal Kirim</th>
                             <th>Tanggal Pakai</th>
                             <th>Status Penyewaan</th>
@@ -280,12 +279,10 @@
                     {
                         data: 'customer_nama',
                         name: 'customer_nama',
-                        className: 'text-nowrap'
-                    },
-                    {
-                        data: 'lokasi',
-                        name: 'lokasi',
-                        className: 'text-nowrap'
+                        render(data, type, full, meta) {
+                            return `${data}<br><small>${full.lokasi}</small>`;
+                        },
+                        // className: 'text-nowrap'
                     },
                     {
                         data: 'tanggal_kirim_str',
@@ -308,7 +305,7 @@
                         data: 'status',
                         name: 'status_str',
                         render(data, type, full, meta) {
-                            return `<span class="badge ${statusClass(data)}">${full.status_str}</span>`;
+                            return `<i class="fas fa-circle ${statusClass(data)} me-2"></i>${full.status_str}`;
                         },
                         className: 'text-nowrap'
                     },
@@ -335,12 +332,12 @@
         });
 
         function statusClass(status) {
-            if (status == 1) return 'bg-primary';
-            else if (status == 2) return 'bg-info';
-            else if (status == 3) return 'bg-secondary';
-            else if (status == 4) return 'bg-warning';
-            else if (status == 5) return 'bg-success';
-            else return 'bg-danger';
+            if (status == 1) return 'text-primary';
+            else if (status == 2) return 'text-info';
+            else if (status == 3) return 'text-secondary';
+            else if (status == 4) return 'text-warning';
+            else if (status == 5) return 'text-success';
+            else return 'text-danger';
         }
 
         function detailFunc(id) {
@@ -375,7 +372,7 @@
                 const status_pembayaran =
                     `<span class="badge bg-${data.status_pembayaran == 1 ? 'success':'danger'}">${data.status_pembayaran_str}</span>`;
                 const status_penyewaan =
-                    `<span class="badge ${statusClass(data.status)}">${data.status_str}</span>`;
+                    `<i class="fas fa-circle ${statusClass(data)} me-2"></i>${data.status_str}`;
 
                 const tanggal_pakai = data.tanggal_pakai_dari == data.tanggal_pakai_sampai ? data
                     .tanggal_pakai_dari :

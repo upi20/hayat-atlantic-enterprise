@@ -3,6 +3,10 @@
 namespace App\Http\Controllers\Administrasi;
 
 use App\Http\Controllers\Controller;
+use App\Models\Barang\HabisPakai;
+use App\Models\Barang\HabisPakai\Pengurangan as HabisPakaiPengurangan;
+use App\Models\Barang\HabisPakai\PenguranganList as HabisPakaiPenguranganList;
+use App\Models\Barang\Jenis;
 use App\Models\Barang\Satuan;
 use Illuminate\Http\Request;
 use App\Models\Barang\Sewa;
@@ -13,15 +17,23 @@ use App\Models\SuratJalan;
 use App\Models\SuratJalanBarang;
 use App\Models\Penyewaan;
 use App\Models\PenyewaanBarang;
+use App\Models\SuratJalanBarangHabisPakai;
 use Illuminate\Support\Facades\DB;
 use League\Config\Exception\ValidationException;
-use PDF;
 
 class PengembalianBarangController extends Controller
 {
     private $validate_model = [
         'surat_jalan' => ['required', 'int'],
         'tanggal' => ['required', 'date'],
+        'keterangan' => ['nullable', 'string'],
+    ];
+
+    private $validate_barang_habis_pakai = [
+        'surat_jalan' => ['required', 'int'],
+        'barang_id' => ['required', 'int'],
+        'qty' => ['required', 'int'],
+        'harga' => ['int', 'int'],
         'keterangan' => ['nullable', 'string'],
     ];
 
@@ -52,6 +64,7 @@ class PengembalianBarangController extends Controller
         $t_surat_jalan_barang = SuratJalanBarang::tableName;
         $t_surat_jalan = SuratJalan::tableName;
         $t_satuan = Satuan::tableName;
+        $t_barang_habis_pakai = SuratJalanBarangHabisPakai::tableName;
 
         // ambil penyewaan barang yang data barang nya belum ada di surat_jalan barang
         $where = <<<SQL
@@ -104,6 +117,7 @@ class PengembalianBarangController extends Controller
             ->leftJoin($t_satuan, "$t_satuan.id", "=", "$t_barang.satuan")
             ->where("$t_surat_jalan_barang.surat_jalan", $surat_jalan->id)->get();
         $customer = Customer::find($model->customer);
+
         DB::commit();
         return view('administrasi.pengembalian.list', compact('page_attr', 'model', 'surat_jalan', 'surat_jalan_barangs', 'customer'));
     }
@@ -185,9 +199,9 @@ class PengembalianBarangController extends Controller
             if ($j_barang->pengembalian_hilang > 0) $hilang_cek = true;
         }
 
+        $no_surat_jalan = 'SJ/' . str_pad($model->no_surat_jalan, 5, '0', STR_PAD_LEFT);
         if ($hilang_cek) {
             $pengurangan = new Pengurangan();
-            $no_surat_jalan = 'SJ/' . str_pad($model->no_surat_jalan, 5, '0', STR_PAD_LEFT);
             $pengurangan->nama = "Barang Hilang Saat Penyewaan Dengan Surat Jalan Nomor $no_surat_jalan";
             $pengurangan->tanggal = $model->tanggal;
             $tanggal_penyewaan = $penyewaan->tanggal_pakai_dari == $penyewaan->tanggal_pakai_sampai
@@ -195,6 +209,8 @@ class PengembalianBarangController extends Controller
                 "$penyewaan->tanggal_pakai_dari s/d $penyewaan->tanggal_pakai_sampai";
             $pengurangan->keterangan = "Tanggal $tanggal_penyewaan, Di $penyewaan->kepada Lokasi $penyewaan->lokasi";
             $pengurangan->created_by = auth()->user()->id;
+            $pengurangan->penyewaan = $penyewaan->id;
+
             $pengurangan->save();
         }
 
@@ -224,8 +240,171 @@ class PengembalianBarangController extends Controller
 
             $barang->save();
         }
+        // pemakaian barang habis pakai
+        $barang_habis_pakai = SuratJalanBarangHabisPakai::where('surat_jalan', $model->id)->get();
+        if ($barang_habis_pakai->count() > 0) {
+            $pengurangan_bhs = new HabisPakaiPengurangan();
+            $pengurangan_bhs->nama = "Barang Digunakan Saat Penyewaan Dengan Surat Jalan Nomor $no_surat_jalan";
+            $pengurangan_bhs->tanggal = $model->tanggal;
+            $tanggal_penyewaan = $penyewaan->tanggal_pakai_dari == $penyewaan->tanggal_pakai_sampai
+                ? $penyewaan->tanggal_pakai_dari :
+                "$penyewaan->tanggal_pakai_dari s/d $penyewaan->tanggal_pakai_sampai";
+            $pengurangan_bhs->keterangan = "Tanggal $tanggal_penyewaan, Di $penyewaan->kepada Lokasi $penyewaan->lokasi";
+            $pengurangan_bhs->penyewaan = $penyewaan->id;
+            $pengurangan_bhs->created_by = auth()->user()->id;
+            $pengurangan_bhs->save();
+        }
+
+        foreach ($barang_habis_pakai as $v) {
+            // kurangi stok yang ada di tabel barang habis pakai
+            $bhs = HabisPakai::find($v->barang_id);
+            $bhs->qty = $bhs->qty - $v->qty;
+            $bhs->save();
+
+            // simpan ke  pengurangan
+            $bhs_pengurangan = new HabisPakaiPenguranganList();
+            $bhs_pengurangan->pengurangan = $pengurangan_bhs->id;
+            $bhs_pengurangan->barang = $v->barang_id;
+            $bhs_pengurangan->qty = $v->qty;
+            $bhs_pengurangan->save();
+        }
 
         DB::commit();
         return ($model);
+    }
+
+    public function barang_habis_pakai_list(Request $request): mixed
+    {
+        try {
+            $table = SuratJalanBarangHabisPakai::tableName;
+            $t_barang = HabisPakai::tableName;
+            $t_satuan = Satuan::tableName;
+            $model = SuratJalanBarangHabisPakai::selectRaw(<<<SQL
+            $table.id, $table.keterangan, $t_barang.nama, $t_barang.kode, $table.qty, 
+            $table.harga, $t_barang.kode, $t_barang.qty as stok,
+            ( $table.qty *  $table.harga) as total, $t_satuan.nama as satuan
+            SQL)
+                ->leftJoin($t_barang, "$t_barang.id", "=", "$table.barang_id")
+                ->leftJoin($t_satuan, "$t_satuan.id", "=", "$t_barang.satuan")
+                ->where('surat_jalan', $request->surat_jalan)
+                ->orderBy("$table.created_at", 'desc')->get();
+            return response()->json($model);
+        } catch (ValidationException $error) {
+            return response()->json([
+                'message' => 'Something went wrong',
+                'error' => $error,
+            ], 500);
+        }
+    }
+
+    public function barang_habis_pakai_insert(Request $request): mixed
+    {
+        try {
+            $request->validate($this->validate_barang_habis_pakai);
+            $model = new SuratJalanBarangHabisPakai();
+
+            $model->surat_jalan = $request->surat_jalan;
+            $model->barang_id = $request->barang_id;
+            $model->qty = $request->qty;
+            $model->harga = $request->harga;
+            $model->keterangan = $request->keterangan;
+            $model->created_by = auth()->user()->id;
+            $model->save();
+
+            return response()->json($model);
+        } catch (ValidationException $error) {
+            return response()->json([
+                'message' => 'Something went wrong',
+                'error' => $error,
+            ], 500);
+        }
+    }
+
+    public function barang_habis_pakai_update(Request $request): mixed
+    {
+        try {
+            $model = SuratJalanBarangHabisPakai::findOrFail($request->id);
+            $request->validate(array_merge(['id' => ['required', 'int']], $this->validate_barang_habis_pakai));
+
+            $model->surat_jalan = $request->surat_jalan;
+            $model->barang_id = $request->barang_id;
+            $model->qty = $request->qty;
+            $model->harga = $request->harga;
+            $model->keterangan = $request->keterangan;
+            $model->updated_by = auth()->user()->id;
+
+            $model->save();
+            return response()->json($model);
+        } catch (ValidationException $error) {
+            return response()->json([
+                'message' => 'Something went wrong',
+                'error' => $error,
+            ], 500);
+        }
+    }
+
+    public function barang_habis_pakai_delete(SuratJalanBarangHabisPakai $model): mixed
+    {
+        try {
+            $model->delete();
+            return response()->json($model);
+        } catch (ValidationException $error) {
+            return response()->json([
+                'message' => 'Something went wrong',
+                'error' => $error,
+            ], 500);
+        }
+    }
+
+    public function barang_habis_pakai_find(Request $request)
+    {
+        $id = $request->id;
+        $t_barang = HabisPakai::tableName;
+        $t_jenis = Jenis::tableName;
+        $t_satuan = Satuan::tableName;
+        $t_bhs = SuratJalanBarangHabisPakai::tableName;
+
+        $model = SuratJalanBarangHabisPakai::selectRaw("
+        $t_bhs.*,
+        $t_barang.id as barang_id,
+        concat($t_barang.kode, ' | ', $t_barang.nama, ' (', $t_barang.qty,')') as barang_nama,
+        $t_satuan.nama as satuan")
+            ->leftJoin($t_barang, "$t_barang.id", '=', "$t_bhs.barang_id")
+            ->leftJoin($t_jenis, "$t_jenis.id", '=', "$t_barang.jenis")
+            ->leftJoin($t_satuan, "$t_satuan.id", '=', "$t_barang.satuan")
+            ->where("$t_bhs.id", $id);
+
+        $result = $model->first();
+        return response()->json($result);
+    }
+
+    public function barang_habis_pakai_select2(Request $request)
+    {
+        try {
+            $surat_jalan = $request->surat_jalan;
+            $t_barang = HabisPakai::tableName;
+            $t_jenis = Jenis::tableName;
+            $t_satuan = Satuan::tableName;
+            $t_bhs = SuratJalanBarangHabisPakai::tableName;
+
+            $model = HabisPakai::selectRaw("$t_barang.*, concat($t_barang.kode, ' | ', $t_barang.nama, ' (', $t_barang.qty,')') as text, $t_satuan.nama as satuan")
+                ->whereRaw(<<<SQL
+                    ( `$t_jenis`.`nama` like '%$request->search%' or
+                    `$t_satuan`.`nama` like '%$request->search%' or
+                    `$t_barang`.`nama` like '%$request->search%' or
+                    `$t_barang`.`kode` like '%$request->search%' or
+                    `$t_barang`.`harga` like '%$request->search%' or
+                    `$t_barang`.`id` like '%$request->search%'
+                    ) and $t_barang.id not in (select barang_id from $t_bhs where $t_bhs.surat_jalan = '$surat_jalan') 
+                SQL)
+                ->leftJoin($t_jenis, "$t_jenis.id", '=', "$t_barang.jenis")
+                ->leftJoin($t_satuan, "$t_satuan.id", '=', "$t_barang.satuan")
+                ->limit(50);
+
+            $result = $model->get()->toArray();
+            return response()->json(['results' => $result]);
+        } catch (\Exception $error) {
+            return response()->json($error, 500);
+        }
     }
 }

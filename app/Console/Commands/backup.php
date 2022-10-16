@@ -111,7 +111,12 @@ class backup extends Command
                 'faktur',
                 'surat_jalan',
                 'surat_jalan_barang',
+                'surat_jalan_barang_habis_pakai',
                 'faktur_barang',
+                'ganti_rugi',
+                'ganti_list_barang',
+                'ganti_rugi_barang',
+                'ganti_rugi_pembayaran'
             ],
         ];
         if ($opt_users == 1 || $arg_type == 'users') echo shell_exec('php artisan iseed users --force');

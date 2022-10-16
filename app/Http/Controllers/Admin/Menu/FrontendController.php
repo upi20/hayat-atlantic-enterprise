@@ -47,7 +47,7 @@ class FrontendController extends Controller
             ->where('parent_id', '=', null)
             ->where('type', '=', 1)
             ->where('title', 'LIKE', '%' . $request->search . '%')
-            ->limit(10)->get()->toArray();
+            ->limit(50)->get()->toArray();
         $result = array_merge([['id' => '0', 'text' => 'ROOT']], $result);
         return response()->json(['results' => $result]);
     }

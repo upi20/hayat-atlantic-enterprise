@@ -80,7 +80,6 @@
                             {!! $can_pengemblian ? '<th>Pengembalian</th>' : '' !!}
                             <th>Detail</th>
                             <th>Customer</th>
-                            <th>Lokasi</th>
                             <th>Tanggal Kirim</th>
                             <th>Tanggal Pakai</th>
                             <th>Status Penyewaan</th>
@@ -280,11 +279,9 @@
                     {
                         data: 'customer_nama',
                         name: 'customer_nama',
-                        className: 'text-nowrap'
-                    },
-                    {
-                        data: 'lokasi',
-                        name: 'lokasi',
+                        render(data, type, full, meta) {
+                            return `${data}<br><small>${full.lokasi}</small>`;
+                        },
                         className: 'text-nowrap'
                     },
                     {

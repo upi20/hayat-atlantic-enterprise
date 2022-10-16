@@ -178,7 +178,7 @@ class RoleController extends Controller
             $result = Role::where('name', 'like', "%$request->search%")
                 ->select(['id', DB::raw('name as text')])
                 ->orWhere('id', 'like', "%$request->search%")
-                ->limit(10)->get();
+                ->limit(50)->get();
             return response()->json(['results' => $result]);
         } catch (\Exception $error) {
             return response()->json($error, 500);

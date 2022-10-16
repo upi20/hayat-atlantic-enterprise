@@ -203,7 +203,7 @@ class SatuanBarangController extends Controller
                     `name` like '%$request->search%' or
                     `id` like '%$request->search%'
                     )")
-                ->limit(10);
+                ->limit(50);
 
             $result = $model->get()->toArray();
             return response()->json(['results' => array_merge([['id' => '', 'text' => 'Semua']], $result)]);

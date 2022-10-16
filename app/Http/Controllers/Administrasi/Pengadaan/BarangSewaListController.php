@@ -184,7 +184,7 @@ class BarangSewaListController extends Controller
                     `$t_barang`.`id` like '%$request->search%'
                     ) and (($t_barang.id not in (SELECT barang FROM `$t_pengadaan_list` WHERE `$t_pengadaan_list`.`pengadaan` = '$pengadaan')) or $t_barang.id = '$barang')
                 SQL)
-                ->limit(10);
+                ->limit(50);
 
             $result = $model->get()->toArray();
             return response()->json(['results' => $result]);

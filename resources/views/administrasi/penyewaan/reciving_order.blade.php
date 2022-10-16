@@ -114,10 +114,10 @@
                             </label>
                             <div class="input-group">
                                 <span class="input-group-text">Rp.</span>
-                                <input type="number" min="1" class="form-control"
-                                    placeholder="Total Harga Penyewaan" aria-label="Total Harga Penyewaan"
-                                    id="total_harga_head" name="total_harga" value="{{ $model->total_harga }}"
-                                    aria-describedby="basic-addon1" required="">
+                                <input type="number" class="form-control" placeholder="Total Harga Penyewaan"
+                                    aria-label="Total Harga Penyewaan" id="total_harga_head" name="total_harga"
+                                    value="{{ $model->total_harga }}" aria-describedby="basic-addon1"
+                                    {{ $model->status == 0 ? '' : 'min="1" required=""' }}>
                             </div>
                             <small id="total_harga_terbilang" class="fst-italic"></small>
                         </div>
@@ -333,7 +333,8 @@
                         return query;
                     },
                 },
-                placeholder: "Masukan nama atau alamat dari customer."
+                placeholder: "Masukan nama atau alamat dari customer.",
+                dropdownParent: $('#modal-default')
             }).on('select2:select', function(e) {
                 const data = e.params.data;
                 const lokasi = $('#lokasi');

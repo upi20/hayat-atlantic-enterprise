@@ -299,3 +299,8 @@ function statusPengamblian(status) {
     else if (status == 1) return 'Data Disimpan';
     else return 'Data Dibuat';
 }
+
+function parse_tanggal_waktu_str(data) {
+    const tanggal = String(data).split(" ");
+    return `${tanggal[0]}<br><small>${tanggal[1]}</small>`;
+}

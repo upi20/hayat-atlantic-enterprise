@@ -212,7 +212,9 @@
                     {
                         data: 'tanggal_str',
                         name: 'tanggal_str',
-                        className: 'text-nowrap',
+                        render(data, type, full, meta) {
+                            return parse_tanggal_waktu_str(data);
+                        },
                     },
                     {
                         data: 'barang_jumlah',

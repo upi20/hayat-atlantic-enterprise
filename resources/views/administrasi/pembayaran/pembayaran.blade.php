@@ -79,7 +79,6 @@
                             {!! $can_pembayaran ? '<th>Pembayaran</th>' : '' !!}
                             <th>Detail</th>
                             <th>Customer</th>
-                            <th>Lokasi</th>
                             <th>Total Harga</th>
                             <th>Dibayar</th>
                             <th>Sisa</th>
@@ -278,11 +277,9 @@
                     {
                         data: 'customer_nama',
                         name: 'customer_nama',
-                        className: 'text-nowrap'
-                    },
-                    {
-                        data: 'lokasi',
-                        name: 'lokasi',
+                        render(data, type, full, meta) {
+                            return `${data}<br><small>${full.lokasi}</small>`;
+                        },
                         className: 'text-nowrap'
                     },
                     {
