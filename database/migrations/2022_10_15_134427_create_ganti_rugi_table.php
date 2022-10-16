@@ -16,13 +16,14 @@ return new class extends Migration
         Schema::create('ganti_rugi', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('penyewaan_id', false, true)->nullable()->default(null);
-            $table->string('nama');
+            $table->string('nama')->nullable()->default(null);
+            $table->text('keterangan')->nullable()->default(null);
             $table->integer('no_surat')->default(1);
             $table->integer('jumlah_barang')->default(0);
             $table->integer('total_qty_barang')->default(0);
-            $table->bigInteger('nominal', false, true)->nullable()->default(null);
-            $table->bigInteger('dibayar', false, true)->nullable()->default(null);
-            $table->bigInteger('sisa', false, true)->nullable()->default(null);
+            $table->bigInteger('nominal', false, true)->nullable()->default(0);
+            $table->bigInteger('dibayar', false, true)->nullable()->default(0);
+            $table->bigInteger('sisa', false, true)->nullable()->default(0);
             $table->boolean('status')->default(0)->nullable()->comment("0 = data dibuat, 1 = proses, 2 = selesai");
             $table->bigInteger('updated_by', false, true)->nullable()->default(null);
             $table->bigInteger('created_by', false, true)->nullable()->default(null);

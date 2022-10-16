@@ -14,14 +14,37 @@
     [x] Simpan ke ganti rugi, ganti rugi barang
 
 ## Ganti Rugi
-    [] Buat tabel
-        [] Ganti rugi
-        [] ganti rugi pembayaran
-        [] ganti rugi barang
+    [x] Buat tabel
+        [x] Ganti rugi list
+        [x] ganti rugi pembayaran
+        [x] ganti rugi barang
+    [] Display
+        [] List ganti rugi
+        [] Detail halaman ganti rugi
+            [] Ganti Barang
+            [] Ganti Pembayaran
+
     [] List barang yang ada data hilang dan rusak
         [] Penggantian
             [] Uang
             [] Barang
+    
+    [] Route
+        - Ganti Rugi Header
+            - datatable
+            - ganti rugi detail
+            - ganti rugi status simpan
+            - inovice (Pelunasan)
+            - Surat Permonoan penggantian barang
+        - Ganti Rugi Barang
+            - datatable
+            - insert
+            - batalkan
+        - Ganti Rugi Pembayaran
+            - datatable
+            - insert
+            - batalkan
+            - invoice ()
 
     * Spesifikasi ganti rugi
         - Ketika admin mengkonfirmasi pengembalian barang:
@@ -47,6 +70,7 @@
     [] Created dan updated
     [] Date time str
     [] Semua status tidak menggunakan badge tapi menggunakan circle
+    [] Semua pembatalan ditambahkan alasan
 
 ## Frontend
     [] Home

@@ -13,6 +13,8 @@ use App\Models\Barang\Sewa;
 use App\Models\Barang\Sewa\Pengurangan;
 use App\Models\Barang\Sewa\PenguranganList;
 use App\Models\Customer;
+use App\Models\GantiRugi;
+use App\Models\GantiRugi\GantiListBarang;
 use App\Models\SuratJalan;
 use App\Models\SuratJalanBarang;
 use App\Models\Penyewaan;
@@ -195,11 +197,15 @@ class PengembalianBarangController extends Controller
         // Data barang sewa berubah
         $barangs = SuratJalanBarang::where('surat_jalan', $model->id)->get();
         $hilang_cek = false;
+        $rusak_cek = false;
         foreach ($barangs as $j_barang) {
             if ($j_barang->pengembalian_hilang > 0) $hilang_cek = true;
+            if ($j_barang->pengembalian_rusak > 0) $rusak_cek = true;
         }
 
         $no_surat_jalan = 'SJ/' . str_pad($model->no_surat_jalan, 5, '0', STR_PAD_LEFT);
+
+        // pengurangan head
         if ($hilang_cek) {
             $pengurangan = new Pengurangan();
             $pengurangan->nama = "Barang Hilang Saat Penyewaan Dengan Surat Jalan Nomor $no_surat_jalan";
@@ -214,6 +220,32 @@ class PengembalianBarangController extends Controller
             $pengurangan->save();
         }
 
+        // ganti rugi
+        $ganti_rugi_id = null;
+        if ($rusak_cek || $hilang_cek) {
+            $ganti_rugi_nomor = GantiRugi::max('no_surat') + 1;
+            $ganti_rugi = new GantiRugi();
+            $ganti_rugi->penyewaan_id = $penyewaan->id;
+
+            $ganti_rugi->nama = "Barang Digunakan Saat Penyewaan Dengan Surat Jalan Nomor $no_surat_jalan";
+            $tanggal_penyewaan = $penyewaan->tanggal_pakai_dari == $penyewaan->tanggal_pakai_sampai
+                ? $penyewaan->tanggal_pakai_dari :
+                "$penyewaan->tanggal_pakai_dari s/d $penyewaan->tanggal_pakai_sampai";
+            $ganti_rugi->keterangan = "Tanggal $tanggal_penyewaan, Di $penyewaan->kepada Lokasi $penyewaan->lokasi";
+
+            $ganti_rugi->no_surat = $ganti_rugi_nomor;
+            $ganti_rugi->created_by = auth()->user()->id;
+            $ganti_rugi->save();
+
+            $ganti_rugi_id = $ganti_rugi->id;
+        }
+
+        $barang_hilang_count_qty = 0;
+        $barang_hilang_count = 0;
+        $barang_hilang_nominal = 0;
+        $barang_rusak_count_qty = 0;
+        $barang_rusak_count = 0;
+        $barang_rusak_nominal = 0;
         foreach ($barangs as $j_barang) {
             $barang = Sewa::findOrFail($j_barang->barang);
             // kurangi barang di sewakan
@@ -227,22 +259,65 @@ class PengembalianBarangController extends Controller
 
             // jika hilang maka kurangi total
             $barang->qty_total = $barang->qty_total - $j_barang->pengembalian_hilang;
+            $barang->save();
 
             // kemudian masukan ke pengurangan barang
             if ($j_barang->pengembalian_hilang > 0) {
                 $pengurangan_barang = new PenguranganList();
                 $pengurangan_barang->pengurangan = $pengurangan->id;
                 $pengurangan_barang->barang = $j_barang->barang;
-                $pengurangan_barang->qty = $j_barang->pengembalian_rusak;
+                $pengurangan_barang->qty = $j_barang->pengembalian_hilang;
                 $pengurangan_barang->created_by = auth()->user()->id;
                 $pengurangan_barang->save();
+
+                // tambahkan ke barang hilang
+                $barang_hilang_count_qty += $j_barang->pengembalian_hilang;
+                $barang_hilang_count++;
+
+                // tambah nominal
+                $barang_hilang_nominal += $barang->harga;
             }
 
-            $barang->save();
+            // hitung barang rusak
+            if ($j_barang->pengembalian_rusak > 0) {
+                // tambahkan ke barang rusak
+                $barang_rusak_count_qty += $j_barang->pengembalian_rusak;
+                $barang_rusak_count++;
+
+                // simpan nominal
+                $barang_rusak_nominal += $barang->harga;
+            }
+
+            if ($j_barang->pengembalian_rusak > 0 || $j_barang->pengembalian_hilang > 0) {
+                $ganti_rugi_barang = new GantiListBarang();
+                $ganti_rugi_barang->ganti_rugi_id = $ganti_rugi_id;
+                $ganti_rugi_barang->barang = $barang->id;
+                $ganti_rugi_barang->qty_rusak = $j_barang->pengembalian_rusak;
+                $ganti_rugi_barang->qty_hilang = $j_barang->pengembalian_hilang;
+                $ganti_rugi_barang->qty_diganti = 0;
+                $ganti_rugi_barang->harga = $barang->harga;
+                $ganti_rugi_barang->save();
+            }
         }
+
+        // ganti rugi body
+        if ($rusak_cek || $hilang_cek) {
+            $ganti_rugi = GantiRugi::find($ganti_rugi_id);
+
+            $ganti_rugi->jumlah_barang = $barang_hilang_count + $barang_rusak_count;
+            $ganti_rugi->total_qty_barang = $barang_hilang_count_qty + $barang_rusak_count_qty;
+
+            $total = $barang_hilang_nominal + $barang_rusak_nominal;
+            $ganti_rugi->nominal = $total;
+            $ganti_rugi->sisa = $total;
+            $ganti_rugi->dibayar = 0;
+            $ganti_rugi->save();
+        }
+
         // pemakaian barang habis pakai
         $barang_habis_pakai = SuratJalanBarangHabisPakai::where('surat_jalan', $model->id)->get();
         if ($barang_habis_pakai->count() > 0) {
+            // pengurangan barang habis pakai head
             $pengurangan_bhs = new HabisPakaiPengurangan();
             $pengurangan_bhs->nama = "Barang Digunakan Saat Penyewaan Dengan Surat Jalan Nomor $no_surat_jalan";
             $pengurangan_bhs->tanggal = $model->tanggal;
@@ -253,20 +328,21 @@ class PengembalianBarangController extends Controller
             $pengurangan_bhs->penyewaan = $penyewaan->id;
             $pengurangan_bhs->created_by = auth()->user()->id;
             $pengurangan_bhs->save();
-        }
 
-        foreach ($barang_habis_pakai as $v) {
-            // kurangi stok yang ada di tabel barang habis pakai
-            $bhs = HabisPakai::find($v->barang_id);
-            $bhs->qty = $bhs->qty - $v->qty;
-            $bhs->save();
+            foreach ($barang_habis_pakai as $v) {
+                // kurangi stok yang ada di tabel barang habis pakai
+                $bhs = HabisPakai::find($v->barang_id);
+                $bhs->qty = $bhs->qty - $v->qty;
+                $bhs->save();
 
-            // simpan ke  pengurangan
-            $bhs_pengurangan = new HabisPakaiPenguranganList();
-            $bhs_pengurangan->pengurangan = $pengurangan_bhs->id;
-            $bhs_pengurangan->barang = $v->barang_id;
-            $bhs_pengurangan->qty = $v->qty;
-            $bhs_pengurangan->save();
+                // simpan ke  pengurangan
+                $bhs_pengurangan = new HabisPakaiPenguranganList();
+                $bhs_pengurangan->pengurangan = $pengurangan_bhs->id;
+                $bhs_pengurangan->barang = $v->barang_id;
+                $bhs_pengurangan->qty = $v->qty;
+                $bhs_pengurangan->created_by = auth()->user()->id;
+                $bhs_pengurangan->save();
+            }
         }
 
         DB::commit();

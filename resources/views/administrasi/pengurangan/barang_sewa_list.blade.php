@@ -2,9 +2,9 @@
 
 @section('content')
     @php
-        $can_insert = auth_can(h_prefix('insert', 1));
-        $can_update = auth_can(h_prefix('update', 1));
-        $can_delete = auth_can(h_prefix('delete', 1));
+        $can_insert = auth_can(h_prefix('insert', 1)) && is_null($model->penyewaan);
+        $can_update = auth_can(h_prefix('update', 1)) && is_null($model->penyewaan);
+        $can_delete = auth_can(h_prefix('delete', 1)) && is_null($model->penyewaan);
     @endphp
 
     <div class="card">

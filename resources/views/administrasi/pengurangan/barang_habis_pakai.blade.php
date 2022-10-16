@@ -251,10 +251,10 @@
                             const btn_barang = can_barang_list ? `<a class="btn btn-rounded btn-info btn-sm me-1" title="List Data Barang" href="{{ url(h_prefix_uri('list')) }}/${data}">
                               <i class="fas fa-file-alt"></i> Barang
                                 </a>` : '';
-                            const btn_update = can_update ? `<button type="button" class="btn btn-rounded btn-primary btn-sm me-1" title="Edit Data" onClick="editFunc('${data}')">
+                            const btn_update = can_update && full.penyewaan == null ? `<button type="button" class="btn btn-rounded btn-primary btn-sm me-1" title="Edit Data" onClick="editFunc('${data}')">
                                 <i class="fas fa-edit"></i> Ubah
                                 </button>` : '';
-                            const btn_delete = can_delete ? `<button type="button" class="btn btn-rounded btn-danger btn-sm me-1" title="Delete Data" onClick="deleteFunc('${data}')">
+                            const btn_delete = can_delete && full.penyewaan == null ? `<button type="button" class="btn btn-rounded btn-danger btn-sm me-1" title="Delete Data" onClick="deleteFunc('${data}')">
                                 <i class="fas fa-trash"></i> Hapus
                                 </button>` : '';
                             return btn_barang + btn_update + btn_delete;

@@ -24,6 +24,7 @@ return new class extends Migration
             $table->bigInteger('pembayaran_sebelumnya')->nullable()->default(0);
 
             $table->boolean('status')->default(1)->nullable("1 aktif, 0 dibatalkan");
+            $table->text('pembatalan_alasan')->nullable()->default(null);
             $table->bigInteger('updated_by', false, true)->nullable()->default(null);
             $table->bigInteger('created_by', false, true)->nullable()->default(null);
             $table->foreign('updated_by')
