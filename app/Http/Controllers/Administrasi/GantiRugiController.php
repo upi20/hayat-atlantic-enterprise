@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Administrasi;
 
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
+use App\Models\GantiRugi;
 use App\Models\User;
 use Illuminate\Http\Request;
 use League\Config\Exception\ValidationException;
@@ -12,25 +13,34 @@ use Yajra\Datatables\Datatables;
 
 class GantiRugiController extends Controller
 {
+    private $validate_model = [
+        'nama' => ['required', 'string', 'max:255'],
+        'alamat' => ['required', 'string'],
+        'no_telepon' => ['nullable', 'string'],
+        'no_whatsapp' => ['nullable', 'string'],
+    ];
+    private $query = [];
+
     public function index(Request $request)
     {
         if (request()->ajax()) {
             return $this->datatable($request);
         }
         $page_attr = [
-            'title' => 'Customer',
+            'title' => 'Ganti Rugi',
             'breadcrumbs' => [
                 ['name' => 'Dashboard'],
             ]
         ];
-        return view('administrasi.customer', compact('page_attr'));
+        return view('administrasi.ganti_rugi.list', compact('page_attr'));
     }
 
     public function datatable(Request $request): mixed
     {
         // list table
         $t_user = User::tableName;
-        $table = Customer::tableName;
+        $t_customer = Customer::tableName;
+        $table = GantiRugi::tableName;
 
         // cusotm query
         // ========================================================================================================
@@ -86,9 +96,15 @@ class GantiRugiController extends Controller
 
 
         // Select =====================================================================================================
-        $model = Customer::select(array_merge([
+        $model = GantiRugi::select(array_merge([
             DB::raw("$table.*"),
+            DB::raw("$table.nominal - $table.dibayar as sisa"),
+            DB::raw("$t_customer.nama as customer_nama"),
+            DB::raw("$t_customer.alamat as customer_alamat"),
+            DB::raw("$t_customer.no_telepon as customer_no_telepon"),
+            DB::raw("$t_customer.no_whatsapp as customer_no_whatsapp"),
         ], $to_db_raw))
+            ->leftJoin($t_customer, "$t_customer.id", '=', "$table.customer")
             ->leftJoin("$t_user as $t_created_by", "$t_created_by.id", '=', "$table.created_by")
             ->leftJoin("$t_user as $t_updated_by", "$t_updated_by.id", '=', "$table.updated_by");
 
@@ -109,7 +125,7 @@ class GantiRugiController extends Controller
         // }
 
         // filter custom
-        $filters = ['updated_by', 'created_by'];
+        $filters = ['updated_by', 'created_by', 'customer'];
         foreach ($filters as  $f) {
             if ($f_c($f) !== false) {
                 $model->whereRaw("$table.$f='{$f_c($f)}'");
@@ -120,12 +136,49 @@ class GantiRugiController extends Controller
 
         // ========================================================================================================
         $datatable = Datatables::of($model)->addIndexColumn();
-        foreach ($model_filter as $v) {
-            // custom pencarian
-            $datatable->filterColumn($this->query["{$v}_alias"], function ($query, $keyword) use ($v) {
-                $query->whereRaw("({$this->query[$v]} like '%$keyword%')");
-            });
-        }
+
+        // search
+        // ========================================================================================================
+        $query_filter = $this->query;
+        $datatable->filter(function ($query) use ($model_filter, $query_filter, $table, $t_customer) {
+            $search = request('search');
+            $search = isset($search['value']) ? $search['value'] : null;
+            if ((is_null($search) || $search == '') && count($model_filter) > 0) return false;
+
+            // tambah pencarian
+            $search_add = [
+                "$table.penyewaan_id",
+                "$table.customer",
+                "$table.nama",
+                "$table.keterangan",
+                "$table.no_surat",
+                "$table.jumlah_barang",
+                "$table.total_qty_barang",
+                "$table.nominal",
+                "$table.dibayar",
+                "$table.sisa",
+                "$table.status",
+                "$table.updated_by",
+                "$table.created_by",
+                "$t_customer.nama",
+                "$t_customer.alamat",
+                "$t_customer.no_telepon",
+                "$t_customer.no_whatsapp",
+            ];
+
+            $search_arr = array_merge($model_filter, $search_add);
+
+            // pake or where
+            $search_str = "(";
+            foreach ($search_arr as $k => $v) {
+                $or = (($k + 1) < count($search_arr)) ? 'or' : '';
+                $column = isset($query_filter[$v]) ? $query_filter[$v] : $v;
+                $search_str .= "$column like '%$search%' $or ";
+            }
+
+            $search_str .= ")";
+            $query->whereRaw($search_str);
+        });
 
         // create datatable
         return $datatable->make(true);

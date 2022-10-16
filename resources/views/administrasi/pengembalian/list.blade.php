@@ -5,7 +5,7 @@
         $can_save = auth_can(h_prefix('save', 2));
         $can_konfirmasi = auth_can(h_prefix('konfirmasi', 2));
         $can_barang_habis_pakai = auth_can(h_prefix('barang_habis_pakai', 2));
-        $can_barang_habis_pakai_insert = auth_can(h_prefix('barang_habis_pakai.insert', 2));
+        $can_barang_habis_pakai_insert = auth_can(h_prefix('barang_habis_pakai.insert', 2)) && $surat_jalan->status != 4;
         $can_barang_habis_pakai_update = auth_can(h_prefix('barang_habis_pakai.update', 2));
         $can_barang_habis_pakai_delete = auth_can(h_prefix('barang_habis_pakai.delete', 2));
         $can_barang_habis_pakai_action = ($can_barang_habis_pakai_update || $can_barang_habis_pakai_delete) && $surat_jalan->status != 4;

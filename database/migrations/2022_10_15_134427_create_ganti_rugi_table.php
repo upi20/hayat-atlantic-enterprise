@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('ganti_rugi', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('penyewaan_id', false, true)->nullable()->default(null);
+            $table->bigInteger('customer', false, true)->nullable()->default(null);
             $table->string('nama')->nullable()->default(null);
             $table->text('keterangan')->nullable()->default(null);
             $table->integer('no_surat')->default(1);
@@ -38,6 +39,10 @@ return new class extends Migration
             $table->foreign('penyewaan_id')
                 ->references('id')->on('penyewaan')
                 ->cascadeOnDelete()
+                ->cascadeOnUpdate();
+            $table->foreign('customer')
+                ->references('id')->on('customers')
+                ->nullOnDelete()
                 ->cascadeOnUpdate();
             $table->timestamps();
         });

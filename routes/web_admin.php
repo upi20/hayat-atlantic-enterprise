@@ -670,6 +670,9 @@ Route::controller(GantiRugiController::class)->prefix($prefix)->group(function (
     Route::get('/invoice/{model}', 'invoice')->name("$name.invoice")->middleware("permission:$name");
     Route::get('/surat_permohonan_ganti_rugi/{model}', 'surat_permohonan_ganti_rugi')->name("$name.surat_permohonan_ganti_rugi")->middleware("permission:$name");
     Route::post('/simpan_status', 'simpan_status')->name("$name.simpan_status")->middleware("permission:$name.simpan_status");
+    Route::controller(PenyewaanController::class)->group(function () use ($name) {
+        Route::get('/customer_select2', 'customer_select2')->name("$name.customer_select2")->middleware("permission:$name");
+    });
 
     $prefix = 'barang';
     Route::prefix($prefix)->group(function () use ($name, $prefix) {

@@ -226,6 +226,7 @@ class PengembalianBarangController extends Controller
             $ganti_rugi_nomor = GantiRugi::max('no_surat') + 1;
             $ganti_rugi = new GantiRugi();
             $ganti_rugi->penyewaan_id = $penyewaan->id;
+            $ganti_rugi->customer = $penyewaan->customer;
 
             $ganti_rugi->nama = "Barang Digunakan Saat Penyewaan Dengan Surat Jalan Nomor $no_surat_jalan";
             $tanggal_penyewaan = $penyewaan->tanggal_pakai_dari == $penyewaan->tanggal_pakai_sampai

@@ -195,11 +195,11 @@ class PMenuTableSeeder extends Seeder
                 'title' => 'Barang Sewa',
                 'icon' => 'fas fa-box',
                 'route' => 'admin.barang.sewa',
-                'sequence' => 9,
+                'sequence' => 10,
                 'active' => 1,
                 'type' => 1,
                 'created_at' => '2022-09-18 21:17:27',
-                'updated_at' => '2022-10-03 08:12:43',
+                'updated_at' => '2022-10-17 00:39:08',
             ),
             14 => 
             array (
@@ -208,11 +208,11 @@ class PMenuTableSeeder extends Seeder
                 'title' => 'Barang Habis Pakai',
                 'icon' => 'fas fa-toolbox',
                 'route' => 'admin.barang.habis_pakai',
-                'sequence' => 10,
+                'sequence' => 11,
                 'active' => 1,
                 'type' => 1,
                 'created_at' => '2022-09-18 21:19:13',
-                'updated_at' => '2022-10-03 08:12:43',
+                'updated_at' => '2022-10-17 00:39:08',
             ),
             15 => 
             array (
@@ -338,11 +338,11 @@ class PMenuTableSeeder extends Seeder
                 'title' => 'Pengadaan Barang',
                 'icon' => 'fas fa-truck',
                 'route' => NULL,
-                'sequence' => 11,
+                'sequence' => 12,
                 'active' => 1,
                 'type' => 1,
                 'created_at' => '2022-09-23 00:08:36',
-                'updated_at' => '2022-10-03 08:12:43',
+                'updated_at' => '2022-10-17 00:39:08',
             ),
             25 => 
             array (
@@ -351,11 +351,11 @@ class PMenuTableSeeder extends Seeder
                 'title' => 'Pengurangan Barang',
                 'icon' => 'fas fa-people-carry',
                 'route' => NULL,
-                'sequence' => 14,
+                'sequence' => 15,
                 'active' => 1,
                 'type' => 1,
                 'created_at' => '2022-09-23 00:09:48',
-                'updated_at' => '2022-10-03 08:12:43',
+                'updated_at' => '2022-10-17 00:39:08',
             ),
             26 => 
             array (
@@ -364,11 +364,11 @@ class PMenuTableSeeder extends Seeder
                 'title' => 'Barang Sewa',
                 'icon' => NULL,
                 'route' => 'admin.barang.pengadaan.sewa',
-                'sequence' => 12,
+                'sequence' => 13,
                 'active' => 1,
                 'type' => 1,
                 'created_at' => '2022-09-23 00:12:16',
-                'updated_at' => '2022-10-03 08:12:43',
+                'updated_at' => '2022-10-17 00:39:08',
             ),
             27 => 
             array (
@@ -377,11 +377,11 @@ class PMenuTableSeeder extends Seeder
                 'title' => 'Barang Habis Pakai',
                 'icon' => NULL,
                 'route' => 'admin.barang.pengadaan.habis_pakai',
-                'sequence' => 13,
+                'sequence' => 14,
                 'active' => 1,
                 'type' => 1,
                 'created_at' => '2022-09-23 00:13:05',
-                'updated_at' => '2022-10-03 08:12:43',
+                'updated_at' => '2022-10-17 00:39:08',
             ),
             28 => 
             array (
@@ -390,11 +390,11 @@ class PMenuTableSeeder extends Seeder
                 'title' => 'Barang Sewa',
                 'icon' => NULL,
                 'route' => 'admin.barang.pengurangan.sewa',
-                'sequence' => 15,
+                'sequence' => 16,
                 'active' => 1,
                 'type' => 1,
                 'created_at' => '2022-09-23 00:14:48',
-                'updated_at' => '2022-10-03 08:12:43',
+                'updated_at' => '2022-10-17 00:39:08',
             ),
             29 => 
             array (
@@ -403,11 +403,11 @@ class PMenuTableSeeder extends Seeder
                 'title' => 'Barang Habis Pakai',
                 'icon' => NULL,
                 'route' => 'admin.barang.pengurangan.habis_pakai',
-                'sequence' => 16,
+                'sequence' => 17,
                 'active' => 1,
                 'type' => 1,
                 'created_at' => '2022-09-23 00:21:11',
-                'updated_at' => '2022-10-03 08:12:43',
+                'updated_at' => '2022-10-17 00:39:08',
             ),
             30 => 
             array (
@@ -481,11 +481,11 @@ class PMenuTableSeeder extends Seeder
                 'title' => 'Menu Data Barang',
                 'icon' => NULL,
                 'route' => NULL,
-                'sequence' => 8,
+                'sequence' => 9,
                 'active' => 1,
                 'type' => 0,
                 'created_at' => '2022-10-03 08:09:26',
-                'updated_at' => '2022-10-03 08:12:43',
+                'updated_at' => '2022-10-17 00:39:08',
             ),
             36 => 
             array (
@@ -507,11 +507,11 @@ class PMenuTableSeeder extends Seeder
                 'title' => 'Ganti Rugi',
                 'icon' => 'fas fa-sync',
                 'route' => 'admin.ganti_rugi',
-                'sequence' => 17,
+                'sequence' => 8,
                 'active' => 1,
                 'type' => 1,
                 'created_at' => '2022-10-17 00:18:29',
-                'updated_at' => '2022-10-17 00:18:40',
+                'updated_at' => '2022-10-17 00:39:08',
             ),
         ));
         
