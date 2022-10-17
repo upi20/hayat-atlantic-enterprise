@@ -312,6 +312,7 @@ class PengembalianBarangController extends Controller
             $ganti_rugi->nominal = $total;
             $ganti_rugi->sisa = $total;
             $ganti_rugi->dibayar = 0;
+            $ganti_rugi->dibayar_barang = 0;
             $ganti_rugi->save();
         }
 

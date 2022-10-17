@@ -67,6 +67,18 @@ class BarangPenguranganTableSeeder extends Seeder
                 'created_at' => '2022-10-10 14:39:04',
                 'updated_at' => '2022-10-10 14:39:04',
             ),
+            4 => 
+            array (
+                'id' => 5,
+                'nama' => 'Barang Hilang Saat Penyewaan Dengan Surat Jalan Nomor SJ/00006',
+                'keterangan' => 'Tanggal 2022-10-08, Di Handip Yusuf Kurniawan Lokasi Jl. Cikutra No.7, Cikutra, Kec. Cibeunying Kidul, Kota Bandung, Jawa Barat 40124',
+                'tanggal' => '2022-10-07 00:00:00',
+                'penyewaan' => 14,
+                'updated_by' => NULL,
+                'created_by' => 1,
+                'created_at' => '2022-10-18 01:23:24',
+                'updated_at' => '2022-10-18 01:23:24',
+            ),
         ));
         
         

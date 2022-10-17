@@ -24,6 +24,7 @@ return new class extends Migration
             $table->integer('total_qty_barang')->default(0);
             $table->bigInteger('nominal', false, true)->nullable()->default(0);
             $table->bigInteger('dibayar', false, true)->nullable()->default(0);
+            $table->bigInteger('dibayar_barang', false, true)->nullable()->default(0);
             $table->bigInteger('sisa', false, true)->nullable()->default(0);
             $table->boolean('status')->default(0)->nullable()->comment("0 = data dibuat, 1 = proses, 2 = selesai");
             $table->bigInteger('updated_by', false, true)->nullable()->default(null);

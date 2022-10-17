@@ -54,14 +54,13 @@
                         <tr>
                             <th>No</th>
                             <th>Detail</th>
-                            <th>Nama</th>
                             <th>Customer</th>
                             <th>Barang</th>
-                            <th>Qty Barang</th>
                             <th>Nominal</th>
                             <th>Dibayar</th>
                             <th>Sisa</th>
                             <th>Status</th>
+                            <th>Keterangan</th>
                         </tr>
                     </thead>
                     <tbody> </tbody>
@@ -112,7 +111,7 @@
                 searchDelay: 500,
                 processing: true,
                 serverSide: true,
-                // responsive: true,
+                responsive: true,
                 scrollX: true,
                 aAutoWidth: false,
                 bAutoWidth: false,
@@ -137,13 +136,6 @@
                         }
                     },
                     {
-                        data: 'nama',
-                        name: 'nama',
-                        render(data, type, full, meta) {
-                            return `${data}<br><small>${full.keterangan}</small>`;
-                        }
-                    },
-                    {
                         data: 'customer_nama',
                         name: 'customer_nama',
                         render(data, type, full, meta) {
@@ -155,11 +147,8 @@
                     },
                     {
                         data: 'jumlah_barang',
-                        name: 'jumlah_barang'
-                    },
-                    {
-                        data: 'total_qty_barang',
-                        name: 'total_qty_barang'
+                        name: 'jumlah_barang',
+                        className: 'text-nowrap text-right'
                     },
                     {
                         data: 'nominal',
@@ -173,7 +162,7 @@
                         data: 'dibayar',
                         name: 'dibayar',
                         render(data, type, full, meta) {
-                            return `Rp. ${format_rupiah(data)}`;
+                            return `Rp. ${format_rupiah(Number(data)+Number(full.dibayar_barang))}`;
                         },
                         className: 'text-nowrap text-right'
                     },
@@ -203,11 +192,19 @@
                             }
                             return `<i class="fas fa-circle text-${color} me-1"></i> ${text}`;
                         },
-                        className: 'text-nowrap text-right'
+                        className: 'text-nowrap'
+                    },
+                    {
+                        data: 'nama',
+                        name: 'nama',
+                        render(data, type, full, meta) {
+                            return `${data}<br><small>${full.keterangan}</small>`;
+                        },
+                        className: 'text-nowrap'
                     },
                 ],
                 order: [
-                    [9, 'asc']
+                    [7, 'asc']
                 ]
             });
 

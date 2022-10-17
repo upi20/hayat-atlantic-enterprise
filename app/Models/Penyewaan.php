@@ -12,4 +12,9 @@ class Penyewaan extends Model
     protected $primaryKey = 'id';
     protected $table = 'penyewaan';
     const tableName = 'penyewaan';
+
+    public function getCustomer()
+    {
+        return $this->hasOne(Customer::class, 'id', 'customer');
+    }
 }

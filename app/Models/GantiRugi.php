@@ -13,4 +13,14 @@ class GantiRugi extends Model
     protected $table = 'ganti_rugi';
     const tableName = 'ganti_rugi';
     const image_folder = '/assets/ganti_rugi';
+
+    public function getCustomer()
+    {
+        return $this->hasOne(Customer::class, 'id', 'customer');
+    }
+
+    public function penyewaan()
+    {
+        return $this->hasOne(Penyewaan::class, 'id', 'penyewaan_id');
+    }
 }

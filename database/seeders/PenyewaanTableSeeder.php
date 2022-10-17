@@ -161,7 +161,7 @@ class PenyewaanTableSeeder extends Seeder
                 'tanggal_pakai_sampai' => '2022-10-08',
                 'kepada' => 'Handip Yusuf Kurniawan',
                 'tanggal_order' => '2022-10-15',
-                'status' => 3,
+                'status' => 4,
                 'total_harga' => 9200000,
                 'dibayar' => 4000000,
                 'status_pembayaran' => 0,
@@ -171,7 +171,7 @@ class PenyewaanTableSeeder extends Seeder
                 'updated_by' => 1,
                 'created_by' => 1,
                 'created_at' => '2022-10-15 17:44:39',
-                'updated_at' => '2022-10-15 21:10:34',
+                'updated_at' => '2022-10-18 01:23:24',
             ),
         ));
         

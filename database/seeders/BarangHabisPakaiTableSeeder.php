@@ -42,12 +42,12 @@ class BarangHabisPakaiTableSeeder extends Seeder
                 'jenis' => 4,
                 'satuan' => 1,
                 'harga' => 10000,
-                'qty' => 6,
+                'qty' => -4,
                 'keterangan' => 'Ditambahkan bersamaan dengan pembuatan aplikasi',
                 'updated_by' => NULL,
                 'created_by' => NULL,
                 'created_at' => '2022-09-17 22:04:43',
-                'updated_at' => NULL,
+                'updated_at' => '2022-10-18 01:23:24',
             ),
             2 => 
             array (
@@ -57,12 +57,12 @@ class BarangHabisPakaiTableSeeder extends Seeder
                 'jenis' => 4,
                 'satuan' => 1,
                 'harga' => 16000,
-                'qty' => 6,
+                'qty' => -5,
                 'keterangan' => 'Ditambahkan bersamaan dengan pembuatan aplikasi',
                 'updated_by' => NULL,
                 'created_by' => NULL,
                 'created_at' => '2022-09-17 22:04:43',
-                'updated_at' => NULL,
+                'updated_at' => '2022-10-18 01:23:24',
             ),
             3 => 
             array (
@@ -87,12 +87,12 @@ class BarangHabisPakaiTableSeeder extends Seeder
                 'jenis' => 4,
                 'satuan' => 5,
                 'harga' => 15500,
-                'qty' => 2,
+                'qty' => -8,
                 'keterangan' => 'Ditambahkan bersamaan dengan pembuatan aplikasi',
                 'updated_by' => NULL,
                 'created_by' => NULL,
                 'created_at' => '2022-09-17 22:04:43',
-                'updated_at' => NULL,
+                'updated_at' => '2022-10-18 01:23:24',
             ),
             5 => 
             array (

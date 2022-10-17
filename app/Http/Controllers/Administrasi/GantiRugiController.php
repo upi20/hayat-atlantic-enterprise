@@ -156,6 +156,7 @@ class GantiRugiController extends Controller
                 "$table.total_qty_barang",
                 "$table.nominal",
                 "$table.dibayar",
+                "$table.dibayar_barang",
                 "$table.sisa",
                 "$table.status",
                 "$table.updated_by",
@@ -182,5 +183,22 @@ class GantiRugiController extends Controller
 
         // create datatable
         return $datatable->make(true);
+    }
+
+    public function detail(GantiRugi $model)
+    {
+        $page_attr = [
+            'title' => 'Ganti Rugi Detail',
+            'breadcrumbs' => [
+                ['name' => 'Dashboard'],
+                ['name' => 'Ganti Rugi', 'url' => h_prefix(null, 2)],
+            ],
+            'navigation' => h_prefix(null, 2)
+        ];
+
+        $customer = $model->getCustomer;
+        $penyewaan = $model->penyewaan;
+
+        return view('administrasi.ganti_rugi.detail', compact('page_attr', 'model', 'customer', 'penyewaan'));
     }
 }
