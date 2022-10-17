@@ -677,18 +677,18 @@ Route::controller(GantiRugiController::class)->prefix($prefix)->group(function (
     $prefix = 'barang';
     Route::prefix($prefix)->group(function () use ($name, $prefix) {
         $name = "$name.$prefix"; // admin.ganti_rugi.barang
-        Route::get('/', 'datatable')->name("$name.datatable")->middleware("permission:$name");
-        Route::get('/invoice', 'invoice')->name("$name.invoice")->middleware("permission:$name");
-        Route::post('/insert', 'insert')->name("$name.insert")->middleware("permission:$name.insert");
-        Route::post('/batalkan', 'batalkan')->name("$name.batalkan")->middleware("permission:$name.batalkan");
+        Route::get('/', "{$prefix}_datatable")->name("$name")->middleware("permission:$name");
+        Route::get('/invoice', "{$prefix}_invoice")->name("$name.invoice")->middleware("permission:$name");
+        Route::post('/insert', "{$prefix}_insert")->name("$name.insert")->middleware("permission:$name.insert");
+        Route::post('/batalkan', "{$prefix}_batalkan")->name("$name.batalkan")->middleware("permission:$name.batalkan");
     });
 
-    $prefix = 'pembayaran';
+    $prefix = 'uang';
     Route::prefix($prefix)->group(function () use ($name, $prefix) {
-        $name = "$name.$prefix"; // admin.ganti_rugi.pembayaran
-        Route::get('/', 'datatable')->name("$name.datatable")->middleware("permission:$name");
-        Route::get('/invoice', 'invoice')->name("$name.invoice")->middleware("permission:$name");
-        Route::post('/insert', 'insert')->name("$name.insert")->middleware("permission:$name.insert");
-        Route::post('/batalkan', 'batalkan')->name("$name.batalkan")->middleware("permission:$name.batalkan");
+        $name = "$name.$prefix"; // admin.ganti_rugi.uang
+        Route::get('/', "{$prefix}_datatable")->name("$name")->middleware("permission:$name");
+        Route::get('/invoice', "{$prefix}_invoice")->name("$name.invoice")->middleware("permission:$name");
+        Route::post('/insert', "{$prefix}_insert")->name("$name.insert")->middleware("permission:$name.insert");
+        Route::post('/batalkan', "{$prefix}_batalkan")->name("$name.batalkan")->middleware("permission:$name.batalkan");
     });
 });

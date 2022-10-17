@@ -19,7 +19,7 @@
         [x] ganti rugi pembayaran
         [x] ganti rugi barang
     [] Display
-        [] List ganti rugi
+        [x] List ganti rugi
         [] Detail halaman ganti rugi
             [] Ganti Barang
             [] Ganti Pembayaran
@@ -28,37 +28,6 @@
         [] Penggantian
             [] Uang
             [] Barang
-    
-    [] Route
-        - Ganti Rugi Header
-            - datatable
-            - ganti rugi detail
-            - ganti rugi status simpan
-            - inovice (Pelunasan)
-            - Surat Permonoan penggantian barang
-        - Ganti Rugi Barang
-            - datatable
-            - insert
-            - batalkan
-        - Ganti Rugi Pembayaran
-            - datatable
-            - insert
-            - batalkan
-            - invoice ()
-
-    * Spesifikasi ganti rugi
-        - Ketika admin mengkonfirmasi pengembalian barang:
-          - Ganti rugi muncul jika ada barang yang hilang atau rusak
-          - Data barang untuk ganti rugi akan diambil dari data pengembalian yang barangnya hilang atau rusak
-          - Harga barang untuk ganti rugi diambil dari data barang yang ada di gudang
-        - Terdapat 2 metode ganti rugi
-          - Pembayaran (Dengan uang)
-            - Ganti rugi dengan uang dapat di angsur beberapa kali.
-            - Ada invoice nya (Faktur)
-          - Ganti barang
-            - Diganti dengan barang dan kualitas yang sama
-            - Terdapat surat serah terima dan pengecekan barang
-          - Ganti barang dan uang
 
 ## Dashboard
     [] Penyewaan Range tanggal Default Bulan sekarang dan Berdasarkan status
@@ -71,6 +40,9 @@
     [] Date time str
     [] Semua status tidak menggunakan badge tapi menggunakan circle
     [] Semua pembatalan ditambahkan alasan
+    [] Filter dibatalkan di pembayaran detail
+    [] Filter dibatalkan di ganti rugi detail uang
+    [] Filter dibatalkan di ganti rugi detail barang
 
 ## Frontend
     [] Home
