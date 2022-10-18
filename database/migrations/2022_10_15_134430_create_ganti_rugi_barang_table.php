@@ -22,8 +22,8 @@ return new class extends Migration
             $table->date('tanggal')->default(now());
             $table->string('oleh')->nullable()->default(null);
             $table->bigInteger('qty')->nullable()->default(0);
-
-            $table->boolean('status')->default(1)->nullable("1 aktif, 0 dibatalkan");
+            $table->text('keterangan')->nullable()->default(null);
+            $table->boolean('status')->default(1)->nullable()->comment("1 aktif, 0 dibatalkan");
             $table->text('pembatalan_alasan')->nullable()->default(null);
             $table->bigInteger('updated_by', false, true)->nullable()->default(null);
             $table->bigInteger('created_by', false, true)->nullable()->default(null);

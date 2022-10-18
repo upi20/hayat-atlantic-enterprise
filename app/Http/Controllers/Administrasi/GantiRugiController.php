@@ -3,8 +3,12 @@
 namespace App\Http\Controllers\Administrasi;
 
 use App\Http\Controllers\Controller;
+use App\Models\Barang\Satuan;
+use App\Models\Barang\Sewa;
 use App\Models\Customer;
 use App\Models\GantiRugi;
+use App\Models\GantiRugi\GantiListBarang;
+use App\Models\GantiRugi\GantiRugiBarang;
 use App\Models\GantiRugi\GantiRugiPembayaran;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -14,6 +18,15 @@ use Yajra\Datatables\Datatables;
 
 class GantiRugiController extends Controller
 {
+    private $validate_barang = [
+        'ganti_rugi' => ['required', 'int'],
+        'nama' => ['required', 'string'],
+        'barang' => ['required', 'int'],
+        'tanggal' => ['required', 'date'],
+        'oleh' => ['required', 'string'],
+        'keterangan' => ['nullable', 'string'],
+    ];
+
     private $validate_uang = [
         'ganti_rugi' => ['required', 'int'],
         'nama' => ['required', 'string'],
@@ -191,6 +204,7 @@ class GantiRugiController extends Controller
 
     public function detail(GantiRugi $model)
     {
+        $barangs = $this->get_list_barang($model->id);
         $page_attr = [
             'title' => 'Ganti Rugi Detail',
             'breadcrumbs' => [
@@ -202,9 +216,50 @@ class GantiRugiController extends Controller
 
         $customer = $model->getCustomer;
 
-        return view('administrasi.ganti_rugi.detail', compact('page_attr', 'model', 'customer'));
+        return view('administrasi.ganti_rugi.detail', compact('page_attr', 'model', 'customer', 'barangs'));
     }
 
+    public function simpan_status(GantiRugi $ganti_rugi, Request $request)
+    {
+        try {
+            $request->validate([
+                'detail_status' => 'required|int'
+            ]);
+            DB::beginTransaction();
+            $ganti_rugi->status = $request->detail_status;
+            $ganti_rugi->save();
+
+            // return data detail ganti rugi
+            $customer = $ganti_rugi->getCustomer;
+
+            DB::commit();
+
+            return response()->json(compact('ganti_rugi', 'customer'));
+        } catch (ValidationException $error) {
+            return response()->json([
+                'message' => 'Something went wrong',
+                'error' => $error,
+            ], 500);
+        }
+    }
+
+    private function get_list_barang($ganti_rugi_id)
+    {
+        $table = GantiListBarang::tableName;
+        $t_satuan = Satuan::tableName;
+        $t_barang = Sewa::tableName;
+        $barangs = GantiListBarang::selectRaw("
+        $table.*,
+        $t_satuan.nama as satuan,
+        $t_barang.nama as barang_nama,
+        $t_barang.kode as barang_kode
+        ")
+            ->leftJoin($t_barang, "$t_barang.id", "=", "$table.barang")
+            ->leftJoin($t_satuan, "$t_satuan.id", "=", "$t_barang.satuan")
+            ->where("$table.ganti_rugi_id", $ganti_rugi_id)->get();
+
+        return $barangs;
+    }
 
     // Ganti rugi uang ============================================================================================
     public function uang_insert(Request $request)
@@ -232,7 +287,57 @@ class GantiRugiController extends Controller
 
             // ganti rugi header
             $ganti_rugi->dibayar = $ganti_rugi->dibayar + $request->nominal;
-            $ganti_rugi->sisa = $ganti_rugi->sisa - $request->nominal;
+            $sisa = $ganti_rugi->sisa - $request->nominal;
+            $ganti_rugi->sisa = $sisa < 0 ? 0 : $sisa;
+            if ($ganti_rugi->status == 0) {
+                $ganti_rugi->status = 1;
+            }
+
+            if ($ganti_rugi->sisa <= 0) {
+                $ganti_rugi->status = 2;
+            }
+            $ganti_rugi->save();
+
+            // return data detail ganti rugi
+            $customer = $ganti_rugi->getCustomer;
+
+            DB::commit();
+
+            return response()->json(compact('ganti_rugi', 'customer'));
+        } catch (ValidationException $error) {
+            return response()->json([
+                'message' => 'Something went wrong',
+                'error' => $error,
+            ], 500);
+        }
+    }
+
+    public function uang_batalkan(Request $request)
+    {
+        try {
+            $request->validate([
+                'id' => 'required|int',
+                'alasan' => 'required|string',
+            ]);
+            DB::beginTransaction();
+            $ganti_rugi_uang = GantiRugiPembayaran::find($request->id);
+
+            if ($ganti_rugi_uang->status == 0) {
+                return response()->json([
+                    'message' => 'Pembayaran sudah di batalkan.',
+                ], 500);
+            }
+
+            $ganti_rugi_uang->pembatalan_alasan = $request->alasan;
+            $ganti_rugi_uang->status = 0;
+            $ganti_rugi_uang->updated_by = auth()->user()->id;
+            $ganti_rugi_uang->save();
+
+            // ganti rugi header
+            $ganti_rugi = $ganti_rugi_uang->ganti_rugi;
+            $ganti_rugi->dibayar = $ganti_rugi->dibayar - $ganti_rugi_uang->nominal;
+            $sisa = $ganti_rugi->sisa + $ganti_rugi_uang->nominal;
+            $ganti_rugi->sisa = $sisa < 0 ? 0 : $sisa;
             if ($ganti_rugi->status == 0) {
                 $ganti_rugi->status = 1;
             }
@@ -396,4 +501,272 @@ class GantiRugiController extends Controller
         // create datatable
         return $datatable->make(true);
     }
+    // Ganti rugi uang ============================================================================================
+
+    // Ganti rugi barang ============================================================================================
+    public function barang_select2(Request $request)
+    {
+
+        try {
+            $model = User::select(['id', DB::raw("concat(no_telepon,' | ',nama) as text")])
+                ->whereRaw("(
+                    `nama` like '%$request->search%' or
+                    `no_telepon` like '%$request->search%' or
+                    `id` like '%$request->search%'
+                    )")
+                ->limit(50);
+
+            $result = $model->get()->toArray();
+            return response()->json(['results' => array_merge([['id' => '', 'text' => 'Semua']], $result)]);
+        } catch (\Exception $error) {
+            return response()->json($error, 500);
+        }
+    }
+
+    public function barang_insert(Request $request)
+    {
+        try {
+            $request->validate($this->validate_barang);
+            DB::beginTransaction();
+            $ganti_rugi = GantiRugi::find($request->ganti_rugi);
+
+            // ganti rugi pembayaran
+            $ganti_rugi_barang = new GantiRugiPembayaran();
+            $ganti_rugi_nomor = GantiRugiPembayaran::max('no_surat') + 1;
+
+            $ganti_rugi_barang->no_surat = $ganti_rugi_nomor;
+            $ganti_rugi_barang->ganti_rugi_id = $ganti_rugi->id;
+            $ganti_rugi_barang->tanggal = $request->tanggal;
+            $ganti_rugi_barang->oleh = $request->oleh;
+            $ganti_rugi_barang->keterangan = $request->keterangan;
+            $ganti_rugi_barang->nominal = $request->nominal;
+            $ganti_rugi_barang->nama = $request->nama;
+            $ganti_rugi_barang->pembayaran_sebelumnya = $ganti_rugi->dibayar;
+            $ganti_rugi_barang->status = 1;
+            $ganti_rugi_barang->created_by = auth()->user()->id;
+            $ganti_rugi_barang->save();
+
+            // ganti rugi header
+            $ganti_rugi->dibayar = $ganti_rugi->dibayar + $request->nominal;
+            $sisa = $ganti_rugi->sisa - $request->nominal;
+            $ganti_rugi->sisa = $sisa < 0 ? 0 : $sisa;
+            if ($ganti_rugi->status == 0) {
+                $ganti_rugi->status = 1;
+            }
+
+            if ($ganti_rugi->sisa <= 0) {
+                $ganti_rugi->status = 2;
+            }
+            $ganti_rugi->save();
+
+            // return data detail ganti rugi
+            $customer = $ganti_rugi->getCustomer;
+
+            DB::commit();
+
+            return response()->json(compact('ganti_rugi', 'customer'));
+        } catch (ValidationException $error) {
+            return response()->json([
+                'message' => 'Something went wrong',
+                'error' => $error,
+            ], 500);
+        }
+    }
+
+    public function barang_batalkan(Request $request)
+    {
+        try {
+            $request->validate([
+                'id' => 'required|int',
+                'alasan' => 'required|string',
+            ]);
+            DB::beginTransaction();
+            $ganti_rugi_barang = GantiRugiPembayaran::find($request->id);
+
+            if ($ganti_rugi_barang->status == 0) {
+                return response()->json([
+                    'message' => 'Pembayaran sudah di batalkan.',
+                ], 500);
+            }
+
+            $ganti_rugi_barang->pembatalan_alasan = $request->alasan;
+            $ganti_rugi_barang->status = 0;
+            $ganti_rugi_barang->updated_by = auth()->user()->id;
+            $ganti_rugi_barang->save();
+
+            // ganti rugi header
+            $ganti_rugi = $ganti_rugi_barang->ganti_rugi;
+            $ganti_rugi->dibayar = $ganti_rugi->dibayar - $ganti_rugi_barang->nominal;
+            $sisa = $ganti_rugi->sisa + $ganti_rugi_barang->nominal;
+            $ganti_rugi->sisa = $sisa < 0 ? 0 : $sisa;
+            if ($ganti_rugi->status == 0) {
+                $ganti_rugi->status = 1;
+            }
+
+            if ($ganti_rugi->sisa <= 0) {
+                $ganti_rugi->status = 2;
+            }
+            $ganti_rugi->save();
+
+            // return data detail ganti rugi
+            $customer = $ganti_rugi->getCustomer;
+
+            DB::commit();
+
+            return response()->json(compact('ganti_rugi', 'customer'));
+        } catch (ValidationException $error) {
+            return response()->json([
+                'message' => 'Something went wrong',
+                'error' => $error,
+            ], 500);
+        }
+    }
+
+    public function barang_datatable(Request $request): mixed
+    {
+        // list table
+        $t_user = User::tableName;
+        $t_barang = Sewa::tableName;
+        $table = GantiRugiBarang::tableName;
+
+        // cusotm query
+        // ========================================================================================================
+        // creted at and updated at
+        $date_format_fun = function (string $select, string $format, string $alias) use ($table): array {
+            $str = <<<SQL
+                (DATE_FORMAT($table.$select, '$format'))
+            SQL;
+            return [$alias => $str, ($alias . '_alias') => $alias];
+        };
+
+        $c_created = 'created';
+        $c_created_str = 'created_str';
+        $c_updated = 'updated';
+        $c_updated_str = 'updated_str';
+        $c_tanggal_str = 'tanggal_str';
+        $this->query = array_merge($this->query, $date_format_fun('created_at', '%d-%b-%Y', $c_created));
+        $this->query = array_merge($this->query, $date_format_fun('created_at', '%W, %d %M %Y %H:%i:%s', $c_created_str));
+        $this->query = array_merge($this->query, $date_format_fun('updated_at', '%d-%b-%Y', $c_updated));
+        $this->query = array_merge($this->query, $date_format_fun('updated_at', '%W, %d %M %Y %H:%i:%s', $c_updated_str));
+        $this->query = array_merge($this->query, $date_format_fun('tanggal', '%d-%b-%Y', $c_tanggal_str));
+
+        // created_by
+        $c_created_by = 'created_by_str';
+        $t_created_by = 'b';
+        $this->query[$c_created_by] = "$t_created_by.name";
+        $this->query["{$c_created_by}_alias"] = $c_created_by;
+
+        // updated_by
+        $c_updated_by = 'updated_by_str';
+        $t_updated_by = 'c';
+        $this->query[$c_updated_by] = "$t_updated_by.name";
+        $this->query["{$c_updated_by}_alias"] = $c_updated_by;
+        // ========================================================================================================
+
+
+        // ========================================================================================================
+        // select raw as alias
+        $sraa = function (string $col): string {
+            return $this->query[$col] . ' as ' . $this->query[$col . '_alias'];
+        };
+        $model_filter = [
+            $c_created,
+            $c_created_str,
+            $c_updated,
+            $c_updated_str,
+            $c_created_by,
+            $c_updated_by,
+            $c_tanggal_str
+        ];
+
+        $to_db_raw = array_map(function ($a) use ($sraa) {
+            return DB::raw($sraa($a));
+        }, $model_filter);
+        // ========================================================================================================
+
+
+        // Select =====================================================================================================
+        $model = GantiRugiBarang::select(array_merge([
+            DB::raw("$table.*"),
+            DB::raw("$t_barang.nama as barang_nama"),
+            DB::raw("$t_barang.kode as barang_kode"),
+        ], $to_db_raw))
+            ->leftJoin($t_barang, "$t_barang.id", '=', "$table.barang")
+            ->leftJoin("$t_user as $t_created_by", "$t_created_by.id", '=', "$table.created_by")
+            ->leftJoin("$t_user as $t_updated_by", "$t_updated_by.id", '=', "$table.updated_by");
+
+        // Filter =====================================================================================================
+        // filter check
+        $f_c = function (string $param) use ($request): mixed {
+            $filter = $request->filter;
+            return isset($filter[$param]) ? $filter[$param] : false;
+        };
+
+        // filter ini menurut data model filter
+        // $f = [$c_created_by, $c_updated_by];
+        // // loop filter
+        // foreach ($f as $v) {
+        //     if ($f_c($v)) {
+        //         $model->whereRaw("{$this->query[$v]}='{$f_c($v)}'");
+        //     }
+        // }
+
+        // filter custom
+        $filters = ['updated_by', 'created_by', 'ganti_rugi_id'];
+        foreach ($filters as  $f) {
+            if ($f_c($f) !== false) {
+                $model->whereRaw("$table.$f='{$f_c($f)}'");
+            }
+        }
+        // ========================================================================================================
+
+
+        // ========================================================================================================
+        $datatable = Datatables::of($model)->addIndexColumn();
+
+        // search
+        // ========================================================================================================
+        $query_filter = $this->query;
+        $datatable->filter(function ($query) use ($model_filter, $query_filter, $table, $t_barang) {
+            $search = request('search');
+            $search = isset($search['value']) ? $search['value'] : null;
+            if ((is_null($search) || $search == '') && count($model_filter) > 0) return false;
+
+            // tambah pencarian
+            $search_add = [
+                "$table.ganti_rugi_id",
+                "$table.nama",
+                "$table.no_surat",
+                "$table.tanggal",
+                "$table.oleh",
+                "$table.keterangan",
+                "$table.qty",
+                "$table.pembayaran_sebelumnya",
+                "$table.status",
+                "$table.pembatalan_alasan",
+                "$table.updated_by",
+                "$table.created_by",
+                "$table.updated_by",
+                "$t_barang.nama",
+                "$t_barang.kode"
+            ];
+
+            $search_arr = array_merge($model_filter, $search_add);
+
+            // pake or where
+            $search_str = "(";
+            foreach ($search_arr as $k => $v) {
+                $or = (($k + 1) < count($search_arr)) ? 'or' : '';
+                $column = isset($query_filter[$v]) ? $query_filter[$v] : $v;
+                $search_str .= "$column like '%$search%' $or ";
+            }
+
+            $search_str .= ")";
+            $query->whereRaw($search_str);
+        });
+
+        // create datatable
+        return $datatable->make(true);
+    }
+    // Ganti rugi barang ============================================================================================
 }

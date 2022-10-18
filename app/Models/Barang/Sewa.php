@@ -13,4 +13,9 @@ class Sewa extends Model
     protected $table = 'barang';
     const tableName = 'barang';
     const image_folder = '/assets/barang/sewa';
+
+    public function getSatuan()
+    {
+        return $this->hasOne(Satuan::class, 'id', 'satuan');
+    }
 }

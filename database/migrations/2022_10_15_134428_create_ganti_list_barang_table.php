@@ -21,7 +21,6 @@ return new class extends Migration
             $table->integer('qty_hilang')->default(1);
             $table->integer('qty_diganti')->default(0);
             $table->bigInteger('harga')->nullable()->default(null);
-            $table->boolean('status')->default(1)->nullable()->comment("1 aktif, 0 dibatalkan");
             $table->bigInteger('updated_by', false, true)->nullable()->default(null);
             $table->bigInteger('created_by', false, true)->nullable()->default(null);
             $table->foreign('updated_by')

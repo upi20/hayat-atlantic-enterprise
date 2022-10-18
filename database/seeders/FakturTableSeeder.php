@@ -169,6 +169,21 @@ class FakturTableSeeder extends Seeder
                 'created_at' => '2022-10-15 21:08:55',
                 'updated_at' => '2022-10-15 21:08:55',
             ),
+            10 => 
+            array (
+                'id' => 19,
+                'no_faktur' => '1666106711',
+                'tanggal' => '2022-10-18',
+                'jumlah' => 1000000,
+                'sisa' => 7792500,
+                'pembayaran_sebelumnya' => 0,
+                'total' => 8792500,
+                'pembayaran' => 36,
+                'updated_by' => NULL,
+                'created_by' => NULL,
+                'created_at' => '2022-10-18 22:25:11',
+                'updated_at' => '2022-10-18 22:25:11',
+            ),
         ));
         
         

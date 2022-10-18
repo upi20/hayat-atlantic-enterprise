@@ -13,4 +13,14 @@ class GantiRugiBarang extends Model
     protected $table = 'ganti_rugi_barang';
     const tableName = 'ganti_rugi_barang';
     const image_folder = '/assets/ganti_rugi_barang';
+
+    public function getBarang()
+    {
+        return $this->hasOne(Sewa::class, 'id', 'barang');
+    }
+
+    public function ganti_rugi()
+    {
+        return $this->hasOne(GantiRugi::class, 'id', 'ganti_rugi_id');
+    }
 }

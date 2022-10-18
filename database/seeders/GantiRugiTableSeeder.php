@@ -30,14 +30,14 @@ class GantiRugiTableSeeder extends Seeder
                 'jumlah_barang' => 7,
                 'total_qty_barang' => 12,
                 'nominal' => 1027500,
-                'dibayar' => 0,
+                'dibayar' => 100000,
                 'dibayar_barang' => 0,
-                'sisa' => 1027500,
-                'status' => 0,
+                'sisa' => 927500,
+                'status' => 1,
                 'updated_by' => NULL,
                 'created_by' => 1,
                 'created_at' => '2022-10-18 01:23:24',
-                'updated_at' => '2022-10-18 01:23:24',
+                'updated_at' => '2022-10-18 22:12:55',
             ),
         ));
         

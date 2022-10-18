@@ -173,6 +173,28 @@ class PenyewaanTableSeeder extends Seeder
                 'created_at' => '2022-10-15 17:44:39',
                 'updated_at' => '2022-10-18 01:23:24',
             ),
+            7 => 
+            array (
+                'id' => 15,
+                'customer' => 17,
+                'lokasi' => 'Lengkong',
+                'tanggal_kirim' => '2022-10-19',
+                'tanggal_pakai_dari' => '2022-10-20',
+                'tanggal_pakai_sampai' => '2022-10-20',
+                'kepada' => 'Dr Baru',
+                'tanggal_order' => '2022-10-18',
+                'status' => 3,
+                'total_harga' => 8792500,
+                'dibayar' => 1000000,
+                'status_pembayaran' => 0,
+                'batal_keterangan' => NULL,
+                'batal_tanggal' => NULL,
+                'batal_oleh' => NULL,
+                'updated_by' => NULL,
+                'created_by' => 1,
+                'created_at' => '2022-10-18 22:22:09',
+                'updated_at' => '2022-10-18 22:25:31',
+            ),
         ));
         
         

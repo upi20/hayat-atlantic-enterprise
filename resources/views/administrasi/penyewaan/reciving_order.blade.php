@@ -333,8 +333,7 @@
                         return query;
                     },
                 },
-                placeholder: "Masukan nama atau alamat dari customer.",
-                dropdownParent: $('#modal-default')
+                placeholder: "Masukan nama atau alamat dari customer."
             }).on('select2:select', function(e) {
                 const data = e.params.data;
                 const lokasi = $('#lokasi');

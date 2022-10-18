@@ -276,7 +276,7 @@ class PengembalianBarangController extends Controller
                 $barang_hilang_count++;
 
                 // tambah nominal
-                $barang_hilang_nominal += $barang->harga;
+                $barang_hilang_nominal += ($barang->harga * $j_barang->pengembalian_hilang);
             }
 
             // hitung barang rusak
@@ -286,7 +286,7 @@ class PengembalianBarangController extends Controller
                 $barang_rusak_count++;
 
                 // simpan nominal
-                $barang_rusak_nominal += $barang->harga;
+                $barang_rusak_nominal += ($barang->harga * $j_barang->pengembalian_rusak);
             }
 
             if ($j_barang->pengembalian_rusak > 0 || $j_barang->pengembalian_hilang > 0) {

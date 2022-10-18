@@ -20,13 +20,14 @@
         [x] ganti rugi barang
     [] Display
         [x] List ganti rugi
-        [] Detail halaman ganti rugi
-            [] Ganti Barang
+        [x] Detail halaman ganti rugi
+            [x] Ganti Barang
             [] Ganti Pembayaran
+        [] List barang yang hilang atau rusak
 
-    [] List barang yang ada data hilang dan rusak
-        [] Penggantian
-            [] Uang
+    [x] List barang yang ada data hilang dan rusak
+        [x] Penggantian
+            [x] Uang
             [] Barang
 
 ## Dashboard

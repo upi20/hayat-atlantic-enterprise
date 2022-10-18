@@ -313,6 +313,62 @@ class SuratJalanBarangTableSeeder extends Seeder
                 'created_at' => '2022-10-15 21:09:02',
                 'updated_at' => '2022-10-16 18:53:46',
             ),
+            21 => 
+            array (
+                'id' => 37,
+                'barang' => 2,
+                'qty' => 100,
+                'pengembalian_qty' => 95,
+                'pengembalian_hilang' => 3,
+                'pengembalian_rusak' => 2,
+                'surat_jalan' => 11,
+                'updated_by' => 1,
+                'created_by' => 1,
+                'created_at' => '2022-10-18 22:25:21',
+                'updated_at' => '2022-10-18 22:50:38',
+            ),
+            22 => 
+            array (
+                'id' => 38,
+                'barang' => 4,
+                'qty' => 10,
+                'pengembalian_qty' => 4,
+                'pengembalian_hilang' => 3,
+                'pengembalian_rusak' => 3,
+                'surat_jalan' => 11,
+                'updated_by' => 1,
+                'created_by' => 1,
+                'created_at' => '2022-10-18 22:25:21',
+                'updated_at' => '2022-10-18 22:50:38',
+            ),
+            23 => 
+            array (
+                'id' => 39,
+                'barang' => 7,
+                'qty' => 12,
+                'pengembalian_qty' => 11,
+                'pengembalian_hilang' => 0,
+                'pengembalian_rusak' => 1,
+                'surat_jalan' => 11,
+                'updated_by' => 1,
+                'created_by' => 1,
+                'created_at' => '2022-10-18 22:25:21',
+                'updated_at' => '2022-10-18 22:50:38',
+            ),
+            24 => 
+            array (
+                'id' => 40,
+                'barang' => 8,
+                'qty' => 31,
+                'pengembalian_qty' => 30,
+                'pengembalian_hilang' => 1,
+                'pengembalian_rusak' => 0,
+                'surat_jalan' => 11,
+                'updated_by' => 1,
+                'created_by' => 1,
+                'created_at' => '2022-10-18 22:25:21',
+                'updated_at' => '2022-10-18 22:50:38',
+            ),
         ));
         
         
