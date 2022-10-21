@@ -2,6 +2,7 @@
 
 namespace App\Models\GantiRugi;
 
+use App\Models\GantiRugi;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 

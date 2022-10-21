@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Administrasi;
 
 use App\Http\Controllers\Controller;
+use App\Models\Barang\Jenis;
 use App\Models\Barang\Satuan;
 use App\Models\Barang\Sewa;
 use App\Models\Customer;
@@ -20,7 +21,6 @@ class GantiRugiController extends Controller
 {
     private $validate_barang = [
         'ganti_rugi' => ['required', 'int'],
-        'nama' => ['required', 'string'],
         'barang' => ['required', 'int'],
         'tanggal' => ['required', 'date'],
         'oleh' => ['required', 'string'],
@@ -215,8 +215,9 @@ class GantiRugiController extends Controller
         ];
 
         $customer = $model->getCustomer;
+        $penyewaan = $model->penyewaan;
 
-        return view('administrasi.ganti_rugi.detail', compact('page_attr', 'model', 'customer', 'barangs'));
+        return view('administrasi.ganti_rugi.detail', compact('page_attr', 'model', 'customer', 'barangs', 'penyewaan'));
     }
 
     public function simpan_status(GantiRugi $ganti_rugi, Request $request)
@@ -234,7 +235,8 @@ class GantiRugiController extends Controller
 
             DB::commit();
 
-            return response()->json(compact('ganti_rugi', 'customer'));
+            $barangs = $this->get_list_barang($ganti_rugi->id);
+            return response()->json(compact('ganti_rugi', 'customer', 'barangs'));
         } catch (ValidationException $error) {
             return response()->json([
                 'message' => 'Something went wrong',
@@ -287,9 +289,10 @@ class GantiRugiController extends Controller
 
             // ganti rugi header
             $ganti_rugi->dibayar = $ganti_rugi->dibayar + $request->nominal;
-            $sisa = $ganti_rugi->sisa - $request->nominal;
-            $ganti_rugi->sisa = $sisa < 0 ? 0 : $sisa;
-            if ($ganti_rugi->status == 0) {
+            $sisa = $ganti_rugi->nominal - ($ganti_rugi->dibayar + $ganti_rugi->dibayar_barang);
+            $ganti_rugi->sisa = $sisa;
+            // $ganti_rugi->sisa = $sisa < 0 ? 0 : $sisa;
+            if ($ganti_rugi->sisa >= 0) {
                 $ganti_rugi->status = 1;
             }
 
@@ -303,7 +306,8 @@ class GantiRugiController extends Controller
 
             DB::commit();
 
-            return response()->json(compact('ganti_rugi', 'customer'));
+            $barangs = $this->get_list_barang($ganti_rugi->id);
+            return response()->json(compact('ganti_rugi', 'customer', 'barangs'));
         } catch (ValidationException $error) {
             return response()->json([
                 'message' => 'Something went wrong',
@@ -336,9 +340,10 @@ class GantiRugiController extends Controller
             // ganti rugi header
             $ganti_rugi = $ganti_rugi_uang->ganti_rugi;
             $ganti_rugi->dibayar = $ganti_rugi->dibayar - $ganti_rugi_uang->nominal;
-            $sisa = $ganti_rugi->sisa + $ganti_rugi_uang->nominal;
-            $ganti_rugi->sisa = $sisa < 0 ? 0 : $sisa;
-            if ($ganti_rugi->status == 0) {
+            $sisa = $ganti_rugi->nominal - ($ganti_rugi->dibayar + $ganti_rugi->dibayar_barang);
+            $ganti_rugi->sisa = $sisa;
+            // $ganti_rugi->sisa = $sisa < 0 ? 0 : $sisa;
+            if ($ganti_rugi->sisa >= 0) {
                 $ganti_rugi->status = 1;
             }
 
@@ -352,7 +357,8 @@ class GantiRugiController extends Controller
 
             DB::commit();
 
-            return response()->json(compact('ganti_rugi', 'customer'));
+            $barangs = $this->get_list_barang($ganti_rugi->id);
+            return response()->json(compact('ganti_rugi', 'customer', 'barangs'));
         } catch (ValidationException $error) {
             return response()->json([
                 'message' => 'Something went wrong',
@@ -508,12 +514,28 @@ class GantiRugiController extends Controller
     {
 
         try {
-            $model = User::select(['id', DB::raw("concat(no_telepon,' | ',nama) as text")])
+            $ganti_rugi_id = $request->ganti_rugi;
+            $table = GantiListBarang::tableName;
+            $t_barang = Sewa::tableName;
+            $t_jenis = Jenis::tableName;
+            $t_satuan = Satuan::tableName;
+            $search = $request->search;
+
+            $sisa = "(($table.qty_rusak + $table.qty_hilang) - $table.qty_diganti)";
+
+            $model = GantiListBarang::selectRaw("$t_barang.id, concat($t_barang.kode,' | ',$t_barang.nama, ' (', $sisa, ')') as text, $t_satuan.nama as satuan, $sisa as sisa")
                 ->whereRaw("(
-                    `nama` like '%$request->search%' or
-                    `no_telepon` like '%$request->search%' or
-                    `id` like '%$request->search%'
+                    $t_jenis.nama like '%$search%' or
+                    $t_satuan.nama like '%$search%' or
+                    $t_barang.nama like '%$search%' or
+                    $t_barang.kode like '%$search%' or
+                    $t_barang.id like '%$search%'
                     )")
+                ->leftJoin($t_barang, "$t_barang.id", '=', "$table.barang")
+                ->leftJoin($t_jenis, "$t_jenis.id", '=', "$t_barang.jenis")
+                ->leftJoin($t_satuan, "$t_satuan.id", '=', "$t_barang.satuan")
+                ->where("$table.ganti_rugi_id", $ganti_rugi_id)
+                ->whereRaw("$sisa > 0")
                 ->limit(50);
 
             $result = $model->get()->toArray();
@@ -530,27 +552,36 @@ class GantiRugiController extends Controller
             DB::beginTransaction();
             $ganti_rugi = GantiRugi::find($request->ganti_rugi);
 
-            // ganti rugi pembayaran
-            $ganti_rugi_barang = new GantiRugiPembayaran();
-            $ganti_rugi_nomor = GantiRugiPembayaran::max('no_surat') + 1;
+            // ganti rugi barang buat harga dan diganti
+            $ganti_rugi_list = GantiListBarang::where('ganti_rugi_id', $request->ganti_rugi)
+                ->where('barang', $request->barang)->first();
+            $ganti_rugi_list->qty_diganti = $ganti_rugi_list->qty_diganti + $request->qty;
+            $ganti_rugi_list->updated_by = auth()->user()->id;
+            $ganti_rugi_list->save();
+
+            // ganti rugi barang
+            $ganti_rugi_barang = new GantiRugiBarang();
+            $ganti_rugi_nomor = GantiRugiBarang::max('no_surat') + 1;
 
             $ganti_rugi_barang->no_surat = $ganti_rugi_nomor;
             $ganti_rugi_barang->ganti_rugi_id = $ganti_rugi->id;
             $ganti_rugi_barang->tanggal = $request->tanggal;
             $ganti_rugi_barang->oleh = $request->oleh;
             $ganti_rugi_barang->keterangan = $request->keterangan;
-            $ganti_rugi_barang->nominal = $request->nominal;
-            $ganti_rugi_barang->nama = $request->nama;
-            $ganti_rugi_barang->pembayaran_sebelumnya = $ganti_rugi->dibayar;
+            $ganti_rugi_barang->barang = $request->barang;
             $ganti_rugi_barang->status = 1;
+            $ganti_rugi_barang->qty = $request->qty;
             $ganti_rugi_barang->created_by = auth()->user()->id;
             $ganti_rugi_barang->save();
 
             // ganti rugi header
-            $ganti_rugi->dibayar = $ganti_rugi->dibayar + $request->nominal;
-            $sisa = $ganti_rugi->sisa - $request->nominal;
-            $ganti_rugi->sisa = $sisa < 0 ? 0 : $sisa;
-            if ($ganti_rugi->status == 0) {
+            $nominal = $request->qty * $ganti_rugi_list->harga;
+
+            $ganti_rugi->dibayar_barang = $ganti_rugi->dibayar_barang + $nominal;
+            $sisa = $ganti_rugi->nominal - ($ganti_rugi->dibayar + $ganti_rugi->dibayar_barang);
+            $ganti_rugi->sisa = $sisa;
+            // $ganti_rugi->sisa = $sisa < 0 ? 0 : $sisa;
+            if ($ganti_rugi->sisa >= 0) {
                 $ganti_rugi->status = 1;
             }
 
@@ -564,7 +595,8 @@ class GantiRugiController extends Controller
 
             DB::commit();
 
-            return response()->json(compact('ganti_rugi', 'customer'));
+            $barangs = $this->get_list_barang($ganti_rugi->id);
+            return response()->json(compact('ganti_rugi', 'customer', 'barangs'));
         } catch (ValidationException $error) {
             return response()->json([
                 'message' => 'Something went wrong',
@@ -581,7 +613,7 @@ class GantiRugiController extends Controller
                 'alasan' => 'required|string',
             ]);
             DB::beginTransaction();
-            $ganti_rugi_barang = GantiRugiPembayaran::find($request->id);
+            $ganti_rugi_barang = GantiRugiBarang::find($request->id);
 
             if ($ganti_rugi_barang->status == 0) {
                 return response()->json([
@@ -594,12 +626,23 @@ class GantiRugiController extends Controller
             $ganti_rugi_barang->updated_by = auth()->user()->id;
             $ganti_rugi_barang->save();
 
+            // ganti list barang
+            $ganti_list_barang = GantiListBarang::where('ganti_rugi_id', $ganti_rugi_barang->ganti_rugi_id)
+                ->where('barang', $ganti_rugi_barang->barang)->first();
+
+            $ganti_list_barang->qty_diganti = $ganti_list_barang->qty_diganti - $ganti_rugi_barang->qty;
+            $nominal = $ganti_list_barang->harga * $ganti_rugi_barang->qty;
+            $ganti_list_barang->save();
+
             // ganti rugi header
             $ganti_rugi = $ganti_rugi_barang->ganti_rugi;
-            $ganti_rugi->dibayar = $ganti_rugi->dibayar - $ganti_rugi_barang->nominal;
-            $sisa = $ganti_rugi->sisa + $ganti_rugi_barang->nominal;
-            $ganti_rugi->sisa = $sisa < 0 ? 0 : $sisa;
-            if ($ganti_rugi->status == 0) {
+
+            $ganti_rugi->dibayar_barang = $ganti_rugi->dibayar_barang - $nominal;
+            $sisa = $ganti_rugi->nominal - ($ganti_rugi->dibayar + $ganti_rugi->dibayar_barang);
+
+            $ganti_rugi->sisa = $sisa;
+            // $ganti_rugi->sisa = $sisa < 0 ? 0 : $sisa;
+            if ($ganti_rugi->sisa >= 0) {
                 $ganti_rugi->status = 1;
             }
 
@@ -613,7 +656,8 @@ class GantiRugiController extends Controller
 
             DB::commit();
 
-            return response()->json(compact('ganti_rugi', 'customer'));
+            $barangs = $this->get_list_barang($ganti_rugi->id);
+            return response()->json(compact('ganti_rugi', 'customer', 'barangs'));
         } catch (ValidationException $error) {
             return response()->json([
                 'message' => 'Something went wrong',
@@ -628,6 +672,8 @@ class GantiRugiController extends Controller
         $t_user = User::tableName;
         $t_barang = Sewa::tableName;
         $table = GantiRugiBarang::tableName;
+        $t_list_barang = GantiListBarang::tableName;
+        $t_satuan = Satuan::tableName;
 
         // cusotm query
         // ========================================================================================================
@@ -661,6 +707,16 @@ class GantiRugiController extends Controller
         $t_updated_by = 'c';
         $this->query[$c_updated_by] = "$t_updated_by.name";
         $this->query["{$c_updated_by}_alias"] = $c_updated_by;
+
+        // harga
+        $c_harga = 'harga';
+        $this->query[$c_harga] = <<<SQL
+            (SELECT harga from $t_list_barang 
+                where $t_list_barang.barang = $table.barang 
+                and $t_list_barang.ganti_rugi_id = $table.ganti_rugi_id 
+                limit 1)
+        SQL;
+        $this->query["{$c_harga}_alias"] = $c_harga;
         // ========================================================================================================
 
 
@@ -676,7 +732,8 @@ class GantiRugiController extends Controller
             $c_updated_str,
             $c_created_by,
             $c_updated_by,
-            $c_tanggal_str
+            $c_tanggal_str,
+            $c_harga
         ];
 
         $to_db_raw = array_map(function ($a) use ($sraa) {
@@ -690,8 +747,10 @@ class GantiRugiController extends Controller
             DB::raw("$table.*"),
             DB::raw("$t_barang.nama as barang_nama"),
             DB::raw("$t_barang.kode as barang_kode"),
+            DB::raw("$t_satuan.nama as satuan"),
         ], $to_db_raw))
             ->leftJoin($t_barang, "$t_barang.id", '=', "$table.barang")
+            ->leftJoin($t_satuan, "$t_satuan.id", '=', "$t_barang.satuan")
             ->leftJoin("$t_user as $t_created_by", "$t_created_by.id", '=', "$table.created_by")
             ->leftJoin("$t_user as $t_updated_by", "$t_updated_by.id", '=', "$table.updated_by");
 
@@ -727,7 +786,7 @@ class GantiRugiController extends Controller
         // search
         // ========================================================================================================
         $query_filter = $this->query;
-        $datatable->filter(function ($query) use ($model_filter, $query_filter, $table, $t_barang) {
+        $datatable->filter(function ($query) use ($model_filter, $query_filter, $table, $t_barang, $t_list_barang, $t_satuan) {
             $search = request('search');
             $search = isset($search['value']) ? $search['value'] : null;
             if ((is_null($search) || $search == '') && count($model_filter) > 0) return false;
@@ -748,7 +807,9 @@ class GantiRugiController extends Controller
                 "$table.created_by",
                 "$table.updated_by",
                 "$t_barang.nama",
-                "$t_barang.kode"
+                "$t_barang.kode",
+                "$t_list_barang.harga",
+                "$t_satuan.nama",
             ];
 
             $search_arr = array_merge($model_filter, $search_add);

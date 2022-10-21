@@ -710,7 +710,7 @@
             $('#detail_dibayar').html(format_rupiah(pembayaran_dibayar));
             $('#detail_total_harga').html(format_rupiah(pembayaran_total));
             const sisa = pembayaran_total - pembayaran_dibayar;
-            $('#detail_sisa').html(format_rupiah(sisa < 0 ? 0 : sisa));
+            $('#detail_sisa').html(format_rupiah(sisa));
             $('#detail_customer').html(`<span class="fw-bold">${pembayaran_kepada}</span>, ${pembayaran_lokasi}`);
         }
         refreshDetailPembayaran();

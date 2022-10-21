@@ -17,4 +17,14 @@ class Penyewaan extends Model
     {
         return $this->hasOne(Customer::class, 'id', 'customer');
     }
+
+    public function ganti_rugi()
+    {
+        return $this->hasOne(GantiRugi::class, 'penyewaan_id', 'id');
+    }
+
+    public function surat_jalan()
+    {
+        return $this->hasOne(SuratJalan::class, 'penyewaan', 'id');
+    }
 }

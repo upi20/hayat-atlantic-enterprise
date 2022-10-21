@@ -330,7 +330,8 @@
 
                             const btn_selesai = (can_selesai &&
                                 (full.status_pembayaran == 1) &&
-                                (full.status == 4)) ? `<br><button type="button" class="btn btn-rounded btn-success btn-sm me-1 mt-1" title="Penyewaan Selesai" onClick="selesaiFunc('${data}')">
+                                (full.status == 4) &&
+                                (full.status_ganti_rugi == 2)) ? `<br><button type="button" class="btn btn-rounded btn-success btn-sm me-1 mt-1" title="Penyewaan Selesai" onClick="selesaiFunc('${data}')">
                                 <i class="fas fa-check"></i> Set Selesai
                                 </button>` : '';
 

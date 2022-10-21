@@ -70,25 +70,21 @@
                     </div>
                 </div>
             </div>
-            <div class="table-responsive table-striped">
-                <table class="table table-bordered table-hover border-bottom" id="tbl_main">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Status</th>
-                            {!! $can_pembayaran ? '<th>Pembayaran</th>' : '' !!}
-                            <th>Detail</th>
-                            <th>Customer</th>
-                            <th>Total Harga</th>
-                            <th>Dibayar</th>
-                            <th>Sisa</th>
-                            <th>Status Penyewaan</th>
-                            <th>Tanggal Pakai</th>
-                        </tr>
-                    </thead>
-                    <tbody> </tbody>
-                </table>
-            </div>
+
+            <table class="table table-hover" id="tbl_main">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Penyewaan</th>
+                        <th>Total Harga</th>
+                        <th>Dibayar</th>
+                        <th>Sisa</th>
+                        <th>Tanggal Pakai</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody> </tbody>
+            </table>
         </div>
     </div>
 
@@ -222,6 +218,7 @@
             $('#filter_status_pembayaran').select2();
 
             // datatable ====================================================================================
+            const to_link = can_pembayaran ? 'to-link' : '';
             const new_table = table_html.DataTable({
                 searchDelay: 500,
                 processing: true,
@@ -242,45 +239,18 @@
                     }
                 },
                 columns: [{
-                        data: null,
-                        name: 'id',
-                        orderable: false,
-                    },
-                    {
-                        data: 'status_pembayaran',
-                        name: 'status_pembayaran',
-                        render(data, type, full, meta) {
-                            return `<span class="badge bg-${data == 1 ? 'success':'danger'}">${full.status_pembayaran_str}</span>`;
-                        },
-                        className: 'text-nowrap'
-                    },
-                    ...((can_pembayaran) ? [{
                         data: 'id',
                         name: 'id',
-                        render(data, type, full, meta) {
-                            return `<a href="{{ url(h_prefix_uri('list')) }}/${data}" class="btn btn-rounded btn-success btn-sm me-1" title="Buat Pembayaran">
-                              <i class="fas fa-dollar-sign"></i> Pembayaran
-                                </a>`;
-                        },
-                        orderable: false,
-                    }, ] : []),
-                    {
-                        data: 'id',
-                        name: 'id',
-                        render(data, type, full, meta) {
-                            return `<button type="button" class="btn btn-rounded btn-info btn-sm me-1" title="Detail Data" onClick="detailFunc('${data}')">
-                                <i class="fas fa-file-alt"></i> Lihat
-                                </button>`;
-                        },
                         orderable: false,
                     },
                     {
                         data: 'customer_nama',
                         name: 'customer_nama',
                         render(data, type, full, meta) {
-                            return `${data}<br><small>${full.lokasi}</small>`;
+                            return `<span class="fw-bold">${data}</span> <br>
+                            <i class="fas fa-circle text-${statusClass(full.status)} me-1"></i>${full.status_str}`;
                         },
-                        className: 'text-nowrap'
+                        className: `${to_link}`
                     },
                     {
                         data: 'total_harga',
@@ -288,7 +258,7 @@
                         render(data, type, full, meta) {
                             return 'Rp. ' + format_rupiah(data);
                         },
-                        className: 'text-nowrap text-right'
+                        className: `text-nowrap text-right ${to_link}`
                     },
                     {
                         data: 'dibayar',
@@ -296,7 +266,7 @@
                         render(data, type, full, meta) {
                             return 'Rp. ' + format_rupiah(data);
                         },
-                        className: 'text-nowrap text-right'
+                        className: `text-nowrap text-right ${to_link}`
                     },
                     {
                         data: 'sisa',
@@ -304,15 +274,7 @@
                         render(data, type, full, meta) {
                             return 'Rp. ' + format_rupiah(data);
                         },
-                        className: 'text-nowrap text-right'
-                    },
-                    {
-                        data: 'status',
-                        name: 'status_str',
-                        render(data, type, full, meta) {
-                            return `<span class="badge ${statusClass(data)}">${full.status_str}</span>`;
-                        },
-                        className: 'text-nowrap'
+                        className: `text-nowrap text-right ${to_link}`
                     },
                     {
                         data: 'tanggal_pakai_dari_str',
@@ -324,20 +286,43 @@
                                 return `${data ?? ''} s/d ${full.tanggal_pakai_sampai_str ?? ''}`;
                             }
                         },
+                        className: `text-nowrap ${to_link}`
+                    },
+                    {
+                        data: 'status_pembayaran',
+                        name: 'status_pembayaran',
+                        render(data, type, full, meta) {
+                            return `<i class="fas fa-circle text-${data == 1 ? 'success':'danger'} me-1"></i>${full.status_pembayaran_str}<br>
+                            <button type="button" class="btn btn-rounded btn-info btn-sm me-1" title="Detail Data" onClick="detailFunc('${full.id}')">
+                                <i class="fas fa-file-alt"></i> Detail
+                                </button>`;
+                        },
                         className: 'text-nowrap'
                     },
                 ],
                 order: [
-                    [1, 'asc']
+                    [6, 'asc']
                 ]
             });
 
             new_table.on('draw.dt', function() {
                 var PageInfo = table_html.DataTable().page.info();
+                var get = table_html.DataTable().data();
+                var datas = [];
+                for (var i = 0; i < get.length; i++) datas.push(get[i]);
+
                 new_table.column(0, {
                     page: 'current'
                 }).nodes().each(function(cell, i) {
+                    var column = 4;
+                    var id = cell.innerHTML;
+                    var link = `window.location.href = '{{ url(h_prefix_uri('list')) }}/${id}'`
+                    var data = datas.find(e => e.id == id);
+
                     cell.innerHTML = i + 1 + PageInfo.start;
+                    var ele = $(cell).parent().find('.to-link');
+                    ele.css('cursor', 'pointer');
+                    ele.attr("onclick", link);
                 });
             });
 
@@ -349,12 +334,12 @@
         });
 
         function statusClass(status) {
-            if (status == 1) return 'bg-primary';
-            else if (status == 2) return 'bg-info';
-            else if (status == 3) return 'bg-secondary';
-            else if (status == 4) return 'bg-warning';
-            else if (status == 5) return 'bg-success';
-            else return 'bg-danger';
+            if (status == 1) return 'primary';
+            else if (status == 2) return 'info';
+            else if (status == 3) return 'secondary';
+            else if (status == 4) return 'warning';
+            else if (status == 5) return 'success';
+            else return 'danger';
         }
 
         function detailFunc(id) {
@@ -389,7 +374,7 @@
                 const status_pembayaran =
                     `<span class="badge bg-${data.status_pembayaran == 1 ? 'success':'danger'}">${data.status_pembayaran_str}</span>`;
                 const status_penyewaan =
-                    `<span class="badge ${statusClass(data.status)}">${data.status_str}</span>`;
+                    `<span class="badge bg-${statusClass(data.status)}">${data.status_str}</span>`;
 
                 const tanggal_pakai = data.tanggal_pakai_dari == data.tanggal_pakai_sampai ? data
                     .tanggal_pakai_dari :

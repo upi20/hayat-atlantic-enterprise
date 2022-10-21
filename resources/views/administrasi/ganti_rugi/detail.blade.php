@@ -2,12 +2,19 @@
 
 @section('content')
     @php
-        $is_selesai = $model->status != 9 && $model->status != 5;
-        $can_insert = auth_can(h_prefix('insert', 2)) && $is_selesai;
-        $can_batalkan = auth_can(h_prefix('batalkan', 2)) && $is_selesai;
+        $is_proses = $penyewaan->status != 9 && $penyewaan->status != 5;
+        // detail
+        $can_simpan_status = auth_can(h_prefix('simpan_status', 2)) && $is_proses;
         
-        $can_simpan_status = auth_can(h_prefix('simpan_status', 2)) && $is_selesai;
-        $can_action = $can_batalkan;
+        // uang
+        $can_uang = auth_can(h_prefix('uang', 2));
+        $can_uang_insert = auth_can(h_prefix('uang.insert', 2)) && $is_proses;
+        $can_uang_batalkan = auth_can(h_prefix('uang.batalkan', 2)) && $is_proses;
+        
+        // barang
+        $can_barang = auth_can(h_prefix('barang', 2));
+        $can_barang_insert = auth_can(h_prefix('barang.insert', 2)) && $is_proses;
+        $can_barang_batalkan = auth_can(h_prefix('barang.batalkan', 2)) && $is_proses;
     @endphp
     <div class="card">
         <div class="card-header d-md-flex flex-row justify-content-between">
@@ -83,7 +90,7 @@
                     </div>
                     <div class="col-12">
                         <label class="form-label">List data barang yang rusak dan hilang</label>
-                        <table class="table">
+                        <table class="table table-hover">
                             <thead>
                                 <tr>
                                     <th>No</th>
@@ -95,7 +102,7 @@
                                     <td class="text-right">Total Harga</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="detail-list-barang">
                                 @foreach ($barangs as $key => $list)
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
@@ -109,7 +116,7 @@
                                         <td class="text-right">
                                             {{ $list->qty_diganti }} {{ $list->satuan }}
                                             <br>
-                                            <small>Rp. {{ format_rupiah($list->harga * $list->diganti) }}</small>
+                                            <small>Rp. {{ format_rupiah($list->harga * $list->qty_diganti) }}</small>
 
                                         </td>
                                         <td class="text-right">Rp. {{ format_rupiah($list->harga) }}</td>
@@ -126,75 +133,77 @@
         </div>
     </div>
 
-    {{-- lsit uang =================================================================================================== --}}
-    <div class="card">
-        <div class="card-header d-md-flex flex-row justify-content-between">
-            <h3 class="card-title">Ganti Rugi Uang</h3>
-            <div>
-                @if ($can_insert)
-                    <button type="button" class="btn btn-rounded btn-success btn-sm" data-bs-effect="effect-scale"
-                        data-bs-toggle="modal" href="#modal-uang" onclick="uangAdd()" data-target="#modal-uang">
-                        <i class="fas fa-plus"></i> Tambah
-                    </button>
-                @endif
+    @if ($can_uang)
+        {{-- lsit uang =================================================================================================== --}}
+        <div class="card">
+            <div class="card-header d-md-flex flex-row justify-content-between">
+                <h3 class="card-title">Ganti Rugi Uang</h3>
+                <div>
+                    @if ($can_uang_insert)
+                        <button type="button" class="btn btn-rounded btn-success btn-sm" data-bs-effect="effect-scale"
+                            data-bs-toggle="modal" href="#modal-uang" onclick="uangAdd()" data-target="#modal-uang">
+                            <i class="fas fa-plus"></i> Tambah
+                        </button>
+                    @endif
+                </div>
             </div>
-        </div>
-        <div class="card-body">
-            <div class="panel-group" id="uang_accordion" role="tablist" aria-multiselectable="true">
-                <div class="panel panel-default active mb-2">
-                    <div class="panel-heading " role="tab" id="uang_heading_filter">
-                        <h4 class="panel-title">
-                            <a role="button" data-bs-toggle="collapse" data-bs-parent="#uang_accordion"
-                                href="#uang_filter" aria-expanded="true" aria-controls="uang_filter">
-                                Filter Data
-                            </a>
-                        </h4>
-                    </div>
-                    <div id="uang_filter" class="panel-collapse collapse" role="tabpanel"
-                        aria-labelledby="uang_heading_filter">
-                        <div class="panel-body">
-                            <form action="javascript:void(0)" class="ml-md-3 mb-md-3" id="UangFilterForm">
+            <div class="card-body">
+                <div class="panel-group" id="uang_accordion" role="tablist" aria-multiselectable="true">
+                    <div class="panel panel-default active mb-2">
+                        <div class="panel-heading " role="tab" id="uang_heading_filter">
+                            <h4 class="panel-title">
+                                <a role="button" data-bs-toggle="collapse" data-bs-parent="#uang_accordion"
+                                    href="#uang_filter" aria-expanded="true" aria-controls="uang_filter">
+                                    Filter Data
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="uang_filter" class="panel-collapse collapse" role="tabpanel"
+                            aria-labelledby="uang_heading_filter">
+                            <div class="panel-body">
+                                <form action="javascript:void(0)" class="ml-md-3 mb-md-3" id="UangFilterForm">
 
-                                <div class="form-group float-start me-2" style="min-width: 300px">
-                                    <label for="dibatalkan">Dibatalkan</label>
-                                    <br>
-                                    <select class="form-control" id="dibatalkan" name="dibatalkan" style="width: 100%;">
-                                        <option value="" selected>Semua</option>
-                                        <option value="Ya">Ya</option>
-                                        <option value="Tidak">Tidak</option>
-                                    </select>
-                                </div>
+                                    <div class="form-group float-start me-2" style="min-width: 300px">
+                                        <label for="dibatalkan">Dibatalkan</label>
+                                        <br>
+                                        <select class="form-control" id="dibatalkan" name="dibatalkan"
+                                            style="width: 100%;">
+                                            <option value="" selected>Semua</option>
+                                            <option value="Ya">Ya</option>
+                                            <option value="Tidak">Tidak</option>
+                                        </select>
+                                    </div>
 
-                                <div class="form-group float-start me-2" style="min-width: 300px">
-                                    <label for="uang_created_by">Dibuat Oleh</label>
-                                    <br>
-                                    <select class="form-control" id="uang_created_by" name="uang_created_by"
-                                        style="width: 100%;">
-                                        <option value="" selected>Semua</option>
-                                    </select>
-                                </div>
+                                    <div class="form-group float-start me-2" style="min-width: 300px">
+                                        <label for="uang_created_by">Dibuat Oleh</label>
+                                        <br>
+                                        <select class="form-control" id="uang_created_by" name="uang_created_by"
+                                            style="width: 100%;">
+                                            <option value="" selected>Semua</option>
+                                        </select>
+                                    </div>
 
-                                <div class="form-group float-start me-2" style="min-width: 300px">
-                                    <label for="uang_updated_by">Diubah Oleh</label>
-                                    <br>
-                                    <select class="form-control" id="uang_updated_by" name="uang_updated_by"
-                                        style="width: 100%;">
-                                        <option value="" selected>Semua</option>
-                                    </select>
-                                </div>
+                                    <div class="form-group float-start me-2" style="min-width: 300px">
+                                        <label for="uang_updated_by">Diubah Oleh</label>
+                                        <br>
+                                        <select class="form-control" id="uang_updated_by" name="uang_updated_by"
+                                            style="width: 100%;">
+                                            <option value="" selected>Semua</option>
+                                        </select>
+                                    </div>
 
-                            </form>
-                            <div style="clear: both"></div>
-                            <button type="submit" form="UangFilterForm" class="btn btn-rounded btn-md btn-info"
-                                data-toggle="tooltip" title="Refresh Filter Table">
-                                <i class="bi bi-arrow-repeat"></i> Terapkan filter
-                            </button>
+                                </form>
+                                <div style="clear: both"></div>
+                                <button type="submit" form="UangFilterForm" class="btn btn-rounded btn-md btn-info"
+                                    data-toggle="tooltip" title="Refresh Filter Table">
+                                    <i class="bi bi-arrow-repeat"></i> Terapkan filter
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="table-responsive table-striped">
-                <table class="table table-bordered table-hover border-bottom" id="tbl_uang">
+
+                <table class="table table-hover" id="tbl_uang">
                     <thead>
                         <tr>
                             <th>No</th>
@@ -203,194 +212,195 @@
                             <th>Nominal</th>
                             <th>Faktur</th>
                             <th>Diubah</th>
-                            {!! $can_batalkan ? '<th>Aksi</th>' : '' !!}
+                            <th>Batalkan</th>
                         </tr>
                     </thead>
                     <tbody> </tbody>
                 </table>
+
             </div>
         </div>
-    </div>
-    {{-- lsit uang =================================================================================================== --}}
+        {{-- lsit uang =================================================================================================== --}}
 
-    {{-- modal uang =================================================================================================== --}}
-    {{-- modal --}}
-    <div class="modal fade" id="modal-uang">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content modal-content-demo">
-                <div class="modal-header">
-                    <h6 class="modal-title" id="modal-uang-title"></h6><button aria-label="Tutup" class="btn-close"
-                        data-bs-dismiss="modal"><span aria-hidden="true">&times;</span></button>
-                </div>
-                <div class="modal-body">
-                    <form action="javascript:void(0)" id="UangMainForm" name="UangMainForm" method="POST"
-                        enctype="multipart/form-data">
-                        <input type="hidden" name="ganti_rugi" id="uang_ganti_rugi" value="{{ $model->id }}">
-                        <div class="form-group">
-                            <label class="form-label" for="uang_nama">Nama Pembayaran
-                                <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="uang_nama" name="nama"
-                                placeholder="Contoh: Ganti Rugi Pertama" required="" />
-                        </div>
-
-                        <div class="form-group">
-                            <label class="form-label" for="uang_oleh">Pembayaran Oleh
-                                <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="uang_oleh" name="oleh"
-                                placeholder="Contoh: Bpk. Adi Permana" required="" />
-                        </div>
-
-                        <div class="form-group">
-                            <label class="form-label" for="uang_tanggal">Tanggal
-                                <span class="text-danger">*</span></label>
-                            <input type="date" class="form-control date-input-str" id="uang_tanggal" name="tanggal"
-                                required="" />
-                        </div>
-
-                        <div class="form-group">
-                            <label class="form-label" for="uang_nominal">Nominal <span
-                                    class="text-danger">*</span></label>
-                            <div class="input-group">
-                                <span class="input-group-text">Rp </span>
-                                <input type="number" min="1" class="form-control" placeholder="Nominal"
-                                    aria-label="Nominal" id="uang_nominal" name="nominal"
-                                    aria-describedby="basic-addon1" required>
+        {{-- modal uang =================================================================================================== --}}
+        {{-- modal --}}
+        <div class="modal fade" id="modal-uang">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content modal-content-demo">
+                    <div class="modal-header">
+                        <h6 class="modal-title" id="modal-uang-title"></h6><button aria-label="Tutup" class="btn-close"
+                            data-bs-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="javascript:void(0)" id="UangMainForm" name="UangMainForm" method="POST"
+                            enctype="multipart/form-data">
+                            <input type="hidden" name="ganti_rugi" id="uang_ganti_rugi" value="{{ $model->id }}">
+                            <div class="form-group">
+                                <label class="form-label" for="uang_nama">Nama Pembayaran
+                                    <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="uang_nama" name="nama"
+                                    placeholder="Contoh: Ganti Rugi Pertama" required="" />
                             </div>
-                            <small id="uang_nominal_terbilang" class="fst-italic"></small>
-                        </div>
 
-                        <div class="form-group">
-                            <label class="form-label" for="uang_keterangan">Keterangan</label>
-                            <textarea type="text" class="form-control" rows="3" id="uang_keterangan" name="keterangan"
-                                placeholder="Keterangan"> </textarea>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary" form="UangMainForm">
-                        <li class="fas fa-save mr-1"></li> Simpan
-                    </button>
-                    <button class="btn btn-light" data-bs-dismiss="modal">
-                        <i class="fas fa-times"></i>
-                        Tutup
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
+                            <div class="form-group">
+                                <label class="form-label" for="uang_oleh">Pembayaran Oleh
+                                    <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="uang_oleh" name="oleh"
+                                    placeholder="Contoh: Bpk. Adi Permana" required="" />
+                            </div>
 
-    <div class="modal fade" id="uang-modal-batalkan">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content modal-content-demo">
-                <div class="modal-header">
-                    <h6 class="modal-title">Batalkan Pembayaran</h6>
-                    <button aria-label="Tutup" class="btn-close" data-bs-dismiss="modal">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form action="javascript:void(0)" id="UangBatalkanForm" method="POST"
-                        enctype="multipart/form-data">
-                        <input type="hidden" name="id" id="uang-batalkan_id">
-                        <div class="form-group">
-                            <label class="form-label" for="alasan">Alasan pembatalan
-                                <span class="text-danger">*</span>
-                            </label>
-                            <textarea type="text" class="form-control" rows="3" id="uang-alasan" name="alasan"
-                                placeholder="Alasan pembatalan" required></textarea>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary" form="UangBatalkanForm">
-                        <li class="fas fa-save mr-1"></li> Simpan
-                    </button>
-                    <button class="btn btn-light" data-bs-dismiss="modal">
-                        <i class="fas fa-times"></i>
-                        Tutup
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-    {{-- modal uang =================================================================================================== --}}
-    {{-- ============================================================================================================== --}}
+                            <div class="form-group">
+                                <label class="form-label" for="uang_tanggal">Tanggal
+                                    <span class="text-danger">*</span></label>
+                                <input type="date" class="form-control date-input-str" id="uang_tanggal"
+                                    name="tanggal" required="" />
+                            </div>
 
+                            <div class="form-group">
+                                <label class="form-label" for="uang_nominal">Nominal <span
+                                        class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <span class="input-group-text">Rp </span>
+                                    <input type="number" min="1" class="form-control" placeholder="Nominal"
+                                        aria-label="Nominal" id="uang_nominal" name="nominal"
+                                        aria-describedby="basic-addon1" required>
+                                </div>
+                                <small id="uang_nominal_terbilang" class="fst-italic"></small>
+                            </div>
 
-
-
-
-
-
-    {{-- lsit barang ================================================================================================== --}}
-    <div class="card">
-        <div class="card-header d-md-flex flex-row justify-content-between">
-            <h3 class="card-title">Ganti Rugi Barang</h3>
-            <div>
-                @if ($can_insert)
-                    <button type="button" class="btn btn-rounded btn-success btn-sm" data-bs-effect="effect-scale"
-                        data-bs-toggle="modal" href="#modal-barang" onclick="barangAdd()" data-target="#modal-barang">
-                        <i class="fas fa-plus"></i> Tambah
-                    </button>
-                @endif
-            </div>
-        </div>
-        <div class="card-body">
-            <div class="panel-group" id="barang_accordion" role="tablist" aria-multiselectable="true">
-                <div class="panel panel-default active mb-2">
-                    <div class="panel-heading " role="tab" id="barang_heading_filter">
-                        <h4 class="panel-title">
-                            <a role="button" data-bs-toggle="collapse" data-bs-parent="#barang_accordion"
-                                href="#barang_filter" aria-expanded="true" aria-controls="barang_filter">
-                                Filter Data
-                            </a>
-                        </h4>
+                            <div class="form-group">
+                                <label class="form-label" for="uang_keterangan">Keterangan</label>
+                                <textarea type="text" class="form-control" rows="3" id="uang_keterangan" name="keterangan"
+                                    placeholder="Keterangan"> </textarea>
+                            </div>
+                        </form>
                     </div>
-                    <div id="barang_filter" class="panel-collapse collapse" role="tabpanel"
-                        aria-labelledby="barang_heading_filter">
-                        <div class="panel-body">
-                            <form action="javascript:void(0)" class="ml-md-3 mb-md-3" id="UangFilterForm">
-
-                                <div class="form-group float-start me-2" style="min-width: 300px">
-                                    <label for="dibatalkan">Dibatalkan</label>
-                                    <br>
-                                    <select class="form-control" id="dibatalkan" name="dibatalkan" style="width: 100%;">
-                                        <option value="" selected>Semua</option>
-                                        <option value="Ya">Ya</option>
-                                        <option value="Tidak">Tidak</option>
-                                    </select>
-                                </div>
-
-                                <div class="form-group float-start me-2" style="min-width: 300px">
-                                    <label for="barang_created_by">Dibuat Oleh</label>
-                                    <br>
-                                    <select class="form-control" id="barang_created_by" name="barang_created_by"
-                                        style="width: 100%;">
-                                        <option value="" selected>Semua</option>
-                                    </select>
-                                </div>
-
-                                <div class="form-group float-start me-2" style="min-width: 300px">
-                                    <label for="barang_updated_by">Diubah Oleh</label>
-                                    <br>
-                                    <select class="form-control" id="barang_updated_by" name="barang_updated_by"
-                                        style="width: 100%;">
-                                        <option value="" selected>Semua</option>
-                                    </select>
-                                </div>
-
-                            </form>
-                            <div style="clear: both"></div>
-                            <button type="submit" form="UangFilterForm" class="btn btn-rounded btn-md btn-info"
-                                data-toggle="tooltip" title="Refresh Filter Table">
-                                <i class="bi bi-arrow-repeat"></i> Terapkan filter
-                            </button>
-                        </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" form="UangMainForm">
+                            <li class="fas fa-save mr-1"></li> Simpan
+                        </button>
+                        <button class="btn btn-light" data-bs-dismiss="modal">
+                            <i class="fas fa-times"></i>
+                            Tutup
+                        </button>
                     </div>
                 </div>
             </div>
-            <div class="table-responsive table-striped">
-                <table class="table table-bordered table-hover border-bottom" id="tbl_barang">
+        </div>
+
+        <div class="modal fade" id="uang-modal-batalkan">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content modal-content-demo">
+                    <div class="modal-header">
+                        <h6 class="modal-title">Batalkan Pembayaran</h6>
+                        <button aria-label="Tutup" class="btn-close" data-bs-dismiss="modal">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="javascript:void(0)" id="UangBatalkanForm" method="POST"
+                            enctype="multipart/form-data">
+                            <input type="hidden" name="id" id="uang-batalkan_id">
+                            <div class="form-group">
+                                <label class="form-label" for="alasan">Alasan pembatalan
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <textarea type="text" class="form-control" rows="3" id="uang-alasan" name="alasan"
+                                    placeholder="Alasan pembatalan" required></textarea>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" form="UangBatalkanForm">
+                            <li class="fas fa-save mr-1"></li> Simpan
+                        </button>
+                        <button class="btn btn-light" data-bs-dismiss="modal">
+                            <i class="fas fa-times"></i>
+                            Tutup
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{-- modal uang =================================================================================================== --}}
+        {{-- ============================================================================================================== --}}
+    @endif
+
+
+    @if ($can_barang)
+        {{-- lsit barang ================================================================================================== --}}
+        <div class="card">
+            <div class="card-header d-md-flex flex-row justify-content-between">
+                <h3 class="card-title">Ganti Rugi Barang</h3>
+                <div>
+                    @if ($can_barang_insert)
+                        <button type="button" class="btn btn-rounded btn-success btn-sm" data-bs-effect="effect-scale"
+                            data-bs-toggle="modal" href="#modal-barang" onclick="barangAdd()"
+                            data-target="#modal-barang">
+                            <i class="fas fa-plus"></i> Tambah
+                        </button>
+                    @endif
+
+                    {{-- surat penyerahan barang --}}
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="panel-group" id="barang_accordion" role="tablist" aria-multiselectable="true">
+                    <div class="panel panel-default active mb-2">
+                        <div class="panel-heading " role="tab" id="barang_heading_filter">
+                            <h4 class="panel-title">
+                                <a role="button" data-bs-toggle="collapse" data-bs-parent="#barang_accordion"
+                                    href="#barang_filter" aria-expanded="true" aria-controls="barang_filter">
+                                    Filter Data
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="barang_filter" class="panel-collapse collapse" role="tabpanel"
+                            aria-labelledby="barang_heading_filter">
+                            <div class="panel-body">
+                                <form action="javascript:void(0)" class="ml-md-3 mb-md-3" id="UangFilterForm">
+
+                                    <div class="form-group float-start me-2" style="min-width: 300px">
+                                        <label for="dibatalkan">Dibatalkan</label>
+                                        <br>
+                                        <select class="form-control" id="dibatalkan" name="dibatalkan"
+                                            style="width: 100%;">
+                                            <option value="" selected>Semua</option>
+                                            <option value="Ya">Ya</option>
+                                            <option value="Tidak">Tidak</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group float-start me-2" style="min-width: 300px">
+                                        <label for="barang_created_by">Dibuat Oleh</label>
+                                        <br>
+                                        <select class="form-control" id="barang_created_by" name="barang_created_by"
+                                            style="width: 100%;">
+                                            <option value="" selected>Semua</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group float-start me-2" style="min-width: 300px">
+                                        <label for="barang_updated_by">Diubah Oleh</label>
+                                        <br>
+                                        <select class="form-control" id="barang_updated_by" name="barang_updated_by"
+                                            style="width: 100%;">
+                                            <option value="" selected>Semua</option>
+                                        </select>
+                                    </div>
+
+                                </form>
+                                <div style="clear: both"></div>
+                                <button type="submit" form="UangFilterForm" class="btn btn-rounded btn-md btn-info"
+                                    data-toggle="tooltip" title="Refresh Filter Table">
+                                    <i class="bi bi-arrow-repeat"></i> Terapkan filter
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <table class="table table-hover" id="tbl_barang">
                     <thead>
                         <tr>
                             <th>No</th>
@@ -398,121 +408,120 @@
                             <th>Tanggal</th>
                             <th>Barang</th>
                             <th>Qty</th>
-                            <th>Nominal</th>
-                            <th>Faktur</th>
                             <th>Diubah</th>
-                            {!! $can_batalkan ? '<th>Aksi</th>' : '' !!}
+                            <th>Batalkan</th>
                         </tr>
                     </thead>
                     <tbody> </tbody>
                 </table>
+
             </div>
         </div>
-    </div>
-    {{-- lsit barang ================================================================================================== --}}
+        {{-- lsit barang ================================================================================================== --}}
 
 
-    {{-- modal barang =================================================================================================== --}}
-    {{-- modal --}}
-    <div class="modal fade" id="modal-barang">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content modal-content-demo">
-                <div class="modal-header">
-                    <h6 class="modal-title" id="modal-barang-title"></h6><button aria-label="Tutup" class="btn-close"
-                        data-bs-dismiss="modal"><span aria-hidden="true">&times;</span></button>
-                </div>
-                <div class="modal-body">
-                    <form action="javascript:void(0)" id="UangMainForm" name="UangMainForm" method="POST"
-                        enctype="multipart/form-data">
-                        <input type="hidden" name="ganti_rugi" id="barang_ganti_rugi" value="{{ $model->id }}">
-                        <div class="form-group">
-                            <label class="form-label" for="barang_nama">Nama Pembayaran
-                                <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="barang_nama" name="nama"
-                                placeholder="Contoh: Ganti Rugi Pertama" required="" />
-                        </div>
-
-                        <div class="form-group">
-                            <label class="form-label" for="barang_oleh">Barang diterima dari
-                                <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="barang_oleh" name="oleh"
-                                placeholder="Contoh: Bpk. Adi Permana" required="" />
-                        </div>
-
-                        <div class="form-group">
-                            <label class="form-label" for="barang_tanggal">Tanggal
-                                <span class="text-danger">*</span></label>
-                            <input type="date" class="form-control date-input-str" id="barang_tanggal" name="tanggal"
-                                required="" />
-                        </div>
-
-                        <div class="form-group">
-                            <label class="form-label" for="barang_nominal">Nominal <span
-                                    class="text-danger">*</span></label>
-                            <div class="input-group">
-                                <span class="input-group-text">Rp </span>
-                                <input type="number" min="1" class="form-control" placeholder="Nominal"
-                                    aria-label="Nominal" id="barang_nominal" name="nominal"
-                                    aria-describedby="basic-addon1" required>
+        {{-- modal barang =================================================================================================== --}}
+        {{-- modal --}}
+        <div class="modal fade" id="modal-barang">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content modal-content-demo">
+                    <div class="modal-header">
+                        <h6 class="modal-title" id="modal-barang-title"></h6><button aria-label="Tutup"
+                            class="btn-close" data-bs-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="javascript:void(0)" id="BarangMainForm" name="BarangMainForm" method="POST"
+                            enctype="multipart/form-data">
+                            <input type="hidden" name="ganti_rugi" id="barang_ganti_rugi" value="{{ $model->id }}">
+                            <div class="form-group">
+                                <label class="form-label" for="nama">Barang <span
+                                        class="text-danger">*</span></label>
+                                <select class="form-control" id="barang" name="barang" style="width: 100%;"
+                                    required>
+                                </select>
                             </div>
-                            <small id="barang_nominal_terbilang" class="fst-italic"></small>
-                        </div>
 
-                        <div class="form-group">
-                            <label class="form-label" for="barang_keterangan">Keterangan</label>
-                            <textarea type="text" class="form-control" rows="3" id="barang_keterangan" name="keterangan"
-                                placeholder="Keterangan"> </textarea>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary" form="UangMainForm">
-                        <li class="fas fa-save mr-1"></li> Simpan
-                    </button>
-                    <button class="btn btn-light" data-bs-dismiss="modal">
-                        <i class="fas fa-times"></i>
-                        Tutup
-                    </button>
+                            <div class="form-group">
+                                <label class="form-label" for="qty">Quantity/Jumlah
+                                    <span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <input type="number" min="1" class="form-control"
+                                        placeholder="Quantity/Jumlah" aria-label="Quantity/Jumlah" id="qty"
+                                        name="qty" aria-describedby="basic-addon1" required>
+                                    <span class="input-group-text satuan"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label" for="barang_oleh">Barang diterima dari
+                                    <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="barang_oleh" name="oleh"
+                                    placeholder="Contoh: Bpk. Adi Permana" required="" />
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label" for="barang_tanggal">Tanggal
+                                    <span class="text-danger">*</span></label>
+                                <input type="date" class="form-control date-input-str" id="barang_tanggal"
+                                    name="tanggal" required="" />
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label" for="barang_keterangan">Keterangan</label>
+                                <textarea type="text" class="form-control" rows="3" id="barang_keterangan" name="keterangan"
+                                    placeholder="Keterangan"> </textarea>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" form="BarangMainForm">
+                            <li class="fas fa-save mr-1"></li> Simpan
+                        </button>
+                        <button class="btn btn-light" data-bs-dismiss="modal">
+                            <i class="fas fa-times"></i>
+                            Tutup
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="modal fade" id="barang-modal-batalkan">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content modal-content-demo">
-                <div class="modal-header">
-                    <h6 class="modal-title">Batalkan Pembayaran</h6>
-                    <button aria-label="Tutup" class="btn-close" data-bs-dismiss="modal">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form action="javascript:void(0)" id="UangBatalkanForm" method="POST"
-                        enctype="multipart/form-data">
-                        <input type="hidden" name="id" id="barang-batalkan_id">
-                        <div class="form-group">
-                            <label class="form-label" for="alasan">Alasan pembatalan
-                                <span class="text-danger">*</span>
-                            </label>
-                            <textarea type="text" class="form-control" rows="3" id="barang-alasan" name="alasan"
-                                placeholder="Alasan pembatalan" required></textarea>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary" form="UangBatalkanForm">
-                        <li class="fas fa-save mr-1"></li> Simpan
-                    </button>
-                    <button class="btn btn-light" data-bs-dismiss="modal">
-                        <i class="fas fa-times"></i>
-                        Tutup
-                    </button>
+        <div class="modal fade" id="barang-modal-batalkan">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content modal-content-demo">
+                    <div class="modal-header">
+                        <h6 class="modal-title">Batalkan Penggantian Barang</h6>
+                        <button aria-label="Tutup" class="btn-close" data-bs-dismiss="modal">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="javascript:void(0)" id="BarangBatalkanForm" method="POST"
+                            enctype="multipart/form-data">
+                            <input type="hidden" name="id" id="barang-batalkan_id">
+                            <div class="form-group">
+                                <label class="form-label" for="alasan">Alasan pembatalan
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <textarea type="text" class="form-control" rows="3" id="barang-alasan" name="alasan"
+                                    placeholder="Alasan pembatalan" required></textarea>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" form="BarangBatalkanForm">
+                            <li class="fas fa-save mr-1"></li> Simpan
+                        </button>
+                        <button class="btn btn-light" data-bs-dismiss="modal">
+                            <i class="fas fa-times"></i>
+                            Tutup
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    {{-- modal barang =================================================================================================== --}}
+        {{-- modal barang =================================================================================================== --}}
+    @endif
 @endsection
 
 @section('javascript')
@@ -530,9 +539,10 @@
     <script src="{{ asset('assets/templates/admin/plugins/select2/js/select2.full.min.js') }}"></script>
 
     <script>
-        const can_insert = {{ $can_insert ? 'true' : 'false' }};
-        const can_batalkan = {{ $can_batalkan ? 'true' : 'false' }};
-        const can_action = {{ $can_action ? 'true' : 'false' }};
+        // Perizinan ==================================================================================================
+        // detail
+        const can_simpan_status = {{ $can_simpan_status ? 'true' : 'false' }};
+
         const today = "{{ date('Y-m-d') }}";
         const oleh = "{{ $customer->nama }}";
         const ganti_rugi_id = "{{ $model->id }}";
@@ -545,20 +555,7 @@
         let detail_customer = '{!! "$customer->nama<br><small>$customer->alamat</small>" !!}';
         let detail_keterangan = '{!! "$model->nama<br><small>$model->keterangan</small>" !!}';
 
-        // Ganti rugi uang ============================================================================================
-        let uangIsEdit = true;
-        const table_uang = $('#tbl_uang');
-        // Ganti rugi uang ============================================================================================
-        // ============================================================================================================
-
-        // Ganti rugi barang ==========================================================================================
-        let barangIsEdit = true;
-        const table_barang = $('#tbl_barang');
-        // Ganti rugi barang ==========================================================================================
-        // ============================================================================================================
-
         $(document).ready(() => {
-            // Ganti rugi Detail ======================================================================================
             $('#DetailForm').submit(function(e) {
                 e.preventDefault();
                 var formData = new FormData(this);
@@ -582,7 +579,8 @@
                             timer: 1500
                         });
                         // simpan detail
-                        setDetail(data);
+                        setDetail(data.ganti_rugi);
+                        refresh_detail_list_barang(data.barangs);
                     },
                     error: function(data) {
                         Swal.fire({
@@ -600,459 +598,555 @@
                     }
                 });
             });
+        });
+    </script>
+
+    @if ($can_uang)
+        <script>
+            // Perizinan ==============================================================================================
+            const can_uang_batalkan = {{ $can_uang_batalkan ? 'true' : 'false' }};
+
+            // Table ==================================================================================================
+            let uangIsEdit = true;
+            const table_uang = $('#tbl_uang');
+
             // Ganti rugi uang ========================================================================================
-            // Ganti rugi Detail ======================================================================================
+            function uangAdd() {
+                if (!uangIsEdit) return false;
+                $('#UangMainForm').trigger("reset");
+                $('#modal-uang-title').html("Tambah Pembayaran");
+                $('#modal-uang').modal('show');
+                $('#uang_id').val('');
+                $('#uang_tanggal').val(today);
+                $('#uang_oleh').val(oleh);
+                render_tanggal($('#uang_tanggal'));
+                resetErrorAfterInput();
+                uangIsEdit = false;
+                UangRefreshNominal();
+                return true;
+            }
 
+            function UangRefreshNominal() {
+                const nominal = $('#uang_nominal').val();
+                $('#uang_nominal_terbilang').html(nominal > 0 ? (terbilang(nominal) + ' Rupiah') : "");
+            }
 
+            function uangBatalFunc(id) {
+                $('#uang-modal-batalkan').modal('show');
+                $('#uang-batalkan_id').val(id);
+                $('#uang-alasan').val('');
+            }
             // Ganti rugi uang ========================================================================================
-            $('#barang').select2({
-                ajax: {
-                    url: "{{ route(h_prefix('barang.select2', 2)) }}",
-                    type: "GET",
-                    data: function(params) {
-                        var query = {
-                            search: params.term,
-                            ganti_rugi: '{{ $model->id }}',
-                        }
-                        return query;
-                    }
-                },
-                placeholder: "Nama, Kode, Jenis atau Satuan Barang",
-                dropdownParent: $('#modal-default'),
-            }).on('select2:select', function(e) {
-                const data = e.params.data;
-                $('.satuan').html(data.satuan);
-                $('#pada_tanggal').html(`Total stok pada tanggal: ${data.pada_tanggal}`);
+            // ========================================================================================================
 
-                const harga = (isEdit && data.id == qty_total_edit_id) ? harga_edit : data
-                    .harga;
-                $('#harga').val(harga);
+            $(document).ready(() => {
+                $('#uang_nominal').change(UangRefreshNominal);
+                $('#uang_nominal').keyup(UangRefreshNominal);
+                $('#uang_nominal').click(UangRefreshNominal);
 
-                qty_total = (isEdit && data.id == qty_total_edit_id) ? qty_total_edit : data
-                    .barang_qty_total;
-                refresh_total();
-                refresh_terbilang();
-            });
-
-            $('#uang_nominal').change(UangRefreshNominal);
-            $('#uang_nominal').keyup(UangRefreshNominal);
-            $('#uang_nominal').click(UangRefreshNominal);
-
-            // form
-            $('#UangMainForm').submit(function(e) {
-                e.preventDefault();
-                resetErrorAfterInput();
-                var formData = new FormData(this);
-                setBtnLoading('[form=UangMainForm][type=submit]', 'Save Changes');
-                $.ajax({
-                    type: "POST",
-                    url: "{{ route(h_prefix('uang.insert', 2)) }}",
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    data: formData,
-                    cache: false,
-                    contentType: false,
-                    processData: false,
-                    success: (data) => {
-                        $("#modal-uang").modal('hide');
-                        var oTable = table_uang.dataTable();
-                        oTable.fnDraw(false);
-                        Swal.fire({
-                            position: 'center',
-                            icon: 'success',
-                            title: 'Data saved successfully',
-                            showConfirmButton: false,
-                            timer: 1500
-                        })
-
-                        // simpan detail
-                        setDetail(data);
-
-                        uangIsEdit = true;
-                    },
-                    error: function(data) {
-                        const res = data.responseJSON ?? {};
-                        errorAfterInput = [];
-                        for (const property in res.errors) {
-                            errorAfterInput.push(property);
-                            setErrorAfterInput(res.errors[property], `#${property}`);
-                        }
-                        Swal.fire({
-                            position: 'top-end',
-                            icon: 'error',
-                            title: res.message ?? 'Something went wrong',
-                            showConfirmButton: false,
-                            timer: 1500
-                        })
-                    },
-                    complete: function() {
-                        setBtnLoading('[form=UangMainForm][type=submit]',
-                            '<li class="fas fa-save mr-1"></li> Simpan',
-                            false);
-                    }
-                });
-            });
-
-            $('#UangBatalkanForm').submit(function(e) {
-                e.preventDefault();
-                resetErrorAfterInput();
-                var formData = new FormData(this);
-                setBtnLoading('button[form=UangBatalkanForm]', 'Save Changes');
-                $.ajax({
-                    type: "POST",
-                    url: "{{ route(h_prefix('uang.batalkan', 2)) }}",
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    data: formData,
-                    cache: false,
-                    contentType: false,
-                    processData: false,
-                    success: (data) => {
-                        $("#uang-modal-batalkan").modal('hide');
-                        var oTable = table_uang.dataTable();
-                        oTable.fnDraw(false);
-                        Swal.fire({
-                            position: 'center',
-                            icon: 'success',
-                            title: 'Data saved successfully',
-                            showConfirmButton: false,
-                            timer: 1500
-                        })
-
-                        // simpan detail
-                        setDetail(data);
-                    },
-                    error: function(data) {
-                        const res = data.responseJSON ?? {};
-                        errorAfterInput = [];
-                        for (const property in res.errors) {
-                            errorAfterInput.push(property);
-                            setErrorAfterInput(res.errors[property], `#${property}`);
-                        }
-                        Swal.fire({
-                            position: 'top-end',
-                            icon: 'error',
-                            title: res.message ?? 'Something went wrong',
-                            showConfirmButton: false,
-                            timer: 1500
-                        })
-                    },
-                    complete: function() {
-                        setBtnLoading('button[form=UangBatalkanForm]',
-                            '<li class="fas fa-save mr-1"></li> Simpan',
-                            false);
-                    }
-                });
-            });
-
-            const new_table_uang = table_uang.DataTable({
-                searchDelay: 500,
-                processing: true,
-                serverSide: true,
-                responsive: true,
-                scrollX: true,
-                aAutoWidth: false,
-                bAutoWidth: false,
-                type: 'GET',
-                ajax: {
-                    url: "{{ route(h_prefix('uang', 2)) }}",
-                    data: function(d) {
-                        d['filter[ganti_rugi_id]'] = ganti_rugi_id;
-                        d['filter[updated_by]'] = $('#uang_updated_by').val();
-                        d['filter[created_by]'] = $('#uang_created_by').val();
-                        d['filter[dibatalkan]'] = $('#uang_dibatalkan').val();
-                    }
-                },
-                columns: [{
-                        data: null,
-                        name: 'id',
-                        orderable: false,
-                    },
-                    {
-                        data: 'oleh',
-                        name: 'oleh',
-                        render(data, type, full, meta) {
-                            const batal = full.status == 0;
-                            const keterangan = full.keterangan ?
-                                `<br><small>${full.keterangan??''}<span class="${batal ?'text-danger' : '' }">${batal ?' (Dibatalkan)' : '' }</span></small> ` :
-                                '';
-                            const nama = full.nama ?
-                                `<br>${full.nama??''}` :
-                                '';
-                            return `<span class="fw-bold">${data??''}</span> ${nama} ${keterangan} `;
+                // form
+                $('#UangMainForm').submit(function(e) {
+                    e.preventDefault();
+                    resetErrorAfterInput();
+                    var formData = new FormData(this);
+                    setBtnLoading('[form=UangMainForm][type=submit]', 'Save Changes');
+                    $.ajax({
+                        type: "POST",
+                        url: "{{ route(h_prefix('uang.insert', 2)) }}",
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
-                    },
-                    {
-                        data: 'tanggal_str',
-                        name: 'tanggal',
-                        className: 'text-nowrap'
-                    },
-                    {
-                        data: 'nominal',
-                        name: 'nominal',
-                        render(data, type, full, meta) {
-                            return 'Rp. ' + format_rupiah(data);
+                        data: formData,
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        success: (data) => {
+                            $("#modal-uang").modal('hide');
+                            var oTable = table_uang.dataTable();
+                            oTable.fnDraw(false);
+                            Swal.fire({
+                                position: 'center',
+                                icon: 'success',
+                                title: 'Data saved successfully',
+                                showConfirmButton: false,
+                                timer: 1500
+                            })
+
+                            // simpan detail
+                            setDetail(data.ganti_rugi);
+                            refresh_detail_list_barang(data.barangs);
+                            uangIsEdit = true;
                         },
-                        className: 'text-nowrap text-right'
+                        error: function(data) {
+                            const res = data.responseJSON ?? {};
+                            errorAfterInput = [];
+                            for (const property in res.errors) {
+                                errorAfterInput.push(property);
+                                setErrorAfterInput(res.errors[property], `#${property}`);
+                            }
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'error',
+                                title: res.message ?? 'Something went wrong',
+                                showConfirmButton: false,
+                                timer: 1500
+                            })
+                        },
+                        complete: function() {
+                            setBtnLoading('[form=UangMainForm][type=submit]',
+                                '<li class="fas fa-save mr-1"></li> Simpan',
+                                false);
+                        }
+                    });
+                });
+
+                $('#UangBatalkanForm').submit(function(e) {
+                    e.preventDefault();
+                    resetErrorAfterInput();
+                    var formData = new FormData(this);
+                    setBtnLoading('button[form=UangBatalkanForm]', 'Save Changes');
+                    $.ajax({
+                        type: "POST",
+                        url: "{{ route(h_prefix('uang.batalkan', 2)) }}",
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        data: formData,
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        success: (data) => {
+                            $("#uang-modal-batalkan").modal('hide');
+                            var oTable = table_uang.dataTable();
+                            oTable.fnDraw(false);
+                            Swal.fire({
+                                position: 'center',
+                                icon: 'success',
+                                title: 'Data saved successfully',
+                                showConfirmButton: false,
+                                timer: 1500
+                            })
+
+                            // simpan detail
+                            setDetail(data.ganti_rugi);
+                            refresh_detail_list_barang(data.barangs);
+                        },
+                        error: function(data) {
+                            const res = data.responseJSON ?? {};
+                            errorAfterInput = [];
+                            for (const property in res.errors) {
+                                errorAfterInput.push(property);
+                                setErrorAfterInput(res.errors[property], `#${property}`);
+                            }
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'error',
+                                title: res.message ?? 'Something went wrong',
+                                showConfirmButton: false,
+                                timer: 1500
+                            })
+                        },
+                        complete: function() {
+                            setBtnLoading('button[form=UangBatalkanForm]',
+                                '<li class="fas fa-save mr-1"></li> Simpan',
+                                false);
+                        }
+                    });
+                });
+
+                const new_table_uang = table_uang.DataTable({
+                    searchDelay: 500,
+                    processing: true,
+                    serverSide: true,
+                    responsive: true,
+                    scrollX: true,
+                    aAutoWidth: false,
+                    bAutoWidth: false,
+                    type: 'GET',
+                    ajax: {
+                        url: "{{ route(h_prefix('uang', 2)) }}",
+                        data: function(d) {
+                            d['filter[ganti_rugi_id]'] = ganti_rugi_id;
+                            d['filter[updated_by]'] = $('#uang_updated_by').val();
+                            d['filter[created_by]'] = $('#uang_created_by').val();
+                            d['filter[dibatalkan]'] = $('#uang_dibatalkan').val();
+                        }
                     },
-                    {
-                        data: 'id',
-                        name: 'id',
-                        render(data, type, full, meta) {
-                            return `<a href="{{ url(h_prefix_uri('faktur', 2)) }}/${data}" target="_blank" class="btn btn-rounded btn-primary btn-sm me-1" title="Cetak Faktur">
+                    columns: [{
+                            data: null,
+                            name: 'id',
+                            orderable: false,
+                        },
+                        {
+                            data: 'oleh',
+                            name: 'oleh',
+                            render(data, type, full, meta) {
+                                const batal = full.status == 0;
+                                const keterangan = full.keterangan ?
+                                    `<br><small>${full.keterangan??''}<span class="${batal ?'text-danger' : '' }">${batal ?' (Dibatalkan)' : '' }</span></small> ` :
+                                    '';
+                                const nama = full.nama ?
+                                    `<br>${full.nama??''}` :
+                                    '';
+                                return `<span class="fw-bold">${data??''}</span> ${nama} ${keterangan} `;
+                            },
+                        },
+                        {
+                            data: 'tanggal_str',
+                            name: 'tanggal',
+                            className: 'text-nowrap'
+                        },
+                        {
+                            data: 'nominal',
+                            name: 'nominal',
+                            render(data, type, full, meta) {
+                                return 'Rp. ' + format_rupiah(data);
+                            },
+                            className: 'text-nowrap text-right'
+                        },
+                        {
+                            data: 'id',
+                            name: 'id',
+                            render(data, type, full, meta) {
+                                return `<a href="{{ url(h_prefix_uri('faktur', 2)) }}/${data}" target="_blank" class="btn btn-rounded btn-primary btn-sm me-1" title="Cetak Faktur">
                                 <i class="fas fa-file-alt"></i> Cetak
                                 </a>`;
+                            },
+                            orderable: false,
+                            className: 'text-nowrap',
                         },
-                        orderable: false,
-                        className: 'text-nowrap',
-                    },
-                    {
-                        data: 'updated',
-                        name: 'updated_by_str',
-                        render(data, type, full, meta) {
-                            const tanggal = data ?? full.created;
-                            const oleh = full.updated_by_str ?? full.created_by_str
-                            return `${oleh??''}<br><small>${tanggal}</small>`;
+                        {
+                            data: 'updated',
+                            name: 'updated_by_str',
+                            render(data, type, full, meta) {
+                                const tanggal = data ?? full.created;
+                                const oleh = full.updated_by_str ?? full.created_by_str
+                                return `${oleh??''}<br><small>${tanggal}</small>`;
+                            },
+                            className: 'text-nowrap'
                         },
-                        className: 'text-nowrap'
-                    },
-                    ...((can_action) ? [{
-                        data: 'id',
-                        name: 'id',
-                        render(data, type, full, meta) {
-                            const btn_batalkan = can_batalkan && full.status == 1 ? `<button type="button" class="btn btn-rounded btn-warning btn-sm me-1" title="Batalkan" onClick="uangBatalFunc('${data}')">
+                        {
+                            data: 'id',
+                            name: 'id',
+                            render(data, type, full, meta) {
+                                const btn_batalkan = can_uang_batalkan && full.status == 1 ? `<button type="button" class="btn btn-rounded btn-warning btn-sm me-1" title="Batalkan" onClick="uangBatalFunc('${data}')">
                                 <i class="fas fa-times"></i> Batalkan
-                                </button>` : `<i class="fas fa-circle text-danger me-1"></i> Dibatalkan<br><small>${full.pembatalan_alasan}</small>`;
-                            return btn_batalkan;
+                                </button>` : '';
+                                const status_str = full.status == 0 ?
+                                    `<i class="fas fa-circle text-danger me-1"></i> Dibatalkan<br><small>${full.pembatalan_alasan??''}</small>` :
+                                    '';
+                                return btn_batalkan + status_str;
+                            },
+                            orderable: false,
+                            className: 'text-nowrap'
+                        }
+                    ],
+                    order: [
+                        [2, 'desc']
+                    ]
+                });
+
+                new_table_uang.on('draw.dt', function() {
+                    var PageInfo = table_uang.DataTable().page.info();
+                    new_table_uang.column(0, {
+                        page: 'current'
+                    }).nodes().each(function(cell, i) {
+                        cell.innerHTML = i + 1 + PageInfo.start;
+                    });
+                });
+
+                $('#FilterForm').submit(function(e) {
+                    e.preventDefault();
+                    var oTable = table_uang.dataTable();
+                    oTable.fnDraw(false);
+                });
+            });
+        </script>
+    @endif
+
+
+
+    @if ($can_barang)
+        <script>
+            // Perizinan ==============================================================================================
+            const can_barang_batalkan = {{ $can_barang_batalkan ? 'true' : 'false' }};
+
+            // Table ==================================================================================================
+            let barangIsEdit = true;
+            const table_barang = $('#tbl_barang');
+
+            function barangAdd() {
+                if (!barangIsEdit) return false;
+                $('#UangMainForm').trigger("reset");
+                $('#modal-barang-title').html("Tambah Pembayaran");
+                $('#modal-barang').modal('show');
+                $('#barang_id').val('');
+                $('#barang_tanggal').val(today);
+                $('#barang_oleh').val(oleh);
+                $('#barang')
+                    .append((new Option('', '', true, true)))
+                    .trigger('change');
+                render_tanggal($('#barang_tanggal'));
+                resetErrorAfterInput();
+                barangIsEdit = false;
+                BarangRefreshNominal();
+                return true;
+            }
+
+            function BarangRefreshNominal() {
+                const nominal = $('#barang_nominal').val();
+                $('#barang_nominal_terbilang').html(nominal > 0 ? (terbilang(nominal) + ' Rupiah') : "");
+            }
+
+            function barangBatalFunc(id) {
+                $('#barang-modal-batalkan').modal('show');
+                $('#barang-batalkan_id').val(id);
+                $('#barang-alasan').val('');
+            }
+
+            $(document).ready(() => {
+                $('#barang_nominal').change(BarangRefreshNominal);
+                $('#barang_nominal').keyup(BarangRefreshNominal);
+                $('#barang_nominal').click(BarangRefreshNominal);
+
+                $('#barang').select2({
+                    ajax: {
+                        url: "{{ route(h_prefix('barang.select2', 2)) }}",
+                        type: "GET",
+                        data: function(params) {
+                            var query = {
+                                search: params.term,
+                                ganti_rugi: '{{ $model->id }}',
+                            }
+                            return query;
+                        }
+                    },
+                    placeholder: "Nama, Kode, Jenis atau Satuan Barang",
+                    dropdownParent: $('#modal-barang'),
+                }).on('select2:select', function(e) {
+                    const data = e.params.data;
+                    $('.satuan').html(data.satuan);
+                    $('#qty').attr('max', data.sisa);
+                    $('#qty').val(data.sisa);
+                });
+
+                // form
+                $('#BarangMainForm').submit(function(e) {
+                    e.preventDefault();
+                    resetErrorAfterInput();
+                    var formData = new FormData(this);
+                    setBtnLoading('[form=BarangMainForm][type=submit]', 'Save Changes');
+                    $.ajax({
+                        type: "POST",
+                        url: "{{ route(h_prefix('barang.insert', 2)) }}",
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
-                        orderable: false,
-                        className: 'text-nowrap'
-                    }] : [])
-                ],
-                order: [
-                    [2, 'desc']
-                ]
-            });
+                        data: formData,
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        success: (data) => {
+                            $("#modal-barang").modal('hide');
+                            var oTable = table_barang.dataTable();
+                            oTable.fnDraw(false);
+                            Swal.fire({
+                                position: 'center',
+                                icon: 'success',
+                                title: 'Data saved successfully',
+                                showConfirmButton: false,
+                                timer: 1500
+                            })
 
-            new_table_uang.on('draw.dt', function() {
-                var PageInfo = table_uang.DataTable().page.info();
-                new_table_uang.column(0, {
-                    page: 'current'
-                }).nodes().each(function(cell, i) {
-                    cell.innerHTML = i + 1 + PageInfo.start;
-                });
-            });
-
-            $('#FilterForm').submit(function(e) {
-                e.preventDefault();
-                var oTable = table_uang.dataTable();
-                oTable.fnDraw(false);
-            });
-
-            // Ganti rugi uang ========================================================================================
-            // ========================================================================================================
-
-
-
-
-
-
-            // Ganti rugi barang ========================================================================================
-            $('#barang_nominal').change(BarangRefreshNominal);
-            $('#barang_nominal').keyup(BarangRefreshNominal);
-            $('#barang_nominal').click(BarangRefreshNominal);
-
-            // form
-            $('#BarangMainForm').submit(function(e) {
-                e.preventDefault();
-                resetErrorAfterInput();
-                var formData = new FormData(this);
-                setBtnLoading('[form=BarangMainForm][type=submit]', 'Save Changes');
-                $.ajax({
-                    type: "POST",
-                    url: "{{ route(h_prefix('barang.insert', 2)) }}",
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    data: formData,
-                    cache: false,
-                    contentType: false,
-                    processData: false,
-                    success: (data) => {
-                        $("#modal-barang").modal('hide');
-                        var oTable = table_barang.dataTable();
-                        oTable.fnDraw(false);
-                        Swal.fire({
-                            position: 'center',
-                            icon: 'success',
-                            title: 'Data saved successfully',
-                            showConfirmButton: false,
-                            timer: 1500
-                        })
-
-                        // simpan detail
-                        setDetail(data);
-
-                        barangIsEdit = true;
-                    },
-                    error: function(data) {
-                        const res = data.responseJSON ?? {};
-                        errorAfterInput = [];
-                        for (const property in res.errors) {
-                            errorAfterInput.push(property);
-                            setErrorAfterInput(res.errors[property], `#${property}`);
+                            // simpan detail
+                            setDetail(data.ganti_rugi);
+                            refresh_detail_list_barang(data.barangs);
+                            barangIsEdit = true;
+                        },
+                        error: function(data) {
+                            const res = data.responseJSON ?? {};
+                            errorAfterInput = [];
+                            for (const property in res.errors) {
+                                errorAfterInput.push(property);
+                                setErrorAfterInput(res.errors[property], `#${property}`);
+                            }
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'error',
+                                title: res.message ?? 'Something went wrong',
+                                showConfirmButton: false,
+                                timer: 1500
+                            })
+                        },
+                        complete: function() {
+                            setBtnLoading('[form=BarangMainForm][type=submit]',
+                                '<li class="fas fa-save mr-1"></li> Simpan',
+                                false);
                         }
-                        Swal.fire({
-                            position: 'top-end',
-                            icon: 'error',
-                            title: res.message ?? 'Something went wrong',
-                            showConfirmButton: false,
-                            timer: 1500
-                        })
-                    },
-                    complete: function() {
-                        setBtnLoading('[form=BarangMainForm][type=submit]',
-                            '<li class="fas fa-save mr-1"></li> Simpan',
-                            false);
-                    }
+                    });
                 });
-            });
 
-            $('#BarangBatalkanForm').submit(function(e) {
-                e.preventDefault();
-                resetErrorAfterInput();
-                var formData = new FormData(this);
-                setBtnLoading('button[form=BarangBatalkanForm]', 'Save Changes');
-                $.ajax({
-                    type: "POST",
-                    url: "{{ route(h_prefix('barang.batalkan', 2)) }}",
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    data: formData,
-                    cache: false,
-                    contentType: false,
-                    processData: false,
-                    success: (data) => {
-                        $("#barang-modal-batalkan").modal('hide');
-                        var oTable = table_barang.dataTable();
-                        oTable.fnDraw(false);
-                        Swal.fire({
-                            position: 'center',
-                            icon: 'success',
-                            title: 'Data saved successfully',
-                            showConfirmButton: false,
-                            timer: 1500
-                        })
+                $('#BarangBatalkanForm').submit(function(e) {
+                    e.preventDefault();
+                    resetErrorAfterInput();
+                    var formData = new FormData(this);
+                    setBtnLoading('button[form=BarangBatalkanForm]', 'Save Changes');
+                    $.ajax({
+                        type: "POST",
+                        url: "{{ route(h_prefix('barang.batalkan', 2)) }}",
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        data: formData,
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        success: (data) => {
+                            $("#barang-modal-batalkan").modal('hide');
+                            var oTable = table_barang.dataTable();
+                            oTable.fnDraw(false);
+                            Swal.fire({
+                                position: 'center',
+                                icon: 'success',
+                                title: 'Data saved successfully',
+                                showConfirmButton: false,
+                                timer: 1500
+                            })
 
-                        // simpan detail
-                        setDetail(data);
-                    },
-                    error: function(data) {
-                        const res = data.responseJSON ?? {};
-                        errorAfterInput = [];
-                        for (const property in res.errors) {
-                            errorAfterInput.push(property);
-                            setErrorAfterInput(res.errors[property], `#${property}`);
+                            // simpan detail
+                            setDetail(data.ganti_rugi);
+                            refresh_detail_list_barang(data.barangs);
+                            barangIsEdit = true;
+                        },
+                        error: function(data) {
+                            const res = data.responseJSON ?? {};
+                            errorAfterInput = [];
+                            for (const property in res.errors) {
+                                errorAfterInput.push(property);
+                                setErrorAfterInput(res.errors[property], `#${property}`);
+                            }
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'error',
+                                title: res.message ?? 'Something went wrong',
+                                showConfirmButton: false,
+                                timer: 1500
+                            })
+                        },
+                        complete: function() {
+                            setBtnLoading('button[form=BarangBatalkanForm]',
+                                '<li class="fas fa-save mr-1"></li> Simpan',
+                                false);
                         }
-                        Swal.fire({
-                            position: 'top-end',
-                            icon: 'error',
-                            title: res.message ?? 'Something went wrong',
-                            showConfirmButton: false,
-                            timer: 1500
-                        })
+                    });
+                });
+
+                const new_table_barang = table_barang.DataTable({
+                    searchDelay: 500,
+                    processing: true,
+                    serverSide: true,
+                    responsive: true,
+                    scrollX: true,
+                    aAutoWidth: false,
+                    bAutoWidth: false,
+                    type: 'GET',
+                    ajax: {
+                        url: "{{ route(h_prefix('barang', 2)) }}",
+                        data: function(d) {
+                            d['filter[ganti_rugi_id]'] = ganti_rugi_id;
+                            d['filter[updated_by]'] = $('#barang_updated_by').val();
+                            d['filter[created_by]'] = $('#barang_created_by').val();
+                            d['filter[dibatalkan]'] = $('#barang_dibatalkan').val();
+                        }
                     },
-                    complete: function() {
-                        setBtnLoading('button[form=BarangBatalkanForm]',
-                            '<li class="fas fa-save mr-1"></li> Simpan',
-                            false);
-                    }
+                    columns: [{
+                            data: null,
+                            name: 'id',
+                            orderable: false,
+                        },
+                        {
+                            data: 'oleh',
+                            name: 'oleh',
+                            render(data, type, full, meta) {
+                                const batal = full.status == 0;
+                                const keterangan = full.keterangan ?
+                                    `<br><small>${full.keterangan??''}<span class="${batal ?'text-danger' : '' }">${batal ?' (Dibatalkan)' : '' }</span></small> ` :
+                                    '';
+                                return `<span class="fw-bold">${data??''}</span> ${keterangan} `;
+                            },
+                        },
+                        {
+                            data: 'tanggal_str',
+                            name: 'tanggal',
+                            className: 'text-nowrap'
+                        },
+                        {
+                            data: 'barang_nama',
+                            name: 'barang_nama',
+                            render(data, type, full, meta) {
+                                return `${data}<br><small>${full.barang_kode} | Rp. ${format_rupiah(full.harga)}</small>`;
+                            },
+                            className: 'text-left'
+                        },
+                        {
+                            data: 'qty',
+                            name: 'qty',
+                            render(data, type, full, meta) {
+                                return `${data} ${full.satuan}<br><small>Rp. ${format_rupiah(full.harga*data)}</small>`;
+                            },
+                            className: 'text-right'
+                        },
+                        {
+                            data: 'updated',
+                            name: 'updated_by_str',
+                            render(data, type, full, meta) {
+                                const tanggal = data ?? full.created;
+                                const oleh = full.updated_by_str ?? full.created_by_str
+                                return `${oleh??''}<br><small>${tanggal}</small>`;
+                            },
+                            className: 'text-nowrap'
+                        },
+                        {
+                            data: 'id',
+                            name: 'id',
+                            render(data, type, full, meta) {
+                                const btn_batalkan = can_barang_batalkan && full.status == 1 ? `<button type="button" class="btn btn-rounded btn-warning btn-sm me-1" title="Batalkan" onClick="barangBatalFunc('${data}')">
+                                <i class="fas fa-times"></i> Batalkan
+                                </button>` : '';
+                                const status_str = full.status == 0 ?
+                                    `<i class="fas fa-circle text-danger me-1"></i> Dibatalkan<br><small>${full.pembatalan_alasan??''}</small>` :
+                                    '';
+                                return btn_batalkan + status_str;
+                            },
+                            orderable: false,
+                            className: 'text-nowrap'
+                        }
+                    ],
+                    order: [
+                        [1, 'desc']
+                    ]
+                });
+
+                new_table_barang.on('draw.dt', function() {
+                    var PageInfo = table_barang.DataTable().page.info();
+                    new_table_barang.column(0, {
+                        page: 'current'
+                    }).nodes().each(function(cell, i) {
+                        cell.innerHTML = i + 1 + PageInfo.start;
+                    });
+                });
+
+                $('#FilterForm').submit(function(e) {
+                    e.preventDefault();
+                    var oTable = table_barang.dataTable();
+                    oTable.fnDraw(false);
                 });
             });
+        </script>
+    @endif
 
-
-
-            $('#FilterForm').submit(function(e) {
-                e.preventDefault();
-                var oTable = table_barang.dataTable();
-                oTable.fnDraw(false);
-            });
-
-            // Ganti rugi barang ========================================================================================
-            // ========================================================================================================
-
-
-
-        });
-        // Ganti rugi uang ============================================================================================
-        function uangAdd() {
-            if (!uangIsEdit) return false;
-            $('#UangMainForm').trigger("reset");
-            $('#modal-uang-title').html("Tambah Pembayaran");
-            $('#modal-uang').modal('show');
-            $('#uang_id').val('');
-            $('#uang_tanggal').val(today);
-            $('#uang_oleh').val(oleh);
-            render_tanggal($('#uang_tanggal'));
-            resetErrorAfterInput();
-            uangIsEdit = false;
-            UangRefreshNominal();
-            return true;
-        }
-
-        function UangRefreshNominal() {
-            const nominal = $('#uang_nominal').val();
-            $('#uang_nominal_terbilang').html(nominal > 0 ? (terbilang(nominal) + ' Rupiah') : "");
-        }
-
-        function uangBatalFunc(id) {
-            $('#uang-modal-batalkan').modal('show');
-            $('#uang-batalkan_id').val(id);
-            $('#uang-alasan').val('');
-        }
-        // Ganti rugi uang ============================================================================================
-        // ============================================================================================================
-
-
-
-
-
-        // Ganti rugi barang ============================================================================================
-        function barangAdd() {
-            if (!barangIsEdit) return false;
-            $('#UangMainForm').trigger("reset");
-            $('#modal-barang-title').html("Tambah Pembayaran");
-            $('#modal-barang').modal('show');
-            $('#barang_id').val('');
-            $('#barang_tanggal').val(today);
-            $('#barang_oleh').val(oleh);
-            render_tanggal($('#barang_tanggal'));
-            resetErrorAfterInput();
-            barangIsEdit = false;
-            BarangRefreshNominal();
-            return true;
-        }
-
-        function BarangRefreshNominal() {
-            const nominal = $('#barang_nominal').val();
-            $('#barang_nominal_terbilang').html(nominal > 0 ? (terbilang(nominal) + ' Rupiah') : "");
-        }
-
-        function barangBatalFunc(id) {
-            $('#barang-modal-batalkan').modal('show');
-            $('#barang-batalkan_id').val(id);
-            $('#barang-alasan').val('');
-        }
-        // Ganti rugi barang ============================================================================================
-        // ============================================================================================================
-
-
-
-
-
+    {{-- function --}}
+    <script>
         // informasi ganti rugi =======================================================================================
         function setStatus(value) {
             if (value == '0' || value == '1' || value == '2') {
@@ -1084,18 +1178,45 @@
 
         function setDetail(data) {
             // simpan detail
-            detail_status_disimpan = data.ganti_rugi.status;
-            detail_total_harga = data.ganti_rugi.nominal;
-            detail_dibayar = data.ganti_rugi.dibayar;
-            detail_dibayar_barang = data.ganti_rugi.dibayar_barang;
-            detail_sisa = data.ganti_rugi.sisa;
+            detail_status_disimpan = data.status;
+            detail_total_harga = data.nominal;
+            detail_dibayar = data.dibayar;
+            detail_dibayar_barang = data.dibayar_barang;
+            detail_sisa = data.sisa;
             detail_customer = `${data.customer.nama}<br>
                         <small>${data.customer.alamat}</small>`;
-            detail_keterangan = `${data.ganti_rugi.nama}<br>
-                        <small>${data.ganti_rugi.keterangan}</small>`;
+            detail_keterangan = `${data.nama}<br>
+                        <small>${data.keterangan}</small>`;
 
             setStatus(detail_status_disimpan);
             refreshDetail();
+        }
+
+        function refresh_detail_list_barang(datas) {
+            const container = $('#detail-list-barang');
+            container.html('');
+            let counter = 1;
+            datas.forEach(list => {
+                container.append(`<tr>
+                    <td>${counter++}</td>
+                    <td>
+                        ${list.barang_nama }
+                        <br>
+                        <small>${list.barang_kode }</small>
+                    </td>
+                    <td class="text-right">${list.qty_rusak } ${list.satuan }</td>
+                    <td class="text-right">${list.qty_hilang } ${list.satuan }</td>
+                    <td class="text-right">
+                        ${list.qty_diganti } ${list.satuan }
+                        <br>
+                        <small>Rp. ${ format_rupiah(list.harga * list.qty_diganti) }</small>
+                    </td>
+                    <td class="text-right">Rp. ${ format_rupiah(list.harga) }</td>
+                    <td class="text-right">Rp.
+                        ${ format_rupiah((list.qty_rusak + list.qty_hilang) * list.harga) }
+                    </td>
+                </tr>`);
+            });
         }
         // informasi ganti rugi =======================================================================================
         // ============================================================================================================

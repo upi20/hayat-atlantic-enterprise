@@ -79,6 +79,18 @@ class BarangPenguranganTableSeeder extends Seeder
                 'created_at' => '2022-10-18 01:23:24',
                 'updated_at' => '2022-10-18 01:23:24',
             ),
+            5 => 
+            array (
+                'id' => 6,
+                'nama' => 'Barang Hilang Saat Penyewaan Dengan Surat Jalan Nomor SJ/00007',
+                'keterangan' => 'Tanggal 2022-10-20, Di Dr Baru Lokasi Lengkong',
+                'tanggal' => '2022-10-19 00:00:00',
+                'penyewaan' => 15,
+                'updated_by' => NULL,
+                'created_by' => 1,
+                'created_at' => '2022-10-22 02:09:52',
+                'updated_at' => '2022-10-22 02:09:52',
+            ),
         ));
         
         

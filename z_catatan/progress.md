@@ -14,21 +14,18 @@
     [x] Simpan ke ganti rugi, ganti rugi barang
 
 ## Ganti Rugi
-    [x] Buat tabel
-        [x] Ganti rugi list
-        [x] ganti rugi pembayaran
-        [x] ganti rugi barang
-    [] Display
-        [x] List ganti rugi
-        [x] Detail halaman ganti rugi
-            [x] Ganti Barang
-            [] Ganti Pembayaran
-        [] List barang yang hilang atau rusak
-
-    [x] List barang yang ada data hilang dan rusak
-        [x] Penggantian
-            [x] Uang
-            [] Barang
+    [x] Ganti rugi list
+    [x] ganti rugi pembayaran
+    [x] ganti rugi barang
+        [x] Select2 Barang
+        [x] Insert
+        [x] Batalkan
+    [x] table List data barang yang rusak dan hilang belum bisa di refresh
+    [x] Tombol penyewaan selesai akan ada jika ganti rugi selesai
+    [x] di pengadaan jika ada penyewaan id aksi tidak bisa dilakukan
+    [x] Ganti rugi tidak bisa di ubah jika penyewaan nya sudah di selesaikan
+    [] Crud perizinan
+    [] Detail masukan ke detail penyewaan
 
 ## Dashboard
     [] Penyewaan Range tanggal Default Bulan sekarang dan Berdasarkan status
@@ -162,4 +159,13 @@
     [] Pembatalan Reciving order
     [] Di pembayaran jika penyewaan sudah selesai maka pembayaran akan di tutup
     [] Buat template untuk default keterangan pengambilan barang
+
+# Sabtu, 22 Oktober 2022
+### Testing
+    [] Pembatalan Reciving order
+    [] Di pembayaran jika penyewaan sudah selesai maka pembayaran akan di tutup
+    [] Buat template untuk default keterangan pengambilan barang
+    [x] Unsinged di database yang bukan relasi
+
+
     

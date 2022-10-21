@@ -125,6 +125,11 @@ function format_rupiah(angka, format = 2, prefix) {
 }
 
 function terbilang(nilai) {
+    var prefix = "";
+    if (nilai < 0) {
+        nilai = Math.abs(nilai);
+        prefix = "Minus "
+    }
     var bilangan = `${nilai}`;
     var kalimat = ""
     var angka = new Array('0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0')
@@ -205,8 +210,9 @@ function terbilang(nilai) {
         }
     }
 
-    return kalimat.trim();
+    return prefix + kalimat.trim();
 }
+
 
 function renderDataTable(element_table) {
     const tableUser = $(element_table).DataTable({

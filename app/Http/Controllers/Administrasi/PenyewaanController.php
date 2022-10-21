@@ -6,9 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Models\Barang\Jenis;
 use App\Models\Barang\Satuan;
 use App\Models\Barang\Sewa;
-
+use App\Models\Barang\Sewa\Pengadaan;
+use App\Models\Barang\Sewa\PengadaanList;
 use App\Models\Customer;
 use App\Models\Faktur;
+use App\Models\GantiRugi;
 use App\Models\Penyewaan;
 use App\Models\PenyewaanBarang;
 use App\Models\PenyewaanPembayaran;
@@ -64,6 +66,7 @@ class PenyewaanController extends Controller
         $table = Penyewaan::tableName;
         $t_customer = Customer::tableName;
         $t_surat_jalan = SuratJalan::tableName;
+        $t_ganti_rugi = GantiRugi::tableName;
 
         // cusotm query
         // ========================================================================================================
@@ -109,6 +112,11 @@ class PenyewaanController extends Controller
         $this->query[$c_customer_nama] = "$t_customer.nama";
         $this->query["{$c_customer_nama}_alias"] = $c_customer_nama;
 
+        // customer
+        $c_customer_alamat = 'customer_alamat';
+        $this->query[$c_customer_alamat] = "$t_customer.alamat";
+        $this->query["{$c_customer_alamat}_alias"] = $c_customer_alamat;
+
         // status
         $c_status_str = 'status_str';
         $this->query[$c_status_str] = <<<SQL
@@ -149,9 +157,27 @@ class PenyewaanController extends Controller
         SQL;
         $this->query["{$c_proses_penyewaan}_alias"] = $c_proses_penyewaan;
 
+        // status_pengambilan
         $c_status_pengambilan = 'status_pengambilan';
         $this->query[$c_status_pengambilan] = "$t_surat_jalan.status";
         $this->query["{$c_status_pengambilan}_alias"] = $c_status_pengambilan;
+
+        // status_ganti_rugi
+        $c_status_ganti_rugi_str = 'status_ganti_rugi_str';
+        $this->query[$c_status_ganti_rugi_str] = <<<SQL
+                    (if($t_ganti_rugi.status = 0,'Data Dibuat',
+                    if($t_ganti_rugi.status = 1,'Proses',
+                    if($t_ganti_rugi.status = 2,'Selesai',
+                    if($t_ganti_rugi.status is null,'Selesai', 'Tidak diketahui')))))
+                SQL;
+        $this->query["{$c_status_ganti_rugi_str}_alias"] = $c_status_ganti_rugi_str;
+
+        // status_ganti_rugi
+        $c_status_ganti_rugi = 'status_ganti_rugi';
+        $this->query[$c_status_ganti_rugi] = <<<SQL
+                    (if($t_ganti_rugi.status is null, 2 ,$t_ganti_rugi.status))
+                SQL;
+        $this->query["{$c_status_ganti_rugi}_alias"] = $c_status_ganti_rugi;
 
         // sisa
         $c_sisa = 'sisa';
@@ -196,7 +222,10 @@ class PenyewaanController extends Controller
             $c_tanggal_pengambilan,
             $c_status_pengambilan,
             $c_status_pengambilan_str,
-            $c_proses_penyewaan
+            $c_proses_penyewaan,
+            $c_customer_alamat,
+            $c_status_ganti_rugi_str,
+            $c_status_ganti_rugi
         ];
 
         $to_db_raw = array_map(function ($a) use ($sraa) {
@@ -212,6 +241,7 @@ class PenyewaanController extends Controller
             ->leftJoin("$t_user as $t_created_by", "$t_created_by.id", '=', "$table.created_by")
             ->leftJoin("$t_user as $t_updated_by", "$t_updated_by.id", '=', "$table.updated_by")
             ->leftJoin($t_surat_jalan, "$t_surat_jalan.penyewaan", '=', "$table.id")
+            ->leftJoin($t_ganti_rugi, "$t_ganti_rugi.penyewaan_id", '=', "$table.id")
             ->leftJoin($t_customer, "$t_customer.id", '=', "$table.customer");
 
         // Filter =====================================================================================================
@@ -825,6 +855,44 @@ class PenyewaanController extends Controller
             DB::beginTransaction();
             $model->status = 5;
             $model->save();
+
+            // proses ganti rugi barang
+            if ($model->ganti_rugi) {
+
+                // head pengadaan barang
+                $surat_jalan = $model->surat_jalan;
+                $no_surat_jalan = 'SJ/' . str_pad($surat_jalan->no_surat_jalan, 5, '0', STR_PAD_LEFT);
+
+                $penyewaan = $model;
+                $pengadaan = new Pengadaan();
+                $pengadaan->nama = "Ganti Rugi Barang Saat Penyewaan Dengan Surat Jalan Nomor $no_surat_jalan";
+                $pengadaan->tanggal = date("Y-m-d");
+                $tanggal_penyewaan = $penyewaan->tanggal_pakai_dari == $penyewaan->tanggal_pakai_sampai
+                    ? $penyewaan->tanggal_pakai_dari :
+                    "$penyewaan->tanggal_pakai_dari s/d $penyewaan->tanggal_pakai_sampai";
+                $pengadaan->keterangan = "Tanggal $tanggal_penyewaan, Di $penyewaan->kepada Lokasi $penyewaan->lokasi";
+                $pengadaan->created_by = auth()->user()->id;
+                $pengadaan->penyewaan = $penyewaan->id;
+                $pengadaan->save();
+
+                // simpan barang list
+                foreach ($model->ganti_rugi->list_barang as $ganti_barang) {
+                    // tambah qty barang
+                    $barang = Sewa::findOrFail($ganti_barang->barang);
+                    $barang->qty_total = $barang->qty_total + $ganti_barang->qty_diganti;
+                    $barang->qty_ada = $barang->qty_ada + $ganti_barang->qty_diganti;
+                    $barang->save();
+
+                    $model = new PengadaanList();
+                    $model->pengadaan = $pengadaan->id;
+                    $model->barang = $ganti_barang->barang;
+                    $model->harga = $ganti_barang->harga;
+                    $model->qty = $ganti_barang->qty_diganti;
+                    $model->created_by = auth()->user()->id;
+                    $model->save();
+                }
+            }
+
             DB::commit();
             return response()->json($model);
         } catch (ValidationException $error) {

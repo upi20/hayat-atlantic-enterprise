@@ -23,8 +23,10 @@ return new class extends Migration
             $table->string('kepada')->nullable()->default(null);
             $table->date('tanggal_order')->nullable()->default(null);
             $table->boolean('status')->nullable()->default(1)->comment("1 = Penyewaan Dibuat, 2 = Faktur Dibuat, 3 = Barang Diambil, 4 = Barang Dikembalikan, 5 = Selesai, 9 Dibatalkan");
-            $table->bigInteger('total_harga', false, true)->default(0);
-            $table->bigInteger('dibayar', false, true)->default(0);
+
+            $table->bigInteger('total_harga', false)->default(0);
+            $table->bigInteger('dibayar', false)->default(0);
+
             $table->boolean('status_pembayaran')->nullable()->default(0)->comment("1 selesai 0 belum");
             $table->text('batal_keterangan')->nullable()->default(null);
             $table->dateTime('batal_tanggal')->nullable()->default(null);

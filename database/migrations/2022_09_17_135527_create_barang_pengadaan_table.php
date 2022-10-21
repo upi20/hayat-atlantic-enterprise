@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('nama');
             $table->text('keterangan')->nullable()->default(null);
             $table->dateTime('tanggal');
+            $table->bigInteger('penyewaan', false, true)->nullable()->default(null);
 
             $table->bigInteger('updated_by', false, true)->nullable()->default(null);
             $table->bigInteger('created_by', false, true)->nullable()->default(null);
@@ -28,6 +29,11 @@ return new class extends Migration
             $table->foreign('created_by')
                 ->references('id')->on('users')
                 ->nullOnDelete()
+                ->cascadeOnUpdate();
+            $table->timestamps();
+            $table->foreign('penyewaan')
+                ->references('id')->on('penyewaan')
+                ->cascadeOnDelete()
                 ->cascadeOnUpdate();
             $table->timestamps();
         });

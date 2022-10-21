@@ -109,7 +109,7 @@ class PembayaranController extends Controller
             $faktur->tanggal = $model->tanggal;
             $faktur->jumlah = $model->nominal;
             $sisa = $penyewaan->total_harga - $penyewaan->dibayar;
-            $faktur->sisa = $sisa < 0 ? 0 : $sisa;
+            $faktur->sisa = $sisa;
             $faktur->pembayaran = $model->id;
             $faktur->total = $penyewaan->total_harga;
             $faktur->pembayaran_sebelumnya = $penyewaan->dibayar - $model->nominal;
@@ -341,9 +341,9 @@ class PembayaranController extends Controller
             DB::raw("date_format(tanggal_pakai_sampai, '%W, %d %M %Y') as tanggal_pakai_sampai"),
             DB::raw("(DATEDIFF(tanggal_pakai_sampai, tanggal_pakai_dari)+1) as pakai_hari"),
         ])
-        ->leftJoin($t_surat_jalan, "$t_surat_jalan.penyewaan", '=', "$t_penyewaan.id")
-        ->leftJoin($t_customer, "$t_customer.id", '=', "$t_penyewaan.customer")
-        ->where("$t_penyewaan.id", $model->penyewaan)->first();
+            ->leftJoin($t_surat_jalan, "$t_surat_jalan.penyewaan", '=', "$t_penyewaan.id")
+            ->leftJoin($t_customer, "$t_customer.id", '=', "$t_penyewaan.customer")
+            ->where("$t_penyewaan.id", $model->penyewaan)->first();
 
         $penyewaan->no_surat_jalan = 'SJ/' . str_pad($penyewaan->no_surat_jalan, 5, '0', STR_PAD_LEFT);
         $penyewaan->no = 'PM/' . str_pad($penyewaan->id, 5, '0', STR_PAD_LEFT);

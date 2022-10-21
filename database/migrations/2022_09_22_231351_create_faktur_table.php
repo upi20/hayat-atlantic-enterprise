@@ -17,10 +17,10 @@ return new class extends Migration
             $table->id();
             $table->string('no_faktur')->nullable()->default(null);
             $table->date('tanggal')->nullable()->default(null);
-            $table->bigInteger('jumlah', false, true)->nullable()->default(null);
-            $table->bigInteger('sisa', false, true)->nullable()->default(null);
-            $table->bigInteger('pembayaran_sebelumnya', false, true)->nullable()->default(null);
-            $table->bigInteger('total', false, true)->nullable()->default(null);
+            $table->bigInteger('jumlah', false)->nullable()->default(null);
+            $table->bigInteger('sisa', false)->nullable()->default(null);
+            $table->bigInteger('pembayaran_sebelumnya', false)->nullable()->default(null);
+            $table->bigInteger('total', false)->nullable()->default(null);
 
             $table->bigInteger('pembayaran', false, true)->nullable()->default(null);
             $table->bigInteger('updated_by', false, true)->nullable()->default(null);
