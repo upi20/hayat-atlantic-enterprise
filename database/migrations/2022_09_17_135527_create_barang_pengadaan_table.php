@@ -30,7 +30,6 @@ return new class extends Migration
                 ->references('id')->on('users')
                 ->nullOnDelete()
                 ->cascadeOnUpdate();
-            $table->timestamps();
             $table->foreign('penyewaan')
                 ->references('id')->on('penyewaan')
                 ->cascadeOnDelete()
