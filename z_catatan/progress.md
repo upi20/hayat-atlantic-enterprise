@@ -1,31 +1,12 @@
 =======================================================================================================================
-# 15 Oktober 2022
-
-## Tabel Pengurangan barang ditambah kolom penyewaan
-    [x] Barang sewa
-    [x] Barang habis pakai
-    [] Detail penyewaan dibuat component
-
+# 22 Oktober 2022
 ## Pengembalian barang
     [] Surat pengembalian barang
 
-## Pengembalian tambah barang habis pakai
-    [x] Display
-    [x] Funsngsi simpan
-    [x] Simpan ke ganti rugi, ganti rugi barang
+## Tabel Pengurangan barang ditambah kolom penyewaan
+    [] Detail penyewaan dibuat component
 
 ## Ganti Rugi
-    [x] Ganti rugi list
-    [x] ganti rugi pembayaran
-    [x] ganti rugi barang
-        [x] Select2 Barang
-        [x] Insert
-        [x] Batalkan
-    [x] table List data barang yang rusak dan hilang belum bisa di refresh
-    [x] Tombol penyewaan selesai akan ada jika ganti rugi selesai
-    [x] di pengadaan jika ada penyewaan id aksi tidak bisa dilakukan
-    [x] Ganti rugi tidak bisa di ubah jika penyewaan nya sudah di selesaikan
-    [x] Crud perizinan
     [] List ganti rugi masukan ke detail penyewaan
     [] Filter di ganti rugi detail
 
@@ -44,6 +25,32 @@
 ## Frontend
     [] Home
     [] List Data barang Sewa
+
+=======================================================================================================================
+# 15 Oktober 2022
+
+## Tabel Pengurangan barang ditambah kolom penyewaan
+    [x] Barang sewa
+    [x] Barang habis pakai
+    [] Detail penyewaan dibuat component
+
+## Pengembalian tambah barang habis pakai
+    [x] Display
+    [x] Funsngsi simpan
+    [x] Simpan ke ganti rugi, ganti rugi barang
+
+## Ganti Rugi
+    [x] Ganti rugi list
+    [x] ganti rugi pembayaran
+    [x] ganti rugi barang
+        [x] Select2 Barang
+        [x] Insert
+        [x] Batalkan
+    [x] table List data barang yang rusak dan hilang belum bisa di refresh
+    [x] Tombol penyewaan selesai akan ada jika ganti rugi selesai
+    [x] di pengadaan jika ada penyewaan id aksi tidak bisa dilakukan
+    [x] Ganti rugi tidak bisa di ubah jika penyewaan nya sudah di selesaikan
+    [x] Crud perizinan
 
 ## Redesign table
     [x] Customer

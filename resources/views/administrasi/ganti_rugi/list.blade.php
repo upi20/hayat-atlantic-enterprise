@@ -162,7 +162,7 @@
                         render(data, type, full, meta) {
                             return `Rp. ${format_rupiah(data)}`;
                         },
-                        className: 'text-nowrap text-right'
+                        className: 'text-nowrap text-right to-link'
                     },
                     {
                         data: 'status',
@@ -182,7 +182,7 @@
                             }
                             return `<i class="fas fa-circle text-${color} me-1"></i> ${text}`;
                         },
-                        className: 'text-nowrap'
+                        className: 'text-nowrap to-link'
                     },
                     {
                         data: 'nama',
