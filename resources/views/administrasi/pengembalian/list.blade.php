@@ -171,7 +171,6 @@
                     <thead>
                         <tr>
                             <th class="text-left">Barang</th>
-                            <th class="text-center">Keterangan</th>
                             <th class="text-center">Qty</th>
                             <th class="text-right">Harga</th>
                             <th class="text-right">Total</th>
@@ -281,6 +280,7 @@
             id: null,
             harga: null,
         };
+        const can_barang_habis_pakai = {{ $can_barang_habis_pakai ? 'true' : 'false' }};
         const can_barang_habis_pakai_update = {{ $can_barang_habis_pakai_update ? 'true' : 'false' }};
         const can_barang_habis_pakai_delete = {{ $can_barang_habis_pakai_delete ? 'true' : 'false' }};
         let can_barang_habis_pakai_action = {{ $can_barang_habis_pakai_action ? 'true' : 'false' }};
@@ -561,6 +561,9 @@
         }
 
         function refresh_bhs_list() {
+            // cek apakah punya izin ke barang habis pakai
+            if (!can_barang_habis_pakai) return true;
+
             $('#bhs-table-body').LoadingOverlay("show");
             $.ajax({
                 method: 'post',
@@ -575,19 +578,21 @@
                 let total = 0;
                 data.forEach(bhs => {
                     total += bhs.total;
-                    const btn_update = can_barang_habis_pakai_update ? `<button type="button" class="btn btn-rounded btn-primary btn-sm me-1" title="Edit Data"onClick="editFunc('${bhs.id}')">
-                                <i class="fas fa-edit"></i> Ubah
+                    const btn_update = can_barang_habis_pakai_update ? `<button type="button" data-toggle="tooltip" class="btn btn-rounded btn-primary btn-sm me-1" title="Edit Data"onClick="editFunc('${bhs.id}')">
+                                <i class="fas fa-edit"></i>
                                 </button>` : '';
-                    const btn_delete = can_barang_habis_pakai_delete ? `<button type="button" class="btn btn-rounded btn-danger btn-sm me-1" title="Delete Data" onClick="deleteFunc('${bhs.id}')">
-                                <i class="fas fa-trash"></i> Hapus
+                    const btn_delete = can_barang_habis_pakai_delete ? `<button type="button" data-toggle="tooltip" class="btn btn-rounded btn-danger btn-sm me-1" title="Delete Data" onClick="deleteFunc('${bhs.id}')">
+                                <i class="fas fa-trash"></i>
                                 </button>` : '';
                     const btn = btn_update + btn_delete;
+
+                    const keterangan = bhs.keterangan ? `<br><small>bhs.keterangan</small>` : '';
                     html += `<tr>
                             <td class="text-left">
                                 ${bhs.nama}<br>
                                 <small>${bhs.kode}</small>
+                                ${keterangan}
                             </td>
-                            <td class="text-center">${bhs.keterangan??''}</td>
                             <td class="text-left">${bhs.qty} ${bhs.satuan}</td>
                             <td class="text-right">Rp. ${format_rupiah(bhs.harga)}</td>
                             <td class="text-right">Rp. ${format_rupiah(bhs.total)}</td>
@@ -597,7 +602,7 @@
 
                 $('#bhs-table-body').html(html);
                 $('#total_bhs').html(format_rupiah(total));
-
+                tooltip_refresh();
             }).fail(($xhr) => {
                 Swal.fire({
                     position: 'top-end',

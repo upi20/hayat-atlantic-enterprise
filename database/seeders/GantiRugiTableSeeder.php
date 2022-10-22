@@ -59,6 +59,26 @@ class GantiRugiTableSeeder extends Seeder
                 'created_at' => '2022-10-22 02:09:52',
                 'updated_at' => '2022-10-22 05:24:30',
             ),
+            2 => 
+            array (
+                'id' => 3,
+                'penyewaan_id' => 12,
+                'customer' => 16,
+                'nama' => 'Barang Digunakan Saat Penyewaan Dengan Surat Jalan Nomor SJ/00008',
+                'keterangan' => 'Tanggal 2022-10-28, Di Daniel Nugraha Lokasi Pontianak',
+                'no_surat' => 3,
+                'jumlah_barang' => 2,
+                'total_qty_barang' => 8,
+                'nominal' => 3780000,
+                'dibayar' => 0,
+                'dibayar_barang' => 0,
+                'sisa' => 3780000,
+                'status' => 1,
+                'updated_by' => NULL,
+                'created_by' => 5,
+                'created_at' => '2022-10-22 11:27:04',
+                'updated_at' => '2022-10-22 13:23:22',
+            ),
         ));
         
         

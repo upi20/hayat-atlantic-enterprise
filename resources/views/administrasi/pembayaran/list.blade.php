@@ -141,23 +141,20 @@
                     </div>
                 </div>
             </div>
-            <div class="table-responsive table-striped">
-                <table class="table table-bordered table-hover border-bottom" id="tbl_main">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Nama</th>
-                            <th>Tanggal</th>
-                            <th>Nominal</th>
-                            <th>Keterangan</th>
-                            <th>Faktur</th>
-                            <th>Diubah</th>
-                            {!! $can_batalkan ? '<th>Aksi</th>' : '' !!}
-                        </tr>
-                    </thead>
-                    <tbody> </tbody>
-                </table>
-            </div>
+            <table class="table table-hover" id="tbl_main">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Nama</th>
+                        <th>Tanggal</th>
+                        <th>Nominal</th>
+                        <th>Faktur</th>
+                        <th>Diubah</th>
+                        {!! $can_batalkan ? '<th>Aksi</th>' : '' !!}
+                    </tr>
+                </thead>
+                <tbody> </tbody>
+            </table>
         </div>
     </div>
 
@@ -444,7 +441,9 @@
                         name: 'nama',
                         render(data, type, full, meta) {
                             const batal = full.batal_tanggal != null;
-                            return `<span class="${batal ?'text-danger' : '' }">${data} ${batal ?'(Dibatalkan)' : '' }</span>`;
+                            const keterangan = full.keterangan ?
+                                `<br><small>${full.keterangan}</small>` : '';
+                            return `<span class="${batal ?'text-danger' : '' }">${data} ${batal ?'(Dibatalkan)' : '' }</span>${keterangan}`;
                         },
                         className: 'text-nowrap'
                     },
@@ -460,11 +459,6 @@
                             return 'Rp. ' + format_rupiah(data);
                         },
                         className: 'text-nowrap text-right'
-                    },
-                    {
-                        data: 'keterangan',
-                        name: 'keterangan',
-                        className: 'text-nowrap'
                     },
                     {
                         data: 'id',

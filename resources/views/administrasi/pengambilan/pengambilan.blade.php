@@ -71,23 +71,18 @@
                     </div>
                 </div>
             </div>
-            <div class="table-responsive table-striped">
-                <table class="table table-bordered table-hover border-bottom" id="tbl_main">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Status</th>
-                            {!! $can_pengambilan ? '<th>Pengambilan</th>' : '' !!}
-                            <th>Detail</th>
-                            <th>Customer</th>
-                            <th>Tanggal Kirim</th>
-                            <th>Tanggal Pakai</th>
-                            <th>Status Penyewaan</th>
-                        </tr>
-                    </thead>
-                    <tbody> </tbody>
-                </table>
-            </div>
+            <table class="table table-hover" id="tbl_main">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Penyewaan</th>
+                        <th>Tanggal Kirim</th>
+                        <th>Tanggal Pakai</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody> </tbody>
+            </table>
         </div>
     </div>
 
@@ -245,49 +240,23 @@
                     }
                 },
                 columns: [{
-                        data: null,
-                        name: 'id',
-                        orderable: false,
-                    },
-                    {
-                        data: 'status_pengambilan',
-                        name: 'status_pengambilan',
-                        render(data, type, full, meta) {
-                            return `<span class="badge bg-${colorClass(data)}">${full.status_pengambilan_str}</span>`;
-                        }
-                    },
-                    ...((can_pengambilan) ? [{
                         data: 'id',
                         name: 'id',
-                        render(data, type, full, meta) {
-                            return `<a href="{{ url(h_prefix_uri('list')) }}/${data}" class="btn btn-rounded btn-success btn-sm me-1" title="Buat Pengambilan">
-                              <i class="fas fa-sign-out-alt"></i> Pengambilan
-                                </a>`;
-                        },
-                        orderable: false,
-                    }, ] : []),
-                    {
-                        data: 'id',
-                        name: 'id',
-                        render(data, type, full, meta) {
-                            return `<button type="button" class="btn btn-rounded btn-info btn-sm me-1" title="Detail Data" onClick="detailFunc('${data}')">
-                                <i class="fas fa-file-alt"></i> Lihat
-                                </button>`;
-                        },
                         orderable: false,
                     },
                     {
                         data: 'customer_nama',
                         name: 'customer_nama',
                         render(data, type, full, meta) {
-                            return `${data}<br><small>${full.lokasi}</small>`;
+                            return `<span class="fw-bold">${data}</span> <br>
+                            <i class="fas fa-circle text-${statusClass(full.status)} me-1"></i>${full.status_str}`;
                         },
-                        // className: 'text-nowrap'
+                        className: `to-link`
                     },
                     {
                         data: 'tanggal_kirim_str',
-                        name: 'tanggal_kirim_str',
-                        className: 'text-nowrap'
+                        name: 'tanggal_kirim',
+                        className: 'text-nowrap to-link'
                     },
                     {
                         data: 'tanggal_pakai_dari_str',
@@ -299,28 +268,38 @@
                                 return `${data ?? ''} s/d ${full.tanggal_pakai_sampai_str ?? ''}`;
                             }
                         },
-                        className: 'text-nowrap'
+                        className: 'text-nowrap to-link'
                     },
                     {
-                        data: 'status',
-                        name: 'status_str',
+                        data: 'status_pengambilan',
+                        name: 'status_pengambilan',
                         render(data, type, full, meta) {
-                            return `<i class="fas fa-circle ${statusClass(data)} me-2"></i>${full.status_str}`;
-                        },
-                        className: 'text-nowrap'
+                            return `<i class="fas fa-circle text-${data == 1 ? 'success':'danger'} me-1"></i>${full.status_pengambilan_str}<br>
+                            <button type="button" data-toggle="tooltip" class="btn btn-rounded btn-info btn-sm me-1" title="Detail Data" onClick="detailFunc('${full.id}')">
+                                <i class="fas fa-file-alt"></i> Detail
+                                </button>`;
+                        }
                     },
                 ],
                 order: [
-                    [1, 'asc']
+                    [2, 'asc']
                 ]
             });
 
             new_table.on('draw.dt', function() {
+                tooltip_refresh();
                 var PageInfo = table_html.DataTable().page.info();
                 new_table.column(0, {
                     page: 'current'
                 }).nodes().each(function(cell, i) {
+                    var id = cell.innerHTML;
                     cell.innerHTML = i + 1 + PageInfo.start;
+                    if (can_pengambilan) {
+                        var link = `window.location.href = '{{ url(h_prefix_uri('list')) }}/${id}'`
+                        var ele = $(cell).parent().find('.to-link');
+                        ele.css('cursor', 'pointer');
+                        ele.attr("onclick", link);
+                    }
                 });
             });
 
@@ -332,12 +311,12 @@
         });
 
         function statusClass(status) {
-            if (status == 1) return 'text-primary';
-            else if (status == 2) return 'text-info';
-            else if (status == 3) return 'text-secondary';
-            else if (status == 4) return 'text-warning';
-            else if (status == 5) return 'text-success';
-            else return 'text-danger';
+            if (status == 1) return 'primary';
+            else if (status == 2) return 'info';
+            else if (status == 3) return 'secondary';
+            else if (status == 4) return 'warning';
+            else if (status == 5) return 'success';
+            else return 'danger';
         }
 
         function detailFunc(id) {
@@ -372,7 +351,7 @@
                 const status_pembayaran =
                     `<span class="badge bg-${data.status_pembayaran == 1 ? 'success':'danger'}">${data.status_pembayaran_str}</span>`;
                 const status_penyewaan =
-                    `<i class="fas fa-circle ${statusClass(data)} me-2"></i>${data.status_str}`;
+                    `<span class="badge bg-${statusClass(data.status)}">${data.status_str}</span>`;
 
                 const tanggal_pakai = data.tanggal_pakai_dari == data.tanggal_pakai_sampai ? data
                     .tanggal_pakai_dari :

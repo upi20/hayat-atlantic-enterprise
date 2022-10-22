@@ -405,6 +405,11 @@ class GantiRugiController extends Controller
         $t_updated_by = 'c';
         $this->query[$c_updated_by] = "$t_updated_by.name";
         $this->query["{$c_updated_by}_alias"] = $c_updated_by;
+
+        // dibatalkan
+        $c_dibatalkan = 'dibatalkan';
+        $this->query[$c_dibatalkan] = "if($table.status = 0,'Ya','Tidak')";
+        $this->query["{$c_dibatalkan}_alias"] = $c_dibatalkan;
         // ========================================================================================================
 
 
@@ -420,7 +425,7 @@ class GantiRugiController extends Controller
             $c_updated_str,
             $c_created_by,
             $c_updated_by,
-            $c_tanggal_str
+            $c_tanggal_str,
         ];
 
         $to_db_raw = array_map(function ($a) use ($sraa) {
@@ -444,13 +449,13 @@ class GantiRugiController extends Controller
         };
 
         // filter ini menurut data model filter
-        // $f = [$c_created_by, $c_updated_by];
-        // // loop filter
-        // foreach ($f as $v) {
-        //     if ($f_c($v)) {
-        //         $model->whereRaw("{$this->query[$v]}='{$f_c($v)}'");
-        //     }
-        // }
+        $f = [$c_dibatalkan];
+        // loop filter
+        foreach ($f as $v) {
+            if ($f_c($v)) {
+                $model->whereRaw("{$this->query[$v]}='{$f_c($v)}'");
+            }
+        }
 
         // filter custom
         $filters = ['updated_by', 'created_by', 'ganti_rugi_id'];
@@ -717,6 +722,11 @@ class GantiRugiController extends Controller
                 limit 1)
         SQL;
         $this->query["{$c_harga}_alias"] = $c_harga;
+
+        // dibatalkan
+        $c_dibatalkan = 'dibatalkan';
+        $this->query[$c_dibatalkan] = "if($table.status = 0,'Ya','Tidak')";
+        $this->query["{$c_dibatalkan}_alias"] = $c_dibatalkan;
         // ========================================================================================================
 
 
@@ -762,13 +772,13 @@ class GantiRugiController extends Controller
         };
 
         // filter ini menurut data model filter
-        // $f = [$c_created_by, $c_updated_by];
-        // // loop filter
-        // foreach ($f as $v) {
-        //     if ($f_c($v)) {
-        //         $model->whereRaw("{$this->query[$v]}='{$f_c($v)}'");
-        //     }
-        // }
+        $f = [$c_dibatalkan];
+        // loop filter
+        foreach ($f as $v) {
+            if ($f_c($v)) {
+                $model->whereRaw("{$this->query[$v]}='{$f_c($v)}'");
+            }
+        }
 
         // filter custom
         $filters = ['updated_by', 'created_by', 'ganti_rugi_id'];

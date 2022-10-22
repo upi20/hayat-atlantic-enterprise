@@ -43,6 +43,18 @@ class BarangHabisPakaiPenguranganTableSeeder extends Seeder
                 'created_at' => '2022-10-18 01:23:24',
                 'updated_at' => '2022-10-18 01:23:24',
             ),
+            2 => 
+            array (
+                'id' => 4,
+                'nama' => 'Barang Digunakan Saat Penyewaan Dengan Surat Jalan Nomor SJ/00008',
+                'keterangan' => 'Tanggal 2022-10-28, Di Daniel Nugraha Lokasi Pontianak',
+                'tanggal' => '2022-10-27 00:00:00',
+                'penyewaan' => 12,
+                'updated_by' => NULL,
+                'created_by' => 5,
+                'created_at' => '2022-10-22 11:27:04',
+                'updated_at' => '2022-10-22 11:27:04',
+            ),
         ));
         
         

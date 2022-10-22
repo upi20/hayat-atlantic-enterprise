@@ -160,6 +160,24 @@ diterima tidak akan ditanggapi.',
                 'created_at' => '2022-10-18 22:25:21',
                 'updated_at' => '2022-10-22 02:09:52',
             ),
+            7 => 
+            array (
+                'id' => 12,
+                'no_surat_jalan' => '8',
+                'penerima' => NULL,
+                'keterangan' => NULL,
+                'tanggal' => '2022-10-27',
+                'tanggal_kembali' => NULL,
+                'status' => 4,
+                'penyewaan' => 12,
+                'konfirmasi_oleh' => NULL,
+                'kirim_oleh' => NULL,
+                'kembali_oleh' => NULL,
+                'updated_by' => 6,
+                'created_by' => 5,
+                'created_at' => '2022-10-22 10:48:11',
+                'updated_at' => '2022-10-22 11:27:04',
+            ),
         ));
         
         

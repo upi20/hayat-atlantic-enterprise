@@ -63,6 +63,17 @@ class BarangHabisPakaiPenguranganListTableSeeder extends Seeder
                 'created_at' => '2022-10-18 01:23:24',
                 'updated_at' => '2022-10-18 01:23:24',
             ),
+            4 => 
+            array (
+                'id' => 5,
+                'qty' => 10,
+                'barang' => 1,
+                'pengurangan' => 4,
+                'updated_by' => NULL,
+                'created_by' => 5,
+                'created_at' => '2022-10-22 11:27:04',
+                'updated_at' => '2022-10-22 11:27:04',
+            ),
         ));
         
         

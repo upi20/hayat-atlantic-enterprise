@@ -147,67 +147,64 @@
             </div>
 
             <div class="card-body">
-                <div class="table-responsive table-striped">
-                    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                        <div class="panel panel-default active mb-2">
-                            <div class="panel-heading " role="tab" id="headingOne1">
-                                <h4 class="panel-title">
-                                    <a role="button" data-bs-toggle="collapse" data-bs-parent="#accordion"
-                                        href="#collapse1" aria-expanded="true" aria-controls="collapse1">
-                                        Filter Data
-                                    </a>
-                                </h4>
-                            </div>
-                            <div id="collapse1" class="panel-collapse collapse" role="tabpanel"
-                                aria-labelledby="headingOne1">
-                                <div class="panel-body">
-                                    <form action="javascript:void(0)" class="ml-md-3 mb-md-3" id="FilterForm">
+                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                    <div class="panel panel-default active mb-2">
+                        <div class="panel-heading " role="tab" id="headingOne1">
+                            <h4 class="panel-title">
+                                <a role="button" data-bs-toggle="collapse" data-bs-parent="#accordion"
+                                    href="#collapse1" aria-expanded="true" aria-controls="collapse1">
+                                    Filter Data
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapse1" class="panel-collapse collapse" role="tabpanel"
+                            aria-labelledby="headingOne1">
+                            <div class="panel-body">
+                                <form action="javascript:void(0)" class="ml-md-3 mb-md-3" id="FilterForm">
 
-                                        <div class="form-group float-start me-2" style="min-width: 300px">
-                                            <label for="created_by">Dibuat Oleh</label>
-                                            <br>
-                                            <select class="form-control" id="created_by" name="created_by"
-                                                style="width: 100%;">
-                                                <option value="" selected>Semua</option>
-                                            </select>
-                                        </div>
+                                    <div class="form-group float-start me-2" style="min-width: 300px">
+                                        <label for="created_by">Dibuat Oleh</label>
+                                        <br>
+                                        <select class="form-control" id="created_by" name="created_by"
+                                            style="width: 100%;">
+                                            <option value="" selected>Semua</option>
+                                        </select>
+                                    </div>
 
-                                        <div class="form-group float-start me-2" style="min-width: 300px">
-                                            <label for="updated_by">Diubah Oleh</label>
-                                            <br>
-                                            <select class="form-control" id="updated_by" name="updated_by"
-                                                style="width: 100%;">
-                                                <option value="" selected>Semua</option>
-                                            </select>
-                                        </div>
+                                    <div class="form-group float-start me-2" style="min-width: 300px">
+                                        <label for="updated_by">Diubah Oleh</label>
+                                        <br>
+                                        <select class="form-control" id="updated_by" name="updated_by"
+                                            style="width: 100%;">
+                                            <option value="" selected>Semua</option>
+                                        </select>
+                                    </div>
 
-                                    </form>
-                                    <div style="clear: both"></div>
-                                    <button type="submit" form="FilterForm" class="btn btn-rounded btn-md btn-info"
-                                        data-toggle="tooltip" title="Refresh Filter Table">
-                                        <i class="bi bi-arrow-repeat"></i> Terapkan filter
-                                    </button>
-                                </div>
+                                </form>
+                                <div style="clear: both"></div>
+                                <button type="submit" form="FilterForm" class="btn btn-rounded btn-md btn-info"
+                                    data-toggle="tooltip" title="Refresh Filter Table">
+                                    <i class="bi bi-arrow-repeat"></i> Terapkan filter
+                                </button>
                             </div>
                         </div>
                     </div>
-                    <table class="table table-bordered table-hover border-bottom" id="tbl_main">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Barang</th>
-                                <th>Qty</th>
-                                <th>Harga</th>
-                                <th>Total Harga</th>
-                                <th>Keterangan</th>
-                                <th>Diubah</th>
-                                {!! $can_barang_delete || $can_barang_update ? '<th>Aksi</th>' : '' !!}
-                            </tr>
-                        </thead>
-                        <tbody> </tbody>
-
-                    </table>
                 </div>
+                <table class="table table-hover" id="tbl_main">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Barang</th>
+                            <th>Qty</th>
+                            <th>Harga</th>
+                            <th>Total Harga</th>
+                            <th>Diubah</th>
+                            {!! $can_barang_delete || $can_barang_update ? '<th>Aksi</th>' : '' !!}
+                        </tr>
+                    </thead>
+                    <tbody> </tbody>
+
+                </table>
             </div>
         </div>
 
@@ -388,7 +385,8 @@
                         Swal.fire({
                             position: 'top-end',
                             icon: 'error',
-                            title: 'Something went wrong',
+                            title: ((data.responseJSON) ? data.responseJSON.message :
+                                'Something went wrong'),
                             showConfirmButton: false,
                             timer: 1500
                         })
@@ -534,7 +532,9 @@
                         name: 'barang_nama',
                         className: 'text-nowrap',
                         render(data, type, full, meta) {
-                            return `${data} <br> <small>${full.barang_kode}</small>`;
+                            const keterangan = full.keterangan ?
+                                `<br><small>${full.keterangan}</small>` : '';
+                            return `<span class="fw-bold">${data}</span><br><small>${full.barang_kode}</small>${keterangan}`;
                         },
                     },
                     {
@@ -559,10 +559,6 @@
                         className: 'text-nowrap text-right'
                     },
                     {
-                        data: 'keterangan',
-                        name: 'keterangan',
-                    },
-                    {
                         data: 'updated',
                         name: 'updated_by_str',
                         render(data, type, full, meta) {
@@ -576,11 +572,11 @@
                         data: 'id',
                         name: 'id',
                         render(data, type, full, meta) {
-                            const btn_update = can_update ? `<button type="button" class="btn btn-rounded btn-primary btn-sm me-1" title="Edit Data" onClick="editFunc('${data}')">
-                                <i class="fas fa-edit"></i> Ubah
+                            const btn_update = can_update ? `<button type="button" data-toggle="tooltip" class="btn btn-rounded btn-primary btn-sm me-1" title="Edit Data" onClick="editFunc('${data}')">
+                                <i class="fas fa-edit"></i>
                                 </button>` : '';
-                            const btn_delete = can_delete ? `<button type="button" class="btn btn-rounded btn-danger btn-sm me-1" title="Delete Data" onClick="deleteFunc('${data}')">
-                                <i class="fas fa-trash"></i> Hapus
+                            const btn_delete = can_delete ? `<button type="button" data-toggle="tooltip" class="btn btn-rounded btn-danger btn-sm me-1" title="Delete Data" onClick="deleteFunc('${data}')">
+                                <i class="fas fa-trash"></i>
                                 </button>` : '';
                             return btn_update + btn_delete;
                         },
@@ -594,6 +590,7 @@
             });
 
             new_table.on('draw.dt', function() {
+                tooltip_refresh();
                 var PageInfo = table_html.DataTable().page.info();
                 new_table.column(0, {
                     page: 'current'

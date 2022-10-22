@@ -1195,6 +1195,102 @@ class PPermissionsTableSeeder extends Seeder
                 'created_at' => '2022-10-10 13:10:04',
                 'updated_at' => '2022-10-10 13:10:04',
             ),
+            147 => 
+            array (
+                'id' => 255,
+                'name' => 'admin.pengembalian.barang_habis_pakai',
+                'guard_name' => 'web',
+                'created_at' => '2022-10-22 11:16:58',
+                'updated_at' => '2022-10-22 11:16:58',
+            ),
+            148 => 
+            array (
+                'id' => 256,
+                'name' => 'admin.pengembalian.barang_habis_pakai.insert',
+                'guard_name' => 'web',
+                'created_at' => '2022-10-22 11:17:03',
+                'updated_at' => '2022-10-22 11:17:03',
+            ),
+            149 => 
+            array (
+                'id' => 257,
+                'name' => 'admin.pengembalian.barang_habis_pakai.update',
+                'guard_name' => 'web',
+                'created_at' => '2022-10-22 11:17:08',
+                'updated_at' => '2022-10-22 11:17:08',
+            ),
+            150 => 
+            array (
+                'id' => 258,
+                'name' => 'admin.pengembalian.barang_habis_pakai.delete',
+                'guard_name' => 'web',
+                'created_at' => '2022-10-22 11:17:13',
+                'updated_at' => '2022-10-22 11:17:13',
+            ),
+            151 => 
+            array (
+                'id' => 259,
+                'name' => 'admin.ganti_rugi',
+                'guard_name' => 'web',
+                'created_at' => '2022-10-22 13:18:29',
+                'updated_at' => '2022-10-22 13:18:29',
+            ),
+            152 => 
+            array (
+                'id' => 260,
+                'name' => 'admin.ganti_rugi.simpan_status',
+                'guard_name' => 'web',
+                'created_at' => '2022-10-22 13:18:38',
+                'updated_at' => '2022-10-22 13:18:38',
+            ),
+            153 => 
+            array (
+                'id' => 261,
+                'name' => 'admin.ganti_rugi.barang',
+                'guard_name' => 'web',
+                'created_at' => '2022-10-22 13:18:46',
+                'updated_at' => '2022-10-22 13:18:46',
+            ),
+            154 => 
+            array (
+                'id' => 262,
+                'name' => 'admin.ganti_rugi.barang.insert',
+                'guard_name' => 'web',
+                'created_at' => '2022-10-22 13:18:53',
+                'updated_at' => '2022-10-22 13:18:53',
+            ),
+            155 => 
+            array (
+                'id' => 263,
+                'name' => 'admin.ganti_rugi.barang.batalkan',
+                'guard_name' => 'web',
+                'created_at' => '2022-10-22 13:19:02',
+                'updated_at' => '2022-10-22 13:19:02',
+            ),
+            156 => 
+            array (
+                'id' => 264,
+                'name' => 'admin.ganti_rugi.uang',
+                'guard_name' => 'web',
+                'created_at' => '2022-10-22 13:21:38',
+                'updated_at' => '2022-10-22 13:21:38',
+            ),
+            157 => 
+            array (
+                'id' => 265,
+                'name' => 'admin.ganti_rugi.uang.batalkan',
+                'guard_name' => 'web',
+                'created_at' => '2022-10-22 13:21:43',
+                'updated_at' => '2022-10-22 13:21:43',
+            ),
+            158 => 
+            array (
+                'id' => 266,
+                'name' => 'admin.ganti_rugi.uang.insert',
+                'guard_name' => 'web',
+                'created_at' => '2022-10-22 13:21:49',
+                'updated_at' => '2022-10-22 13:21:49',
+            ),
         ));
         
         

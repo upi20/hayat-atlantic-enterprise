@@ -4,6 +4,7 @@
 ## Tabel Pengurangan barang ditambah kolom penyewaan
     [x] Barang sewa
     [x] Barang habis pakai
+    [] Detail penyewaan dibuat component
 
 ## Pengembalian barang
     [] Surat pengembalian barang
@@ -24,7 +25,7 @@
     [x] Tombol penyewaan selesai akan ada jika ganti rugi selesai
     [x] di pengadaan jika ada penyewaan id aksi tidak bisa dilakukan
     [x] Ganti rugi tidak bisa di ubah jika penyewaan nya sudah di selesaikan
-    [] Crud perizinan
+    [x] Crud perizinan
     [] List ganti rugi masukan ke detail penyewaan
     [] Filter di ganti rugi detail
 
@@ -39,9 +40,6 @@
     [] Date time str
     [] Semua status tidak menggunakan badge tapi menggunakan circle
     [] Semua pembatalan ditambahkan alasan
-    [] Filter dibatalkan di pembayaran detail
-    [] Filter dibatalkan di ganti rugi detail uang
-    [] Filter dibatalkan di ganti rugi detail barang
 
 ## Frontend
     [] Home
@@ -51,7 +49,7 @@
     [x] Customer
     [x] Barang sewa
     [x] Barang Habis Pakai
-    [] Pengadaan
+    [x] Pengadaan
         [x] Barang sewa
             [x] List
             [x] Detail
@@ -70,6 +68,21 @@
         [x] Jenis Barang
         [x] Satuan Barang
         [x] Jabatan Pegawai
+    [x] Penyewaan
+        [x] List
+        [x] Reciving Order
+    [x] Pembayaran
+        [x] List
+        [x] Detail
+    [x] Pengambilan
+        [x] List
+        [z] Detail
+    [x] Pengembalian
+        [x] List
+        [x] Detail
+    [x] Ganti Rugi
+        x[] Filter uang
+        [] Filter barang
     
 =======================================================================================================================
 ## Penyewaan

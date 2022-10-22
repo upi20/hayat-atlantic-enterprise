@@ -48,25 +48,21 @@
                     </div>
                 </div>
             </div>
-            <div class="table-responsive table-striped">
-                <table class="table table-bordered table-hover border-bottom" id="tbl_main">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Detail</th>
-                            <th>Customer</th>
-                            <th>Barang</th>
-                            <th>Nominal</th>
-                            <th>Dibayar</th>
-                            <th>Sisa</th>
-                            <th>Status</th>
-                            <th>Keterangan</th>
-                        </tr>
-                    </thead>
-                    <tbody> </tbody>
-
-                </table>
-            </div>
+            <table class="table table-hover" id="tbl_main">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Customer</th>
+                        <th>Barang</th>
+                        <th>Nominal</th>
+                        <th>Dibayar</th>
+                        <th>Sisa</th>
+                        <th>Status</th>
+                        <th>Keterangan</th>
+                    </tr>
+                </thead>
+                <tbody> </tbody>
+            </table>
         </div>
     </div>
 @endsection
@@ -124,16 +120,9 @@
                     }
                 },
                 columns: [{
-                        data: null,
-                        name: 'id',
-                        orderable: false,
-                    },
-                    {
                         data: 'id',
                         name: 'id',
-                        render(data, type, full, meta) {
-                            return `<a href="{{ url(h_prefix_uri('detail')) }}/${data}" class="btn btn-success btn-sm"><i class="fas fa-sync me-1"></i> Detail</a>`;
-                        }
+                        orderable: false,
                     },
                     {
                         data: 'customer_nama',
@@ -143,12 +132,13 @@
                             ${data}<br>
                             <small><i class="fas fa-phone-alt me-1"></i> ${full.customer_no_telepon}</small><br>
                             <small><i class="fab fa-whatsapp me-1"></i> ${full.customer_no_whatsapp}</small><br>`;
-                        }
+                        },
+                        className: 'text-nowrap to-link'
                     },
                     {
                         data: 'jumlah_barang',
                         name: 'jumlah_barang',
-                        className: 'text-nowrap text-right'
+                        className: 'text-nowrap text-right to-link'
                     },
                     {
                         data: 'nominal',
@@ -156,7 +146,7 @@
                         render(data, type, full, meta) {
                             return `Rp. ${format_rupiah(data)}`;
                         },
-                        className: 'text-nowrap text-right'
+                        className: 'text-nowrap text-right to-link'
                     },
                     {
                         data: 'dibayar',
@@ -164,7 +154,7 @@
                         render(data, type, full, meta) {
                             return `Rp. ${format_rupiah(Number(data)+Number(full.dibayar_barang))}`;
                         },
-                        className: 'text-nowrap text-right'
+                        className: 'text-nowrap text-right to-link'
                     },
                     {
                         data: 'sisa',
@@ -204,15 +194,22 @@
                     },
                 ],
                 order: [
-                    [7, 'asc']
+                    [6, 'asc']
                 ]
             });
 
             new_table.on('draw.dt', function() {
+                tooltip_refresh();
                 var PageInfo = table_html.DataTable().page.info();
                 new_table.column(0, {
                     page: 'current'
                 }).nodes().each(function(cell, i) {
+                    var id = cell.innerHTML;
+                    var link =
+                        `window.location.href = '{{ url(h_prefix_uri('detail')) }}/${id}'`
+                    var ele = $(cell).parent().find('.to-link');
+                    ele.css('cursor', 'pointer');
+                    ele.attr("onclick", link);
                     cell.innerHTML = i + 1 + PageInfo.start;
                 });
             });

@@ -27,12 +27,12 @@ class BarangHabisPakaiTableSeeder extends Seeder
                 'jenis' => 4,
                 'satuan' => 1,
                 'harga' => 15000,
-                'qty' => 5,
+                'qty' => -5,
                 'keterangan' => 'Ditambahkan bersamaan dengan pembuatan aplikasi',
                 'updated_by' => NULL,
                 'created_by' => NULL,
                 'created_at' => '2022-09-17 22:04:43',
-                'updated_at' => '2022-09-24 17:26:36',
+                'updated_at' => '2022-10-22 11:27:04',
             ),
             1 => 
             array (

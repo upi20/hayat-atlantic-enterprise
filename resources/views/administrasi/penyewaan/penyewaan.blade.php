@@ -90,15 +90,14 @@
                     </div>
                 </div>
             </div>
-            <table class="table text-nowrap text-md-nowrap table-hover table-bordered border-bottom" id="tbl_main">
+            <table class="table table-hover" id="tbl_main">
                 <thead>
                     <tr>
                         <th rowspan="2" class="align-middle text-center">No</th>
-                        <th rowspan="2" class="align-middle text-center">Aksi</th>
                         <th rowspan="2" class="align-middle text-center">Customer</th>
-                        <th rowspan="2" class="align-middle text-center">Status</th>
+                        <th rowspan="2" class="align-middle text-center">Penyewaan</th>
                         <th class="text-center" colspan="3">Tanggal</th>
-                        <th class="text-center" colspan="4">Pembayaran</th>
+                        <th class="text-center" colspan="3">Pembayaran</th>
                         <th rowspan="2" class="align-middle text-center">Diubah</th>
                     </tr>
                     <tr>
@@ -108,7 +107,6 @@
                         <th>Total</th>
                         <th>Dibayar</th>
                         <th>Sisa</th>
-                        <th>Status</th>
                     </tr>
                 </thead>
                 <tbody> </tbody>
@@ -303,67 +301,69 @@
                     }
                 },
                 columns: [{
-                        data: null,
-                        name: 'id',
-                        orderable: false,
-                    },
-                    {
                         data: 'id',
                         name: 'id',
-                        render(data, type, full, meta) {
-                            let br_counter = 0;
-                            const btn_detail = `<button type="button" class="btn btn-rounded btn-info btn-sm me-1 mt-1" title="Detail Data" onClick="detailFunc('${data}')">
-                                <i class="fas fa-file-alt"></i> Deatail
-                                </button> ${(++br_counter %2==0)? '<br>':''}`;
-
-                            const btn_batalkan = (full.status <= 2 && can_batalkan) ? `<button type="button" class="btn btn-rounded btn-warning btn-sm me-1 mt-1" title="Batalkan" onClick="batalFunc('${data}')">
-                                <i class="fas fa-times"></i> Batalkan
-                                </button>${(++br_counter %2==0)? '<br>':''}` : '';
-
-                            const btn_update = (can_reciving_order && full.status <= 2) ? `<a href="{{ route('admin.penyewaan.reciving_order') }}/${data}" class="btn btn-rounded btn-primary btn-sm me-1 mt-1" title="Edit Data">
-                                <i class="fas fa-edit"></i> Ubah
-                                </a>${(++br_counter %2==0)? '<br>':''}` : '';
-
-                            const btn_delete = (can_delete && full.status <= 2) ? `<button type="button" class="btn btn-rounded btn-danger btn-sm me-1 mt-1" title="Delete Data" onClick="deleteFunc('${data}')">
-                                <i class="fas fa-trash"></i> Hapus
-                                </button>${(++br_counter %2==0)? '<br>':''}` : '';
-
-                            const btn_selesai = (can_selesai &&
-                                (full.status_pembayaran == 1) &&
-                                (full.status == 4) &&
-                                (full.status_ganti_rugi == 2)) ? `<br><button type="button" class="btn btn-rounded btn-success btn-sm me-1 mt-1" title="Penyewaan Selesai" onClick="selesaiFunc('${data}')">
-                                <i class="fas fa-check"></i> Set Selesai
-                                </button>` : '';
-
-                            return btn_detail + btn_batalkan + btn_update + btn_delete + btn_selesai;
-                        },
                         orderable: false,
-                        className: 'text-nowrap'
+                        className: 'to-link',
+                        render(data, type, full, meta) {
+                            return (can_reciving_order && full.status <= 2) ? data : '';
+                        },
+                        className: 'to-link'
                     },
                     {
                         data: 'customer_nama',
                         name: 'customer_nama',
                         render(data, type, full, meta) {
-                            return `${data}<br><small>${full.lokasi}</small>`;
-                        }
+                            return `<span data-toggle="tooltip" title="${data}">${data}</span><br>
+                            <small data-toggle="tooltip" title="${full.lokasi}">${full.lokasi}</small>`;
+                        },
+                        className: 'to-link'
                     },
                     {
-                        data: 'status_str',
+                        data: 'id',
                         name: 'status',
                         render(data, type, full, meta) {
-                            return `<span class="badge ${statusClass(full.status)}">${data}</span>`;
+                            const status = `<i class="fas fa-circle me-1 text-${statusClass(full.status)}"></i>
+                                ${full.status_str}`;
+
+                            // button
+                            let br_counter = 0;
+                            const btn_selesai = (can_selesai &&
+                                (full.status_pembayaran == 1) &&
+                                (full.status == 4) &&
+                                (full.status_ganti_rugi == 2)) ? `<br><button type="button" data-toggle="tooltip" class="btn btn-rounded btn-success btn-sm me-1 mt-1" title="Penyewaan Selesai" onClick="selesaiFunc('${data}')">
+                                <i class="fas fa-check"></i>
+                                </button>` : '';
+
+                            const btn_detail = `<button type="button" data-toggle="tooltip" class="btn btn-rounded btn-info btn-sm me-1 mt-1" title="Detail Data" onClick="detailFunc('${data}')">
+                                <i class="fas fa-file-alt"></i>
+                                </button> ${(++br_counter %4==0)? '<br>':''}`;
+
+                            const btn_update = (can_reciving_order && full.status <= 2) ? `<a href="{{ route('admin.penyewaan.reciving_order') }}/${data}"  data-toggle="tooltip" class="btn btn-rounded btn-primary btn-sm me-1 mt-1" title="Edit Data">
+                                <i class="fas fa-edit"></i>
+                                </a>${(++br_counter %4==0)? '<br>':''}` : '';
+
+                            const btn_batalkan = (full.status <= 2 && can_batalkan) ? `<button type="button" data-toggle="tooltip" class="btn btn-rounded btn-warning btn-sm me-1 mt-1" title="Batalkan" onClick="batalFunc('${data}')">
+                                <i class="fas fa-times"></i>
+                                </button>${(++br_counter %4==0)? '<br>':''}` : '';
+
+                            const btn_delete = (can_delete && full.status <= 2) ? `<button type="button" data-toggle="tooltip" class="btn btn-rounded btn-danger btn-sm me-1 mt-1" title="Delete Data" onClick="deleteFunc('${data}')">
+                                <i class="fas fa-trash"></i>
+                                </button>${(++br_counter %4==0)? '<br>':''}` : '';
+
+                            return `${status}<br>${btn_selesai} ${btn_update} ${btn_detail} ${btn_batalkan} ${btn_delete}`;
                         },
                         className: 'text-nowrap'
                     },
                     {
                         data: 'tanggal_order_str',
                         name: 'tanggal_order_str',
-                        className: 'text-nowrap'
+                        className: 'text-nowrap to-link'
                     },
                     {
                         data: 'tanggal_kirim_str',
                         name: 'tanggal_kirim_str',
-                        className: 'text-nowrap'
+                        className: 'text-nowrap to-link'
                     },
                     {
                         data: 'tanggal_pakai_dari',
@@ -375,7 +375,7 @@
                                 return `${full.tanggal_pakai_dari_str ?? ''} s/d <br> ${full.tanggal_pakai_sampai_str ?? ''}`;
                             }
                         },
-                        className: 'text-nowrap'
+                        className: 'text-nowrap to-link'
                     },
                     {
                         data: 'total_harga',
@@ -383,7 +383,7 @@
                         render(data, type, full, meta) {
                             return 'Rp. ' + format_rupiah(data);
                         },
-                        className: 'text-nowrap text-right'
+                        className: 'text-nowrap text-right to-link'
                     },
                     {
                         data: 'dibayar',
@@ -391,23 +391,18 @@
                         render(data, type, full, meta) {
                             return 'Rp. ' + format_rupiah(data);
                         },
-                        className: 'text-nowrap text-right'
+                        className: 'text-nowrap text-right to-link'
                     },
                     {
                         data: 'sisa',
                         name: 'sisa',
                         render(data, type, full, meta) {
-                            return 'Rp. ' + format_rupiah(data);
+                            const sisa = 'Rp. ' + format_rupiah(data);
+                            const status =
+                                `<i class="fas fa-circle me-1 text-${full.status_pembayaran == 1 ? 'success':'danger'}"></i>${full.status_pembayaran_str}`;
+                            return `${sisa}<br>${status}`;
                         },
-                        className: 'text-nowrap text-right'
-                    },
-                    {
-                        data: 'status_pembayaran_str',
-                        name: 'status_pembayaran_str',
-                        render(data, type, full, meta) {
-                            return `<span class="badge bg-${full.status_pembayaran == 1 ? 'success':'danger'}">${data}</span>`;
-                        },
-                        className: 'text-nowrap'
+                        className: 'text-nowrap text-right to-link'
                     },
                     {
                         data: 'updated',
@@ -417,20 +412,31 @@
                             const oleh = full.updated_by_str ?? full.created_by_str
                             return `${oleh}<br><small>${tanggal}</small>`;
                         },
-                        className: 'text-nowrap'
-                    }
+                        className: 'text-nowrap to-link'
+                    },
                 ],
                 order: [
-                    [6, 'desc']
+                    [5, 'desc']
                 ]
             });
 
             new_table.on('draw.dt', function() {
+                tooltip_refresh();
                 var PageInfo = table_html.DataTable().page.info();
                 new_table.column(0, {
                     page: 'current'
                 }).nodes().each(function(cell, i) {
+                    var id = cell.innerHTML;
+                    var link =
+                        `window.location.href = '{{ route('admin.penyewaan.reciving_order') }}/${id}'`
+
                     cell.innerHTML = i + 1 + PageInfo.start;
+
+                    if (id != '') {
+                        var ele = $(cell).parent().find('.to-link');
+                        ele.css('cursor', 'pointer');
+                        ele.attr("onclick", link);
+                    }
                 });
             });
 
@@ -599,12 +605,12 @@
         }
 
         function statusClass(status) {
-            if (status == 1) return 'bg-primary';
-            else if (status == 2) return 'bg-info';
-            else if (status == 3) return 'bg-secondary';
-            else if (status == 4) return 'bg-warning';
-            else if (status == 5) return 'bg-success';
-            else return 'bg-danger';
+            if (status == 1) return 'primary';
+            else if (status == 2) return 'info';
+            else if (status == 3) return 'secondary';
+            else if (status == 4) return 'warning';
+            else if (status == 5) return 'success';
+            else return 'danger';
         }
 
         function detailFunc(id) {
@@ -639,7 +645,7 @@
                 const status_pembayaran =
                     `<span class="badge bg-${data.status_pembayaran == 1 ? 'success':'danger'}">${data.status_pembayaran_str}</span>`;
                 const status_penyewaan =
-                    `<span class="badge ${statusClass(data.status)}">${data.status_str}</span>`;
+                    `<span class="badge bg-${statusClass(data.status)}">${data.status_str}</span>`;
 
                 const tanggal_pakai = data.tanggal_pakai_dari == data.tanggal_pakai_sampai ? data
                     .tanggal_pakai_dari :

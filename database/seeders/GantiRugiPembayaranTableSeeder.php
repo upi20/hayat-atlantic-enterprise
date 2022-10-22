@@ -55,6 +55,24 @@ class GantiRugiPembayaranTableSeeder extends Seeder
                 'created_at' => '2022-10-22 05:14:38',
                 'updated_at' => '2022-10-22 05:14:38',
             ),
+            2 => 
+            array (
+                'id' => 3,
+                'ganti_rugi_id' => 3,
+                'nama' => 'Pertama',
+                'no_surat' => 3,
+                'tanggal' => '2022-10-22',
+                'oleh' => 'Daniel Nugraha',
+                'keterangan' => NULL,
+                'nominal' => 500000,
+                'pembayaran_sebelumnya' => 0,
+                'status' => 0,
+                'pembatalan_alasan' => 'Uang kurang',
+                'updated_by' => 5,
+                'created_by' => 5,
+                'created_at' => '2022-10-22 13:22:40',
+                'updated_at' => '2022-10-22 13:23:22',
+            ),
         ));
         
         

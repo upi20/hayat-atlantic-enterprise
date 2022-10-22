@@ -218,7 +218,6 @@
             $('#filter_status_pembayaran').select2();
 
             // datatable ====================================================================================
-            const to_link = can_pembayaran ? 'to-link' : '';
             const new_table = table_html.DataTable({
                 searchDelay: 500,
                 processing: true,
@@ -250,7 +249,7 @@
                             return `<span class="fw-bold">${data}</span> <br>
                             <i class="fas fa-circle text-${statusClass(full.status)} me-1"></i>${full.status_str}`;
                         },
-                        className: `${to_link}`
+                        className: `to-link`
                     },
                     {
                         data: 'total_harga',
@@ -258,7 +257,7 @@
                         render(data, type, full, meta) {
                             return 'Rp. ' + format_rupiah(data);
                         },
-                        className: `text-nowrap text-right ${to_link}`
+                        className: `text-nowrap text-right to-link`
                     },
                     {
                         data: 'dibayar',
@@ -266,7 +265,7 @@
                         render(data, type, full, meta) {
                             return 'Rp. ' + format_rupiah(data);
                         },
-                        className: `text-nowrap text-right ${to_link}`
+                        className: `text-nowrap text-right to-link`
                     },
                     {
                         data: 'sisa',
@@ -274,7 +273,7 @@
                         render(data, type, full, meta) {
                             return 'Rp. ' + format_rupiah(data);
                         },
-                        className: `text-nowrap text-right ${to_link}`
+                        className: `text-nowrap text-right to-link`
                     },
                     {
                         data: 'tanggal_pakai_dari_str',
@@ -286,7 +285,7 @@
                                 return `${data ?? ''} s/d ${full.tanggal_pakai_sampai_str ?? ''}`;
                             }
                         },
-                        className: `text-nowrap ${to_link}`
+                        className: `text-nowrap to-link`
                     },
                     {
                         data: 'status_pembayaran',
@@ -306,23 +305,19 @@
             });
 
             new_table.on('draw.dt', function() {
+                tooltip_refresh();
                 var PageInfo = table_html.DataTable().page.info();
-                var get = table_html.DataTable().data();
-                var datas = [];
-                for (var i = 0; i < get.length; i++) datas.push(get[i]);
-
                 new_table.column(0, {
                     page: 'current'
                 }).nodes().each(function(cell, i) {
-                    var column = 4;
-                    var id = cell.innerHTML;
-                    var link = `window.location.href = '{{ url(h_prefix_uri('list')) }}/${id}'`
-                    var data = datas.find(e => e.id == id);
-
                     cell.innerHTML = i + 1 + PageInfo.start;
-                    var ele = $(cell).parent().find('.to-link');
-                    ele.css('cursor', 'pointer');
-                    ele.attr("onclick", link);
+                    if (can_pembayaran) {
+                        var id = cell.innerHTML;
+                        var link = `window.location.href = '{{ url(h_prefix_uri('list')) }}/${id}'`
+                        var ele = $(cell).parent().find('.to-link');
+                        ele.css('cursor', 'pointer');
+                        ele.attr("onclick", link);
+                    }
                 });
             });
 

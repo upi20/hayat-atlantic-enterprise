@@ -164,9 +164,9 @@
                                 <form action="javascript:void(0)" class="ml-md-3 mb-md-3" id="UangFilterForm">
 
                                     <div class="form-group float-start me-2" style="min-width: 300px">
-                                        <label for="dibatalkan">Dibatalkan</label>
+                                        <label for="uang_dibatalkan">Dibatalkan</label>
                                         <br>
-                                        <select class="form-control" id="dibatalkan" name="dibatalkan"
+                                        <select class="form-control" id="uang_dibatalkan" name="uang_dibatalkan"
                                             style="width: 100%;">
                                             <option value="" selected>Semua</option>
                                             <option value="Ya">Ya</option>
@@ -358,12 +358,12 @@
                         <div id="barang_filter" class="panel-collapse collapse" role="tabpanel"
                             aria-labelledby="barang_heading_filter">
                             <div class="panel-body">
-                                <form action="javascript:void(0)" class="ml-md-3 mb-md-3" id="UangFilterForm">
+                                <form action="javascript:void(0)" class="ml-md-3 mb-md-3" id="BarangFilterForm">
 
                                     <div class="form-group float-start me-2" style="min-width: 300px">
-                                        <label for="dibatalkan">Dibatalkan</label>
+                                        <label for="barang_dibatalkan">Dibatalkan</label>
                                         <br>
-                                        <select class="form-control" id="dibatalkan" name="dibatalkan"
+                                        <select class="form-control" id="barang_dibatalkan" name="barang_dibatalkan"
                                             style="width: 100%;">
                                             <option value="" selected>Semua</option>
                                             <option value="Ya">Ya</option>
@@ -391,7 +391,7 @@
 
                                 </form>
                                 <div style="clear: both"></div>
-                                <button type="submit" form="UangFilterForm" class="btn btn-rounded btn-md btn-info"
+                                <button type="submit" form="BarangFilterForm" class="btn btn-rounded btn-md btn-info"
                                     data-toggle="tooltip" title="Refresh Filter Table">
                                     <i class="bi bi-arrow-repeat"></i> Terapkan filter
                                 </button>
@@ -640,6 +640,40 @@
             // ========================================================================================================
 
             $(document).ready(() => {
+                $('#uang_dibatalkan').select2();
+
+                $('#uang_created_by').select2({
+                    ajax: {
+                        url: "{{ route('member_select2') }}",
+                        type: "POST",
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        data: function(params) {
+                            var query = {
+                                search: params.term,
+                            }
+                            return query;
+                        }
+                    }
+                });
+
+                $('#uang_updated_by').select2({
+                    ajax: {
+                        url: "{{ route('member_select2') }}",
+                        type: "POST",
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        data: function(params) {
+                            var query = {
+                                search: params.term,
+                            }
+                            return query;
+                        }
+                    }
+                });
+
                 $('#uang_nominal').change(UangRefreshNominal);
                 $('#uang_nominal').keyup(UangRefreshNominal);
                 $('#uang_nominal').click(UangRefreshNominal);
@@ -855,7 +889,7 @@
                     });
                 });
 
-                $('#FilterForm').submit(function(e) {
+                $('#UangFilterForm').submit(function(e) {
                     e.preventDefault();
                     var oTable = table_uang.dataTable();
                     oTable.fnDraw(false);
@@ -905,6 +939,40 @@
             }
 
             $(document).ready(() => {
+                $('#barang_dibatalkan').select2();
+
+                $('#barang_created_by').select2({
+                    ajax: {
+                        url: "{{ route('member_select2') }}",
+                        type: "POST",
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        data: function(params) {
+                            var query = {
+                                search: params.term,
+                            }
+                            return query;
+                        }
+                    }
+                });
+
+                $('#barang_updated_by').select2({
+                    ajax: {
+                        url: "{{ route('member_select2') }}",
+                        type: "POST",
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        data: function(params) {
+                            var query = {
+                                search: params.term,
+                            }
+                            return query;
+                        }
+                    }
+                });
+
                 $('#barang_nominal').change(BarangRefreshNominal);
                 $('#barang_nominal').keyup(BarangRefreshNominal);
                 $('#barang_nominal').click(BarangRefreshNominal);
@@ -1136,7 +1204,7 @@
                     });
                 });
 
-                $('#FilterForm').submit(function(e) {
+                $('#BarangFilterForm').submit(function(e) {
                     e.preventDefault();
                     var oTable = table_barang.dataTable();
                     oTable.fnDraw(false);
