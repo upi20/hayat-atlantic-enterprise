@@ -189,6 +189,7 @@ class BarangHabisPakaiListController extends Controller
         $t_user = User::tableName;
         $table = PenguranganList::tableName;
         $t_barang = HabisPakai::tableName;
+        $t_satuan = Satuan::tableName;
 
         // cusotm query
         // ========================================================================================================
@@ -262,10 +263,12 @@ class BarangHabisPakaiListController extends Controller
         // Select =====================================================================================================
         $model = PenguranganList::select(array_merge([
             DB::raw("$table.*"),
+            DB::raw("$t_satuan.nama as satuan"),
         ], $to_db_raw))
             ->leftJoin("$t_user as $t_created_by", "$t_created_by.id", '=', "$table.created_by")
             ->leftJoin("$t_user as $t_updated_by", "$t_updated_by.id", '=', "$table.updated_by")
-            ->leftJoin($t_barang, "$t_barang.id", '=', "$table.barang");
+            ->leftJoin($t_barang, "$t_barang.id", '=', "$table.barang")
+            ->leftJoin($t_satuan, "$t_satuan.id", '=', "$t_barang.satuan");
 
         // Filter =====================================================================================================
         // filter check
@@ -295,13 +298,38 @@ class BarangHabisPakaiListController extends Controller
 
         // ========================================================================================================
         $datatable = Datatables::of($model)->addIndexColumn();
-        foreach ($model_filter as $v) {
-            // custom pencarian
-            $datatable->filterColumn($this->query["{$v}_alias"], function ($query, $keyword) use ($v) {
-                $query->whereRaw("({$this->query[$v]} like '%$keyword%')");
-            });
-        }
 
+        // search
+        // ========================================================================================================
+        $query_filter = $this->query;
+        $datatable->filter(function ($query) use ($model_filter, $query_filter, $table) {
+            $search = request('search');
+            $search = isset($search['value']) ? $search['value'] : null;
+            if ((is_null($search) || $search == '') && count($model_filter) > 0) return false;
+
+            // tambah pencarian
+            $search_add = [
+                "$table.nama",
+                "$table.keterangan",
+                "$table.tanggal",
+                "$table.penyewaan",
+                "$table.updated_by",
+                "$table.created_by",
+            ];
+
+            $search_arr = array_merge($model_filter, $search_add);
+
+            // pake or where
+            $search_str = "(";
+            foreach ($search_arr as $k => $v) {
+                $or = (($k + 1) < count($search_arr)) ? 'or' : '';
+                $column = isset($query_filter[$v]) ? $query_filter[$v] : $v;
+                $search_str .= "$column like '%$search%' $or ";
+            }
+
+            $search_str .= ")";
+            $query->whereRaw($search_str);
+        });
         // create datatable
         return $datatable->make(true);
     }

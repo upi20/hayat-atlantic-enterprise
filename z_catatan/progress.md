@@ -25,7 +25,8 @@
     [x] di pengadaan jika ada penyewaan id aksi tidak bisa dilakukan
     [x] Ganti rugi tidak bisa di ubah jika penyewaan nya sudah di selesaikan
     [] Crud perizinan
-    [] Detail masukan ke detail penyewaan
+    [] List ganti rugi masukan ke detail penyewaan
+    [] Filter di ganti rugi detail
 
 ## Dashboard
     [] Penyewaan Range tanggal Default Bulan sekarang dan Berdasarkan status
@@ -46,6 +47,30 @@
     [] Home
     [] List Data barang Sewa
 
+## Redesign table
+    [x] Customer
+    [x] Barang sewa
+    [x] Barang Habis Pakai
+    [] Pengadaan
+        [x] Barang sewa
+            [x] List
+            [x] Detail
+        [x] Barang Habis Pakai
+            [x] List
+            [x] Detail
+    [x] Pengurangan
+        [x] Barang sewa
+            [x] List
+            [x] Detail
+        [x] Barang Habis Pakai
+            [x] List
+            [x] Detail
+    [x] Karyawan
+    [x] Data Master 
+        [x] Jenis Barang
+        [x] Satuan Barang
+        [x] Jabatan Pegawai
+    
 =======================================================================================================================
 ## Penyewaan
     [x] CRUD penyewaan

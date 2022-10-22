@@ -59,24 +59,24 @@
                     </div>
                 </div>
             </div>
-            <div class="table-responsive table-striped">
-                <table class="table table-bordered table-hover border-bottom" id="tbl_main">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Nama</th>
-                            <th>Tanggal</th>
-                            <th>Brg. Jml.</th>
-                            <th>Brg. Qty</th>
-                            <th>Diubah Oleh</th>
-                            <th>Diubah Tgl.</th>
-                            {!! $can_delete || $can_update ? '<th>Aksi</th>' : '' !!}
-                        </tr>
-                    </thead>
-                    <tbody> </tbody>
+            <table class="table table-hover" id="tbl_main">
+                <thead>
+                    <tr>
+                        <th rowspan="2" class="align-middle text-center">No</th>
+                        <th rowspan="2" class="align-middle text-center">Nama</th>
+                        <th rowspan="2" class="align-middle text-center">Tanggal</th>
+                        <th class="text-center" colspan="2">Barang</th>
+                        <th rowspan="2" class="align-middle text-center">Diubah</th>
+                        {!! $can_delete || $can_update ? '<th rowspan="2" class="align-middle text-center">Aksi</th>' : '' !!}
+                    </tr>
+                    <tr>
+                        <th>Jumlah</th>
+                        <th>Qty Total</th>
+                    </tr>
+                </thead>
+                <tbody> </tbody>
 
-                </table>
-            </div>
+            </table>
         </div>
     </div>
     <!-- End Row -->
@@ -199,26 +199,34 @@
                     }
                 },
                 columns: [{
-                        data: null,
+                        data: 'id',
                         name: 'id',
                         orderable: false,
+                        className: "to-link"
                     },
                     {
                         data: 'nama',
                         name: 'nama',
                         render(data, type, full, meta) {
-                            return `${data}<br><small>${full.keterangan}</small>`;
+                            const keterangan = full.keterangan ?
+                                `<br><small data-toggle="tooltip" title="${full.keterangan}">${full.keterangan}</small>` :
+                                ''
+                            return `<span class="fw-bold" data-toggle="tooltip" title="${data}">${data}</span> ${keterangan}`;
                         },
+                        className: 'to-link',
                     },
                     {
                         data: 'tanggal_str',
-                        name: 'tanggal_str',
-                        className: 'text-nowrap',
+                        name: 'tanggal',
+                        render(data, type, full, meta) {
+                            return parse_tanggal_waktu_str(data);
+                        },
+                        className: 'text-nowrap to-link',
                     },
                     {
                         data: 'barang_jumlah',
                         name: 'barang_jumlah',
-                        className: 'text-nowrap text-right'
+                        className: 'text-nowrap text-right to-link'
                     },
                     {
                         data: 'barang_total_qty',
@@ -226,54 +234,59 @@
                         render(data, type, full, meta) {
                             return data ?? 0;
                         },
-                        className: 'text-nowrap text-right'
-                    },
-                    {
-                        data: 'updated_by_str',
-                        name: 'updated_by_str',
-                        render(data, type, full, meta) {
-                            return data ?? full.created_by_str;
-                        },
-                        className: 'text-nowrap',
+                        className: 'text-nowrap text-right to-link'
                     },
                     {
                         data: 'updated',
-                        name: 'updated',
+                        name: 'updated_by_str',
                         render(data, type, full, meta) {
-                            return data ?? full.created;
+                            const tanggal = data ?? full.created;
+                            const oleh = full.updated_by_str ?? full.created_by_str
+                            return `${oleh ??''}<br><small>${tanggal}</small>`;
                         },
-                        className: 'text-nowrap',
+                        className: 'text-nowrap to-link'
                     },
                     ...(can_update || can_delete ? [{
                         data: 'id',
                         name: 'id',
                         render(data, type, full, meta) {
-                            const btn_barang = can_barang_list ? `<a class="btn btn-rounded btn-info btn-sm me-1" title="List Data Barang" href="{{ url(h_prefix_uri('list')) }}/${data}">
-                              <i class="fas fa-file-alt"></i> Barang
-                                </a>` : '';
-                            const btn_update = can_update && full.penyewaan == null ? `<button type="button" class="btn btn-rounded btn-primary btn-sm me-1" title="Edit Data" onClick="editFunc('${data}')">
-                                <i class="fas fa-edit"></i> Ubah
+                            const can_edit = full.penyewaan == null;
+                            const btn_update = can_update && can_edit ? `<button type="button" data-toggle="tooltip" class="btn btn-rounded btn-primary btn-sm me-1" title="Edit Data" onClick="editFunc('${data}')">
+                                <i class="fas fa-edit"></i>
                                 </button>` : '';
-                            const btn_delete = can_delete && full.penyewaan == null ? `<button type="button" class="btn btn-rounded btn-danger btn-sm me-1" title="Delete Data" onClick="deleteFunc('${data}')">
-                                <i class="fas fa-trash"></i> Hapus
+                            const btn_delete = can_delete && can_edit ? `<button type="button" data-toggle="tooltip" class="btn btn-rounded btn-danger btn-sm me-1" title="Delete Data" onClick="deleteFunc('${data}')">
+                                <i class="fas fa-trash"></i>
                                 </button>` : '';
-                            return btn_barang + btn_update + btn_delete;
+                            return btn_update + btn_delete;
                         },
                         orderable: false,
                         className: 'text-nowrap',
                     }] : []),
                 ],
                 order: [
-                    [1, 'asc']
+                    [2, 'desc']
                 ]
             });
 
             new_table.on('draw.dt', function() {
+                tooltip_refresh();
                 var PageInfo = table_html.DataTable().page.info();
+                var get = table_html.DataTable().data();
+                var datas = [];
+                for (var i = 0; i < get.length; i++) datas.push(get[i]);
+
                 new_table.column(0, {
                     page: 'current'
                 }).nodes().each(function(cell, i) {
+                    var column = 4;
+                    var id = cell.innerHTML;
+                    var link = `window.location.href = '{{ url(h_prefix_uri('list')) }}/${id}'`
+                    var data = datas.find(e => e.id == id);
+
                     cell.innerHTML = i + 1 + PageInfo.start;
+                    var ele = $(cell).parent().find('.to-link');
+                    ele.css('cursor', 'pointer');
+                    ele.attr("onclick", link);
                 });
             });
 

@@ -58,24 +58,19 @@
                     </div>
                 </div>
             </div>
-            <div class="table-responsive table-striped">
-                <table class="table table-bordered table-hover border-bottom" id="tbl_main">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Nama</th>
-                            <th>No Telepon</th>
-                            <th>No Whatsapp</th>
-                            <th>Alamat</th>
-                            <th>Diubah Oleh</th>
-                            <th>Diubah Tgl.</th>
-                            {!! $can_delete || $can_update ? '<th>Aksi</th>' : '' !!}
-                        </tr>
-                    </thead>
-                    <tbody> </tbody>
 
-                </table>
-            </div>
+            <table class="table table-hover " id="tbl_main">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Nama</th>
+                        <th>Kontak</th>
+                        <th>Diubah</th>
+                        {!! $can_delete || $can_update ? '<th>Aksi</th>' : '' !!}
+                    </tr>
+                </thead>
+                <tbody> </tbody>
+            </table>
         </div>
     </div>
     <!-- End Row -->
@@ -209,43 +204,39 @@
                     },
                     {
                         data: 'nama',
-                        name: 'nama'
+                        name: 'nama',
+                        render(data, type, full, meta) {
+                            return `<span class="fw-bold">${data}</span><br>
+                            <small>${full.alamat}</small>`;
+                        }
                     },
                     {
                         data: 'no_telepon',
-                        name: 'no_telepon'
-                    },
-                    {
-                        data: 'no_whatsapp',
-                        name: 'no_whatsapp'
-                    },
-                    {
-                        data: 'alamat',
-                        name: 'alamat'
-                    },
-                    {
-                        data: 'updated_by_str',
-                        name: 'updated_by_str',
+                        name: 'no_telepon',
                         render(data, type, full, meta) {
-                            return data ?? full.created_by_str;
+                            return `<i class="fas fa-phone me-1"></i>${data}<br>
+                            <i class="fab fa-whatsapp me-1"></i>${full.no_whatsapp}`;
                         }
                     },
                     {
                         data: 'updated',
-                        name: 'updated',
+                        name: 'updated_by_str',
                         render(data, type, full, meta) {
-                            return data ?? full.created;
-                        }
+                            const tanggal = data ?? full.created;
+                            const oleh = full.updated_by_str ?? full.created_by_str
+                            return `${oleh}<br><small>${tanggal}</small>`;
+                        },
+                        className: 'text-nowrap'
                     },
                     ...(can_update || can_delete ? [{
                         data: 'id',
                         name: 'id',
                         render(data, type, full, meta) {
-                            const btn_update = can_update ? `<button type="button" class="btn btn-rounded btn-primary btn-sm me-1" title="Edit Data" onClick="editFunc('${data}')">
-                                <i class="fas fa-edit"></i> Ubah
+                            const btn_update = can_update ? `<button type="button" data-toggle="tooltip" class="btn btn-rounded btn-primary btn-sm me-1" title="Edit Data" onClick="editFunc('${data}')">
+                                <i class="fas fa-edit"></i>
                                 </button>` : '';
-                            const btn_delete = can_delete ? `<button type="button" class="btn btn-rounded btn-danger btn-sm me-1" title="Delete Data" onClick="deleteFunc('${data}')">
-                                <i class="fas fa-trash"></i> Hapus
+                            const btn_delete = can_delete ? `<button type="button" data-toggle="tooltip" class="btn btn-rounded btn-danger btn-sm me-1" title="Delete Data" onClick="deleteFunc('${data}')">
+                                <i class="fas fa-trash"></i>
                                 </button>` : '';
                             return btn_update + btn_delete;
                         },
@@ -264,6 +255,7 @@
                 }).nodes().each(function(cell, i) {
                     cell.innerHTML = i + 1 + PageInfo.start;
                 });
+                tooltip_refresh();
             });
 
             $('#FilterForm').submit(function(e) {

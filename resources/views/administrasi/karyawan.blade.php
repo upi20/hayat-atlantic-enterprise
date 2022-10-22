@@ -89,26 +89,20 @@
                     </div>
                 </div>
             </div>
-            <div class="table-responsive table-striped">
-                <table class="table table-bordered table-hover border-bottom" id="tbl_main">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Name</th>
-                            <th>NIK</th>
-                            <th>Jenis Kelamin</th>
-                            <th>Email</th>
-                            <th>Jabatan</th>
-                            <th>Active</th>
-                            <th>Diubah Oleh</th>
-                            <th>Diubah Tgl.</th>
-                            {!! $can_delete || $can_update ? '<th>Action</th>' : '' !!}
-                        </tr>
-                    </thead>
-                    <tbody> </tbody>
-
-                </table>
-            </div>
+            <table class="table table-hover" id="tbl_main">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>NIK</th>
+                        <th>Nama</th>
+                        <th>Jenis Kelamin</th>
+                        <th>Email</th>
+                        <th>Diubah</th>
+                        {!! $can_delete || $can_update ? '<th>Action</th>' : '' !!}
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
         </div>
     </div>
 
@@ -281,13 +275,19 @@
                         orderable: false,
                     },
                     {
-                        data: 'name',
-                        name: 'name',
+                        data: 'nik',
+                        name: 'nik',
                         className: 'text-nowrap',
                     },
                     {
-                        data: 'nik',
-                        name: 'nik',
+                        data: 'name',
+                        name: 'name',
+                        render(data, type, full, meta) {
+                            const class_el = full.active == 1 ? 'success' :
+                                'danger';
+                            return `<span class="fw-bold" data-toggle="tooltip" title="Akun Karyawan ${full.active_str}" ><i class="fas fa-circle me-1 text-${class_el}"></i> ${data}</span><br>
+                            <small>${full.role_str}</small>`;
+                        },
                         className: 'text-nowrap',
                     },
                     {
@@ -302,46 +302,25 @@
                         orderable: false
                     },
                     {
-                        data: 'role_str',
-                        name: 'role_str',
-                        className: 'text-nowrap',
-                    },
-                    {
-                        data: 'active_str',
-                        name: 'active',
-                        render(data, type, full, meta) {
-                            const class_el = full.active == 1 ? 'badge bg-success' :
-                                'badge bg-danger';
-                            return `<span class="${class_el} p-2">${full.active_str}</span>`;
-                        },
-                        className: 'text-nowrap',
-                    },
-                    {
-                        data: 'updated_by_str',
+                        data: 'updated',
                         name: 'updated_by_str',
                         render(data, type, full, meta) {
-                            return data ?? full.created_by_str;
+                            const tanggal = data ?? full.created;
+                            const oleh = full.updated_by_str ?? full.created_by_str
+                            return `${oleh ??''}<br><small>${tanggal}</small>`;
                         },
-                        className: 'text-nowrap'
-                    },
-                    {
-                        data: 'updated',
-                        name: 'updated',
-                        render(data, type, full, meta) {
-                            return data ?? full.created;
-                        },
-                        className: 'text-nowrap'
+                        className: 'text-nowrap to-link'
                     },
                     ...((can_update || can_delete) ? [{
                         data: 'id',
                         name: 'id',
                         render(data, type, full, meta) {
-                            const btn_update = can_update ? `<button type="button" class="btn btn-rounded btn-primary btn-sm me-1" title="Edit Data"
+                            const btn_update = can_update ? `<button type="button" data-toggle="tooltip" class="btn btn-rounded btn-primary btn-sm me-1" title="Edit Data"
                                 onClick="editFunc('${full.id}')">
-                                <i class="fas fa-edit"></i> Ubah
+                                <i class="fas fa-edit"></i>
                                 </button>` : '';
-                            const btn_delete = can_delete ? `<button type="button" class="btn btn-rounded btn-danger btn-sm me-1" title="Delete Data" onClick="deleteFunc('${data}')">
-                                <i class="fas fa-trash"></i> Hapus
+                            const btn_delete = can_delete ? `<button type="button" data-toggle="tooltip" class="btn btn-rounded btn-danger btn-sm me-1" title="Delete Data" onClick="deleteFunc('${data}')">
+                                <i class="fas fa-trash"></i>
                                 </button>` : '';
                             return btn_update + btn_delete;
                         },
@@ -350,11 +329,12 @@
                     }] : []),
                 ],
                 order: [
-                    [1, 'asc']
+                    [2, 'asc']
                 ]
             });
 
             new_table.on('draw.dt', function() {
+                tooltip_refresh();
                 var PageInfo = table_html.DataTable().page.info();
                 new_table.column(0, {
                     page: 'current'

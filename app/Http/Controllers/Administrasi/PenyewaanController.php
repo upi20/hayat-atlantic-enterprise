@@ -866,7 +866,7 @@ class PenyewaanController extends Controller
                 $penyewaan = $model;
                 $pengadaan = new Pengadaan();
                 $pengadaan->nama = "Ganti Rugi Barang Saat Penyewaan Dengan Surat Jalan Nomor $no_surat_jalan";
-                $pengadaan->tanggal = date("Y-m-d");
+                $pengadaan->tanggal = date("Y-m-d H:i:s");
                 $tanggal_penyewaan = $penyewaan->tanggal_pakai_dari == $penyewaan->tanggal_pakai_sampai
                     ? $penyewaan->tanggal_pakai_dari :
                     "$penyewaan->tanggal_pakai_dari s/d $penyewaan->tanggal_pakai_sampai";

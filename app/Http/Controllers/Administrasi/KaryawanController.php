@@ -169,7 +169,7 @@ class KaryawanController extends Controller
 
         $c_active = 'active_str';
         $this->query[$c_active] = <<<SQL
-            IF($table.active = 1, 'Yes', 'No')
+            IF($table.active = 1, 'Aktif', 'Tidak Aktif')
             SQL;
         $this->query["{$c_active}_alias"] = $c_active;
 
@@ -234,13 +234,38 @@ class KaryawanController extends Controller
 
         // ========================================================================================================
         $datatable = Datatables::of($model)->addIndexColumn();
-        foreach ($model_filter as $v) {
-            // custom pencarian
-            $datatable->filterColumn($this->query["{$v}_alias"], function ($query, $keyword) use ($v) {
-                $query->whereRaw("({$this->query[$v]} like '%$keyword%')");
-            });
-        }
 
+        // search
+        // ========================================================================================================
+        $query_filter = $this->query;
+        $datatable->filter(function ($query) use ($model_filter, $query_filter, $table) {
+            $search = request('search');
+            $search = isset($search['value']) ? $search['value'] : null;
+            if ((is_null($search) || $search == '') && count($model_filter) > 0) return false;
+
+            // tambah pencarian
+            $search_add = [
+                "$table.name",
+                "$table.email",
+                "$table.nik",
+                "$table.jenis_kelamin",
+                "$table.updated_by",
+                "$table.created_by",
+            ];
+
+            $search_arr = array_merge($model_filter, $search_add);
+
+            // pake or where
+            $search_str = "(";
+            foreach ($search_arr as $k => $v) {
+                $or = (($k + 1) < count($search_arr)) ? 'or' : '';
+                $column = isset($query_filter[$v]) ? $query_filter[$v] : $v;
+                $search_str .= "$column like '%$search%' $or ";
+            }
+
+            $search_str .= ")";
+            $query->whereRaw($search_str);
+        });
         // create datatable
         return $datatable->make(true);
     }

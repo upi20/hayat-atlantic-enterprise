@@ -83,27 +83,21 @@
                     </div>
                 </div>
             </div>
-            <div class="table-responsive table-striped">
-                <table class="table table-bordered table-hover border-bottom" id="tbl_main">
-                    <thead>
-                        <tr>
-                            <th class="text-nowrap text-center">No</th>
-                            <th class="text-nowrap text-center">Nama</th>
-                            <th class="text-nowrap text-center">Kode</th>
-                            <th class="text-nowrap text-center">Jenis</th>
-                            <th class="text-nowrap text-center">Satuan</th>
-                            <th class="text-nowrap text-center">Harga</th>
-                            <th class="text-nowrap text-center">Jumlah</th>
-                            <th class="text-nowrap text-center">Keterangan</th>
-                            <th class="text-nowrap text-center">Diubah Oleh</th>
-                            <th class="text-nowrap text-center">Diubah Tgl.</th>
-                            {!! $can_delete || $can_update ? '<th>Aksi</th>' : '' !!}
-                        </tr>
-                    </thead>
-                    <tbody> </tbody>
+            <table class="table table-hover" id="tbl_main">
+                <thead>
+                    <tr>
+                        <th class="text-nowrap text-center">No</th>
+                        <th class="text-nowrap text-center">Nama</th>
+                        <th class="text-nowrap text-center">Harga</th>
+                        <th class="text-nowrap text-center">Jumlah</th>
+                        <th class="text-nowrap text-center">Keterangan</th>
+                        <th class="text-nowrap text-center">Diubah</th>
+                        {!! $can_delete || $can_update ? '<th>Aksi</th>' : '' !!}
+                    </tr>
+                </thead>
+                <tbody> </tbody>
 
-                </table>
-            </div>
+            </table>
         </div>
     </div>
     <!-- End Row -->
@@ -294,21 +288,11 @@
                     {
                         data: 'nama',
                         name: 'nama',
-                        className: 'text-nowrap'
-                    },
-                    {
-                        data: 'kode',
-                        name: 'kode',
-                        className: 'text-nowrap'
-                    },
-                    {
-                        data: 'jenis_str',
-                        name: 'jenis_str',
-                        className: 'text-nowrap'
-                    },
-                    {
-                        data: 'satuan_str',
-                        name: 'satuan_str',
+                        render(data, type, full, meta) {
+                            return `<span class="fw-bold">${data}</span><br>
+                            <small>${full.kode}</small><br>
+                            <small>${full.jenis_str}</small>`;
+                        },
                         className: 'text-nowrap'
                     },
                     {
@@ -322,26 +306,25 @@
                     {
                         data: 'qty',
                         name: 'qty',
+                        render(data, type, full, meta) {
+                            return `${data} ${full.satuan_str}`;
+                        },
                         className: 'text-nowrap text-right'
                     },
                     {
                         data: 'keterangan',
                         name: 'keterangan',
-                        className: 'text-nowrap'
-                    },
-                    {
-                        data: 'updated_by_str',
-                        name: 'updated_by_str',
                         render(data, type, full, meta) {
-                            return data ?? full.created_by_str;
+                            return `<small>${data??''}</small>`;
                         },
-                        className: 'text-nowrap'
                     },
                     {
                         data: 'updated',
-                        name: 'updated',
+                        name: 'updated_by_str',
                         render(data, type, full, meta) {
-                            return data ?? full.created;
+                            const tanggal = data ?? full.created;
+                            const oleh = full.updated_by_str ?? full.created_by_str
+                            return `${oleh ??''}<br><small>${tanggal}</small>`;
                         },
                         className: 'text-nowrap'
                     },
@@ -349,11 +332,11 @@
                         data: 'id',
                         name: 'id',
                         render(data, type, full, meta) {
-                            const btn_update = can_update ? `<button type="button" class="btn btn-rounded btn-primary btn-sm me-1" title="Edit Data" onClick="editFunc('${data}')">
-                                <i class="fas fa-edit"></i> Ubah
+                            const btn_update = can_update ? `<button type="button" data-toggle="tooltip" class="btn btn-rounded btn-primary btn-sm me-1" title="Edit Data" onClick="editFunc('${data}')">
+                                <i class="fas fa-edit"></i>
                                 </button>` : '';
-                            const btn_delete = can_delete ? `<button type="button" class="btn btn-rounded btn-danger btn-sm me-1" title="Delete Data" onClick="deleteFunc('${data}')">
-                                <i class="fas fa-trash"></i> Hapus
+                            const btn_delete = can_delete ? `<button type="button" data-toggle="tooltip" class="btn btn-rounded btn-danger btn-sm me-1" title="Delete Data" onClick="deleteFunc('${data}')">
+                                <i class="fas fa-trash"></i>
                                 </button>` : '';
                             return btn_update + btn_delete;
                         },
@@ -367,6 +350,7 @@
             });
 
             new_table.on('draw.dt', function() {
+                tooltip_refresh();
                 var PageInfo = table_html.DataTable().page.info();
                 new_table.column(0, {
                     page: 'current'
