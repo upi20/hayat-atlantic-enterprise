@@ -204,7 +204,10 @@ class KaryawanController extends Controller
             DB::raw("$table.*"),
         ], $to_db_raw))
             ->leftJoin("$table as $t_created_by", "$t_created_by.id", '=', "$table.created_by")
-            ->leftJoin("$table as $t_updated_by", "$t_updated_by.id", '=', "$table.updated_by");
+            ->leftJoin("$table as $t_updated_by", "$t_updated_by.id", '=', "$table.updated_by")
+            ->leftJoin($t_model_has_roles, "$t_model_has_roles.model_id", '=', "$table.id")
+            ->leftJoin($t_roles, "$t_roles.id", '=', "$t_model_has_roles.role_id")
+            ->where("$t_roles.name", '<>', config('app.super_admin_role'));
 
         // Filter =====================================================================================================
         // filter check

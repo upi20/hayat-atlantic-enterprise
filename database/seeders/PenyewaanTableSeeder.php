@@ -26,7 +26,7 @@ class PenyewaanTableSeeder extends Seeder
                 'lokasi' => 'Gedung Sate',
                 'tanggal_kirim' => '2022-10-10',
                 'tanggal_pakai_dari' => '2022-10-11',
-                'tanggal_pakai_sampai' => '2022-10-11',
+                'tanggal_pakai_sampai' => '2014-10-01',
                 'kepada' => 'Bpk. Daniel Nugraha',
                 'tanggal_order' => '2022-10-09',
                 'status' => 5,

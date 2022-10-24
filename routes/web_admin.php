@@ -85,6 +85,7 @@ Route::group(
     function () use ($name, $prefix) {
         $name = "$name.$prefix"; // admin.dashboard
         Route::get('/', 'index')->name($name);
+        Route::get('/chart_reciving_order', 'reciving_order')->name("$name.chart_reciving_order");
     }
 );
 

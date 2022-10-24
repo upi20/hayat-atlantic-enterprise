@@ -1,5 +1,30 @@
 =======================================================================================================================
-# 22 Oktober 2022
+# 24 Oktober 2022
+## Dashboard
+    [] Widget
+        [] Total Penyewaan
+        [] Total Customer
+        [] Total Pegawai
+        [] Jml Barang Rusak (Total)
+
+    [] Chart
+        [] Penyewaan Single Bar chart Default Tahun http://127.0.0.1:5500/html/charts.html
+        [] Ganti rugi Single Bar chart Default Tahun http://127.0.0.1:5500/html/charts.html
+        [] uang vs barng Multiple Bar chart Default Tahun http://127.0.0.1:5500/html/charts.html
+        
+        [] Donout chart ganti uang vs barng http://127.0.0.1:5500/html/chart-donut.html
+        [] Donout chart Penyewaan Berdasarkan Status http://127.0.0.1:5500/html/chart-donut.html
+        [] Donout chart Pembayaran Berdasarkan Status http://127.0.0.1:5500/html/chart-donut.html
+        [] Donout chart Pengambilan Berdasarkan Status http://127.0.0.1:5500/html/chart-donut.html
+        [] Donout chart Ganti Rugi Berdasarkan Status http://127.0.0.1:5500/html/chart-donut.html
+
+## Laporan
+    [] Penyewaan
+    [] Pengambilan Barang
+    [] Pengembalian Barang
+    [] Barang Rusak
+    [] Ganti Rugi Barang
+    
 ## Pengembalian barang
     [] Surat pengembalian barang
 
@@ -10,11 +35,6 @@
     [] List ganti rugi masukan ke detail penyewaan
     [] Filter di ganti rugi detail
 
-## Dashboard
-    [] Penyewaan Range tanggal Default Bulan sekarang dan Berdasarkan status
-    [] Pembayaran Range tanggal Default Bulan sekarang dan Berdasarkan status
-    [] Barang Keluar Range tanggal Default Bulan sekarang dan Berdasarkan status
-    [] Ganti rugi Range tanggal Default Bulan sekarang dan Berdasarkan status
 
 ## Printilan
     [] Created dan updated
