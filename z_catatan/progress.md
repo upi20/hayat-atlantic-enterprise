@@ -1,4 +1,11 @@
 =======================================================================================================================
+# 25 Oktober 2022
+## Cek Error
+    [] Reciving order baru barang bisa sama
+    [] Total Harga Penyewaan Jika berbeda kasih tanda merah
+    [] Jika ada perubahan dan belum disimpan maka keluarkan alert[pembayaran, pengambilan, pengembalian, ganti rugi]
+
+=======================================================================================================================
 # 24 Oktober 2022
 ## Dashboard
     [] Widget

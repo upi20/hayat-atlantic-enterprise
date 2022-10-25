@@ -235,6 +235,18 @@ class CustomersTableSeeder extends Seeder
                 'created_at' => '2022-10-15 18:15:35',
                 'updated_at' => '2022-10-15 18:15:35',
             ),
+            18 => 
+            array (
+                'id' => 19,
+                'nama' => 'Nama Customer Baru',
+                'no_telepon' => '+628798132502',
+                'no_whatsapp' => '+628798132503',
+                'alamat' => 'Alamat Customer Baru',
+                'updated_by' => NULL,
+                'created_by' => 1,
+                'created_at' => '2022-10-15 18:15:35',
+                'updated_at' => '2022-10-15 18:15:35',
+            ),
         ));
         
         

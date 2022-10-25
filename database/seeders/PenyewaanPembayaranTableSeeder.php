@@ -259,6 +259,38 @@ class PenyewaanPembayaranTableSeeder extends Seeder
                 'created_at' => '2022-10-22 10:22:17',
                 'updated_at' => '2022-10-22 10:22:17',
             ),
+            15 => 
+            array (
+                'id' => 41,
+                'tanggal' => '2022-10-25',
+                'nama' => 'DP',
+                'keterangan' => NULL,
+                'nominal' => 5000000,
+                'penyewaan' => 16,
+                'batal_keterangan' => NULL,
+                'batal_tanggal' => NULL,
+                'batal_oleh' => NULL,
+                'updated_by' => NULL,
+                'created_by' => 1,
+                'created_at' => '2022-10-25 23:17:08',
+                'updated_at' => '2022-10-25 23:17:08',
+            ),
+            16 => 
+            array (
+                'id' => 42,
+                'tanggal' => '2022-10-26',
+                'nama' => 'DP',
+                'keterangan' => NULL,
+                'nominal' => 5000000,
+                'penyewaan' => 18,
+                'batal_keterangan' => NULL,
+                'batal_tanggal' => NULL,
+                'batal_oleh' => NULL,
+                'updated_by' => NULL,
+                'created_by' => 1,
+                'created_at' => '2022-10-26 00:04:43',
+                'updated_at' => '2022-10-26 00:04:43',
+            ),
         ));
         
         

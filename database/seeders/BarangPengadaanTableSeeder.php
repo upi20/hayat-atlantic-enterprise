@@ -79,6 +79,18 @@ class BarangPengadaanTableSeeder extends Seeder
                 'created_at' => '2022-10-22 06:17:15',
                 'updated_at' => '2022-10-22 06:17:15',
             ),
+            5 => 
+            array (
+                'id' => 9,
+                'nama' => 'Ganti Rugi Barang Saat Penyewaan Dengan Surat Jalan Nomor SJ/00010',
+                'keterangan' => 'Tanggal 2022-10-26, Di Customer 15 Lokasi Alamat 15',
+                'tanggal' => '2022-10-26 00:29:00',
+                'penyewaan' => 18,
+                'updated_by' => NULL,
+                'created_by' => 1,
+                'created_at' => '2022-10-26 00:29:00',
+                'updated_at' => '2022-10-26 00:29:00',
+            ),
         ));
         
         

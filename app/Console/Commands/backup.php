@@ -90,9 +90,9 @@ class backup extends Command
             ],
             'other' => [
                 'faq',
-                'customers',
             ],
             'barang' => [
+                'customers',
                 'barang_jenis',
                 'barang_satuan',
                 'barang',

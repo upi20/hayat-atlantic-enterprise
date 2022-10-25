@@ -427,10 +427,10 @@
                     page: 'current'
                 }).nodes().each(function(cell, i) {
                     var id = cell.innerHTML;
+                    cell.innerHTML = i + 1 + PageInfo.start;
                     var link =
                         `window.location.href = '{{ route('admin.penyewaan.reciving_order') }}/${id}'`
 
-                    cell.innerHTML = i + 1 + PageInfo.start;
 
                     if (id != '') {
                         var ele = $(cell).parent().find('.to-link');
@@ -580,7 +580,7 @@
                             Swal.fire({
                                 position: 'center',
                                 icon: 'success',
-                                title: '{{ $page_attr['title'] }} berhasil dihapus',
+                                title: 'Penyewaan berhasil diselesaikan.',
                                 showConfirmButton: false,
                                 timer: 1500
                             })

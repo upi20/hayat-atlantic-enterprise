@@ -21,17 +21,6 @@ class BarangHabisPakaiPenguranganListTableSeeder extends Seeder
         \DB::table('barang_habis_pakai_pengurangan_list')->insert(array (
             0 => 
             array (
-                'id' => 1,
-                'qty' => 1,
-                'barang' => 1,
-                'pengurangan' => 1,
-                'updated_by' => NULL,
-                'created_by' => 1,
-                'created_at' => '2022-09-24 17:26:36',
-                'updated_at' => '2022-09-24 17:26:36',
-            ),
-            1 => 
-            array (
                 'id' => 2,
                 'qty' => 10,
                 'barang' => 2,
@@ -41,7 +30,7 @@ class BarangHabisPakaiPenguranganListTableSeeder extends Seeder
                 'created_at' => '2022-10-18 01:23:24',
                 'updated_at' => '2022-10-18 01:23:24',
             ),
-            2 => 
+            1 => 
             array (
                 'id' => 3,
                 'qty' => 10,
@@ -52,7 +41,7 @@ class BarangHabisPakaiPenguranganListTableSeeder extends Seeder
                 'created_at' => '2022-10-18 01:23:24',
                 'updated_at' => '2022-10-18 01:23:24',
             ),
-            3 => 
+            2 => 
             array (
                 'id' => 4,
                 'qty' => 11,
@@ -63,7 +52,7 @@ class BarangHabisPakaiPenguranganListTableSeeder extends Seeder
                 'created_at' => '2022-10-18 01:23:24',
                 'updated_at' => '2022-10-18 01:23:24',
             ),
-            4 => 
+            3 => 
             array (
                 'id' => 5,
                 'qty' => 10,
@@ -73,6 +62,50 @@ class BarangHabisPakaiPenguranganListTableSeeder extends Seeder
                 'created_by' => 5,
                 'created_at' => '2022-10-22 11:27:04',
                 'updated_at' => '2022-10-22 11:27:04',
+            ),
+            4 => 
+            array (
+                'id' => 6,
+                'qty' => 2,
+                'barang' => 4,
+                'pengurangan' => 5,
+                'updated_by' => NULL,
+                'created_by' => 1,
+                'created_at' => '2022-10-26 00:16:11',
+                'updated_at' => '2022-10-26 00:16:11',
+            ),
+            5 => 
+            array (
+                'id' => 7,
+                'qty' => 10,
+                'barang' => 6,
+                'pengurangan' => 6,
+                'updated_by' => NULL,
+                'created_by' => 1,
+                'created_at' => '2022-10-26 00:17:27',
+                'updated_at' => '2022-10-26 00:17:27',
+            ),
+            6 => 
+            array (
+                'id' => 8,
+                'qty' => 20,
+                'barang' => 4,
+                'pengurangan' => 6,
+                'updated_by' => NULL,
+                'created_by' => 1,
+                'created_at' => '2022-10-26 00:17:27',
+                'updated_at' => '2022-10-26 00:17:27',
+            ),
+            7 => 
+            array (
+                'id' => 9,
+                'qty' => 10,
+                'barang' => 8,
+                'pengurangan' => 6,
+                'updated_by' => NULL,
+                'created_by' => 1,
+                'created_at' => '2022-10-26 00:17:27',
+                'updated_at' => '2022-10-26 00:17:27',
             ),
         ));
         

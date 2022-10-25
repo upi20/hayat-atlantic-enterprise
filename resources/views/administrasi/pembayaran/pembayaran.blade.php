@@ -300,7 +300,7 @@
                     },
                 ],
                 order: [
-                    [6, 'asc']
+                    [5, 'desc']
                 ]
             });
 
@@ -310,9 +310,9 @@
                 new_table.column(0, {
                     page: 'current'
                 }).nodes().each(function(cell, i) {
+                    var id = cell.innerHTML;
                     cell.innerHTML = i + 1 + PageInfo.start;
                     if (can_pembayaran) {
-                        var id = cell.innerHTML;
                         var link = `window.location.href = '{{ url(h_prefix_uri('list')) }}/${id}'`
                         var ele = $(cell).parent().find('.to-link');
                         ele.css('cursor', 'pointer');

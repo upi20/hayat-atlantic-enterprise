@@ -21,18 +21,6 @@ class BarangHabisPakaiPenguranganTableSeeder extends Seeder
         \DB::table('barang_habis_pakai_pengurangan')->insert(array (
             0 => 
             array (
-                'id' => 1,
-                'nama' => 'Testing',
-                'keterangan' => '123',
-                'tanggal' => '2022-09-24 17:23:00',
-                'penyewaan' => NULL,
-                'updated_by' => NULL,
-                'created_by' => 1,
-                'created_at' => '2022-09-24 17:23:29',
-                'updated_at' => '2022-09-24 17:23:29',
-            ),
-            1 => 
-            array (
                 'id' => 2,
                 'nama' => 'Barang Digunakan Saat Penyewaan Dengan Surat Jalan Nomor SJ/00006',
                 'keterangan' => 'Tanggal 2022-10-08, Di Handip Yusuf Kurniawan Lokasi Jl. Cikutra No.7, Cikutra, Kec. Cibeunying Kidul, Kota Bandung, Jawa Barat 40124',
@@ -43,7 +31,7 @@ class BarangHabisPakaiPenguranganTableSeeder extends Seeder
                 'created_at' => '2022-10-18 01:23:24',
                 'updated_at' => '2022-10-18 01:23:24',
             ),
-            2 => 
+            1 => 
             array (
                 'id' => 4,
                 'nama' => 'Barang Digunakan Saat Penyewaan Dengan Surat Jalan Nomor SJ/00008',
@@ -54,6 +42,30 @@ class BarangHabisPakaiPenguranganTableSeeder extends Seeder
                 'created_by' => 5,
                 'created_at' => '2022-10-22 11:27:04',
                 'updated_at' => '2022-10-22 11:27:04',
+            ),
+            2 => 
+            array (
+                'id' => 5,
+                'nama' => 'Barang Digunakan Saat Penyewaan Dengan Surat Jalan Nomor SJ/00010',
+                'keterangan' => 'Tanggal 2022-10-26, Di Customer 15 Lokasi Alamat 15',
+                'tanggal' => '2022-10-25 00:00:00',
+                'penyewaan' => 18,
+                'updated_by' => NULL,
+                'created_by' => 1,
+                'created_at' => '2022-10-26 00:16:11',
+                'updated_at' => '2022-10-26 00:16:11',
+            ),
+            3 => 
+            array (
+                'id' => 6,
+                'nama' => 'Barang Digunakan Saat Penyewaan Dengan Surat Jalan Nomor SJ/00009',
+                'keterangan' => 'Tanggal 2022-10-29, Di Kepada Penyewa Baru Lokasi Lokasi Penyewaan Baru',
+                'tanggal' => '2022-10-28 00:00:00',
+                'penyewaan' => 16,
+                'updated_by' => NULL,
+                'created_by' => 1,
+                'created_at' => '2022-10-26 00:17:27',
+                'updated_at' => '2022-10-26 00:17:27',
             ),
         ));
         

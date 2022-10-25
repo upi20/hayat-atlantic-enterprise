@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Administrasi;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Barang\Sewa;
-
 use App\Models\Faktur;
 use App\Models\FakturBarang;
 use App\Models\Penyewaan;
@@ -63,6 +62,13 @@ class PembayaranController extends Controller
         try {
             $request->validate(['status_pembayaran' => ['required', 'int']]);
             $model->status_pembayaran = $request->status_pembayaran;
+
+            // set status penyewaan jika status pembayaran lunas 
+            // dan status penyewaan masih penyewaan dibuat
+            if ($model->status == 1 && $request->status_pembayaran == 1) {
+                $model->status = 2;
+            }
+
             $model->save();
             return response()->json($model);
         } catch (ValidationException $error) {
