@@ -7,6 +7,8 @@ use App\Models\Barang\Sewa;
 use App\Models\Customer;
 use App\Models\GantiRugi;
 use App\Models\Penyewaan;
+use App\Models\SuratJalan;
+use App\Models\SuratJalanBarang;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -67,7 +69,8 @@ class DashboardController extends Controller
 
         // Penyewaan
         // Penyewaan yang belum selesai
-        $result->penyewaan = Penyewaan::where('status', '<', 5)->count();
+        $result->penyewaan = Penyewaan::where('status', '<>', 0)
+            ->where('status', '<', 5)->count();
 
         // Pembayaran
         // Penyewaan yang belum lunas
@@ -109,9 +112,6 @@ class DashboardController extends Controller
         $results[] = $fun(9, 'Dibatalkan');
         return $results;
     }
-
-
-
 
     // statistik
     private function getYear()
@@ -166,18 +166,43 @@ class DashboardController extends Controller
 
     public function penyewaan_barang_rusak(Request $request)
     {
+        $t_surat_jalan = SuratJalan::tableName;
+        $table = SuratJalanBarang::tableName;
+        $year_ = $request->year ?? date('Y');
         $results = [];
-        $years = $this->monthForLoop($request->year);
-        // foreach ($years as $year) {
-        //     $item = collect();
-        //     $item->name = $year->name;
-        //     $item->data = Penyewaan::where('status', '<>', '0')
-        //         ->where('status', '<>', '9')
-        //         ->where('tanggal_order', '>=', $year->start)
-        //         ->where('tanggal_order', '<=', $year->end)
-        //         ->count();
-        //     $results[] = $item;
-        // }
-        // return response()->json($results);
+        $years = $this->monthForLoop($year_);
+        foreach ($years as $year) {
+            $item['name'] = $year->name;
+            $item['data'] = SuratJalanBarang::selectRaw("count(*) as barang, ifnull(sum(surat_jalan_barang.pengembalian_rusak),0) as qty")
+                ->join($t_surat_jalan, "$t_surat_jalan.id", '=', "$table.surat_jalan")
+                ->where("$t_surat_jalan.status", '4') // status selesai
+                ->where("$t_surat_jalan.tanggal", '>=', $year->start)
+                ->where("$t_surat_jalan.tanggal", '<=', $year->end)
+                ->where("$table.pengembalian_rusak", '>', 0)
+                ->limit(1)->first();
+            $results[] = $item;
+        }
+        return response()->json(['data' => $results, 'title' => "Penyewaan Barang Rusak $year_"]);
+    }
+
+    public function penyewaan_barang_hilang(Request $request)
+    {
+        $t_surat_jalan = SuratJalan::tableName;
+        $table = SuratJalanBarang::tableName;
+        $year_ = $request->year ?? date('Y');
+        $results = [];
+        $years = $this->monthForLoop($year_);
+        foreach ($years as $year) {
+            $item['name'] = $year->name;
+            $item['data'] = SuratJalanBarang::selectRaw("count(*) as barang, ifnull(sum(surat_jalan_barang.pengembalian_hilang),0) as qty")
+                ->join($t_surat_jalan, "$t_surat_jalan.id", '=', "$table.surat_jalan")
+                ->where("$t_surat_jalan.status", '4') // status selesai
+                ->where("$t_surat_jalan.tanggal", '>=', $year->start)
+                ->where("$t_surat_jalan.tanggal", '<=', $year->end)
+                ->where("$table.pengembalian_hilang", '>', 0)
+                ->limit(1)->first();
+            $results[] = $item;
+        }
+        return response()->json(['data' => $results, 'title' => "Penyewaan Barang Hilang $year_"]);
     }
 }

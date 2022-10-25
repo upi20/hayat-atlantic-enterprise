@@ -204,6 +204,28 @@
             </div>
         </div>
 
+        {{-- multiple jumlah barang, qty barang --}}
+        <div class="col-lg-6 col-md-12">
+            <div class="card">
+                <div class="card-header d-md-flex flex-row justify-content-between">
+                    <h3 class="card-title">Penyewaan Barang Hilang</h3>
+                    <div>
+                        <select id="chart-penyewaan-barang-hilang-filter"
+                            class="form-control form-select form-select-sm select2" data-bs-placeholder="Select Country">
+                            @foreach ($years as $year)
+                                <option value="{{ $year->year }}" {{ $year->year == date('Y') ? 'selected' : '' }}>
+                                    {{ $year->year }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div id="chart-penyewaan-barang-hilang" class="chartsh"></div>
+                </div>
+            </div>
+        </div>
+
         {{-- Penyewaan barang habis pakai --}}
         <div class="col-lg-6 col-md-12">
             <div class="card">
@@ -346,48 +368,8 @@
                 chart_reciving_order();
             });
 
-            // penyewaan barang rusak
-            var chart = c3.generate({
-                bindto: '#chart-penyewaan-barang-rusak', // id of chart wrapper
-                data: {
-                    columns: [
-                        // each columns data
-                        ['data1', 7, 7, 5, 7, 9, 12, 4, 6, 2, 5, 2, 8],
-                        ['data2', 11, 8, 15, 18, 19, 17, 20, 25, 32, 20, 14, 20],
-                    ],
-                    type: 'bar', // default type of chart
-                    groups: [
-                        ['data1', 'data2']
-                    ],
-                    colors: {
-                        data1: '#6c5ffc',
-                        data2: '#05c3fb'
-                    },
-                    names: {
-                        // name of each serie
-                        'data1': 'Barang',
-                        'data2': 'Qty/Jumlah'
-                    }
-                },
-                axis: {
-                    x: {
-                        type: 'category',
-                        // name of each category
-                        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct',
-                            'Nov', 'Dec'
-                        ]
-                    },
-                },
-                bar: {
-                    width: 16
-                },
-                legend: {
-                    show: true, //hide legend
-                },
-                padding: {
-                    bottom: 0,
-                    top: 0
-                },
+            $('#chart-penyewaan-barang-rusak').on('select2:select', function(e) {
+                chart_penyewaan_barang_rusak();
             });
 
             // barang habis pakai
@@ -637,6 +619,7 @@
                     top: 0
                 },
             });
+
         });
 
         function donat_status_penyewaan() {
@@ -758,9 +741,173 @@
 
         }
 
+        function chart_penyewaan_barang_rusak() {
+            const card = $('#chart-penyewaan-barang-rusak').parent().parent();
+            const year = $('#chart-penyewaan-barang-rusak-filter').val();
+            card.LoadingOverlay("show");
+            $.ajax({
+                type: "GET",
+                url: `{{ route(h_prefix('penyewaan_barang_rusak')) }}`,
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: {
+                    year
+                },
+                success: (res) => {
+                    console.log(res);
+
+                    const columns = [
+                        ['barang'],
+                        ['qty'],
+                    ];
+                    const categories = [];
+
+                    res.data.forEach(e => {
+                        columns[0].push(e.data.barang);
+                        columns[1].push(e.data.qty);
+                        categories.push(e.name);
+                    })
+                    // penyewaan barang rusak
+                    var chart = c3.generate({
+                        bindto: '#chart-penyewaan-barang-rusak', // id of chart wrapper
+                        data: {
+                            columns: columns,
+                            type: 'bar', // default type of chart
+                            groups: [
+                                ['barang', 'qty']
+                            ],
+                            colors: {
+                                barang: '#6c5ffc',
+                                qty: '#05c3fb'
+                            },
+                            names: {
+                                // name of each serie
+                                'barang': 'Barang',
+                                'qty': 'Qty/Jumlah'
+                            }
+                        },
+                        axis: {
+                            x: {
+                                type: 'category',
+                                // name of each category
+                                categories: categories
+                            },
+                        },
+                        bar: {
+                            width: 16
+                        },
+                        legend: {
+                            show: true, //hide legend
+                        },
+                        padding: {
+                            bottom: 0,
+                            top: 0
+                        },
+                    });
+                },
+                error: function(data) {
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'error',
+                        title: 'Something went wrong',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                },
+                complete: function() {
+                    card.LoadingOverlay("hide");
+                }
+            });
+
+        }
+
+        function chart_penyewaan_barang_hilang() {
+            const card = $('#chart-penyewaan-barang-hilang').parent().parent();
+            const year = $('#chart-penyewaan-barang-hilang-filter').val();
+            card.LoadingOverlay("show");
+            $.ajax({
+                type: "GET",
+                url: `{{ route(h_prefix('penyewaan_barang_hilang')) }}`,
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: {
+                    year
+                },
+                success: (res) => {
+                    console.log(res);
+
+                    const columns = [
+                        ['barang'],
+                        ['qty'],
+                    ];
+                    const categories = [];
+
+                    res.data.forEach(e => {
+                        columns[0].push(e.data.barang);
+                        columns[1].push(e.data.qty);
+                        categories.push(e.name);
+                    })
+                    // penyewaan barang hilang
+                    var chart = c3.generate({
+                        bindto: '#chart-penyewaan-barang-hilang', // id of chart wrapper
+                        data: {
+                            columns: columns,
+                            type: 'bar', // default type of chart
+                            groups: [
+                                ['barang', 'qty']
+                            ],
+                            colors: {
+                                barang: '#6c5ffc',
+                                qty: '#05c3fb'
+                            },
+                            names: {
+                                // name of each serie
+                                'barang': 'Barang',
+                                'qty': 'Qty/Jumlah'
+                            }
+                        },
+                        axis: {
+                            x: {
+                                type: 'category',
+                                // name of each category
+                                categories: categories
+                            },
+                        },
+                        bar: {
+                            width: 16
+                        },
+                        legend: {
+                            show: true, //hide legend
+                        },
+                        padding: {
+                            bottom: 0,
+                            top: 0
+                        },
+                    });
+                },
+                error: function(data) {
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'error',
+                        title: 'Something went wrong',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                },
+                complete: function() {
+                    card.LoadingOverlay("hide");
+                }
+            });
+
+        }
+
 
         // initial
         donat_status_penyewaan();
         chart_reciving_order();
+        chart_penyewaan_barang_rusak();
+        chart_penyewaan_barang_hilang();
     </script>
 @endsection
