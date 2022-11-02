@@ -88,6 +88,8 @@ Route::group(
         Route::get('/chart_reciving_order', 'reciving_order')->name("$name.chart_reciving_order");
         Route::get('/penyewaan_barang_rusak', 'penyewaan_barang_rusak')->name("$name.penyewaan_barang_rusak");
         Route::get('/penyewaan_barang_hilang', 'penyewaan_barang_hilang')->name("$name.penyewaan_barang_hilang");
+        Route::get('/penggunaan_bhs', 'penggunaan_bhs')->name("$name.penggunaan_bhs");
+        Route::get('/ganti_rugi', 'ganti_rugi')->name("$name.ganti_rugi");
     }
 );
 

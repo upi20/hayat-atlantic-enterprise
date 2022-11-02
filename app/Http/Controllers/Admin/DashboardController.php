@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Barang\HabisPakai\Pengurangan;
+use App\Models\Barang\HabisPakai\PenguranganList;
 use App\Models\Barang\Sewa;
 use App\Models\Customer;
 use App\Models\GantiRugi;
@@ -23,7 +25,6 @@ class DashboardController extends Controller
         $years = $this->getYear();
         $page_attr = ['title' => 'Dashboard'];
         $donat = collect();
-        $donat->status_penyewaan = $this->status_penyewaan();
 
         $data = compact(
             'page_attr',
@@ -90,27 +91,6 @@ class DashboardController extends Controller
         $result->ganti_rugi = GantiRugi::where('status', '<', 2)->count();
 
         return $result;
-    }
-
-    // donat status penyewaan
-    private function status_penyewaan()
-    {
-        $results = [];
-
-        $fun = function ($status, $name) {
-            $item = [];
-            $item['name'] = $name;
-            $item['data'] = Penyewaan::where('status', $status)->count();
-            return $item;
-        };
-
-        $results[] = $fun(1, 'Penyewaan Dibuat');
-        $results[] = $fun(2, 'Faktur Dibuat');
-        $results[] = $fun(3, 'Barang Diambil');
-        $results[] = $fun(4, 'Barang Dikembalikan');
-        $results[] = $fun(5, 'Selesai');
-        $results[] = $fun(9, 'Dibatalkan');
-        return $results;
     }
 
     // statistik
@@ -204,5 +184,46 @@ class DashboardController extends Controller
             $results[] = $item;
         }
         return response()->json(['data' => $results, 'title' => "Penyewaan Barang Hilang $year_"]);
+    }
+
+    public function penggunaan_bhs(Request $request)
+    {
+        $t_pengurangan = Pengurangan::tableName;
+        $table = PenguranganList::tableName;
+        $year_ = $request->year ?? date('Y');
+        $results = [];
+        $years = $this->monthForLoop($year_);
+        foreach ($years as $month) {
+            $item['name'] = $month->name;
+            $item['data'] = PenguranganList::selectRaw("count(*) as barang, ifnull(sum($table.qty),0) as qty")
+                ->join($t_pengurangan, "$t_pengurangan.id", '=', "$table.pengurangan")
+                ->whereNotNull("$t_pengurangan.penyewaan") // ada penyewaan
+                ->whereRaw("(date($t_pengurangan.tanggal) >= '$month->start' and date($t_pengurangan.tanggal) <= '$month->end')")
+                ->first();
+            $results[] = $item;
+        }
+        return response()->json(['data' => $results, 'title' => "Penggunaan Barang Habis Pakai $year_"]);
+    }
+
+    public function ganti_rugi(Request $request)
+    {
+        $t_penyewaan = Penyewaan::tableName;
+        $table = GantiRugi::tableName;
+
+
+        $year_ = $request->year ?? date('Y');
+        $results = [];
+        $years = $this->monthForLoop($year_);
+        foreach ($years as $month) {
+            $item['name'] = $month->name;
+            $item['data'] = GantiRugi::selectRaw("ifnull(sum($table.dibayar_barang),0) as barang, ifnull(sum($table.dibayar),0) as uang")
+                ->join($t_penyewaan, "$t_penyewaan.id", '=', "$table.penyewaan_id")
+                ->where("$t_penyewaan.status", 5) // penyewaan selesai
+                ->where("$t_penyewaan.tanggal_kirim", '>=', $month->start)
+                ->where("$t_penyewaan.tanggal_kirim", '<=', $month->end)
+                ->first();
+            $results[] = $item;
+        }
+        return response()->json(['data' => $results, 'title' => "Perbandingan Ganti Rugi Barang Dengan Uang $year_"]);
     }
 }

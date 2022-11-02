@@ -77,8 +77,11 @@
         {{-- ringkasan penyewaan --}}
         <div class="col-lg-6 col-md-12">
             <div class="card">
-                <div class="card-header d-md-flex flex-row justify-content-between">
-                    <h3 class="card-title">Penyewaan</h3>
+                <div class="card-header">
+                    <div>
+                        <h3 class="card-title mb-1">Penyewaan</h3>
+                        <small>Ringkasan penyewaan per hari ini</small>
+                    </div>
                 </div>
                 <div class="card-body">
                     <div class="clearfix row mb-4">
@@ -164,7 +167,10 @@
         <div class="col-lg-6 col-md-12">
             <div class="card">
                 <div class="card-header d-md-flex flex-row justify-content-between">
-                    <h3 class="card-title">Reciving Order</h3>
+                    <div>
+                        <h3 class="card-title mb-1">Reciving Order</h3>
+                        <small>Jumlah Reciving Order Per Tahun</small>
+                    </div>
                     <div>
                         <select id="chart-penyewaan-filter" class="form-control form-select form-select-sm select2"
                             data-bs-placeholder="Select Country">
@@ -186,7 +192,10 @@
         <div class="col-lg-6 col-md-12">
             <div class="card">
                 <div class="card-header d-md-flex flex-row justify-content-between">
-                    <h3 class="card-title">Penyewaan Barang Rusak</h3>
+                    <div>
+                        <h3 class="card-title mb-1">Penyewaan Barang Rusak</h3>
+                        <small>Jumlah Penyewaan Barang Rusak Per Tahun</small>
+                    </div>
                     <div>
                         <select id="chart-penyewaan-barang-rusak-filter"
                             class="form-control form-select form-select-sm select2" data-bs-placeholder="Select Country">
@@ -208,7 +217,10 @@
         <div class="col-lg-6 col-md-12">
             <div class="card">
                 <div class="card-header d-md-flex flex-row justify-content-between">
-                    <h3 class="card-title">Penyewaan Barang Hilang</h3>
+                    <div>
+                        <h3 class="card-title mb-1">Penyewaan Barang Hilang</h3>
+                        <small>Jumlah Penyewaan Barang Hilang Per Tahun</small>
+                    </div>
                     <div>
                         <select id="chart-penyewaan-barang-hilang-filter"
                             class="form-control form-select form-select-sm select2" data-bs-placeholder="Select Country">
@@ -230,7 +242,10 @@
         <div class="col-lg-6 col-md-12">
             <div class="card">
                 <div class="card-header d-md-flex flex-row justify-content-between">
-                    <h3 class="card-title">Penggunaan Barang Habis Pakai</h3>
+                    <div>
+                        <h3 class="card-title mb-1">Penggunaan Barang Habis Pakai</h3>
+                        <small>Penggunaan Dalam Penyewaan Per Tahun</small>
+                    </div>
                     <div>
                         <select id="chart-penyewaan-bhs-filter" class="form-control form-select form-select-sm select2"
                             data-bs-placeholder="Select Country">
@@ -252,7 +267,10 @@
         <div class="col-lg-6 col-md-12">
             <div class="card">
                 <div class="card-header d-md-flex flex-row justify-content-between">
-                    <h3 class="card-title">Ganti Rugi</h3>
+                    <div>
+                        <h3 class="card-title mb-1">Ganti Rugi</h3>
+                        <small>Perbandingan Ganti Rugi Barang Dengan Uang Per Tahun</small>
+                    </div>
                     <div>
                         <select id="chart-ganti-rugi-filter" class="form-control form-select form-select-sm select2"
                             data-bs-placeholder="Select Country">
@@ -266,66 +284,6 @@
                 </div>
                 <div class="card-body">
                     <div id="chart-ganti-rugi" class="chartsh"></div>
-                </div>
-            </div>
-        </div>
-
-        {{-- status penyewaan --}}
-        <div class="col-lg-6 col-md-12">
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">Status Penyewaan</h3>
-                </div>
-                <div class="card-body">
-                    <div id="chart-circle-penyewaan" class="chartsh"></div>
-                </div>
-            </div>
-        </div>
-
-        {{-- status pembayaran --}}
-        <div class="col-lg-6 col-md-12">
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">Status Pembayaran</h3>
-                </div>
-                <div class="card-body">
-                    <div id="chart-circle-pembayaran" class="chartsh"></div>
-                </div>
-            </div>
-        </div>
-
-        {{-- status pengambilan --}}
-        <div class="col-lg-6 col-md-12">
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">Status Pengambilan</h3>
-                </div>
-                <div class="card-body">
-                    <div id="chart-circle-pengambilan" class="chartsh"></div>
-                </div>
-            </div>
-        </div>
-
-        {{-- status pengembalian --}}
-        <div class="col-lg-6 col-md-12">
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">StatusPengembalian</h3>
-                </div>
-                <div class="card-body">
-                    <div id="chart-circle-pengembalian" class="chartsh"></div>
-                </div>
-            </div>
-        </div>
-
-        {{-- status penyewaan --}}
-        <div class="col-lg-6 col-md-12">
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">Ganti Rugi</h3>
-                </div>
-                <div class="card-body">
-                    <div id="chart-circle-ganti-rugi" class="chartsh"></div>
                 </div>
             </div>
         </div>
@@ -359,7 +317,8 @@
     <script src="{{ asset('assets/templates/admin/plugins/input-mask/jquery.mask.min.js') }}"></script>
     <script src="{{ asset('assets/templates/admin/plugins/select2/js/select2.full.min.js') }}"></script>
     <script src="{{ asset('assets/templates/admin/plugins/loading/loadingoverlay.min.js') }}"></script>
-
+    {{-- sweetalert --}}
+    <script src="{{ asset('assets/templates/admin/plugins/sweet-alert/sweetalert2.all.js') }}"></script>
     <script>
         $(document).ready(() => {
             $('.select2').select2();
@@ -368,304 +327,20 @@
                 chart_reciving_order();
             });
 
-            $('#chart-penyewaan-barang-rusak').on('select2:select', function(e) {
+            $('#chart-penyewaan-barang-rusak-filter').on('select2:select', function(e) {
                 chart_penyewaan_barang_rusak();
             });
 
-            // barang habis pakai
-            var chart = c3.generate({
-                bindto: '#chart-penyewaan-bhs', // id of chart wrapper
-                data: {
-                    columns: [
-                        // each columns data
-                        ['data1', 11, 8, 35, 18, 19, 17, 33, 39, 48, 57, 39, 63]
-                    ],
-                    type: 'bar', // default type of chart
-                    colors: {
-                        data1: '#6c5ffc'
-                    },
-                    names: {
-                        // name of each serie
-                        'data1': 'Reciving Order'
-                    }
-                },
-                axis: {
-                    x: {
-                        type: 'category',
-                        // name of each category
-                        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct',
-                            'Nov', 'Dec'
-                        ]
-                    },
-                },
-                bar: {
-                    width: 16
-                },
-                legend: {
-                    show: true, //hide legend
-                },
-                padding: {
-                    bottom: 0,
-                    top: 0
-                },
+            $('#chart-penyewaan-bhs-filter').on('select2:select', function(e) {
+                chart_penggunaan_bhs();
             });
 
-            // ganti rugi
-            var chart = c3.generate({
-                bindto: '#chart-ganti-rugi', // id of chart wrapper
-                data: {
-                    columns: [
-                        // each columns data
-                        ['data1', 7, 7, 5, 7, 9, 12, 4, 6, 2, 5, 2, 8],
-                        ['data2', 11, 8, 15, 18, 19, 17, 20, 25, 32, 20, 14, 20],
-                    ],
-                    type: 'bar', // default type of chart
-                    colors: {
-                        data1: '#6c5ffc',
-                        data2: '#05c3fb'
-                    },
-                    names: {
-                        // name of each serie
-                        'data1': 'Barang',
-                        'data2': 'Uang'
-                    }
-                },
-                axis: {
-                    x: {
-                        type: 'category',
-                        // name of each category
-                        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct',
-                            'Nov', 'Dec'
-                        ]
-                    },
-                },
-                bar: {
-                    width: 16
-                },
-                legend: {
-                    show: true, //hide legend
-                },
-                padding: {
-                    bottom: 0,
-                    top: 0
-                },
+            $('#chart-ganti-rugi-filter').on('select2:select', function(e) {
+                chart_ganti_rugi();
             });
 
-
-            /*chart-donut*/
-            var chart = c3.generate({
-                bindto: '#chart-circle-pembayaran', // id of chart wrapper
-                data: {
-                    columns: [
-                        // each columns data
-                        ['data1', 78],
-                        ['data2', 95],
-                        ['data3', 25],
-                        ['data4', 45],
-                        ['data5', 75],
-                        ['data6', 25],
-                    ],
-                    type: 'donut', // default type of chart
-                    colors: {
-                        'data1': '#6c5ffc',
-                        'data2': '#05c3fb',
-                        'data3': '#09ad95',
-                        'data4': '#f7b731',
-                        'data5': '#f82649',
-                        'data6': '#f7b731',
-                    },
-                    names: {
-                        // name of each serie
-                        'data1': 'sales1',
-                        'data2': 'sales2',
-                        'data3': 'sales3',
-                        'data4': 'sales4',
-                        'data5': 'sales5',
-                        'data6': 'sales6',
-                    }
-                },
-                axis: {},
-                legend: {
-                    show: true, //hide legend
-                },
-                padding: {
-                    bottom: 0,
-                    top: 0
-                },
-            });
-
-            /*chart-donut*/
-            var chart = c3.generate({
-                bindto: '#chart-circle-pengambilan', // id of chart wrapper
-                data: {
-                    columns: [
-                        // each columns data
-                        ['data1', 78],
-                        ['data2', 95],
-                        ['data3', 25],
-                        ['data4', 45],
-                        ['data5', 75],
-                        ['data6', 25],
-                    ],
-                    type: 'donut', // default type of chart
-                    colors: {
-                        'data1': '#6c5ffc',
-                        'data2': '#05c3fb',
-                        'data3': '#09ad95',
-                        'data4': '#1170e4',
-                        'data5': '#f82649',
-                        'data6': '#f7b731',
-                    },
-                    names: {
-                        // name of each serie
-                        'data1': 'sales1',
-                        'data2': 'sales2',
-                        'data3': 'sales3',
-                        'data4': 'sales4',
-                        'data5': 'sales5',
-                        'data6': 'sales6',
-                    }
-                },
-                axis: {},
-                legend: {
-                    show: true, //hide legend
-                },
-                padding: {
-                    bottom: 0,
-                    top: 0
-                },
-            });
-
-            /*chart-donut*/
-            var chart = c3.generate({
-                bindto: '#chart-circle-pengembalian', // id of chart wrapper
-                data: {
-                    columns: [
-                        // each columns data
-                        ['data1', 78],
-                        ['data2', 95],
-                        ['data3', 25],
-                        ['data4', 45],
-                        ['data5', 75],
-                        ['data6', 25],
-                    ],
-                    type: 'donut', // default type of chart
-                    colors: {
-                        'data1': '#6c5ffc',
-                        'data2': '#05c3fb',
-                        'data3': '#09ad95',
-                        'data4': '#1170e4',
-                        'data5': '#f82649',
-                        'data6': '#f7b731',
-                    },
-                    names: {
-                        // name of each serie
-                        'data1': 'sales1',
-                        'data2': 'sales2',
-                        'data3': 'sales3',
-                        'data4': 'sales4',
-                        'data5': 'sales5',
-                        'data6': 'sales6',
-                    }
-                },
-                axis: {},
-                legend: {
-                    show: true, //hide legend
-                },
-                padding: {
-                    bottom: 0,
-                    top: 0
-                },
-            });
-
-            /*chart-donut*/
-            var chart = c3.generate({
-                bindto: '#chart-circle-ganti-rugi', // id of chart wrapper
-                data: {
-                    columns: [
-                        // each columns data
-                        ['data1', 78],
-                        ['data2', 95],
-                        ['data3', 25],
-                        ['data4', 45],
-                        ['data5', 75],
-                        ['data6', 25],
-                    ],
-                    type: 'donut', // default type of chart
-                    colors: {
-                        'data1': '#6c5ffc',
-                        'data2': '#05c3fb',
-                        'data3': '#09ad95',
-                        'data4': '#1170e4',
-                        'data5': '#f82649',
-                        'data6': '#f7b731',
-                    },
-                    names: {
-                        // name of each serie
-                        'data1': 'sales1',
-                        'data2': 'sales2',
-                        'data3': 'sales3',
-                        'data4': 'sales4',
-                        'data5': 'sales5',
-                        'data6': 'sales6',
-                    }
-                },
-                axis: {},
-                legend: {
-                    show: true, //hide legend
-                },
-                padding: {
-                    bottom: 0,
-                    top: 0
-                },
-            });
 
         });
-
-        function donat_status_penyewaan() {
-            const data_raw = JSON.parse(`{!! json_encode($donat->status_penyewaan) !!}`);
-
-            const columns = [];
-            const names = {};
-            data_raw.forEach((e, i) => {
-                columns.push([`data${i+1}`, e.data]);
-                names[`data${i+1}`] = e.name
-            });
-
-            var chart = c3.generate({
-                bindto: '#chart-circle-penyewaan', // id of chart wrapper
-                data: {
-                    columns: columns,
-                    type: 'donut', // default type of chart
-                    colors: {
-                        // 'data1': '#6c5ffc', // primary
-                        // 'data2': '#05c3fb', // secondary
-                        // 'data3': '#09ad95', // success
-                        // 'data4': '#1170e4', // info
-                        // 'data5': '#f82649', // danger
-                        // 'data6': '#f7b731', // warning
-
-                        'data1': '#6c5ffc',
-                        'data2': '#1170e4',
-                        'data3': '#05c3fb',
-                        'data4': '#09ad95',
-                        'data5': '#f7b731',
-                        'data6': '#f82649',
-                    },
-                    names: names
-                },
-                axis: {},
-                legend: {
-                    show: true, //hide legend
-                },
-                padding: {
-                    bottom: 0,
-                    top: 0
-                },
-            });
-
-            chart.hide(['data5', 'data6']);
-        }
 
         function chart_reciving_order() {
             const card = $('#chart-penyewaan').parent().parent();
@@ -903,11 +578,171 @@
 
         }
 
+        function chart_penggunaan_bhs() {
+            const card = $('#chart-penyewaan-bhs').parent().parent();
+            const year = $('#chart-penyewaan-bhs-filter').val();
+            card.LoadingOverlay("show");
+            $.ajax({
+                type: "GET",
+                url: `{{ route(h_prefix('penggunaan_bhs')) }}`,
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: {
+                    year
+                },
+                success: (res) => {
+                    console.log(res);
+
+                    const columns = [
+                        ['barang'],
+                        ['qty'],
+                    ];
+                    const categories = [];
+
+                    res.data.forEach(e => {
+                        columns[0].push(e.data.barang);
+                        columns[1].push(e.data.qty);
+                        categories.push(e.name);
+                    })
+                    // penyewaan barang rusak
+                    var chart = c3.generate({
+                        bindto: '#chart-penyewaan-bhs', // id of chart wrapper
+                        data: {
+                            columns: columns,
+                            type: 'bar', // default type of chart
+                            groups: [
+                                ['barang', 'qty']
+                            ],
+                            colors: {
+                                barang: '#6c5ffc',
+                                qty: '#05c3fb'
+                            },
+                            names: {
+                                // name of each serie
+                                'barang': 'Barang',
+                                'qty': 'Qty/Jumlah'
+                            }
+                        },
+                        axis: {
+                            x: {
+                                type: 'category',
+                                // name of each category
+                                categories: categories
+                            },
+                        },
+                        bar: {
+                            width: 16
+                        },
+                        legend: {
+                            show: true, //hide legend
+                        },
+                        padding: {
+                            bottom: 0,
+                            top: 0
+                        },
+                    });
+                },
+                error: function(data) {
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'error',
+                        title: 'Something went wrong',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                },
+                complete: function() {
+                    card.LoadingOverlay("hide");
+                }
+            });
+
+        }
+
+        function chart_ganti_rugi() {
+            const card = $('#chart-ganti-rugi').parent().parent();
+            const year = $('#chart-ganti-rugi-filter').val();
+            card.LoadingOverlay("show");
+            $.ajax({
+                type: "GET",
+                url: `{{ route(h_prefix('ganti_rugi')) }}`,
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: {
+                    year
+                },
+                success: (res) => {
+                    console.log(res);
+
+                    const columns = [
+                        ['barang'],
+                        ['uang'],
+                    ];
+                    const categories = [];
+
+                    res.data.forEach(e => {
+                        columns[0].push(e.data.barang);
+                        columns[1].push(e.data.uang);
+                        categories.push(e.name);
+                    })
+
+                    // ganti rugi
+                    var chart = c3.generate({
+                        bindto: '#chart-ganti-rugi', // id of chart wrapper
+                        data: {
+                            columns: columns,
+                            type: 'bar', // default type of chart
+                            colors: {
+                                barang: '#6c5ffc',
+                                uang: '#05c3fb'
+                            },
+                            names: {
+                                // name of each serie
+                                'barang': 'Barang',
+                                'uang': 'Uang'
+                            }
+                        },
+                        axis: {
+                            x: {
+                                type: 'category',
+                                // name of each category
+                                categories: categories
+                            },
+                        },
+                        bar: {
+                            width: 16
+                        },
+                        legend: {
+                            show: true, //hide legend
+                        },
+                        padding: {
+                            bottom: 0,
+                            top: 0
+                        },
+                    });
+                },
+                error: function(data) {
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'error',
+                        title: 'Something went wrong',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                },
+                complete: function() {
+                    card.LoadingOverlay("hide");
+                }
+            });
+
+        }
 
         // initial
-        donat_status_penyewaan();
         chart_reciving_order();
         chart_penyewaan_barang_rusak();
         chart_penyewaan_barang_hilang();
+        chart_penggunaan_bhs();
+        chart_ganti_rugi();
     </script>
 @endsection
