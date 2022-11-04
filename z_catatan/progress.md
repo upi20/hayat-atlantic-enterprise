@@ -1,37 +1,17 @@
 =======================================================================================================================
-# 25 Oktober 2022
+# 04 November 2022
 ## Cek Error
     [] Reciving order baru barang bisa sama
     [] Total Harga Penyewaan Jika berbeda kasih tanda merah
     [] Jika ada perubahan dan belum disimpan maka keluarkan alert[pembayaran, pengambilan, pengembalian, ganti rugi]
-
-=======================================================================================================================
-# 24 Oktober 2022
-## Dashboard
-    [] Widget
-        [] Total Penyewaan
-        [] Total Customer
-        [] Total Pegawai
-        [] Jml Barang Rusak (Total)
-
-    [] Chart
-        [] Penyewaan Single Bar chart Default Tahun http://127.0.0.1:5500/html/charts.html
-        [] Ganti rugi Single Bar chart Default Tahun http://127.0.0.1:5500/html/charts.html
-        [] uang vs barng Multiple Bar chart Default Tahun http://127.0.0.1:5500/html/charts.html
-        
-        [] Donout chart ganti uang vs barng http://127.0.0.1:5500/html/chart-donut.html
-        [] Donout chart Penyewaan Berdasarkan Status http://127.0.0.1:5500/html/chart-donut.html
-        [] Donout chart Pembayaran Berdasarkan Status http://127.0.0.1:5500/html/chart-donut.html
-        [] Donout chart Pengambilan Berdasarkan Status http://127.0.0.1:5500/html/chart-donut.html
-        [] Donout chart Ganti Rugi Berdasarkan Status http://127.0.0.1:5500/html/chart-donut.html
-
+    
 ## Laporan
     [] Penyewaan
     [] Pengambilan Barang
     [] Pengembalian Barang
     [] Barang Rusak
     [] Ganti Rugi Barang
-    
+
 ## Pengembalian barang
     [] Surat pengembalian barang
 
@@ -42,7 +22,6 @@
     [] List ganti rugi masukan ke detail penyewaan
     [] Filter di ganti rugi detail
 
-
 ## Printilan
     [] Created dan updated
     [] Date time str
@@ -52,7 +31,29 @@
 ## Frontend
     [] Home
     [] List Data barang Sewa
+=======================================================================================================================
+# 25 Oktober 2022
 
+=======================================================================================================================
+# 24 Oktober 2022
+## Dashboard
+    [x] Widget
+        [x] Total Penyewaan
+        [x] Total Customer
+        [x] Total Pegawai
+        [x] Jml Barang Rusak (Total)
+
+    [x] Chart
+        [x] Penyewaan Single Bar chart Default Tahun http://127.0.0.1:5500/html/charts.html
+        [x] Ganti rugi Single Bar chart Default Tahun http://127.0.0.1:5500/html/charts.html
+        [x] uang vs barng Multiple Bar chart Default Tahun http://127.0.0.1:5500/html/charts.html
+        
+        [x] Donout chart ganti uang vs barng http://127.0.0.1:5500/html/chart-donut.html
+        [x] Donout chart Penyewaan Berdasarkan Status http://127.0.0.1:5500/html/chart-donut.html
+        [x] Donout chart Pembayaran Berdasarkan Status http://127.0.0.1:5500/html/chart-donut.html
+        [x] Donout chart Pengambilan Berdasarkan Status http://127.0.0.1:5500/html/chart-donut.html
+        [x] Donout chart Ganti Rugi Berdasarkan Status http://127.0.0.1:5500/html/chart-donut.html
+    
 =======================================================================================================================
 # 15 Oktober 2022
 
@@ -176,12 +177,12 @@
 
 ## Pengembalian Barang
     [x] Pengembalian Barang Datatable
-    [] Atur status str sesuai dengan migrasi
-    [] Pengembalian Barang List barang
-    [] Pengembalian Barang pemakaian barang habis pakai
-    [] Laporan pengembalian barang
-    [] tanggal kembali
-    [] penerima barang
+    [x] Atur status str sesuai dengan migrasi
+    [x] Pengembalian Barang List barang
+    [x] Pengembalian Barang pemakaian barang habis pakai
+    [x] Laporan pengembalian barang
+    [x] tanggal kembali
+    [x] penerima barang
 
 ### Refactore
     [] Pembuatan konsep Seluruhan
@@ -228,16 +229,13 @@
 
 # Senin, 10 Oktober 2022
 ### Testing
-    [] Pembatalan Reciving order
-    [] Di pembayaran jika penyewaan sudah selesai maka pembayaran akan di tutup
-    [] Buat template untuk default keterangan pengambilan barang
+    [x] Pembatalan Reciving order
+    [x] Di pembayaran jika penyewaan sudah selesai maka pembayaran akan di tutup
+    [x] Buat template untuk default keterangan pengambilan barang
 
 # Sabtu, 22 Oktober 2022
 ### Testing
-    [] Pembatalan Reciving order
-    [] Di pembayaran jika penyewaan sudah selesai maka pembayaran akan di tutup
-    [] Buat template untuk default keterangan pengambilan barang
+    [x] Pembatalan Reciving order
+    [x] Di pembayaran jika penyewaan sudah selesai maka pembayaran akan di tutup
+    [x] Buat template untuk default keterangan pengambilan barang
     [x] Unsinged di database yang bukan relasi
-
-
-    
