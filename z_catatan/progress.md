@@ -1,16 +1,38 @@
 =======================================================================================================================
 # 04 November 2022
+## Refactore Penyewaan
+    [] Implementasi nomor
+        [x] Crud
+        [x] Detail
+        [] Faktur Pembayaran
+        [x] Surat Jalan
+        [] Pengambilan Barang
+        [] Pengembalian Barang
+        [] Ganti Rugi
+    [] Tambahkan Perusahaan ke customer
+
 ## Cek Error
-    [] Reciving order baru barang bisa sama
+    [x] Reciving order baru barang bisa sama
     [] Total Harga Penyewaan Jika berbeda kasih tanda merah
     [] Jika ada perubahan dan belum disimpan maka keluarkan alert[pembayaran, pengambilan, pengembalian, ganti rugi]
-    
+
+## Pdf saat penyewaan
+    [x] Faktur
+    [x] Surat Jalan
+    [] Label Pengiriman
+    [] Surat Pengembalian
+    [] Faktur Ganti Rugi
+        [] Uang
+        [] Barang
+
 ## Laporan
     [] Penyewaan
     [] Pengambilan Barang
     [] Pengembalian Barang
     [] Barang Rusak
     [] Ganti Rugi Barang
+
+## Buat Setting Penomoran
 
 ## Pengembalian barang
     [] Surat pengembalian barang

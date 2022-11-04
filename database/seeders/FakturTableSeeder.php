@@ -274,6 +274,36 @@ class FakturTableSeeder extends Seeder
                 'created_at' => '2022-10-26 00:04:43',
                 'updated_at' => '2022-10-26 00:04:43',
             ),
+            17 => 
+            array (
+                'id' => 26,
+                'no_faktur' => '1667577416',
+                'tanggal' => '2022-11-04',
+                'jumlah' => 50000,
+                'sisa' => 50000,
+                'pembayaran_sebelumnya' => 0,
+                'total' => 100000,
+                'pembayaran' => 43,
+                'updated_by' => NULL,
+                'created_by' => NULL,
+                'created_at' => '2022-11-04 22:56:56',
+                'updated_at' => '2022-11-04 22:56:56',
+            ),
+            18 => 
+            array (
+                'id' => 27,
+                'no_faktur' => '1667577568',
+                'tanggal' => '2022-11-04',
+                'jumlah' => 50000,
+                'sisa' => 0,
+                'pembayaran_sebelumnya' => 50000,
+                'total' => 100000,
+                'pembayaran' => 44,
+                'updated_by' => NULL,
+                'created_by' => NULL,
+                'created_at' => '2022-11-04 22:59:28',
+                'updated_at' => '2022-11-04 22:59:28',
+            ),
         ));
         
         

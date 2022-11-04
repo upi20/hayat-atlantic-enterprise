@@ -660,6 +660,7 @@
 
 
                 data_penyewaan.html(`
+                <div class="col-md-6 mb-2"><span class="fw-bold">Nomor Penyewaan:</span> <br> ${data.number}</div>
                 <div class="col-md-6 mb-2"><span class="fw-bold">Tanggal Order:</span> <br> ${data.tanggal_order}</div>
                 <div class="col-md-6 mb-2"><span class="fw-bold">Tanggal Kirim:</span> <br> ${data.tanggal_kirim}</div>
                 <div class="col-md-6 mb-2"><span class="fw-bold">Tanggal Pakai:</span> <br> ${tanggal_pakai}</div>

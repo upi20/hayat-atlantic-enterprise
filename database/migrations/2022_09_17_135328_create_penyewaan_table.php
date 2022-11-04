@@ -15,7 +15,8 @@ return new class extends Migration
     {
         Schema::create('penyewaan', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('customer', false, true)->nullable()->default(null);
+            $table->unsignedBigInteger('customer')->nullable()->default(null);
+            $table->string('number')->nullable()->default(null);
             $table->text('lokasi')->nullable()->default(null);
             $table->date('tanggal_kirim')->nullable()->default(null);
             $table->date('tanggal_pakai_dari')->nullable()->default(null);
@@ -30,10 +31,10 @@ return new class extends Migration
             $table->boolean('status_pembayaran')->nullable()->default(0)->comment("1 selesai 0 belum");
             $table->text('batal_keterangan')->nullable()->default(null);
             $table->dateTime('batal_tanggal')->nullable()->default(null);
-            $table->bigInteger('batal_oleh', false, true)->nullable()->default(null);
+            $table->unsignedBigInteger('batal_oleh')->nullable()->default(null);
 
-            $table->bigInteger('updated_by', false, true)->nullable()->default(null);
-            $table->bigInteger('created_by', false, true)->nullable()->default(null);
+            $table->unsignedBigInteger('updated_by')->nullable()->default(null);
+            $table->unsignedBigInteger('created_by')->nullable()->default(null);
             $table->timestamps();
 
             $table->foreign('customer')

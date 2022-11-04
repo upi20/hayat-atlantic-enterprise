@@ -231,14 +231,14 @@ class PMenuTableSeeder extends Seeder
             array (
                 'id' => 421,
                 'parent_id' => 420,
-                'title' => 'Pengambilan barang',
+                'title' => 'Penyewaan',
                 'icon' => NULL,
                 'route' => NULL,
                 'sequence' => 30,
                 'active' => 1,
                 'type' => 1,
                 'created_at' => '2022-09-18 21:21:44',
-                'updated_at' => '2022-10-17 00:18:40',
+                'updated_at' => '2022-11-04 23:02:43',
             ),
             17 => 
             array (
@@ -247,24 +247,24 @@ class PMenuTableSeeder extends Seeder
                 'title' => 'Pengembalian barang',
                 'icon' => NULL,
                 'route' => NULL,
-                'sequence' => 31,
+                'sequence' => 32,
                 'active' => 1,
                 'type' => 1,
                 'created_at' => '2022-09-18 21:22:19',
-                'updated_at' => '2022-10-17 00:18:40',
+                'updated_at' => '2022-11-04 23:02:55',
             ),
             18 => 
             array (
                 'id' => 423,
                 'parent_id' => 420,
-            'title' => 'Pengiriman barang (Surat Jalan)',
+                'title' => 'Pengambilan barang',
                 'icon' => NULL,
                 'route' => NULL,
-                'sequence' => 32,
+                'sequence' => 31,
                 'active' => 1,
                 'type' => 1,
                 'created_at' => '2022-09-18 21:23:37',
-                'updated_at' => '2022-10-17 00:18:40',
+                'updated_at' => '2022-11-04 23:03:12',
             ),
             19 => 
             array (
@@ -283,29 +283,16 @@ class PMenuTableSeeder extends Seeder
             array (
                 'id' => 425,
                 'parent_id' => 420,
-                'title' => 'Bon pembelian barang habis pakai kas kecil',
+                'title' => 'Ganti Rugi',
                 'icon' => NULL,
                 'route' => NULL,
                 'sequence' => 34,
                 'active' => 1,
                 'type' => 1,
                 'created_at' => '2022-09-18 21:25:45',
-                'updated_at' => '2022-10-17 00:18:40',
+                'updated_at' => '2022-11-04 23:03:30',
             ),
             21 => 
-            array (
-                'id' => 426,
-                'parent_id' => 420,
-                'title' => 'Bon pembelian barang kas besar',
-                'icon' => NULL,
-                'route' => NULL,
-                'sequence' => 35,
-                'active' => 1,
-                'type' => 1,
-                'created_at' => '2022-09-18 21:26:25',
-                'updated_at' => '2022-10-17 00:18:40',
-            ),
-            22 => 
             array (
                 'id' => 427,
                 'parent_id' => NULL,
@@ -318,7 +305,7 @@ class PMenuTableSeeder extends Seeder
                 'created_at' => '2022-09-22 20:51:04',
                 'updated_at' => '2022-10-17 00:18:40',
             ),
-            23 => 
+            22 => 
             array (
                 'id' => 428,
                 'parent_id' => NULL,
@@ -331,7 +318,7 @@ class PMenuTableSeeder extends Seeder
                 'created_at' => '2022-09-22 22:47:27',
                 'updated_at' => '2022-10-03 08:12:43',
             ),
-            24 => 
+            23 => 
             array (
                 'id' => 429,
                 'parent_id' => NULL,
@@ -344,7 +331,7 @@ class PMenuTableSeeder extends Seeder
                 'created_at' => '2022-09-23 00:08:36',
                 'updated_at' => '2022-10-17 00:39:08',
             ),
-            25 => 
+            24 => 
             array (
                 'id' => 430,
                 'parent_id' => NULL,
@@ -357,7 +344,7 @@ class PMenuTableSeeder extends Seeder
                 'created_at' => '2022-09-23 00:09:48',
                 'updated_at' => '2022-10-17 00:39:08',
             ),
-            26 => 
+            25 => 
             array (
                 'id' => 431,
                 'parent_id' => 429,
@@ -370,7 +357,7 @@ class PMenuTableSeeder extends Seeder
                 'created_at' => '2022-09-23 00:12:16',
                 'updated_at' => '2022-10-17 00:39:08',
             ),
-            27 => 
+            26 => 
             array (
                 'id' => 432,
                 'parent_id' => 429,
@@ -383,7 +370,7 @@ class PMenuTableSeeder extends Seeder
                 'created_at' => '2022-09-23 00:13:05',
                 'updated_at' => '2022-10-17 00:39:08',
             ),
-            28 => 
+            27 => 
             array (
                 'id' => 433,
                 'parent_id' => 430,
@@ -396,7 +383,7 @@ class PMenuTableSeeder extends Seeder
                 'created_at' => '2022-09-23 00:14:48',
                 'updated_at' => '2022-10-17 00:39:08',
             ),
-            29 => 
+            28 => 
             array (
                 'id' => 434,
                 'parent_id' => 430,
@@ -409,7 +396,7 @@ class PMenuTableSeeder extends Seeder
                 'created_at' => '2022-09-23 00:21:11',
                 'updated_at' => '2022-10-17 00:39:08',
             ),
-            30 => 
+            29 => 
             array (
                 'id' => 435,
                 'parent_id' => NULL,
@@ -422,7 +409,7 @@ class PMenuTableSeeder extends Seeder
                 'created_at' => '2022-09-25 10:06:57',
                 'updated_at' => '2022-10-03 08:12:43',
             ),
-            31 => 
+            30 => 
             array (
                 'id' => 436,
                 'parent_id' => NULL,
@@ -435,7 +422,7 @@ class PMenuTableSeeder extends Seeder
                 'created_at' => '2022-10-01 12:50:57',
                 'updated_at' => '2022-10-03 08:12:43',
             ),
-            32 => 
+            31 => 
             array (
                 'id' => 437,
                 'parent_id' => NULL,
@@ -448,7 +435,7 @@ class PMenuTableSeeder extends Seeder
                 'created_at' => '2022-10-02 14:04:55',
                 'updated_at' => '2022-10-03 08:12:43',
             ),
-            33 => 
+            32 => 
             array (
                 'id' => 438,
                 'parent_id' => NULL,
@@ -461,7 +448,7 @@ class PMenuTableSeeder extends Seeder
                 'created_at' => '2022-10-02 14:09:12',
                 'updated_at' => '2022-10-03 08:12:43',
             ),
-            34 => 
+            33 => 
             array (
                 'id' => 439,
                 'parent_id' => NULL,
@@ -474,7 +461,7 @@ class PMenuTableSeeder extends Seeder
                 'created_at' => '2022-10-03 08:07:56',
                 'updated_at' => '2022-10-03 08:12:43',
             ),
-            35 => 
+            34 => 
             array (
                 'id' => 440,
                 'parent_id' => NULL,
@@ -487,7 +474,7 @@ class PMenuTableSeeder extends Seeder
                 'created_at' => '2022-10-03 08:09:26',
                 'updated_at' => '2022-10-17 00:39:08',
             ),
-            36 => 
+            35 => 
             array (
                 'id' => 441,
                 'parent_id' => NULL,
@@ -500,7 +487,7 @@ class PMenuTableSeeder extends Seeder
                 'created_at' => '2022-10-03 08:11:55',
                 'updated_at' => '2022-10-17 00:18:40',
             ),
-            37 => 
+            36 => 
             array (
                 'id' => 442,
                 'parent_id' => NULL,
@@ -512,6 +499,19 @@ class PMenuTableSeeder extends Seeder
                 'type' => 1,
                 'created_at' => '2022-10-17 00:18:29',
                 'updated_at' => '2022-10-17 00:39:08',
+            ),
+            37 => 
+            array (
+                'id' => 443,
+                'parent_id' => 420,
+                'title' => 'Barang Hilang',
+                'icon' => NULL,
+                'route' => NULL,
+                'sequence' => 40,
+                'active' => 1,
+                'type' => 1,
+                'created_at' => '2022-11-04 23:04:28',
+                'updated_at' => '2022-11-04 23:04:28',
             ),
         ));
         

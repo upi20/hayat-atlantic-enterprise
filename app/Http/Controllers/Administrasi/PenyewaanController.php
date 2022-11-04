@@ -341,6 +341,7 @@ class PenyewaanController extends Controller
 
         $model = Penyewaan::select([
             DB::raw("$table.id"),
+            DB::raw("$table.number"),
             DB::raw("$table.lokasi"),
             DB::raw("$table.kepada"),
             DB::raw("$table.total_harga"),
@@ -435,9 +436,13 @@ class PenyewaanController extends Controller
             $model = new Penyewaan();
             $model->status = 0;
             $model->created_by = $user_id;
+            $max_id = Penyewaan::max('number');
+            $max_id = $max_id ?? 'SP/00001';
+            $max_id = (int)str_replace('SP/', '', $max_id);
+            $max_id++;
+            $model->number = 'SP/' . str_pad($max_id, 5, '0', STR_PAD_LEFT);
             $model->save();
         }
-
         $customer = Customer::find($model->customer);
 
         $model->customer_nama = is_null($customer) ? null : $customer->nama;
@@ -679,6 +684,7 @@ class PenyewaanController extends Controller
                 $model->updated_by = auth()->user()->id;
             }
 
+            $model->number = $request->number;
             $model->customer = $request->customer;
             $model->lokasi = $request->lokasi;
             $model->kepada = $request->kepada;

@@ -111,7 +111,14 @@ class PembayaranController extends Controller
 
             // simpan ke faktur
             $faktur = new Faktur();
-            $faktur->no_faktur = time();
+
+            // get no faktur
+            $max_id = Faktur::max('no_faktur');
+            $max_id = $max_id ?? 'INV/00001';
+            $max_id = (int)str_replace('INV/', '', $max_id);
+            $max_id++;
+            $faktur->no_faktur = 'INV/' . str_pad($max_id, 5, '0', STR_PAD_LEFT);
+
             $faktur->tanggal = $model->tanggal;
             $faktur->jumlah = $model->nominal;
             $sisa = $penyewaan->total_harga - $penyewaan->dibayar;

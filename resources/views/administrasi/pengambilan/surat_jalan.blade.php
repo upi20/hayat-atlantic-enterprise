@@ -64,17 +64,25 @@
                         </td>
                     </tr>
                     <tr>
+                        <td class="fw-bold" style="padding: 4px 4px!important; white-space: nowrap">Referensi</td>
+                        <td class="fw-bold" style="padding: 4px 4px!important;">:</td>
+                        <td class="fw-bold" style="padding: 4px 4px!important;">
+                            {{ $model->number }}
+                        </td>
+                    </tr>
+                    <tr>
                         <td class="fw-bold" style="padding: 4px 4px!important; white-space: nowrap">Tanggal Surat</td>
                         <td class="fw-bold" style="padding: 4px 4px!important;">:</td>
                         <td class="fw-bold" style="padding: 4px 4px!important;">
                             {{ $surat_jalan->tanggal_str }}
                         </td>
                     </tr>
+
                     <tr>
-                        <td class="fw-bold" style="padding: 4px 4px!important; white-space: nowrap">Tanggal Pakai</td>
+                        <td class="fw-bold" style="padding: 4px 4px!important; white-space: nowrap">Customer</td>
                         <td class="fw-bold" style="padding: 4px 4px!important;">:</td>
                         <td class="fw-bold" style="padding: 4px 4px!important;">
-                            {{ $surat_jalan->tanggal_pakai }}
+                            {{ $customer->nama }}, {{ $customer->alamat }}
                         </td>
                     </tr>
                 </table>
@@ -82,10 +90,10 @@
             <td class="b-all w-50">
                 <table class="tbl-10">
                     <tr>
-                        <td class="fw-bold" style="padding: 4px 4px!important; white-space: nowrap">Customer</td>
+                        <td class="fw-bold" style="padding: 4px 4px!important; white-space: nowrap">Tanggal Pakai</td>
                         <td class="fw-bold" style="padding: 4px 4px!important;">:</td>
                         <td class="fw-bold" style="padding: 4px 4px!important;">
-                            {{ $customer->nama }}, {{ $customer->alamat }}
+                            {{ $surat_jalan->tanggal_pakai }}
                         </td>
                     </tr>
                     <tr>
@@ -110,7 +118,6 @@
     <table class="tbl-10 w-100">
         <thead>
             <tr>
-
                 <th class="b-all" style="max-width: 10px">No</th>
                 <th class="b-all">Barang</th>
                 <th class="b-all">Qty</th>

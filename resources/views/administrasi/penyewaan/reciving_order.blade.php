@@ -29,7 +29,7 @@
                 <div class="row">
                     <input type="hidden" name="id" id="id" value="{{ $model->id }}">
                     <input type="hidden" name="is_edit" id="is_edit" value="{{ $is_edit ? 1 : 0 }}">
-                    <div class="col-12">
+                    <div class="col-md-8">
                         <div class="form-group">
                             <label class="form-label" for="customer">Customer
                                 <span class="text-danger">*</span></label>
@@ -39,6 +39,15 @@
                                     </option>
                                 @endif
                             </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="form-label" for="number">Nomor
+                                <span class="text-danger">*</span>
+                            </label>
+                            <input type="text" placeholder="Nomor Penyewaan" class="form-control" id="number"
+                                name="number" value="{{ $model->number }}" required="" />
                         </div>
                     </div>
                     <div class="col-md-4">

@@ -22,6 +22,7 @@ class PenyewaanTableSeeder extends Seeder
             0 => 
             array (
                 'id' => 8,
+                'nomor' => 'SP/0008',
                 'customer' => 1,
                 'lokasi' => 'Gedung Sate',
                 'tanggal_kirim' => '2022-10-10',
@@ -44,6 +45,7 @@ class PenyewaanTableSeeder extends Seeder
             1 => 
             array (
                 'id' => 9,
+                'nomor' => 'SP/0009',
                 'customer' => 1,
                 'lokasi' => 'Jl. Supratman no 54 gedung b',
                 'tanggal_kirim' => '2022-10-12',
@@ -66,6 +68,7 @@ class PenyewaanTableSeeder extends Seeder
             2 => 
             array (
                 'id' => 10,
+                'nomor' => 'SP/0010',
                 'customer' => 2,
                 'lokasi' => 'Gedung Serba guna Widyatama.',
                 'tanggal_kirim' => '2022-10-07',
@@ -88,6 +91,7 @@ class PenyewaanTableSeeder extends Seeder
             3 => 
             array (
                 'id' => 11,
+                'nomor' => 'SP/0011',
                 'customer' => 1,
                 'lokasi' => 'Alamat 1',
                 'tanggal_kirim' => '2022-10-05',
@@ -110,6 +114,7 @@ class PenyewaanTableSeeder extends Seeder
             4 => 
             array (
                 'id' => 12,
+                'nomor' => 'SP/0012',
                 'customer' => 16,
                 'lokasi' => 'Pontianak',
                 'tanggal_kirim' => '2022-10-27',
@@ -132,6 +137,7 @@ class PenyewaanTableSeeder extends Seeder
             5 => 
             array (
                 'id' => 13,
+                'nomor' => 'SP/0013',
                 'customer' => 16,
                 'lokasi' => 'Jalan supratman no 50 gedung b',
                 'tanggal_kirim' => '2022-10-12',
@@ -154,6 +160,7 @@ class PenyewaanTableSeeder extends Seeder
             6 => 
             array (
                 'id' => 14,
+                'nomor' => 'SP/0014',
                 'customer' => 18,
                 'lokasi' => 'Jl. Cikutra No.7, Cikutra, Kec. Cibeunying Kidul, Kota Bandung, Jawa Barat 40124',
                 'tanggal_kirim' => '2022-10-07',
@@ -176,6 +183,7 @@ class PenyewaanTableSeeder extends Seeder
             7 => 
             array (
                 'id' => 15,
+                'nomor' => 'SP/0015',
                 'customer' => 17,
                 'lokasi' => 'Lengkong',
                 'tanggal_kirim' => '2022-10-19',
@@ -198,6 +206,7 @@ class PenyewaanTableSeeder extends Seeder
             8 => 
             array (
                 'id' => 16,
+                'nomor' => 'SP/0016',
                 'customer' => 19,
                 'lokasi' => 'Lokasi Penyewaan Baru',
                 'tanggal_kirim' => '2022-10-28',
@@ -220,6 +229,7 @@ class PenyewaanTableSeeder extends Seeder
             9 => 
             array (
                 'id' => 17,
+                'nomor' => 'SP/0017',
                 'customer' => NULL,
                 'lokasi' => NULL,
                 'tanggal_kirim' => NULL,
@@ -242,6 +252,7 @@ class PenyewaanTableSeeder extends Seeder
             10 => 
             array (
                 'id' => 18,
+                'nomor' => 'SP/0018',
                 'customer' => 15,
                 'lokasi' => 'Alamat 15',
                 'tanggal_kirim' => '2022-10-25',
@@ -260,6 +271,52 @@ class PenyewaanTableSeeder extends Seeder
                 'created_by' => 1,
                 'created_at' => '2022-10-26 00:00:46',
                 'updated_at' => '2022-10-26 00:29:00',
+            ),
+            11 => 
+            array (
+                'id' => 19,
+                'nomor' => 'SP/0019',
+                'customer' => 18,
+                'lokasi' => 'Jl. Cikutra No.7, Cikutra, Kec. Cibeunying Kidul, Kota Bandung, Jawa Barat 40124',
+                'tanggal_kirim' => '2022-11-03',
+                'tanggal_pakai_dari' => '2022-11-04',
+                'tanggal_pakai_sampai' => '2022-11-04',
+                'kepada' => 'Handip Yusuf Kurniawan',
+                'tanggal_order' => '2022-11-04',
+                'status' => 5,
+                'total_harga' => 100000,
+                'dibayar' => 100000,
+                'status_pembayaran' => 1,
+                'batal_keterangan' => NULL,
+                'batal_tanggal' => NULL,
+                'batal_oleh' => NULL,
+                'updated_by' => NULL,
+                'created_by' => 1,
+                'created_at' => '2022-11-04 22:54:39',
+                'updated_at' => '2022-11-04 22:59:37',
+            ),
+            12 => 
+            array (
+                'id' => 20,
+                'nomor' => NULL,
+                'customer' => NULL,
+                'lokasi' => NULL,
+                'tanggal_kirim' => NULL,
+                'tanggal_pakai_dari' => NULL,
+                'tanggal_pakai_sampai' => NULL,
+                'kepada' => NULL,
+                'tanggal_order' => NULL,
+                'status' => 0,
+                'total_harga' => 0,
+                'dibayar' => 0,
+                'status_pembayaran' => 0,
+                'batal_keterangan' => NULL,
+                'batal_tanggal' => NULL,
+                'batal_oleh' => NULL,
+                'updated_by' => NULL,
+                'created_by' => 1,
+                'created_at' => '2022-11-04 23:49:04',
+                'updated_at' => '2022-11-04 23:49:04',
             ),
         ));
         

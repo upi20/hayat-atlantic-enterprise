@@ -119,6 +119,26 @@ class GantiRugiTableSeeder extends Seeder
                 'created_at' => '2022-10-26 00:17:27',
                 'updated_at' => '2022-10-26 00:17:27',
             ),
+            5 => 
+            array (
+                'id' => 6,
+                'penyewaan_id' => 19,
+                'customer' => 18,
+                'nama' => 'Barang Digunakan Saat Penyewaan Dengan Surat Jalan Nomor SJ/00010',
+                'keterangan' => 'Tanggal 2022-11-04, Di Handip Yusuf Kurniawan Lokasi Jl. Cikutra No.7, Cikutra, Kec. Cibeunying Kidul, Kota Bandung, Jawa Barat 40124',
+                'no_surat' => 6,
+                'jumlah_barang' => 1,
+                'total_qty_barang' => 1,
+                'nominal' => 100000,
+                'dibayar' => 0,
+                'dibayar_barang' => 100000,
+                'sisa' => 0,
+                'status' => 2,
+                'updated_by' => NULL,
+                'created_by' => 1,
+                'created_at' => '2022-11-04 22:57:43',
+                'updated_at' => '2022-11-04 22:58:42',
+            ),
         ));
         
         

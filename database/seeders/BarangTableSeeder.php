@@ -35,7 +35,7 @@ class BarangTableSeeder extends Seeder
                 'updated_by' => NULL,
                 'created_by' => 1,
                 'created_at' => '2022-09-17 22:04:43',
-                'updated_at' => '2022-10-26 00:29:00',
+                'updated_at' => '2022-11-04 22:59:37',
             ),
             1 => 
             array (

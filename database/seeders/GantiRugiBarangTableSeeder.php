@@ -240,6 +240,23 @@ class GantiRugiBarangTableSeeder extends Seeder
                 'created_at' => '2022-10-26 00:22:29',
                 'updated_at' => '2022-10-26 00:22:29',
             ),
+            13 => 
+            array (
+                'id' => 14,
+                'ganti_rugi_id' => 6,
+                'barang' => 1,
+                'no_surat' => 14,
+                'tanggal' => '2022-11-04',
+                'oleh' => 'Handip Yusuf Kurniawan',
+                'qty' => 1,
+                'keterangan' => NULL,
+                'status' => 1,
+                'pembatalan_alasan' => NULL,
+                'updated_by' => NULL,
+                'created_by' => 1,
+                'created_at' => '2022-11-04 22:58:42',
+                'updated_at' => '2022-11-04 22:58:42',
+            ),
         ));
         
         

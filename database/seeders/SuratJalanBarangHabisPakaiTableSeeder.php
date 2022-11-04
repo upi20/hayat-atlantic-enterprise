@@ -123,6 +123,19 @@ class SuratJalanBarangHabisPakaiTableSeeder extends Seeder
                 'created_at' => '2022-10-26 00:16:08',
                 'updated_at' => '2022-10-26 00:16:08',
             ),
+            8 => 
+            array (
+                'id' => 11,
+                'surat_jalan' => 15,
+                'barang_id' => 1,
+                'harga' => 15000,
+                'qty' => 1,
+                'keterangan' => NULL,
+                'updated_by' => NULL,
+                'created_by' => 1,
+                'created_at' => '2022-11-04 22:57:38',
+                'updated_at' => '2022-11-04 22:57:38',
+            ),
         ));
         
         

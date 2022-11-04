@@ -91,6 +91,18 @@ class BarangPengadaanTableSeeder extends Seeder
                 'created_at' => '2022-10-26 00:29:00',
                 'updated_at' => '2022-10-26 00:29:00',
             ),
+            6 => 
+            array (
+                'id' => 10,
+                'nama' => 'Ganti Rugi Barang Saat Penyewaan Dengan Surat Jalan Nomor SJ/00010',
+                'keterangan' => 'Tanggal 2022-11-04, Di Handip Yusuf Kurniawan Lokasi Jl. Cikutra No.7, Cikutra, Kec. Cibeunying Kidul, Kota Bandung, Jawa Barat 40124',
+                'tanggal' => '2022-11-04 22:59:37',
+                'penyewaan' => 19,
+                'updated_by' => NULL,
+                'created_by' => 1,
+                'created_at' => '2022-11-04 22:59:37',
+                'updated_at' => '2022-11-04 22:59:37',
+            ),
         ));
         
         
