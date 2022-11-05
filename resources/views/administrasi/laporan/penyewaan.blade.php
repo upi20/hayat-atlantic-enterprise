@@ -11,11 +11,6 @@
     <div class="card">
         <div class="card-header d-md-flex flex-row justify-content-between">
             <h3 class="card-title">{{ $page_attr['title'] }} Table List</h3>
-            @if ($can_reciving_order)
-                <a class="btn btn-rounded btn-success btn-sm" href="{{ route('admin.penyewaan.reciving_order') }}">
-                    <i class="fas fa-plus"></i> Reciving Order
-                </a>
-            @endif
         </div>
         <div class="card-body">
             <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
@@ -147,7 +142,6 @@
             </div>
         </div>
     </div>
-
     @include('component.penyewaan_detail_html')
 @endsection
 
@@ -357,7 +351,10 @@
                 order: [
                     [2, 'asc'],
                     [8, 'asc']
-                ]
+                ],
+                language: {
+                    url: datatable_indonesia_language_url
+                }
             });
 
             new_table.on('draw.dt', function() {

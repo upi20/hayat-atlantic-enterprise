@@ -60,7 +60,7 @@ use App\Http\Controllers\Administrasi\MasterData\PegawaiJabatan;
 // Data Barang ========================================================================================================
 use App\Http\Controllers\Administrasi\Barang\SewaController;
 use App\Http\Controllers\Administrasi\Barang\HabisPakaiController;
-
+use App\Http\Controllers\Administrasi\Laporan\PenyewaanController as LaporanPenyewaanController;
 // Pengadaan Barang ===================================================================================================
 use App\Http\Controllers\Administrasi\Pengadaan\BarangSewaController;
 use App\Http\Controllers\Administrasi\Pengadaan\BarangSewaListController;
@@ -697,4 +697,28 @@ Route::controller(GantiRugiController::class)->prefix($prefix)->group(function (
         Route::post('/insert', "{$prefix}_insert")->name("$name.insert")->middleware("permission:$name.insert");
         Route::post('/batalkan', "{$prefix}_batalkan")->name("$name.batalkan")->middleware("permission:$name.batalkan");
     });
+});
+
+
+$prefix = 'laporan';
+Route::prefix($prefix)->prefix($prefix)->group(function () use ($name, $prefix) {
+    $name = "$name.$prefix"; // admin.laporan
+
+    $prefix = "penyewaan";
+    Route::prefix($prefix)->controller(LaporanPenyewaanController::class)->group(function () use ($name, $prefix) {
+        $name = "$name.$prefix"; // admin.laporan.penyewaan
+        Route::get('/', 'index')->name($name)->middleware("permission:$name");
+        Route::get('/customer_select2', 'customer_select2')->name("$name.customer_select2")->middleware("permission:$name");
+        Route::get('/detail', 'detail')->name("$name.detail")->middleware("permission:$name");
+        Route::post('/batalkan', 'batalkan')->name("$name.batalkan")->middleware("permission:$name.batalkan");
+        Route::post('/selesai/{model}', 'selesai')->name("$name.selesai")->middleware("permission:$name.selesai");
+        Route::delete('/{model}', 'delete')->name("$name.delete")->middleware("permission:$name.delete");
+    });
+
+    // pengambilan_barang
+    // pengembalian_barang
+    // ganti_rugi
+    // barang_rusak
+    // barang_hilang
+
 });
