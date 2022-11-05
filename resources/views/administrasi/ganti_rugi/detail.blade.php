@@ -877,7 +877,10 @@
                     ],
                     order: [
                         [2, 'desc']
-                    ]
+                    ],
+                    language: {
+                        url: datatable_indonesia_language_url
+                    }
                 });
 
                 new_table_uang.on('draw.dt', function() {
@@ -1192,7 +1195,10 @@
                     ],
                     order: [
                         [1, 'desc']
-                    ]
+                    ],
+                    language: {
+                        url: datatable_indonesia_language_url
+                    }
                 });
 
                 new_table_barang.on('draw.dt', function() {
