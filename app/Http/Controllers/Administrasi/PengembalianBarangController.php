@@ -142,6 +142,7 @@ class PengembalianBarangController extends Controller
             }
 
             // belum sinkron dengan tanggal pengiriman di tabel panyewaan
+            $model->tanggal_kembali = $request->tanggal_kembali;
             $model->status = 3;
             $model->updated_by = auth()->user()->id;
             $model->save();

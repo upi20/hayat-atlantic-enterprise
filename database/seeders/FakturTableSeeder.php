@@ -22,7 +22,7 @@ class FakturTableSeeder extends Seeder
             0 => 
             array (
                 'id' => 9,
-                'no_faktur' => '1665299851',
+                'no_faktur' => 'INV/00009',
                 'tanggal' => '2022-10-09',
                 'jumlah' => 1000000,
                 'sisa' => 1900000,
@@ -37,7 +37,7 @@ class FakturTableSeeder extends Seeder
             1 => 
             array (
                 'id' => 10,
-                'no_faktur' => '1665299939',
+                'no_faktur' => 'INV/00010',
                 'tanggal' => '2022-10-09',
                 'jumlah' => 500000,
                 'sisa' => 1400000,
@@ -52,7 +52,7 @@ class FakturTableSeeder extends Seeder
             2 => 
             array (
                 'id' => 11,
-                'no_faktur' => '1665326145',
+                'no_faktur' => 'INV/00011',
                 'tanggal' => '2022-10-09',
                 'jumlah' => 4000000,
                 'sisa' => 4850000,
@@ -67,7 +67,7 @@ class FakturTableSeeder extends Seeder
             3 => 
             array (
                 'id' => 12,
-                'no_faktur' => '1665336806',
+                'no_faktur' => 'INV/00012',
                 'tanggal' => '2022-10-10',
                 'jumlah' => 1000000,
                 'sisa' => 2750000,
@@ -82,7 +82,7 @@ class FakturTableSeeder extends Seeder
             4 => 
             array (
                 'id' => 13,
-                'no_faktur' => '1665339289',
+                'no_faktur' => 'INV/00013',
                 'tanggal' => '2022-10-10',
                 'jumlah' => 1400000,
                 'sisa' => 0,
@@ -97,7 +97,7 @@ class FakturTableSeeder extends Seeder
             5 => 
             array (
                 'id' => 14,
-                'no_faktur' => '1665377315',
+                'no_faktur' => 'INV/00014',
                 'tanggal' => '2022-10-10',
                 'jumlah' => 2750000,
                 'sisa' => 0,
@@ -112,7 +112,7 @@ class FakturTableSeeder extends Seeder
             6 => 
             array (
                 'id' => 15,
-                'no_faktur' => '1665377777',
+                'no_faktur' => 'INV/00015',
                 'tanggal' => '2022-10-10',
                 'jumlah' => 10000000,
                 'sisa' => 7075000,
@@ -127,7 +127,7 @@ class FakturTableSeeder extends Seeder
             7 => 
             array (
                 'id' => 16,
-                'no_faktur' => '1665382541',
+                'no_faktur' => 'INV/00016',
                 'tanggal' => '2022-10-10',
                 'jumlah' => 7075000,
                 'sisa' => 0,
@@ -142,7 +142,7 @@ class FakturTableSeeder extends Seeder
             8 => 
             array (
                 'id' => 17,
-                'no_faktur' => '1665386679',
+                'no_faktur' => 'INV/00017',
                 'tanggal' => '2022-10-10',
                 'jumlah' => 1000000,
                 'sisa' => 915000,
@@ -157,7 +157,7 @@ class FakturTableSeeder extends Seeder
             9 => 
             array (
                 'id' => 18,
-                'no_faktur' => '1665842935',
+                'no_faktur' => 'INV/00018',
                 'tanggal' => '2022-10-15',
                 'jumlah' => 4000000,
                 'sisa' => 5200000,
@@ -172,7 +172,7 @@ class FakturTableSeeder extends Seeder
             10 => 
             array (
                 'id' => 19,
-                'no_faktur' => '1666106711',
+                'no_faktur' => 'INV/00019',
                 'tanggal' => '2022-10-18',
                 'jumlah' => 1000000,
                 'sisa' => 7792500,
@@ -187,7 +187,7 @@ class FakturTableSeeder extends Seeder
             11 => 
             array (
                 'id' => 20,
-                'no_faktur' => '1666389361',
+                'no_faktur' => 'INV/00020',
                 'tanggal' => '2022-10-22',
                 'jumlah' => 7792500,
                 'sisa' => 0,
@@ -202,7 +202,7 @@ class FakturTableSeeder extends Seeder
             12 => 
             array (
                 'id' => 21,
-                'no_faktur' => '1666394205',
+                'no_faktur' => 'INV/00021',
                 'tanggal' => '2022-10-22',
                 'jumlah' => 5200000,
                 'sisa' => 0,
@@ -217,7 +217,7 @@ class FakturTableSeeder extends Seeder
             13 => 
             array (
                 'id' => 22,
-                'no_faktur' => '1666394225',
+                'no_faktur' => 'INV/00022',
                 'tanggal' => '2022-10-22',
                 'jumlah' => 4850000,
                 'sisa' => 0,
@@ -232,7 +232,7 @@ class FakturTableSeeder extends Seeder
             14 => 
             array (
                 'id' => 23,
-                'no_faktur' => '1666408937',
+                'no_faktur' => 'INV/00023',
                 'tanggal' => '2022-10-22',
                 'jumlah' => 1000000,
                 'sisa' => 6550000,
@@ -247,7 +247,7 @@ class FakturTableSeeder extends Seeder
             15 => 
             array (
                 'id' => 24,
-                'no_faktur' => '1666714628',
+                'no_faktur' => 'INV/00024',
                 'tanggal' => '2022-10-25',
                 'jumlah' => 5000000,
                 'sisa' => 4025000,
@@ -262,7 +262,7 @@ class FakturTableSeeder extends Seeder
             16 => 
             array (
                 'id' => 25,
-                'no_faktur' => '1666717483',
+                'no_faktur' => 'INV/00025',
                 'tanggal' => '2022-10-26',
                 'jumlah' => 5000000,
                 'sisa' => 3675000,
@@ -277,7 +277,7 @@ class FakturTableSeeder extends Seeder
             17 => 
             array (
                 'id' => 26,
-                'no_faktur' => '1667577416',
+                'no_faktur' => 'INV/00026',
                 'tanggal' => '2022-11-04',
                 'jumlah' => 50000,
                 'sisa' => 50000,
@@ -292,7 +292,7 @@ class FakturTableSeeder extends Seeder
             18 => 
             array (
                 'id' => 27,
-                'no_faktur' => '1667577568',
+                'no_faktur' => 'INV/00027',
                 'tanggal' => '2022-11-04',
                 'jumlah' => 50000,
                 'sisa' => 0,
@@ -303,6 +303,36 @@ class FakturTableSeeder extends Seeder
                 'created_by' => NULL,
                 'created_at' => '2022-11-04 22:59:28',
                 'updated_at' => '2022-11-04 22:59:28',
+            ),
+            19 => 
+            array (
+                'id' => 30,
+                'no_faktur' => 'INV/00028',
+                'tanggal' => '2022-11-05',
+                'jumlah' => 1000000,
+                'sisa' => 5550000,
+                'pembayaran_sebelumnya' => 1000000,
+                'total' => 7550000,
+                'pembayaran' => 48,
+                'updated_by' => NULL,
+                'created_by' => NULL,
+                'created_at' => '2022-11-05 01:18:05',
+                'updated_at' => '2022-11-05 01:18:05',
+            ),
+            20 => 
+            array (
+                'id' => 31,
+                'no_faktur' => 'INV/00029',
+                'tanggal' => '2022-11-05',
+                'jumlah' => 300000,
+                'sisa' => 300000,
+                'pembayaran_sebelumnya' => 0,
+                'total' => 600000,
+                'pembayaran' => 49,
+                'updated_by' => NULL,
+                'created_by' => NULL,
+                'created_at' => '2022-11-05 17:21:11',
+                'updated_at' => '2022-11-05 17:21:11',
             ),
         ));
         

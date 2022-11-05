@@ -64,7 +64,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="fw-bold" style="padding: 4px 4px!important; white-space: nowrap">Referensi</td>
+                        <td class="fw-bold" style="padding: 4px 4px!important; white-space: nowrap">Penyewaan</td>
                         <td class="fw-bold" style="padding: 4px 4px!important;">:</td>
                         <td class="fw-bold" style="padding: 4px 4px!important;">
                             {{ $model->number }}

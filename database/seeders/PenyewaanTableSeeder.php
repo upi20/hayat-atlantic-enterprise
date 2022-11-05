@@ -22,8 +22,8 @@ class PenyewaanTableSeeder extends Seeder
             0 => 
             array (
                 'id' => 8,
-                'nomor' => 'SP/0008',
                 'customer' => 1,
+                'number' => 'SP/0008',
                 'lokasi' => 'Gedung Sate',
                 'tanggal_kirim' => '2022-10-10',
                 'tanggal_pakai_dari' => '2022-10-11',
@@ -45,8 +45,8 @@ class PenyewaanTableSeeder extends Seeder
             1 => 
             array (
                 'id' => 9,
-                'nomor' => 'SP/0009',
                 'customer' => 1,
+                'number' => 'SP/0009',
                 'lokasi' => 'Jl. Supratman no 54 gedung b',
                 'tanggal_kirim' => '2022-10-12',
                 'tanggal_pakai_dari' => '2022-10-13',
@@ -68,8 +68,8 @@ class PenyewaanTableSeeder extends Seeder
             2 => 
             array (
                 'id' => 10,
-                'nomor' => 'SP/0010',
                 'customer' => 2,
+                'number' => 'SP/0010',
                 'lokasi' => 'Gedung Serba guna Widyatama.',
                 'tanggal_kirim' => '2022-10-07',
                 'tanggal_pakai_dari' => '2022-10-08',
@@ -91,8 +91,8 @@ class PenyewaanTableSeeder extends Seeder
             3 => 
             array (
                 'id' => 11,
-                'nomor' => 'SP/0011',
                 'customer' => 1,
+                'number' => 'SP/0011',
                 'lokasi' => 'Alamat 1',
                 'tanggal_kirim' => '2022-10-05',
                 'tanggal_pakai_dari' => '2022-10-06',
@@ -114,8 +114,8 @@ class PenyewaanTableSeeder extends Seeder
             4 => 
             array (
                 'id' => 12,
-                'nomor' => 'SP/0012',
                 'customer' => 16,
+                'number' => 'SP/0012',
                 'lokasi' => 'Pontianak',
                 'tanggal_kirim' => '2022-10-27',
                 'tanggal_pakai_dari' => '2022-10-28',
@@ -124,7 +124,7 @@ class PenyewaanTableSeeder extends Seeder
                 'tanggal_order' => '2022-10-22',
                 'status' => 4,
                 'total_harga' => 7550000,
-                'dibayar' => 1000000,
+                'dibayar' => 2000000,
                 'status_pembayaran' => 0,
                 'batal_keterangan' => NULL,
                 'batal_tanggal' => NULL,
@@ -132,13 +132,13 @@ class PenyewaanTableSeeder extends Seeder
                 'updated_by' => NULL,
                 'created_by' => 5,
                 'created_at' => '2022-10-10 11:38:10',
-                'updated_at' => '2022-10-22 11:27:04',
+                'updated_at' => '2022-11-05 01:18:05',
             ),
             5 => 
             array (
                 'id' => 13,
-                'nomor' => 'SP/0013',
                 'customer' => 16,
+                'number' => 'SP/0013',
                 'lokasi' => 'Jalan supratman no 50 gedung b',
                 'tanggal_kirim' => '2022-10-12',
                 'tanggal_pakai_dari' => '2022-10-13',
@@ -160,8 +160,8 @@ class PenyewaanTableSeeder extends Seeder
             6 => 
             array (
                 'id' => 14,
-                'nomor' => 'SP/0014',
                 'customer' => 18,
+                'number' => 'SP/0014',
                 'lokasi' => 'Jl. Cikutra No.7, Cikutra, Kec. Cibeunying Kidul, Kota Bandung, Jawa Barat 40124',
                 'tanggal_kirim' => '2022-10-07',
                 'tanggal_pakai_dari' => '2022-10-08',
@@ -183,8 +183,8 @@ class PenyewaanTableSeeder extends Seeder
             7 => 
             array (
                 'id' => 15,
-                'nomor' => 'SP/0015',
                 'customer' => 17,
+                'number' => 'SP/0015',
                 'lokasi' => 'Lengkong',
                 'tanggal_kirim' => '2022-10-19',
                 'tanggal_pakai_dari' => '2022-10-20',
@@ -206,8 +206,8 @@ class PenyewaanTableSeeder extends Seeder
             8 => 
             array (
                 'id' => 16,
-                'nomor' => 'SP/0016',
                 'customer' => 19,
+                'number' => 'SP/0016',
                 'lokasi' => 'Lokasi Penyewaan Baru',
                 'tanggal_kirim' => '2022-10-28',
                 'tanggal_pakai_dari' => '2022-10-29',
@@ -229,8 +229,8 @@ class PenyewaanTableSeeder extends Seeder
             9 => 
             array (
                 'id' => 17,
-                'nomor' => 'SP/0017',
                 'customer' => NULL,
+                'number' => 'SP/0017',
                 'lokasi' => NULL,
                 'tanggal_kirim' => NULL,
                 'tanggal_pakai_dari' => NULL,
@@ -252,8 +252,8 @@ class PenyewaanTableSeeder extends Seeder
             10 => 
             array (
                 'id' => 18,
-                'nomor' => 'SP/0018',
                 'customer' => 15,
+                'number' => 'SP/0018',
                 'lokasi' => 'Alamat 15',
                 'tanggal_kirim' => '2022-10-25',
                 'tanggal_pakai_dari' => '2022-10-26',
@@ -275,8 +275,8 @@ class PenyewaanTableSeeder extends Seeder
             11 => 
             array (
                 'id' => 19,
-                'nomor' => 'SP/0019',
                 'customer' => 18,
+                'number' => 'SP/0019',
                 'lokasi' => 'Jl. Cikutra No.7, Cikutra, Kec. Cibeunying Kidul, Kota Bandung, Jawa Barat 40124',
                 'tanggal_kirim' => '2022-11-03',
                 'tanggal_pakai_dari' => '2022-11-04',
@@ -297,9 +297,32 @@ class PenyewaanTableSeeder extends Seeder
             ),
             12 => 
             array (
-                'id' => 20,
-                'nomor' => NULL,
+                'id' => 27,
+                'customer' => 18,
+                'number' => 'SP/0022',
+                'lokasi' => 'Jl. Cikutra No.7, Cikutra, Kec. Cibeunying Kidul, Kota Bandung, Jawa Barat 40124',
+                'tanggal_kirim' => '2022-11-03',
+                'tanggal_pakai_dari' => '2022-11-04',
+                'tanggal_pakai_sampai' => '2022-11-04',
+                'kepada' => 'Handip Yusuf Kurniawan',
+                'tanggal_order' => '2022-11-05',
+                'status' => 2,
+                'total_harga' => 600000,
+                'dibayar' => 300000,
+                'status_pembayaran' => 0,
+                'batal_keterangan' => NULL,
+                'batal_tanggal' => NULL,
+                'batal_oleh' => NULL,
+                'updated_by' => 1,
+                'created_by' => 1,
+                'created_at' => '2022-11-05 00:28:51',
+                'updated_at' => '2022-11-05 17:21:11',
+            ),
+            13 => 
+            array (
+                'id' => 28,
                 'customer' => NULL,
+                'number' => 'SP/0023',
                 'lokasi' => NULL,
                 'tanggal_kirim' => NULL,
                 'tanggal_pakai_dari' => NULL,
@@ -315,8 +338,8 @@ class PenyewaanTableSeeder extends Seeder
                 'batal_oleh' => NULL,
                 'updated_by' => NULL,
                 'created_by' => 1,
-                'created_at' => '2022-11-04 23:49:04',
-                'updated_at' => '2022-11-04 23:49:04',
+                'created_at' => '2022-11-05 00:31:55',
+                'updated_at' => '2022-11-05 00:31:55',
             ),
         ));
         

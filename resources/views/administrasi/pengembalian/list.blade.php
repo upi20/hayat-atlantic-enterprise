@@ -52,6 +52,15 @@
                     </div>
                 </div>
                 <div class=" row mb-4">
+                    <label class="form-label col-md-3">Tanggal Barang Kembali:
+                        <span class="text-danger">*</span></label>
+                    <div class="col-md-9">
+                        <input type="date" class="form-control date-input-str" name="tanggal_kembali"
+                            id="tanggal_kembali" value="{{ $surat_jalan->tanggal_kembali ?? date('Y-m-d') }}"
+                            required="" />
+                    </div>
+                </div>
+                <div class=" row mb-4">
                     <label class="form-label col-md-3 ">Keterangan/Catatan:
                         <span class="text-danger">*</span></label>
                     <div class="col-md-9">
