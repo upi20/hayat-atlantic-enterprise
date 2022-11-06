@@ -188,6 +188,7 @@ class PengembalianBarangController extends Controller
     {
         DB::beginTransaction();
         $model->status = 4;
+        $model->konfirmasi_oleh = auth()->user()->id;
         $model->save();
 
         // penyewaan

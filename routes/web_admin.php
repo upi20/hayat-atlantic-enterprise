@@ -60,6 +60,7 @@ use App\Http\Controllers\Administrasi\MasterData\PegawaiJabatan;
 // Data Barang ========================================================================================================
 use App\Http\Controllers\Administrasi\Barang\SewaController;
 use App\Http\Controllers\Administrasi\Barang\HabisPakaiController;
+use App\Http\Controllers\Administrasi\Laporan\PengambilanBarangController as LaporanPengambilanBarangController;
 use App\Http\Controllers\Administrasi\Laporan\PenyewaanController as LaporanPenyewaanController;
 // Pengadaan Barang ===================================================================================================
 use App\Http\Controllers\Administrasi\Pengadaan\BarangSewaController;
@@ -717,7 +718,7 @@ Route::prefix($prefix)->prefix($prefix)->group(function () use ($name, $prefix) 
     });
 
     $prefix = "pengambilan";
-    Route::prefix($prefix)->controller(PengambilanBarangController::class)->group(function () use ($name, $prefix) {
+    Route::prefix($prefix)->controller(LaporanPengambilanBarangController::class)->group(function () use ($name, $prefix) {
         $name = "$name.$prefix"; // admin.laporan.pengambilan
         Route::get('/', 'index')->name($name)->middleware("permission:$name");
         Route::get('/cetak_laporan', 'cetak_laporan')->name("$name.cetak_laporan")->middleware("permission:$name.cetak_laporan");
