@@ -29,7 +29,7 @@
                     <div id="collapse1" class="panel-collapse collapse show" role="tabpanel" aria-labelledby="headingOne1">
                         <div class="panel-body">
                             <form action="javascript:void(0)" class="ml-md-3 mb-md-3" id="FilterForm">
-                                <div class="form-group float-start me-2" style="min-width: 300px">
+                                {{-- <div class="form-group float-start me-2" style="min-width: 300px">
                                     <label for="filter_status_pembayaran">Status Pembayaran</label>
                                     <br>
                                     <select class="form-control" id="filter_status_pembayaran"
@@ -38,8 +38,9 @@
                                         <option value="1">Lunas</option>
                                         <option value="0">Belum Lunas</option>
                                     </select>
-                                </div>
-                                <div class="form-group float-start me-2" style="min-width: 300px">
+                                </div> --}}
+
+                                {{-- <div class="form-group float-start me-2" style="min-width: 300px">
                                     <label for="filter_status">Status Penyewaan</label>
                                     <br>
                                     <select class="form-control" id="filter_status" name="filter_status"
@@ -52,15 +53,15 @@
                                         <option value="5">Selesai</option>
                                         <option value="9">Dibatalkan</option>
                                     </select>
-                                </div>
+                                </div> --}}
 
-                                <div class="form-group float-start me-2" style="min-width: 300px">
+                                {{-- <div class="form-group float-start me-2" style="min-width: 300px">
                                     <label for="customer">Customer</label>
                                     <br>
                                     <select class="form-control" id="customer" name="customer" style="width: 100%;">
                                         <option value="" selected>Semua</option>
                                     </select>
-                                </div>
+                                </div> --}}
 
                                 <div class="form-group float-start me-2" style="min-width: 300px">
                                     <label for="dari_tanggal">Dari Tanggal <small>(Tanggal Order)</small></label>
@@ -91,7 +92,6 @@
                     <tr>
                         <th rowspan="2" class="align-middle text-center">Nomor</th>
                         <th rowspan="2" class="align-middle text-center">Customer</th>
-                        <th rowspan="2" class="align-middle text-center">Penyewaan</th>
                         <th class="text-center" colspan="3">Tanggal</th>
                         <th class="text-center" colspan="3">Pembayaran</th>
                     </tr>
@@ -240,6 +240,12 @@
                 columns: [{
                         data: 'number',
                         name: 'number',
+                        render(data, type, full, meta) {
+                            const btn_detail = `<button type="button" data-toggle="tooltip" class="btn btn-rounded btn-info btn-sm me-1 mt-1" title="Detail Data" onClick="detailFunc('${full.id}')">
+                                <i class="fas fa-file-alt"></i> Detail
+                                </button>`;
+                            return `${data}<br>${btn_detail}`;
+                        },
                     },
                     {
                         data: 'customer_nama',
@@ -248,20 +254,6 @@
                             return `<span data-toggle="tooltip" title="${data}">${data}</span><br>
                             <small data-toggle="tooltip" title="${full.lokasi}">${full.lokasi}</small>`;
                         },
-                    },
-                    {
-                        data: 'id',
-                        name: 'status',
-                        render(data, type, full, meta) {
-                            const btn_detail = `<button type="button" data-toggle="tooltip" class="btn btn-rounded btn-info btn-sm me-1 mt-1" title="Detail Data" onClick="detailFunc('${data}')">
-                                <i class="fas fa-file-alt"></i>
-                                </button>`;
-                            const status = `<i class="fas fa-circle me-1 text-${statusClass(full.status)}"></i>
-                                ${full.status_str}`;
-
-                            return `${status} <br>${btn_detail}`;
-                        },
-                        className: 'text-nowrap'
                     },
                     {
                         data: 'tanggal_order_str',
@@ -306,9 +298,7 @@
                         name: 'sisa',
                         render(data, type, full, meta) {
                             const sisa = 'Rp. ' + format_rupiah(data);
-                            const status =
-                                `<i class="fas fa-circle me-1 text-${full.status_pembayaran == 1 ? 'success':'danger'}"></i>${full.status_pembayaran_str}`;
-                            return `${sisa}<br>${status}`;
+                            return `${sisa}`;
                         },
                         className: 'text-nowrap text-right'
                     },
@@ -397,15 +387,15 @@
         function cetak_laporan() {
             const data_table = table_html.DataTable();
             const params = data_table.ajax.params();
-            const customer = params['filter[customer]'];
-            const dari_tanggal = params['filter[dari_tanggal]'];
-            const sampai_tanggal = params['filter[sampai_tanggal]'];
-            const status = params['filter[status]'];
-            const status_pembayaran = params['filter[status_pembayaran]'];
-            const order = params['order'][0];
+            const customer = params['filter[customer]'] ?? '';
+            const dari_tanggal = params['filter[dari_tanggal]'] ?? '';
+            const sampai_tanggal = params['filter[sampai_tanggal]'] ?? '';
+            const status = params['filter[status]'] ?? '';
+            const status_pembayaran = params['filter[status_pembayaran]'] ?? '';
+            const order = params['order'][0] ?? '';
             const order_column = order['column'];
             const order_dir = order['dir'];
-            const search = params['search']['value'];
+            const search = params['search']['value'] ?? '';
             const search_value = encodeURIComponent(search);
 
             // column

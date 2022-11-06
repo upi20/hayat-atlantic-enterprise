@@ -319,9 +319,9 @@ class PenyewaanController extends Controller
 
         $penyewaans = $this->datatable($request);
         $penyewaans = $penyewaans->original['data'];
-        $dari_tanggal = Carbon::parse($request->dari_tanggal)
+        $dari_tanggal = Carbon::parse($request->filter['dari_tanggal'])
             ->isoFormat("D MMMM Y");
-        $sampai_tanggal = Carbon::parse($request->sampai_tanggal)
+        $sampai_tanggal = Carbon::parse($request->filter['sampai_tanggal'])
             ->isoFormat("D MMMM Y");
         $search = request('search');
         $search = isset($search['value']) ? $search['value'] : null;
