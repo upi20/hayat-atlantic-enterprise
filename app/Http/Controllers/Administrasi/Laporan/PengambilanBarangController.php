@@ -7,12 +7,9 @@ use App\Models\Barang\HabisPakai;
 use App\Models\Barang\Satuan;
 use App\Models\Barang\Sewa;
 use App\Models\Customer;
-use App\Models\GantiRugi;
 use App\Models\Penyewaan;
-use App\Models\PenyewaanBarang;
 use App\Models\SuratJalan;
 use App\Models\SuratJalanBarang;
-use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -46,7 +43,7 @@ class PengambilanBarangController extends Controller
         }
 
         $page_attr = [
-            'title' => 'Laporan Penyewaan',
+            'title' => 'Laporan Pengambilan',
             'breadcrumbs' => [
                 ['name' => 'Dashboard'],
                 ['name' => 'Laporan'],
