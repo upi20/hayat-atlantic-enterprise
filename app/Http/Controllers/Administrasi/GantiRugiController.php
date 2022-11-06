@@ -273,7 +273,13 @@ class GantiRugiController extends Controller
 
             // ganti rugi pembayaran
             $ganti_rugi_uang = new GantiRugiPembayaran();
-            $ganti_rugi_nomor = GantiRugiPembayaran::max('no_surat') + 1;
+
+            // penomoran
+            $max_id = GantiRugiPembayaran::max('no_surat');
+            $max_id = $max_id ?? 'GRU/00001';
+            $max_id = (int)str_replace('GRU/', '', $max_id);
+            $max_id++;
+            $ganti_rugi_nomor = 'GRU/' . str_pad($max_id, 5, '0', STR_PAD_LEFT);
 
             $ganti_rugi_uang->no_surat = $ganti_rugi_nomor;
             $ganti_rugi_uang->ganti_rugi_id = $ganti_rugi->id;
@@ -566,7 +572,13 @@ class GantiRugiController extends Controller
 
             // ganti rugi barang
             $ganti_rugi_barang = new GantiRugiBarang();
-            $ganti_rugi_nomor = GantiRugiBarang::max('no_surat') + 1;
+
+            // penomoran
+            $max_id = GantiRugiBarang::max('no_surat');
+            $max_id = $max_id ?? 'GRB/00001';
+            $max_id = (int)str_replace('GRB/', '', $max_id);
+            $max_id++;
+            $ganti_rugi_nomor = 'GRB/' . str_pad($max_id, 5, '0', STR_PAD_LEFT);
 
             $ganti_rugi_barang->no_surat = $ganti_rugi_nomor;
             $ganti_rugi_barang->ganti_rugi_id = $ganti_rugi->id;

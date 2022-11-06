@@ -4,17 +4,17 @@
     [] Implementasi nomor
         [x] Crud
         [x] Detail
-        [] Faktur Pembayaran
+        [x] Faktur Pembayaran
         [x] Surat Jalan
         [] Pengambilan Barang
         [] Pengembalian Barang
-        [] Ganti Rugi
+        [x] Ganti Rugi
     [] Tambahkan Perusahaan ke 
     
 # Penomoran
-    [] GRU ganti rugi uang
-    [] GRB ganti rugi barang
-    [] GRU Pembayaran sebelumnya
+    [x] GRU ganti rugi uang
+    [x] GRB ganti rugi barang
+    [x] GRU Pembayaran sebelumnya
 
 ## Cek Error
     [x] Reciving order baru barang bisa sama
