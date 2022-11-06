@@ -1,64 +1,66 @@
 =======================================================================================================================
-# 04 November 2022
+# Next
+## Laporan Perizinan dan cleaning file sintaks yang tidak di gunakan
+    [] Penyewaan
+    [] Pengambilan Barang
+    [] Pengembalian Barang
+    [] Ganti Rugi Barang
+
 ## Refactore Penyewaan
     [] Implementasi nomor
-        [x] Crud
-        [x] Detail
-        [x] Faktur Pembayaran
-        [x] Surat Jalan
         [] Pengambilan Barang
         [] Pengembalian Barang
-        [x] Ganti Rugi
-    [] Tambahkan Perusahaan ke 
-    
-# Penomoran
-    [x] GRU ganti rugi uang
-    [x] GRB ganti rugi barang
-    [x] GRU Pembayaran sebelumnya
 
 ## Cek Error
-    [x] Reciving order baru barang bisa sama
     [] Total Harga Penyewaan Jika berbeda kasih tanda merah
     [] Jika ada perubahan dan belum disimpan maka keluarkan alert[pembayaran, pengambilan, pengembalian, ganti rugi]
 
-## Pdf saat penyewaan
-    [x] Faktur
-    [x] Surat Jalan
+## Pdf saat penyewaan (Surat atau laporan)
     [] Surat Pengembalian (Surat Pengembalian Barang) // sama seperti di laporan
     [] Faktur Ganti Rugi
         [] Uang (Faktur)
         [] Barang (Surat Serah Terima Barang)
     [] Label Pengiriman
 
-## Laporan
-    [x] Penyewaan
-    [x] Pengambilan Barang
-    [x] Pengembalian Barang
-    [] Ganti Rugi Barang
-
-## Penyewaan jika di batalkan bisa di hapus
-
-## Buat Setting Penomoran
-
-## Pengembalian barang
-    [] Surat pengembalian barang
-
-## Tabel Pengurangan barang ditambah kolom penyewaan
-    [] Detail penyewaan dibuat component
 
 ## Ganti Rugi
     [] List ganti rugi masukan ke detail penyewaan
     [] Filter di ganti rugi detail
 
-## Printilan
-    [] Created dan updated
-    [] Date time str
-    [] Semua status tidak menggunakan badge tapi menggunakan circle
-    [] Semua pembatalan ditambahkan alasan
-
 ## Frontend
     [] Home
     [] List Data barang Sewa
+
+=======================================================================================================================
+# 04 November 2022
+
+## Refactore Penyewaan
+    [] Implementasi nomor
+        [x] Crud
+        [x] Detail
+        [x] Faktur Pembayaran
+        [x] Surat Jalan
+        [x] Ganti Rugi
+    
+# Penomoran
+    [x] GRU ganti rugi uang
+    [x] GRB ganti rugi barang
+    [x] GRU Pembayaran sebelumnya
+
+
+## Cek Error
+    [x] Reciving order baru barang bisa sama
+
+## Pdf saat penyewaan
+    [x] Faktur
+    [x] Surat Jalan
+
+## Laporan
+    [x] Penyewaan
+    [x] Pengambilan Barang
+    [x] Pengembalian Barang
+    [x] Ganti Rugi Barang
+
 =======================================================================================================================
 # 25 Oktober 2022
 
