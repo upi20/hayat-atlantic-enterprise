@@ -10,13 +10,14 @@ use App\Models\Customer;
 use App\Models\Penyewaan;
 use App\Models\SuratJalan;
 use App\Models\SuratJalanBarang;
+use App\Models\SuratJalanBarangHabisPakai;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Yajra\Datatables\Datatables;
 use PDF;
 
-class PengambilanBarangController extends Controller
+class PengembalianBarangController extends Controller
 {
     private $query = [];
 
@@ -43,13 +44,13 @@ class PengambilanBarangController extends Controller
         }
 
         $page_attr = [
-            'title' => 'Laporan Pengambilan',
+            'title' => 'Laporan Pengembalian',
             'breadcrumbs' => [
                 ['name' => 'Dashboard'],
                 ['name' => 'Laporan'],
             ]
         ];
-        return view('administrasi.laporan.pengambilan', compact('page_attr', 'date_end', 'date_start'));
+        return view('administrasi.laporan.pengembalian', compact('page_attr', 'date_end', 'date_start'));
     }
 
     public function datatable(Request $request): mixed
@@ -196,6 +197,7 @@ class PengambilanBarangController extends Controller
     {
         $surat_jalan = $this->datatable($request);
         $t_surat_jalan_barang = SuratJalanBarang::tableName;
+        $t_surat_jalan_barang_hp = SuratJalanBarangHabisPakai::tableName;
         $t_barang_sewa = Sewa::tableName;
         $t_barang_hbs = HabisPakai::tableName;
         $t_satuan = Satuan::tableName;
@@ -219,14 +221,29 @@ class PengambilanBarangController extends Controller
                 $t_barang_sewa.kode,
                 $t_barang_sewa.nama as barang,
                 $t_satuan.nama as satuan,
-                $t_surat_jalan_barang.qty as qty
+                $t_surat_jalan_barang.qty as qty,
+                $t_surat_jalan_barang.pengembalian_rusak as pengembalian_rusak,
+                $t_surat_jalan_barang.pengembalian_hilang as pengembalian_hilang,
+                $t_surat_jalan_barang.pengembalian_qty as pengembalian_qty
             ")
                 ->join($t_barang_sewa, "$t_barang_sewa.id", '=', "$t_surat_jalan_barang.barang")
                 ->join($t_satuan, "$t_satuan.id", '=', "$t_barang_sewa.satuan")
                 ->where("$t_surat_jalan_barang.surat_jalan", '=', $surat_jalans[$i]['id'])
                 ->orderBy("$t_barang_sewa.nama")->get();
 
+            $barang_hps = SuratJalanBarangHabisPakai::selectRaw("
+                $t_barang_hbs.kode,
+                $t_barang_hbs.nama as barang,
+                $t_satuan.nama as satuan,
+                $t_surat_jalan_barang_hp.qty as qty
+            ")
+                ->join($t_barang_hbs, "$t_barang_hbs.id", '=', "$t_surat_jalan_barang_hp.barang_id")
+                ->join($t_satuan, "$t_satuan.id", '=', "$t_barang_hbs.satuan")
+                ->where("$t_surat_jalan_barang_hp.surat_jalan", '=', $surat_jalans[$i]['id'])
+                ->orderBy("$t_barang_hbs.nama")->get();
+
             $surat_jalans[$i]['barangs'] = (object) $barangs;
+            $surat_jalans[$i]['barang_hps'] = (object) $barang_hps;
             $surat_jalans[$i] = (object) $surat_jalans[$i];
         }
 
@@ -235,12 +252,12 @@ class PengambilanBarangController extends Controller
         $data['compact'] = $data;
 
         // dd($data);
-        // return view('administrasi.laporan.pengambilan_cetak_cetak', $data);
-        view()->share('administrasi.laporan.pengambilan_cetak_cetak', $data);
-        $pdf = PDF::loadView('administrasi.laporan.pengambilan_cetak_cetak', $data)
+        // return view('administrasi.laporan.pengembalian_cetak', $data);
+        view()->share('administrasi.laporan.pengembalian_cetak', $data);
+        $pdf = PDF::loadView('administrasi.laporan.pengembalian_cetak', $data)
             ->setPaper('a4', 'landscape');
 
-        $name = "Laporan Pengambilan Barang $dari_tanggal-$sampai_tanggal.pdf";
+        $name = "Laporan Pengembalian Barang $dari_tanggal-$sampai_tanggal.pdf";
         return $pdf->stream($name);
         exit();
     }

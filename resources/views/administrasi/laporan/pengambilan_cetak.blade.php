@@ -50,16 +50,16 @@
         </tr>
     </table>
     <hr class="garis">
-    <h2 class="text-center">Laporan Pengembalian Barang</h2>
+    <h2 class="text-center">Laporan Pengambilan Barang</h2>
     <h4 class="text-center">Periode: {{ $dari_tanggal }} s/d {{ $sampai_tanggal }}
         {{ $search ? "Dengan Kata Kunci: \"$search\"" : '' }}</h4>
 
     @foreach ($surat_jalans as $surat_jalan)
         <table>
             <tr>
-                <td>Tanggal</td>
+                <td>Tanggal Suart Jalan</td>
                 <td>:</td>
-                <td>Kirim {{ $surat_jalan->tanggal_str }} | Kembali {{ $surat_jalan->tanggal_kembali_str }}</td>
+                <td>{{ $surat_jalan->tanggal_str }}</td>
             </tr>
             <tr>
                 <td>Nomor Surat Jalan</td>
@@ -78,20 +78,13 @@
             </tr>
         </table>
 
-        <b style="margin-left: 4px">Barang Sewa</b>
         <table class="tbl-10 w-100">
             <thead>
                 <tr>
-                    <th rowspan="2" class="b-all" style="max-width: 10px; vertical-align: middle">No</th>
-                    <th rowspan="2" class="b-all" style=" vertical-align: middle">Kode</th>
-                    <th rowspan="2" class="b-all" style=" vertical-align: middle">Barang</th>
-                    <th colspan="4" class="b-all">Jumlah Kondisi Barang</th>
-                </tr>
-                <tr>
-                    <th class="b-all">Disewa</th>
-                    <th class="b-all">Baik</th>
-                    <th class="b-all">Rusak</th>
-                    <th class="b-all">Hilang</th>
+                    <th class="b-all" style="max-width: 10px">No</th>
+                    <th class="b-all">Kode</th>
+                    <th class="b-all">Barang</th>
+                    <th class="b-all">Qty</th>
                 </tr>
             </thead>
             <tbody>
@@ -103,45 +96,10 @@
                         <td class="text-right b-all" style="padding: 8px 10px!important">
                             {{ $barang->qty . ' ' . $barang->satuan }}
                         </td>
-                        <td class="text-right b-all" style="padding: 8px 10px!important">
-                            {{ $barang->pengembalian_qty . ' ' . $barang->satuan }}
-                        </td>
-                        <td class="text-right b-all" style="padding: 8px 10px!important">
-                            {{ $barang->pengembalian_rusak . ' ' . $barang->satuan }}
-                        </td>
-                        <td class="text-right b-all" style="padding: 8px 10px!important">
-                            {{ $barang->pengembalian_hilang . ' ' . $barang->satuan }}
-                        </td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
-        @if (!$surat_jalan->barang_hps->isEmpty())
-            <br>
-            <b style="margin-left: 4px">Penggunaan Barang Habis Pakai</b>
-            <table class="tbl-10 w-100">
-                <thead>
-                    <tr>
-                        <th class="b-all" style="max-width: 10px">No</th>
-                        <th class="b-all">Kode</th>
-                        <th class="b-all">Barang</th>
-                        <th class="b-all">Qty</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($surat_jalan->barang_hps as $key => $barang)
-                        <tr>
-                            <td class="b-all"style="text-align: center">{{ $key + 1 }}</td>
-                            <td class="b-all"style="padding: 8px 10px!important">{{ $barang->kode }}</td>
-                            <td class="b-all"style="padding: 8px 10px!important">{{ $barang->barang }}</td>
-                            <td class="text-right b-all" style="padding: 8px 10px!important">
-                                {{ $barang->qty . ' ' . $barang->satuan }}
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        @endif
         <br>
         <br>
         <br>

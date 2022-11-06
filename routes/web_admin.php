@@ -60,8 +60,7 @@ use App\Http\Controllers\Administrasi\MasterData\PegawaiJabatan;
 // Data Barang ========================================================================================================
 use App\Http\Controllers\Administrasi\Barang\SewaController;
 use App\Http\Controllers\Administrasi\Barang\HabisPakaiController;
-use App\Http\Controllers\Administrasi\Laporan\PengambilanBarangController as LaporanPengambilanBarangController;
-use App\Http\Controllers\Administrasi\Laporan\PenyewaanController as LaporanPenyewaanController;
+
 // Pengadaan Barang ===================================================================================================
 use App\Http\Controllers\Administrasi\Pengadaan\BarangSewaController;
 use App\Http\Controllers\Administrasi\Pengadaan\BarangSewaListController;
@@ -73,6 +72,11 @@ use App\Http\Controllers\Administrasi\Pengurangan\BarangSewaController as Pengur
 use App\Http\Controllers\Administrasi\Pengurangan\BarangSewaListController as PenguranganBarangSewaListController;
 use App\Http\Controllers\Administrasi\Pengurangan\BarangHabisPakaiController as PenguranganBarangHabisPakaiController;
 use App\Http\Controllers\Administrasi\Pengurangan\BarangHabisPakaiListController as PenguranganBarangHabisPakaiListController;
+
+// Data Barang ========================================================================================================
+use App\Http\Controllers\Administrasi\Laporan\PengambilanBarangController as LaporanPengambilanBarangController;
+use App\Http\Controllers\Administrasi\Laporan\PengembalianBarangController as LaporanPengembalianBarangController;
+use App\Http\Controllers\Administrasi\Laporan\PenyewaanController as LaporanPenyewaanController;
 
 
 $name = 'admin';
@@ -700,7 +704,6 @@ Route::controller(GantiRugiController::class)->prefix($prefix)->group(function (
     });
 });
 
-
 $prefix = 'laporan';
 Route::prefix($prefix)->prefix($prefix)->group(function () use ($name, $prefix) {
     $name = "$name.$prefix"; // admin.laporan
@@ -729,7 +732,18 @@ Route::prefix($prefix)->prefix($prefix)->group(function () use ($name, $prefix) 
         });
     });
 
-    // pengembalian_barang
+    $prefix = "pengembalian";
+    Route::prefix($prefix)->controller(LaporanPengembalianBarangController::class)->group(function () use ($name, $prefix) {
+        $name = "$name.$prefix"; // admin.laporan.pengembalian
+        Route::get('/', 'index')->name($name)->middleware("permission:$name");
+        Route::get('/cetak_laporan', 'cetak_laporan')->name("$name.cetak_laporan")->middleware("permission:$name.cetak_laporan");
+
+        Route::controller(PenyewaanController::class)->group(function () use ($name) {
+            Route::get('/customer_select2', 'customer_select2')->name("$name.customer_select2")->middleware("permission:$name");
+            Route::get('/detail', 'detail')->name("$name.detail")->middleware("permission:$name");
+        });
+    });
+
     // ganti_rugi
     // barang_rusak
     // barang_hilang

@@ -22,7 +22,7 @@ class SuratJalanTableSeeder extends Seeder
             0 => 
             array (
                 'id' => 5,
-                'no_surat_jalan' => '1',
+                'no_surat_jalan' => 'SJ/00005',
                 'penerima' => NULL,
                 'keterangan' => 'Harap barang pesanan dicek kembali saat diterima.
 
@@ -46,7 +46,7 @@ Semua klaim setelah barang diterima tidak akan ditanggapi.',
             1 => 
             array (
                 'id' => 6,
-                'no_surat_jalan' => '2',
+                'no_surat_jalan' => 'SJ/00006',
                 'penerima' => NULL,
                 'keterangan' => 'Harap barang pesanan dicek kembali saat diterima.
 
@@ -70,7 +70,7 @@ Semua klaim setelah barang diterima tidak akan ditanggapi.',
             2 => 
             array (
                 'id' => 7,
-                'no_surat_jalan' => '3',
+                'no_surat_jalan' => 'SJ/00007',
                 'penerima' => NULL,
                 'keterangan' => 'Harap barang pesanan dicek kembali saat diterima. Barang yang
 sudah diterima/dipasang tidak dapat dibatalkan.. Barang yang
@@ -91,7 +91,7 @@ diterima tidak akan ditanggapi.',
             3 => 
             array (
                 'id' => 8,
-                'no_surat_jalan' => '4',
+                'no_surat_jalan' => 'SJ/00008',
                 'penerima' => NULL,
                 'keterangan' => NULL,
                 'tanggal' => '2022-10-05',
@@ -109,7 +109,7 @@ diterima tidak akan ditanggapi.',
             4 => 
             array (
                 'id' => 9,
-                'no_surat_jalan' => '5',
+                'no_surat_jalan' => 'SJ/00009',
                 'penerima' => NULL,
                 'keterangan' => 'Barang yang rusak harus di ganti rugi.',
                 'tanggal' => '2022-10-12',
@@ -127,7 +127,7 @@ diterima tidak akan ditanggapi.',
             5 => 
             array (
                 'id' => 10,
-                'no_surat_jalan' => '6',
+                'no_surat_jalan' => 'SJ/00010',
                 'penerima' => NULL,
                 'keterangan' => NULL,
                 'tanggal' => '2022-10-07',
@@ -145,7 +145,7 @@ diterima tidak akan ditanggapi.',
             6 => 
             array (
                 'id' => 11,
-                'no_surat_jalan' => '7',
+                'no_surat_jalan' => 'SJ/00011',
                 'penerima' => NULL,
                 'keterangan' => NULL,
                 'tanggal' => '2022-10-19',
@@ -163,7 +163,7 @@ diterima tidak akan ditanggapi.',
             7 => 
             array (
                 'id' => 12,
-                'no_surat_jalan' => '8',
+                'no_surat_jalan' => 'SJ/00012',
                 'penerima' => NULL,
                 'keterangan' => NULL,
                 'tanggal' => '2022-10-27',
@@ -181,7 +181,7 @@ diterima tidak akan ditanggapi.',
             8 => 
             array (
                 'id' => 13,
-                'no_surat_jalan' => '9',
+                'no_surat_jalan' => 'SJ/00013',
                 'penerima' => NULL,
                 'keterangan' => NULL,
                 'tanggal' => '2022-10-28',
@@ -199,7 +199,7 @@ diterima tidak akan ditanggapi.',
             9 => 
             array (
                 'id' => 14,
-                'no_surat_jalan' => '10',
+                'no_surat_jalan' => 'SJ/00014',
                 'penerima' => NULL,
                 'keterangan' => NULL,
                 'tanggal' => '2022-10-25',
@@ -217,7 +217,7 @@ diterima tidak akan ditanggapi.',
             10 => 
             array (
                 'id' => 15,
-                'no_surat_jalan' => '10',
+                'no_surat_jalan' => 'SJ/00015',
                 'penerima' => NULL,
                 'keterangan' => NULL,
                 'tanggal' => '2022-11-03',
@@ -235,7 +235,7 @@ diterima tidak akan ditanggapi.',
             11 => 
             array (
                 'id' => 16,
-                'no_surat_jalan' => '10',
+                'no_surat_jalan' => 'SJ/00016',
                 'penerima' => NULL,
                 'keterangan' => 'Harap barang pesanan dicek kembali kondisi dan jumlah saat diterima.
 Jika ada barang pesanan yang tidak layar/rusak/cacat/tidak sesuai
@@ -252,6 +252,24 @@ Semua klaim setelah barang diterima tidak akan ditanggapi',
                 'created_by' => 1,
                 'created_at' => '2022-11-05 17:28:51',
                 'updated_at' => '2022-11-05 17:41:14',
+            ),
+            12 => 
+            array (
+                'id' => 19,
+                'no_surat_jalan' => 'SJ/00017',
+                'penerima' => NULL,
+                'keterangan' => NULL,
+                'tanggal' => '2022-11-06',
+                'tanggal_kembali' => NULL,
+                'status' => 1,
+                'penyewaan' => 29,
+                'konfirmasi_oleh' => NULL,
+                'kirim_oleh' => NULL,
+                'kembali_oleh' => NULL,
+                'updated_by' => 1,
+                'created_by' => 1,
+                'created_at' => '2022-11-06 17:36:46',
+                'updated_at' => '2022-11-06 17:36:50',
             ),
         ));
         
