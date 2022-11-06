@@ -284,7 +284,7 @@ class PenyewaanController extends Controller
             if ((is_null($search) || $search == '') && count($model_filter) > 0) return false;
 
             // tambah pencarian
-            $search_add = ['customer', 'lokasi', 'tanggal_kirim', 'tanggal_pakai_dari', 'tanggal_pakai_sampai', 'kepada', 'tanggal_order', 'status', 'total_harga', 'dibayar', 'status_pembayaran', 'batal_keterangan', 'batal_tanggal', 'batal_oleh', 'updated_by', 'created_by'];
+            $search_add = ['customer', 'lokasi', 'tanggal_kirim', 'tanggal_pakai_dari', 'tanggal_pakai_sampai', 'kepada', 'tanggal_order', 'status', 'total_harga', 'dibayar', 'status_pembayaran', 'batal_keterangan', 'batal_tanggal', 'batal_oleh', 'updated_by', 'created_by', 'number'];
             $search_add = array_map(function ($v) use ($table) {
                 return "$table.$v";
             }, $search_add);
@@ -310,7 +310,7 @@ class PenyewaanController extends Controller
     {
         try {
             // penyewaan bisa di hapus jika status nya sama dengan 1
-            if ($model->status == 1) {
+            if ($model->status == 1 || $model->status == 9) {
                 $model->delete();
                 return response()->json($model);
             } else {

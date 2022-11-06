@@ -13,6 +13,12 @@ class Penyewaan extends Model
     protected $table = 'penyewaan';
     const tableName = 'penyewaan';
 
+
+    public function barangs()
+    {
+        return $this->hasMany(PenyewaanBarang::class, 'penyewaan_id', 'id');
+    }
+
     public function getCustomer()
     {
         return $this->hasOne(Customer::class, 'id', 'customer');

@@ -44,11 +44,6 @@
             <td style="width: 33%; padding: 2px 2px; ">
                 <table class="tbl-2">
                     <tr>
-                        <td>Surat Jalan </td>
-                        <td>:</td>
-                        <td>{{ $penyewaan->no_surat_jalan }}</td>
-                    </tr>
-                    <tr>
                         <td>Penyewaan </td>
                         <td>:</td>
                         <td>{{ $penyewaan->number }}</td>

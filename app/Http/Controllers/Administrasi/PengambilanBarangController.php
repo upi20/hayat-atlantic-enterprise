@@ -238,7 +238,7 @@ class PengambilanBarangController extends Controller
         $pdf = PDF::loadView('administrasi.pengambilan.surat_jalan', compact('page_attr', 'model', 'surat_jalan', 'surat_jalan_barangs', 'customer'))
             ->setPaper('a4', 'landscape');
         // $name = "$faktur->no_faktur $penyewaan->kepada.pdf";
-        $name = "tes.pdf";
+        $name = "Surat Jalan $surat_jalan->no_surat_jalan.pdf";
         return $pdf->stream($name);
         exit();
     }

@@ -399,10 +399,12 @@ class PembayaranController extends Controller
             ->where('faktur', $faktur->id)
             ->leftJoin($t_barang, "$t_barang.id", "$table.barang")
             ->get();
-        // return view('administrasi.pembayaran.faktur', compact('faktur', 'barangs', 'model', 'penyewaan'));
+        $data = compact('faktur', 'barangs', 'model', 'penyewaan');
+        $data['compact'] = $data;
+        // return view('administrasi.pembayaran.faktur', $data);
         $faktur->no = 'IN/' . str_pad($faktur->id, 5, '0', STR_PAD_LEFT);
-        view()->share('administrasi.pembayaran.faktur', compact('faktur', 'barangs', 'model', 'penyewaan'));
-        $pdf = PDF::loadView('administrasi.pembayaran.faktur', compact('faktur', 'barangs', 'model', 'penyewaan'))
+        view()->share('administrasi.pembayaran.faktur', $data);
+        $pdf = PDF::loadView('administrasi.pembayaran.faktur', $data)
             ->setPaper('a4', 'landscape');
         $name = "$faktur->no_faktur $penyewaan->kepada.pdf";
         return $pdf->stream($name);

@@ -100,6 +100,11 @@
     .fw-bold {
         font-weight: bold;
     }
+
+    div.breakNow {
+        page-break-inside: avoid;
+        page-break-after: always;
+    }
 </style>
 
 @for ($i = 1; $i <= 150; $i++)

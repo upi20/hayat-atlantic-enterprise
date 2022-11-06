@@ -132,12 +132,12 @@ class DashboardController extends Controller
         $year_ = $request->year ?? date('Y');
         $results = [];
         $years = $this->monthForLoop($year_);
-        foreach ($years as $year) {
-            $item['name'] = $year->name;
+        foreach ($years as $month) {
+            $item['name'] = $month->name;
             $item['data'] = Penyewaan::where('status', '<>', '0')
                 ->where('status', '<>', '9')
-                ->where('tanggal_order', '>=', $year->start)
-                ->where('tanggal_order', '<=', $year->end)
+                ->where('tanggal_order', '>=', $month->start)
+                ->where('tanggal_order', '<=', $month->end)
                 ->count();
             $results[] = $item;
         }
@@ -151,13 +151,13 @@ class DashboardController extends Controller
         $year_ = $request->year ?? date('Y');
         $results = [];
         $years = $this->monthForLoop($year_);
-        foreach ($years as $year) {
-            $item['name'] = $year->name;
+        foreach ($years as $month) {
+            $item['name'] = $month->name;
             $item['data'] = SuratJalanBarang::selectRaw("count(*) as barang, ifnull(sum(surat_jalan_barang.pengembalian_rusak),0) as qty")
                 ->join($t_surat_jalan, "$t_surat_jalan.id", '=', "$table.surat_jalan")
                 ->where("$t_surat_jalan.status", '4') // status selesai
-                ->where("$t_surat_jalan.tanggal", '>=', $year->start)
-                ->where("$t_surat_jalan.tanggal", '<=', $year->end)
+                ->where("$t_surat_jalan.tanggal", '>=', $month->start)
+                ->where("$t_surat_jalan.tanggal", '<=', $month->end)
                 ->where("$table.pengembalian_rusak", '>', 0)
                 ->limit(1)->first();
             $results[] = $item;
@@ -172,13 +172,13 @@ class DashboardController extends Controller
         $year_ = $request->year ?? date('Y');
         $results = [];
         $years = $this->monthForLoop($year_);
-        foreach ($years as $year) {
-            $item['name'] = $year->name;
+        foreach ($years as $month) {
+            $item['name'] = $month->name;
             $item['data'] = SuratJalanBarang::selectRaw("count(*) as barang, ifnull(sum(surat_jalan_barang.pengembalian_hilang),0) as qty")
                 ->join($t_surat_jalan, "$t_surat_jalan.id", '=', "$table.surat_jalan")
                 ->where("$t_surat_jalan.status", '4') // status selesai
-                ->where("$t_surat_jalan.tanggal", '>=', $year->start)
-                ->where("$t_surat_jalan.tanggal", '<=', $year->end)
+                ->where("$t_surat_jalan.tanggal", '>=', $month->start)
+                ->where("$t_surat_jalan.tanggal", '<=', $month->end)
                 ->where("$table.pengembalian_hilang", '>', 0)
                 ->limit(1)->first();
             $results[] = $item;

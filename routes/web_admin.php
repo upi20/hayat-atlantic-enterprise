@@ -708,11 +708,12 @@ Route::prefix($prefix)->prefix($prefix)->group(function () use ($name, $prefix) 
     Route::prefix($prefix)->controller(LaporanPenyewaanController::class)->group(function () use ($name, $prefix) {
         $name = "$name.$prefix"; // admin.laporan.penyewaan
         Route::get('/', 'index')->name($name)->middleware("permission:$name");
-        Route::get('/customer_select2', 'customer_select2')->name("$name.customer_select2")->middleware("permission:$name");
-        Route::get('/detail', 'detail')->name("$name.detail")->middleware("permission:$name");
-        Route::post('/batalkan', 'batalkan')->name("$name.batalkan")->middleware("permission:$name.batalkan");
-        Route::post('/selesai/{model}', 'selesai')->name("$name.selesai")->middleware("permission:$name.selesai");
-        Route::delete('/{model}', 'delete')->name("$name.delete")->middleware("permission:$name.delete");
+        Route::get('/cetak_laporan', 'cetak_laporan')->name("$name.cetak_laporan")->middleware("permission:$name.cetak_laporan");
+
+        Route::controller(PenyewaanController::class)->group(function () use ($name) {
+            Route::get('/customer_select2', 'customer_select2')->name("$name.customer_select2")->middleware("permission:$name");
+            Route::get('/detail', 'detail')->name("$name.detail")->middleware("permission:$name");
+        });
     });
 
     // pengambilan_barang

@@ -32,6 +32,8 @@
     [] Barang Rusak
     [] Ganti Rugi Barang
 
+## Penyewaan jika di batalkan bisa di hapus
+
 ## Buat Setting Penomoran
 
 ## Pengembalian barang
