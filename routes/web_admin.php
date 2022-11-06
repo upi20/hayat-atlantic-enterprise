@@ -716,7 +716,18 @@ Route::prefix($prefix)->prefix($prefix)->group(function () use ($name, $prefix) 
         });
     });
 
-    // pengambilan_barang
+    $prefix = "pengambilan";
+    Route::prefix($prefix)->controller(PengambilanBarangController::class)->group(function () use ($name, $prefix) {
+        $name = "$name.$prefix"; // admin.laporan.pengambilan
+        Route::get('/', 'index')->name($name)->middleware("permission:$name");
+        Route::get('/cetak_laporan', 'cetak_laporan')->name("$name.cetak_laporan")->middleware("permission:$name.cetak_laporan");
+
+        Route::controller(PenyewaanController::class)->group(function () use ($name) {
+            Route::get('/customer_select2', 'customer_select2')->name("$name.customer_select2")->middleware("permission:$name");
+            Route::get('/detail', 'detail')->name("$name.detail")->middleware("permission:$name");
+        });
+    });
+
     // pengembalian_barang
     // ganti_rugi
     // barang_rusak

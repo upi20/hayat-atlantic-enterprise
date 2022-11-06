@@ -203,13 +203,10 @@ class PengembalianBarangController extends Controller
             if ($j_barang->pengembalian_hilang > 0) $hilang_cek = true;
             if ($j_barang->pengembalian_rusak > 0) $rusak_cek = true;
         }
-
-        $no_surat_jalan = 'SJ/' . str_pad($model->no_surat_jalan, 5, '0', STR_PAD_LEFT);
-
         // pengurangan head
         if ($hilang_cek) {
             $pengurangan = new Pengurangan();
-            $pengurangan->nama = "Barang Hilang Saat Penyewaan Dengan Surat Jalan Nomor $no_surat_jalan";
+            $pengurangan->nama = "Barang Hilang Saat Penyewaan Dengan Surat Jalan Nomor $model->no_surat_jalan";
             $pengurangan->tanggal = $model->tanggal;
             $tanggal_penyewaan = $penyewaan->tanggal_pakai_dari == $penyewaan->tanggal_pakai_sampai
                 ? $penyewaan->tanggal_pakai_dari :
@@ -229,7 +226,7 @@ class PengembalianBarangController extends Controller
             $ganti_rugi->penyewaan_id = $penyewaan->id;
             $ganti_rugi->customer = $penyewaan->customer;
 
-            $ganti_rugi->nama = "Barang Digunakan Saat Penyewaan Dengan Surat Jalan Nomor $no_surat_jalan";
+            $ganti_rugi->nama = "Barang Digunakan Saat Penyewaan Dengan Surat Jalan Nomor $model->no_surat_jalan";
             $tanggal_penyewaan = $penyewaan->tanggal_pakai_dari == $penyewaan->tanggal_pakai_sampai
                 ? $penyewaan->tanggal_pakai_dari :
                 "$penyewaan->tanggal_pakai_dari s/d $penyewaan->tanggal_pakai_sampai";
@@ -322,7 +319,7 @@ class PengembalianBarangController extends Controller
         if ($barang_habis_pakai->count() > 0) {
             // pengurangan barang habis pakai head
             $pengurangan_bhs = new HabisPakaiPengurangan();
-            $pengurangan_bhs->nama = "Barang Digunakan Saat Penyewaan Dengan Surat Jalan Nomor $no_surat_jalan";
+            $pengurangan_bhs->nama = "Barang Digunakan Saat Penyewaan Dengan Surat Jalan Nomor $model->no_surat_jalan";
             $pengurangan_bhs->tanggal = $model->tanggal;
             $tanggal_penyewaan = $penyewaan->tanggal_pakai_dari == $penyewaan->tanggal_pakai_sampai
                 ? $penyewaan->tanggal_pakai_dari :

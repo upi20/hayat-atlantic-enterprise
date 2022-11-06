@@ -895,13 +895,9 @@ class PenyewaanController extends Controller
             // proses ganti rugi barang
             if ($model->ganti_rugi) {
 
-                // head pengadaan barang
-                $surat_jalan = $model->surat_jalan;
-                $no_surat_jalan = 'SJ/' . str_pad($surat_jalan->no_surat_jalan, 5, '0', STR_PAD_LEFT);
-
                 $penyewaan = $model;
                 $pengadaan = new Pengadaan();
-                $pengadaan->nama = "Ganti Rugi Barang Saat Penyewaan Dengan Surat Jalan Nomor $no_surat_jalan";
+                $pengadaan->nama = "Ganti Rugi Barang Saat Penyewaan Dengan Surat Jalan Nomor $model->no_surat_jalan";
                 $pengadaan->tanggal = date("Y-m-d H:i:s");
                 $tanggal_penyewaan = $penyewaan->tanggal_pakai_dari == $penyewaan->tanggal_pakai_sampai
                     ? $penyewaan->tanggal_pakai_dari :

@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\DB;
 use Yajra\Datatables\Datatables;
 use PDF;
 
-class PenyewaanController extends Controller
+class PengabilanBarangController extends Controller
 {
     private $query = [];
 
@@ -51,7 +51,7 @@ class PenyewaanController extends Controller
                 ['name' => 'Laporan'],
             ]
         ];
-        return view('administrasi.laporan.penyewaan', compact('page_attr', 'date_end', 'date_start'));
+        return view('administrasi.laporan.pengambilan', compact('page_attr', 'date_end', 'date_start'));
     }
 
     public function datatable(Request $request): mixed

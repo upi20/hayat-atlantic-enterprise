@@ -123,8 +123,12 @@ class PengambilanBarangController extends Controller
 
             // nomor surat
             if (is_null($model->no_surat_jalan)) {
-                $nomor = SuratJalan::max('no_surat_jalan') ?? 0;
-                $model->no_surat_jalan = ($nomor) + 1;
+                // get no faktur
+                $max_id = SuratJalan::max('no_surat_jalan');
+                $max_id = $max_id ?? 'SJ/00001';
+                $max_id = (int)str_replace('SJ/', '', $max_id);
+                $max_id++;
+                $model->no_surat_jalan = 'SJ/' . str_pad($max_id, 5, '0', STR_PAD_LEFT);
                 $model->save();
             }
 
@@ -199,12 +203,13 @@ class PengambilanBarangController extends Controller
 
         // nomor surat
         if (is_null($surat_jalan->no_surat_jalan)) {
-            $nomor = SuratJalan::max('no_surat_jalan') ?? 0;
-            $surat_jalan->no_surat_jalan = ($nomor) + 1;
+            $max_id = SuratJalan::max('no_surat_jalan');
+            $max_id = $max_id ?? 'SJ/00001';
+            $max_id = (int)str_replace('SJ/', '', $max_id);
+            $max_id++;
+            $surat_jalan->no_surat_jalan = 'SJ/' . str_pad($max_id, 5, '0', STR_PAD_LEFT);
             $surat_jalan->save();
         }
-
-        $surat_jalan->no_surat_jalan = 'SJ/' . str_pad($surat_jalan->no_surat_jalan, 5, '0', STR_PAD_LEFT);
 
         // tanggal pakai
         if ($surat_jalan->tanggal_pakai_dari != $surat_jalan->tanggal_pakai_sampai) {

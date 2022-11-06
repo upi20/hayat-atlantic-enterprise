@@ -388,8 +388,7 @@ class PembayaranController extends Controller
             ->leftJoin($t_customer, "$t_customer.id", '=', "$t_penyewaan.customer")
             ->where("$t_penyewaan.id", $model->penyewaan)->first();
 
-        $penyewaan->no_surat_jalan = 'SJ/' . str_pad($penyewaan->no_surat_jalan, 5, '0', STR_PAD_LEFT);
-        $penyewaan->no = 'PM/' . str_pad($penyewaan->id, 5, '0', STR_PAD_LEFT);
+
 
         $barangs = FakturBarang::select([
             DB::raw("$table.*"),
