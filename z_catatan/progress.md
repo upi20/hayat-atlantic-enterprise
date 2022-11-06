@@ -9,7 +9,12 @@
         [] Pengambilan Barang
         [] Pengembalian Barang
         [] Ganti Rugi
-    [] Tambahkan Perusahaan ke customer
+    [] Tambahkan Perusahaan ke 
+    
+# Penomoran
+    [] GRU ganti rugi uang
+    [] GRB ganti rugi barang
+    [] GRU Pembayaran sebelumnya
 
 ## Cek Error
     [x] Reciving order baru barang bisa sama
@@ -19,17 +24,16 @@
 ## Pdf saat penyewaan
     [x] Faktur
     [x] Surat Jalan
-    [] Label Pengiriman
-    [] Surat Pengembalian
+    [] Surat Pengembalian (Surat Pengembalian Barang) // sama seperti di laporan
     [] Faktur Ganti Rugi
-        [] Uang
-        [] Barang
+        [] Uang (Faktur)
+        [] Barang (Surat Serah Terima Barang)
+    [] Label Pengiriman
 
 ## Laporan
-    [] Penyewaan
-    [] Pengambilan Barang
-    [] Pengembalian Barang
-    [] Barang Rusak
+    [x] Penyewaan
+    [x] Pengambilan Barang
+    [x] Pengembalian Barang
     [] Ganti Rugi Barang
 
 ## Penyewaan jika di batalkan bisa di hapus

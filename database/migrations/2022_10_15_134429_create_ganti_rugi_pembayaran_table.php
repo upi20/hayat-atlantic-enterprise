@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('ganti_rugi_id', false, true)->nullable()->default(null);
             $table->string('nama')->nullable()->default(null);
-            $table->integer('no_surat')->default(1);
+            $table->string('no_surat')->nullable()->default(null);
             $table->date('tanggal')->default(now());
             $table->string('oleh')->nullable()->default(null);
             $table->text('keterangan')->nullable()->default(null);

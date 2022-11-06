@@ -60,7 +60,7 @@ use App\Http\Controllers\Administrasi\MasterData\PegawaiJabatan;
 // Data Barang ========================================================================================================
 use App\Http\Controllers\Administrasi\Barang\SewaController;
 use App\Http\Controllers\Administrasi\Barang\HabisPakaiController;
-
+use App\Http\Controllers\Administrasi\Laporan\GantiRugiBarangController;
 // Pengadaan Barang ===================================================================================================
 use App\Http\Controllers\Administrasi\Pengadaan\BarangSewaController;
 use App\Http\Controllers\Administrasi\Pengadaan\BarangSewaListController;
@@ -744,8 +744,15 @@ Route::prefix($prefix)->prefix($prefix)->group(function () use ($name, $prefix) 
         });
     });
 
-    // ganti_rugi
-    // barang_rusak
-    // barang_hilang
+    $prefix = "ganti_rugi";
+    Route::prefix($prefix)->controller(GantiRugiBarangController::class)->group(function () use ($name, $prefix) {
+        $name = "$name.$prefix"; // admin.laporan.ganti_rugi
+        Route::get('/', 'index')->name($name)->middleware("permission:$name");
+        Route::get('/cetak_laporan', 'cetak_laporan')->name("$name.cetak_laporan")->middleware("permission:$name.cetak_laporan");
 
+        Route::controller(PenyewaanController::class)->group(function () use ($name) {
+            Route::get('/customer_select2', 'customer_select2')->name("$name.customer_select2")->middleware("permission:$name");
+            Route::get('/detail', 'detail')->name("$name.detail")->middleware("permission:$name");
+        });
+    });
 });
