@@ -37,8 +37,9 @@
                             Surat Jalan
                         </a>
                     </li>
-                    <li>
-                        <a href="{{ '' }}" target="_blank" id="btn-surat-jalan" class="dropdown-item"
+                    <li id="btn-surat-pengembalian-barang" style="{{ $surat_jalan->status == 4 ? '' : 'display:none' }}">
+                        <a href="{{ route(h_prefix('surat_pengembalian', 2), $model->id) }}" target="_blank"
+                            id="btn-surat-jalan" class="dropdown-item"
                             style="{{ $surat_jalan->status == 0 ? 'display:none' : '' }}">
                             Surat Pengembalian Barang
                         </a>
@@ -479,6 +480,12 @@
                 $('#btn-konfirmasi').fadeIn();
             } else {
                 $('#btn-konfirmasi').fadeOut();
+            }
+
+            if (status == 4) {
+                $('#btn-surat-pengembalian-barang').fadeIn();
+            } else {
+                $('#btn-surat-pengembalian-barang').fadeOut();
             }
         }
 

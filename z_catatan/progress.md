@@ -6,25 +6,21 @@
         [] Pengambilan Barang
         [] Pengembalian Barang
 
-## Cek Error
-    [] Total Harga Penyewaan Jika berbeda kasih tanda merah
-    [] Jika ada perubahan dan belum disimpan maka keluarkan alert[pembayaran, pengambilan, pengembalian, ganti rugi]
-
 ## Pdf saat penyewaan (Surat atau laporan)
-    [] Laporan Pembayaran
+    [x] Laporan Pembayaran
     [] Surat Pengembalian (Surat Pengembalian Barang) // sama seperti di laporan
     [] Faktur Ganti Rugi
         [] Uang (Faktur)
         [] Barang (Surat Serah Terima Barang)
     [] Label Pengiriman
 
-## Ganti Rugi
-    [] List ganti rugi masukan ke detail penyewaan
-    [] Filter di ganti rugi detail
-
 ## Frontend
     [] Home
     [] List Data barang Sewa
+
+## Cek Error
+    [] Total Harga Penyewaan Jika berbeda kasih tanda merah
+    [] Jika ada perubahan dan belum disimpan maka keluarkan alert[pembayaran, pengambilan, pengembalian, ganti rugi]
 
 ## Laporan Perizinan dan cleaning file sintaks yang tidak di gunakan
     [x] Penyewaan

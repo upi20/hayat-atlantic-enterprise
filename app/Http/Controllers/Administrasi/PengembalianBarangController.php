@@ -22,6 +22,7 @@ use App\Models\PenyewaanBarang;
 use App\Models\SuratJalanBarangHabisPakai;
 use Illuminate\Support\Facades\DB;
 use League\Config\Exception\ValidationException;
+use PDF;
 
 class PengembalianBarangController extends Controller
 {
@@ -483,5 +484,66 @@ class PengembalianBarangController extends Controller
         } catch (\Exception $error) {
             return response()->json($error, 500);
         }
+    }
+
+    public function surat_pengembalian(Penyewaan $model)
+    {
+        $t_surat_jalan_barang = SuratJalanBarang::tableName;
+        $t_surat_jalan_barang_hp = SuratJalanBarangHabisPakai::tableName;
+        $t_barang_sewa = Sewa::tableName;
+        $t_barang_hbs = HabisPakai::tableName;
+        $t_satuan = Satuan::tableName;
+
+        $customer = Customer::find($model->customer);
+
+
+        $surat_jalan = SuratJalan::selectRaw("
+        date_format(tanggal, '%d-%b-%Y') as tanggal_str,
+        date_format(tanggal_kembali, '%d-%b-%Y') as tanggal_kembali_str,
+        no_surat_jalan,
+        id
+        ")->where('penyewaan', $model->id)->first();
+
+
+        // list barangs
+        $barangs = SuratJalanBarang::selectRaw("
+                $t_barang_sewa.kode,
+                $t_barang_sewa.nama as barang,
+                $t_satuan.nama as satuan,
+                $t_surat_jalan_barang.qty as qty,
+                $t_surat_jalan_barang.pengembalian_rusak as pengembalian_rusak,
+                $t_surat_jalan_barang.pengembalian_hilang as pengembalian_hilang,
+                $t_surat_jalan_barang.pengembalian_qty as pengembalian_qty
+            ")
+            ->join($t_barang_sewa, "$t_barang_sewa.id", '=', "$t_surat_jalan_barang.barang")
+            ->join($t_satuan, "$t_satuan.id", '=', "$t_barang_sewa.satuan")
+            ->where("$t_surat_jalan_barang.surat_jalan", '=', $surat_jalan->id)
+            ->orderBy("$t_barang_sewa.nama")->get();
+
+        $barang_hps = SuratJalanBarangHabisPakai::selectRaw("
+                $t_barang_hbs.kode,
+                $t_barang_hbs.nama as barang,
+                $t_satuan.nama as satuan,
+                $t_surat_jalan_barang_hp.qty as qty
+            ")
+            ->join($t_barang_hbs, "$t_barang_hbs.id", '=', "$t_surat_jalan_barang_hp.barang_id")
+            ->join($t_satuan, "$t_satuan.id", '=', "$t_barang_hbs.satuan")
+            ->where("$t_surat_jalan_barang_hp.surat_jalan", '=', $surat_jalan->id)
+            ->orderBy("$t_barang_hbs.nama")->get();
+
+        $penyewaan = $model;
+
+        // parse to object
+        $data = compact('surat_jalan', 'penyewaan', 'customer', 'barangs', 'barang_hps');
+        $data['compact'] = $data;
+        // return view('administrasi.pengembalian.surat_pengembalian', $data);
+
+        view()->share('administrasi.pengembalian.surat_pengembalian', $data);
+        $pdf = PDF::loadView('administrasi.pengembalian.surat_pengembalian', $data)
+            ->setPaper('a4', 'landscape');
+
+        $name = "Surat Pengembalian Barang $surat_jalan->no_surat_jalan.pdf";
+        return $pdf->stream($name);
+        exit();
     }
 }

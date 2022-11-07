@@ -24,7 +24,7 @@
     <meta name="msapplication-TileColor" content="#fff">
     <meta name="theme-color" content="#0191D7">
     <meta name="msapplication-TileImage" content="{{ public_path('favicon/icon-144x144.png') }}">
-    <title>Laporan Pengembalian Barang</title>
+    <title>Surat Pengembalian Barang</title>
     @include('templates.admin.pdf_style')
 </head>
 
@@ -50,52 +50,83 @@
         </tr>
     </table>
     <hr class="garis">
-    <h2 class="text-center">Laporan Pengembalian Barang</h2>
-    <h4 class="text-center">Periode: {{ $dari_tanggal }} s/d {{ $sampai_tanggal }}
-        {{ $search ? "Dengan Kata Kunci: \"$search\"" : '' }}</h4>
+    <h2 class="text-center">Surat Pengembalian Barang</h2>
+    <br>
+    <table>
+        <tr>
+            <td>Tanggal</td>
+            <td>:</td>
+            <td>Kirim {{ $surat_jalan->tanggal_str }} | Kembali {{ $surat_jalan->tanggal_kembali_str }}</td>
+        </tr>
+        <tr>
+            <td>Nomor Surat Jalan</td>
+            <td>:</td>
+            <td>{{ $surat_jalan->no_surat_jalan }}</td>
+        </tr>
+        <tr>
+            <td>Customer/Pelanggan</td>
+            <td>:</td>
+            <td>{{ $customer->nama }}, {{ $customer->alamat }}</td>
+        </tr>
+        <tr>
+            <td>Lokasi Penyewaan</td>
+            <td>:</td>
+            <td>{{ $penyewaan->kepada }}, {{ $penyewaan->lokasi }}</td>
+        </tr>
+    </table>
 
-    @foreach ($surat_jalans as $surat_jalan)
-        <table>
+    <b style="margin-left: 4px">Barang Sewa</b>
+    <table class="tbl-10 w-100">
+        <thead>
             <tr>
-                <td>Tanggal</td>
-                <td>:</td>
-                <td>Kirim {{ $surat_jalan->tanggal_str }} | Kembali {{ $surat_jalan->tanggal_kembali_str }}</td>
+                <th rowspan="2" class="b-all" style="max-width: 10px; vertical-align: middle">No</th>
+                <th rowspan="2" class="b-all" style=" vertical-align: middle">Kode</th>
+                <th rowspan="2" class="b-all" style=" vertical-align: middle">Barang</th>
+                <th colspan="4" class="b-all">Jumlah Kondisi Barang</th>
             </tr>
             <tr>
-                <td>Nomor Surat Jalan</td>
-                <td>:</td>
-                <td>{{ $surat_jalan->no_surat_jalan }}</td>
+                <th class="b-all">Disewa</th>
+                <th class="b-all">Baik</th>
+                <th class="b-all">Rusak</th>
+                <th class="b-all">Hilang</th>
             </tr>
-            <tr>
-                <td>Customer/Pelanggan</td>
-                <td>:</td>
-                <td>{{ $surat_jalan->customer_nama }}, {{ $surat_jalan->customer_alamat }}</td>
-            </tr>
-            <tr>
-                <td>Lokasi Penyewaan</td>
-                <td>:</td>
-                <td>{{ $surat_jalan->penyewaan_kepada }}, {{ $surat_jalan->penyewaan_lokasi }}</td>
-            </tr>
-        </table>
-
-        <b style="margin-left: 4px">Barang Sewa</b>
+        </thead>
+        <tbody>
+            @foreach ($barangs as $key => $barang)
+                <tr>
+                    <td class="b-all"style="text-align: center">{{ $key + 1 }}</td>
+                    <td class="b-all"style="padding: 8px 10px!important">{{ $barang->kode }}</td>
+                    <td class="b-all"style="padding: 8px 10px!important">{{ $barang->barang }}</td>
+                    <td class="text-right b-all" style="padding: 8px 10px!important">
+                        {{ $barang->qty . ' ' . $barang->satuan }}
+                    </td>
+                    <td class="text-right b-all" style="padding: 8px 10px!important">
+                        {{ $barang->pengembalian_qty . ' ' . $barang->satuan }}
+                    </td>
+                    <td class="text-right b-all" style="padding: 8px 10px!important">
+                        {{ $barang->pengembalian_rusak . ' ' . $barang->satuan }}
+                    </td>
+                    <td class="text-right b-all" style="padding: 8px 10px!important">
+                        {{ $barang->pengembalian_hilang . ' ' . $barang->satuan }}
+                    </td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
+    @if (!$barang_hps->isEmpty())
+        <br>
+        <b style="margin-left: 4px">Penggunaan Barang Habis Pakai</b>
         <table class="tbl-10 w-100">
             <thead>
                 <tr>
-                    <th rowspan="2" class="b-all" style="max-width: 10px; vertical-align: middle">No</th>
-                    <th rowspan="2" class="b-all" style=" vertical-align: middle">Kode</th>
-                    <th rowspan="2" class="b-all" style=" vertical-align: middle">Barang</th>
-                    <th colspan="4" class="b-all">Jumlah Kondisi Barang</th>
-                </tr>
-                <tr>
-                    <th class="b-all">Disewa</th>
-                    <th class="b-all">Baik</th>
-                    <th class="b-all">Rusak</th>
-                    <th class="b-all">Hilang</th>
+                    <th class="b-all" style="max-width: 10px">No</th>
+                    <th class="b-all">Kode</th>
+                    <th class="b-all">Barang</th>
+                    <th class="b-all">Qty</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($surat_jalan->barangs as $key => $barang)
+                @foreach ($barang_hps as $key => $barang)
                     <tr>
                         <td class="b-all"style="text-align: center">{{ $key + 1 }}</td>
                         <td class="b-all"style="padding: 8px 10px!important">{{ $barang->kode }}</td>
@@ -103,50 +134,11 @@
                         <td class="text-right b-all" style="padding: 8px 10px!important">
                             {{ $barang->qty . ' ' . $barang->satuan }}
                         </td>
-                        <td class="text-right b-all" style="padding: 8px 10px!important">
-                            {{ $barang->pengembalian_qty . ' ' . $barang->satuan }}
-                        </td>
-                        <td class="text-right b-all" style="padding: 8px 10px!important">
-                            {{ $barang->pengembalian_rusak . ' ' . $barang->satuan }}
-                        </td>
-                        <td class="text-right b-all" style="padding: 8px 10px!important">
-                            {{ $barang->pengembalian_hilang . ' ' . $barang->satuan }}
-                        </td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
-        @if (!$surat_jalan->barang_hps->isEmpty())
-            <br>
-            <b style="margin-left: 4px">Penggunaan Barang Habis Pakai</b>
-            <table class="tbl-10 w-100">
-                <thead>
-                    <tr>
-                        <th class="b-all" style="max-width: 10px">No</th>
-                        <th class="b-all">Kode</th>
-                        <th class="b-all">Barang</th>
-                        <th class="b-all">Qty</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($surat_jalan->barang_hps as $key => $barang)
-                        <tr>
-                            <td class="b-all"style="text-align: center">{{ $key + 1 }}</td>
-                            <td class="b-all"style="padding: 8px 10px!important">{{ $barang->kode }}</td>
-                            <td class="b-all"style="padding: 8px 10px!important">{{ $barang->barang }}</td>
-                            <td class="text-right b-all" style="padding: 8px 10px!important">
-                                {{ $barang->qty . ' ' . $barang->satuan }}
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        @endif
-        <br>
-        <br>
-        <br>
-        {{-- <div class="breakNow"></div> --}}
-    @endforeach
+    @endif
 </body>
 
 </html>
