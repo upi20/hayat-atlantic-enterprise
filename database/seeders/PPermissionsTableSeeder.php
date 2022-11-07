@@ -1299,6 +1299,86 @@ class PPermissionsTableSeeder extends Seeder
                 'created_at' => '2022-10-22 14:26:38',
                 'updated_at' => '2022-10-22 14:26:38',
             ),
+            160 => 
+            array (
+                'id' => 268,
+                'name' => 'admin.laporan.penyewaan.cetak_laporan',
+                'guard_name' => 'web',
+                'created_at' => '2022-11-07 23:40:32',
+                'updated_at' => '2022-11-07 23:40:32',
+            ),
+            161 => 
+            array (
+                'id' => 269,
+                'name' => 'admin.laporan.penyewaan',
+                'guard_name' => 'web',
+                'created_at' => '2022-11-07 23:40:47',
+                'updated_at' => '2022-11-07 23:40:47',
+            ),
+            162 => 
+            array (
+                'id' => 270,
+                'name' => 'admin.laporan.pengambilan.cetak_laporan',
+                'guard_name' => 'web',
+                'created_at' => '2022-11-07 23:41:02',
+                'updated_at' => '2022-11-07 23:41:02',
+            ),
+            163 => 
+            array (
+                'id' => 271,
+                'name' => 'admin.laporan.pengambilan',
+                'guard_name' => 'web',
+                'created_at' => '2022-11-07 23:41:06',
+                'updated_at' => '2022-11-07 23:41:06',
+            ),
+            164 => 
+            array (
+                'id' => 272,
+                'name' => 'admin.laporan.pengembalian.cetak_laporan',
+                'guard_name' => 'web',
+                'created_at' => '2022-11-07 23:41:17',
+                'updated_at' => '2022-11-07 23:41:17',
+            ),
+            165 => 
+            array (
+                'id' => 273,
+                'name' => 'admin.laporan.pengembalian',
+                'guard_name' => 'web',
+                'created_at' => '2022-11-07 23:41:22',
+                'updated_at' => '2022-11-07 23:41:22',
+            ),
+            166 => 
+            array (
+                'id' => 274,
+                'name' => 'admin.laporan.ganti_rugi.cetak_laporan',
+                'guard_name' => 'web',
+                'created_at' => '2022-11-07 23:41:30',
+                'updated_at' => '2022-11-07 23:41:30',
+            ),
+            167 => 
+            array (
+                'id' => 275,
+                'name' => 'admin.laporan.ganti_rugi',
+                'guard_name' => 'web',
+                'created_at' => '2022-11-07 23:41:34',
+                'updated_at' => '2022-11-07 23:41:34',
+            ),
+            168 => 
+            array (
+                'id' => 276,
+                'name' => 'admin.laporan.pembayaran.cetak_laporan',
+                'guard_name' => 'web',
+                'created_at' => '2022-11-07 23:41:47',
+                'updated_at' => '2022-11-07 23:42:06',
+            ),
+            169 => 
+            array (
+                'id' => 277,
+                'name' => 'admin.laporan.pembayaran',
+                'guard_name' => 'web',
+                'created_at' => '2022-11-07 23:42:24',
+                'updated_at' => '2022-11-07 23:42:24',
+            ),
         ));
         
         

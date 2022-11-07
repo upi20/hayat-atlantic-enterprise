@@ -4,9 +4,12 @@
     <div class="card">
         <div class="card-header d-md-flex flex-row justify-content-between">
             <h3 class="card-title">{{ $page_attr['title'] }} Table List</h3>
-            <button class="btn btn-rounded btn-success btn-sm" type="button" onclick="cetak_laporan()">
-                <i class="fas fa-print"></i> Cetak Laporan
-            </button>
+            @if (auth_can(h_prefix('cetak_laporan')))
+                <button class="btn btn-rounded btn-success btn-sm" type="button" onclick="cetak_laporan()">
+                    <i class="fas fa-print"></i> Cetak Laporan
+                </button>
+            @endif
+
         </div>
         <div class="card-body">
             <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">

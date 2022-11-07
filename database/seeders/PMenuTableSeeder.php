@@ -493,12 +493,12 @@ class PMenuTableSeeder extends Seeder
                 'parent_id' => 420,
                 'title' => 'Pembayaran',
                 'icon' => NULL,
-                'route' => NULL,
+                'route' => 'admin.laporan.pembayaran',
                 'sequence' => 11,
                 'active' => 1,
                 'type' => 1,
                 'created_at' => '2022-11-07 20:52:22',
-                'updated_at' => '2022-11-07 20:52:48',
+                'updated_at' => '2022-11-07 22:18:08',
             ),
         ));
         

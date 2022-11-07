@@ -1,19 +1,14 @@
 @extends('templates.admin.master')
 
 @section('content')
-    @php
-        $can_reciving_order = auth_can(h_prefix('reciving_order'));
-        $can_delete = auth_can(h_prefix('delete'));
-        $can_selesai = auth_can(h_prefix('selesai'));
-        $can_batalkan = auth_can(h_prefix('batalkan'));
-    @endphp
-
     <div class="card">
         <div class="card-header d-md-flex flex-row justify-content-between">
             <h3 class="card-title">{{ $page_attr['title'] }} Table List</h3>
-            <button class="btn btn-rounded btn-success btn-sm" type="button" onclick="cetak_laporan()">
-                <i class="fas fa-print"></i> Cetak Laporan
-            </button>
+            @if (auth_can(h_prefix('cetak_laporan')))
+                <button class="btn btn-rounded btn-success btn-sm" type="button" onclick="cetak_laporan()">
+                    <i class="fas fa-print"></i> Cetak Laporan
+                </button>
+            @endif
         </div>
         <div class="card-body">
             <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
@@ -29,39 +24,6 @@
                     <div id="collapse1" class="panel-collapse collapse show" role="tabpanel" aria-labelledby="headingOne1">
                         <div class="panel-body">
                             <form action="javascript:void(0)" class="ml-md-3 mb-md-3" id="FilterForm">
-                                {{-- <div class="form-group float-start me-2" style="min-width: 300px">
-                                    <label for="filter_status_pembayaran">Status Pembayaran</label>
-                                    <br>
-                                    <select class="form-control" id="filter_status_pembayaran"
-                                        name="filter_status_pembayaran" style="width: 100%;">
-                                        <option value="" selected>Semua</option>
-                                        <option value="1">Lunas</option>
-                                        <option value="0">Belum Lunas</option>
-                                    </select>
-                                </div> --}}
-
-                                {{-- <div class="form-group float-start me-2" style="min-width: 300px">
-                                    <label for="filter_status">Status Penyewaan</label>
-                                    <br>
-                                    <select class="form-control" id="filter_status" name="filter_status"
-                                        style="width: 100%;">
-                                        <option value="" selected>Semua</option>
-                                        <option value="1">Penyewaan Dibuat</option>
-                                        <option value="2">Faktur Dibuat</option>
-                                        <option value="3">Barang Diambil</option>
-                                        <option value="4">Barang Dikembalikan</option>
-                                        <option value="5">Selesai</option>
-                                        <option value="9">Dibatalkan</option>
-                                    </select>
-                                </div> --}}
-
-                                {{-- <div class="form-group float-start me-2" style="min-width: 300px">
-                                    <label for="customer">Customer</label>
-                                    <br>
-                                    <select class="form-control" id="customer" name="customer" style="width: 100%;">
-                                        <option value="" selected>Semua</option>
-                                    </select>
-                                </div> --}}
 
                                 <div class="form-group float-start me-2" style="min-width: 300px">
                                     <label for="dari_tanggal">Dari Tanggal <small>(Tanggal Order)</small></label>
@@ -127,13 +89,7 @@
 
     <script>
         const prefix_url = '{{ url(h_prefix_uri()) }}';
-        const can_batalkan = {{ $can_batalkan ? 'true' : 'false' }};
-        const can_reciving_order = {{ $can_reciving_order ? 'true' : 'false' }};
-        const can_selesai = {{ $can_selesai ? 'true' : 'false' }};
-        const can_delete = {{ $can_delete ? 'true' : 'false' }};
         const table_html = $('#tbl_main');
-        let isEdit = true;
-        let global_datatable_params;
         $(document).ready(function() {
             $('#created_by').select2({
                 ajax: {

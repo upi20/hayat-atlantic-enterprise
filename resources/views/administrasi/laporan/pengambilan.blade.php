@@ -1,19 +1,14 @@
 @extends('templates.admin.master')
 
 @section('content')
-    @php
-        $can_reciving_order = auth_can(h_prefix('reciving_order'));
-        $can_delete = auth_can(h_prefix('delete'));
-        $can_selesai = auth_can(h_prefix('selesai'));
-        $can_batalkan = auth_can(h_prefix('batalkan'));
-    @endphp
-
     <div class="card">
         <div class="card-header d-md-flex flex-row justify-content-between">
             <h3 class="card-title">{{ $page_attr['title'] }} Table List</h3>
-            <button class="btn btn-rounded btn-success btn-sm" type="button" onclick="cetak_laporan()">
-                <i class="fas fa-print"></i> Cetak Laporan
-            </button>
+            @if (auth_can(h_prefix('cetak_laporan')))
+                <button class="btn btn-rounded btn-success btn-sm" type="button" onclick="cetak_laporan()">
+                    <i class="fas fa-print"></i> Cetak Laporan
+                </button>
+            @endif
         </div>
         <div class="card-body">
             <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
@@ -66,40 +61,6 @@
                 </thead>
                 <tbody> </tbody>
             </table>
-        </div>
-    </div>
-
-    <div class="modal fade" id="modal-batalkan">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content modal-content-demo">
-                <div class="modal-header">
-                    <h6 class="modal-title" id="modal-batalkan-title">Batalkan Penyewaan</h6>
-                    <button aria-label="Tutup" class="btn-close" data-bs-dismiss="modal">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form action="javascript:void(0)" id="BatalkanForm" method="POST" enctype="multipart/form-data">
-                        <input type="hidden" name="id" id="batalkan_id">
-                        <div class="form-group">
-                            <label class="form-label" for="alasan">Alasan pembatalan
-                                <span class="text-danger">*</span>
-                            </label>
-                            <textarea type="text" class="form-control" rows="3" id="alasan" name="alasan"
-                                placeholder="Alasan pembatalan" required></textarea>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary" form="BatalkanForm">
-                        <li class="fas fa-save mr-1"></li> Simpan
-                    </button>
-                    <button class="btn btn-light" data-bs-dismiss="modal">
-                        <i class="fas fa-times"></i>
-                        Tutup
-                    </button>
-                </div>
-            </div>
         </div>
     </div>
     @include('component.penyewaan_detail_html')

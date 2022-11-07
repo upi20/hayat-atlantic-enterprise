@@ -3,18 +3,13 @@
 namespace App\Http\Controllers\Administrasi\Laporan;
 
 use App\Http\Controllers\Controller;
-use App\Models\Barang\HabisPakai;
 use App\Models\Barang\Satuan;
 use App\Models\Barang\Sewa;
 use App\Models\Customer;
 use App\Models\GantiRugi;
-use App\Models\GantiRugi\GantiListBarang;
 use App\Models\GantiRugi\GantiRugiBarang;
 use App\Models\GantiRugi\GantiRugiPembayaran;
 use App\Models\Penyewaan;
-use App\Models\SuratJalan;
-use App\Models\SuratJalanBarang;
-use App\Models\SuratJalanBarangHabisPakai;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;

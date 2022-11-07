@@ -1,10 +1,5 @@
 =======================================================================================================================
 # Next
-## Laporan Perizinan dan cleaning file sintaks yang tidak di gunakan
-    [] Penyewaan
-    [] Pengambilan Barang
-    [] Pengembalian Barang
-    [] Ganti Rugi Barang
 
 ## Refactore Penyewaan
     [] Implementasi nomor
@@ -31,6 +26,11 @@
     [] Home
     [] List Data barang Sewa
 
+## Laporan Perizinan dan cleaning file sintaks yang tidak di gunakan
+    [x] Penyewaan
+    [x] Pengambilan Barang
+    [x] Pengembalian Barang
+    [x] Ganti Rugi Barang
 =======================================================================================================================
 # 04 November 2022
 
