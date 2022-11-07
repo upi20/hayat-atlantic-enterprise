@@ -13,20 +13,37 @@
 
     <div class="card">
         <div class="card-header d-md-flex flex-row justify-content-between">
-            <h3 class="card-title">Detail Pengambilan Barang
-                @if ($model->status == 9)
-                    <span class="badge bg-danger">Dibatalkan</span>
-                @endif
-            </h3>
             <div>
-                <a href="{{ route(h_prefix(null, 2)) }}" class="btn btn-rounded btn-secondary btn-sm">
-                    <i class="fas fa-arrow-left"></i> Kembali
+                <a href="{{ route(h_prefix(null, 2)) }}" class="btn btn-rounded btn-secondary btn-sm me-2 px-1"
+                    style="display: inline">
+                    <i class="fas fa-arrow-left"></i>
                 </a>
-                <a href="{{ route(h_prefix('pengambilan.surat_jalan', 3), $model->id) }}" target="_blank" id="btn-surat-jalan"
-                    class="btn btn-rounded btn-success btn-sm"
-                    style="{{ $surat_jalan->status == 0 ? 'display:none' : '' }}">
-                    <i class="fas fa-print"></i> Cetak Surat Jalan
-                </a>
+                <h3 class="card-title" style="display: inline">Detail Pengambilan Barang
+                    @if ($model->status == 9)
+                        <span class="badge bg-danger">Dibatalkan</span>
+                    @endif
+                </h3>
+            </div>
+            <div class="dropdown">
+                <button class="btn btn-success dropdown-toggle btn-sm" type="button" id="menu_cetak"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-print"></i> Cetak Surat
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="menu_cetak">
+                    <li>
+                        <a href="{{ route(h_prefix('pengambilan.surat_jalan', 3), $model->id) }}" target="_blank"
+                            id="btn-surat-jalan" class="dropdown-item"
+                            style="{{ $surat_jalan->status == 0 ? 'display:none' : '' }}">
+                            Surat Jalan
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ '' }}" target="_blank" id="btn-surat-jalan" class="dropdown-item"
+                            style="{{ $surat_jalan->status == 0 ? 'display:none' : '' }}">
+                            Surat Pengembalian Barang
+                        </a>
+                    </li>
+                </ul>
             </div>
         </div>
         <div class="card-body">
@@ -116,8 +133,9 @@
                                             onclick="refresh_total('{{ $barang->id }}')" type="number" min="0"
                                             max="{{ $barang->qty }}"
                                             value="{{ $surat_jalan->status == 3 ? $barang->pengembalian_hilang : 0 }}"
-                                            class="form-control" style="max-width: 100px" name="rusak[{{ $barang->id }}]"
-                                            id="rusak-{{ $barang->id }}" required="" />
+                                            class="form-control" style="max-width: 100px"
+                                            name="rusak[{{ $barang->id }}]" id="rusak-{{ $barang->id }}"
+                                            required="" />
                                         <div class="input-group-text">{{ $barang->barang_satuan }}</div>
                                     </div>
                                 </td>

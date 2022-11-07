@@ -61,6 +61,7 @@ use App\Http\Controllers\Administrasi\MasterData\PegawaiJabatan;
 use App\Http\Controllers\Administrasi\Barang\SewaController;
 use App\Http\Controllers\Administrasi\Barang\HabisPakaiController;
 use App\Http\Controllers\Administrasi\Laporan\GantiRugiBarangController;
+
 // Pengadaan Barang ===================================================================================================
 use App\Http\Controllers\Administrasi\Pengadaan\BarangSewaController;
 use App\Http\Controllers\Administrasi\Pengadaan\BarangSewaListController;
@@ -77,6 +78,7 @@ use App\Http\Controllers\Administrasi\Pengurangan\BarangHabisPakaiListController
 use App\Http\Controllers\Administrasi\Laporan\PengambilanBarangController as LaporanPengambilanBarangController;
 use App\Http\Controllers\Administrasi\Laporan\PengembalianBarangController as LaporanPengembalianBarangController;
 use App\Http\Controllers\Administrasi\Laporan\PenyewaanController as LaporanPenyewaanController;
+use App\Http\Controllers\Administrasi\Laporan\PembayaranController as LaporanPembayaranController;
 
 
 $name = 'admin';
@@ -747,6 +749,18 @@ Route::prefix($prefix)->prefix($prefix)->group(function () use ($name, $prefix) 
     $prefix = "ganti_rugi";
     Route::prefix($prefix)->controller(GantiRugiBarangController::class)->group(function () use ($name, $prefix) {
         $name = "$name.$prefix"; // admin.laporan.ganti_rugi
+        Route::get('/', 'index')->name($name)->middleware("permission:$name");
+        Route::get('/cetak_laporan', 'cetak_laporan')->name("$name.cetak_laporan")->middleware("permission:$name.cetak_laporan");
+
+        Route::controller(PenyewaanController::class)->group(function () use ($name) {
+            Route::get('/customer_select2', 'customer_select2')->name("$name.customer_select2")->middleware("permission:$name");
+            Route::get('/detail', 'detail')->name("$name.detail")->middleware("permission:$name");
+        });
+    });
+
+    $prefix = "pembayaran";
+    Route::prefix($prefix)->controller(LaporanPembayaranController::class)->group(function () use ($name, $prefix) {
+        $name = "$name.$prefix"; // admin.laporan.pembayaran
         Route::get('/', 'index')->name($name)->middleware("permission:$name");
         Route::get('/cetak_laporan', 'cetak_laporan')->name("$name.cetak_laporan")->middleware("permission:$name.cetak_laporan");
 

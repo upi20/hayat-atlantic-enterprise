@@ -71,7 +71,7 @@
             <td style="width: 50%">
                 <table>
                     <tr>
-                        <td>Pelanggan</td>
+                        <td>Customer</td>
                         <td>:</td>
                         <td>{{ $penyewaan->customer_nama }}</td>
                     </tr>

@@ -19,7 +19,7 @@
                 </a>
                 <a href="{{ route(h_prefix('surat_jalan', 2), $model->id) }}" target="_blank" id="btn-surat-jalan"
                     class="btn btn-rounded btn-success btn-sm">
-                    <i class="fas fa-print"></i> Cetak Surat Jalan
+                    <i class="fas fa-print"></i> Surat Jalan
                 </a>
             </div>
         </div>

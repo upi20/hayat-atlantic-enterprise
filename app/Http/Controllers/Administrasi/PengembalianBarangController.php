@@ -56,7 +56,7 @@ class PengembalianBarangController extends Controller
             'title' => 'Pengembalian Barang',
             'breadcrumbs' => [
                 ['name' => 'Dashboard'],
-                ['name' => 'SuratJalan', 'route' => route(h_prefix(null, 2))],
+                ['name' => 'Pengembalian Barang', 'route' => route(h_prefix(null, 2))],
             ],
             'navigation' => h_prefix(null, 2)
         ];

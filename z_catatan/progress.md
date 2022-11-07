@@ -16,12 +16,12 @@
     [] Jika ada perubahan dan belum disimpan maka keluarkan alert[pembayaran, pengambilan, pengembalian, ganti rugi]
 
 ## Pdf saat penyewaan (Surat atau laporan)
+    [] Laporan Pembayaran
     [] Surat Pengembalian (Surat Pengembalian Barang) // sama seperti di laporan
     [] Faktur Ganti Rugi
         [] Uang (Faktur)
         [] Barang (Surat Serah Terima Barang)
     [] Label Pengiriman
-
 
 ## Ganti Rugi
     [] List ganti rugi masukan ke detail penyewaan
@@ -90,7 +90,6 @@
 ## Tabel Pengurangan barang ditambah kolom penyewaan
     [x] Barang sewa
     [x] Barang habis pakai
-    [] Detail penyewaan dibuat component
 
 ## Pengembalian tambah barang habis pakai
     [x] Display
