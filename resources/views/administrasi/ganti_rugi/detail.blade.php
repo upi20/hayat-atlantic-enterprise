@@ -5,6 +5,8 @@
         $is_proses = $penyewaan->status != 9 && $penyewaan->status != 5;
         // detail
         $can_simpan_status = auth_can(h_prefix('simpan_status', 2)) && $is_proses;
+        $can_faktur = auth_can(h_prefix('faktur', 2));
+        $can_surat_terima = auth_can(h_prefix('surat_terima', 2));
         
         // uang
         $can_uang = auth_can(h_prefix('uang', 2));
@@ -210,7 +212,7 @@
                             <th>Pembayaran Oleh</th>
                             <th>Tanggal</th>
                             <th>Nominal</th>
-                            <th>Faktur</th>
+                            {!! $can_faktur ? '<th>Faktur</th>' : '' !!}
                             <th>Diubah</th>
                             <th>Batalkan</th>
                         </tr>
@@ -333,6 +335,12 @@
             <div class="card-header d-md-flex flex-row justify-content-between">
                 <h3 class="card-title">Ganti Rugi Barang</h3>
                 <div>
+                    @if ($can_surat_terima)
+                        <a href="{{ url(h_prefix_uri('surat_terima', 2), $model->id) }}" target="_blank"
+                            class="btn btn-rounded btn-primary btn-sm me-1" title="Cetak Faktur">
+                            <i class="fas fa-file-alt"></i> Surat Terima Barang
+                        </a>
+                    @endif
                     @if ($can_barang_insert)
                         <button type="button" class="btn btn-rounded btn-success btn-sm" data-bs-effect="effect-scale"
                             data-bs-toggle="modal" href="#modal-barang" onclick="barangAdd()"
@@ -542,6 +550,7 @@
         // Perizinan ==================================================================================================
         // detail
         const can_simpan_status = {{ $can_simpan_status ? 'true' : 'false' }};
+        const can_faktur = {{ $can_faktur ? 'true' : 'false' }};
 
         const today = "{{ date('Y-m-d') }}";
         const oleh = "{{ $customer->nama }}";
@@ -841,7 +850,7 @@
                             },
                             className: 'text-nowrap text-right'
                         },
-                        {
+                        ...(can_faktur ? [{
                             data: 'id',
                             name: 'id',
                             render(data, type, full, meta) {
@@ -851,7 +860,7 @@
                             },
                             orderable: false,
                             className: 'text-nowrap',
-                        },
+                        }] : []),
                         {
                             data: 'updated',
                             name: 'updated_by_str',

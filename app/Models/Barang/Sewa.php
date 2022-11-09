@@ -16,6 +16,6 @@ class Sewa extends Model
 
     public function getSatuan()
     {
-        return $this->hasOne(Satuan::class, 'id', 'satuan');
+        return $this->belongsTo(Satuan::class, 'satuan', 'id');
     }
 }

@@ -861,7 +861,7 @@ class GantiRugiController extends Controller
     }
     // Ganti rugi barang ============================================================================================
 
-    public function faktur(GantiRugiPembayaran $ganti_rugi, Request $request)
+    public function faktur(GantiRugiPembayaran $ganti_rugi)
     {
         $ganti_rugi->tanggal_str = Carbon::parse($ganti_rugi->tanggal)
             ->isoFormat("D MMMM Y");
@@ -883,6 +883,26 @@ class GantiRugiController extends Controller
             ->setPaper('a4', 'landscape');
 
         $name = "Invoice Ganti Rugi Uang $ganti_rugi->no_surat .pdf";
+        return $pdf->stream($name);
+        exit();
+    }
+
+    public function surat_terima(GantiRugi $ganti_rugi, Request $request)
+    {
+        $barang_diganti = GantiRugiBarang::with('getBarang')->where('ganti_rugi_id', $ganti_rugi->id)->orderBy('tanggal', 'desc')->get();
+
+        $data = compact('ganti_rugi', 'barang_diganti');
+        $data['compact'] = $data;
+
+        // return $ganti_rugi->list_barang;
+
+        // return view('administrasi.ganti_rugi.surat_terima_barang', $data);
+
+        view()->share('administrasi.ganti_rugi.surat_terima_barang', $data);
+        $pdf = PDF::loadView('administrasi.ganti_rugi.surat_terima_barang', $data)
+            ->setPaper('a4', 'landscape');
+
+        $name = "Invoice Ganti Rugi Barang $ganti_rugi->no_surat .pdf";
         return $pdf->stream($name);
         exit();
     }

@@ -18,6 +18,6 @@ class GantiListBarang extends Model
 
     public function getBarang()
     {
-        return $this->hasOne(Sewa::class, 'id', 'barang');
+        return $this->belongsTo(Sewa::class, 'barang', 'id');
     }
 }
