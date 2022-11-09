@@ -882,7 +882,7 @@ class GantiRugiController extends Controller
         $pdf = PDF::loadView('administrasi.ganti_rugi.faktur_pembayaran', $data)
             ->setPaper('a4', 'landscape');
 
-        $name = "Invoice Ganti Rugi Uang $ganti_rugi->no_surat .pdf";
+        $name = "Invoice Ganti Rugi Uang $ganti_rugi->no_surat.pdf";
         return $pdf->stream($name);
         exit();
     }
@@ -894,7 +894,7 @@ class GantiRugiController extends Controller
         $data = compact('ganti_rugi', 'barang_diganti');
         $data['compact'] = $data;
 
-        // return $ganti_rugi->list_barang;
+        // return $ganti_rugi->penyewaan->number;
 
         // return view('administrasi.ganti_rugi.surat_terima_barang', $data);
 
@@ -902,7 +902,7 @@ class GantiRugiController extends Controller
         $pdf = PDF::loadView('administrasi.ganti_rugi.surat_terima_barang', $data)
             ->setPaper('a4', 'landscape');
 
-        $name = "Invoice Ganti Rugi Barang $ganti_rugi->no_surat .pdf";
+        $name = "Surat Ganti Rugi Barang {$ganti_rugi->penyewaan->number}.pdf";
         return $pdf->stream($name);
         exit();
     }
