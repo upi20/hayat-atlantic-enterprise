@@ -24,10 +24,9 @@
     <meta name="msapplication-TileColor" content="#fff">
     <meta name="theme-color" content="#0191D7">
     <meta name="msapplication-TileImage" content="{{ public_path('favicon/icon-144x144.png') }}">
-    <title>{{ " $faktur->no_faktur $penyewaan->kepada " }}</title>
+    <title>Invoice</title>
     @include('templates.admin.pdf_style')
 </head>
-
 
 <body>
     <table style="width: 100%" class="tbl-2">
@@ -39,7 +38,7 @@
             </td>
             <td style="width: 33%; padding: 2px 2px;  vertical-align: middle; text-align: center">
                 <h1 style="margin: 0; font-size: 2.5em">INVOICE</h1>
-                <span>Nomor : {{ $faktur->no_faktur }}</span>
+                <span>Ganti Rugi Uang Nomor : {{ $ganti_rugi->no_surat }}</span>
             </td>
             <td style="width: 33%; padding: 2px 2px; ">
                 <table class="tbl-2">
@@ -47,6 +46,11 @@
                         <td>Penyewaan </td>
                         <td>:</td>
                         <td>{{ $penyewaan->number }}</td>
+                    </tr>
+                    <tr>
+                        <td>Surat Jalan </td>
+                        <td>:</td>
+                        <td>{{ $surat_jalan->no_surat_jalan }}</td>
                     </tr>
                 </table>
             </td>
@@ -59,12 +63,12 @@
                     <tr>
                         <td>No. Telepon </td>
                         <td>:</td>
-                        <td>{{ $penyewaan->customer_no_telepon }}</td>
+                        <td>{{ $customer->no_telepon }}</td>
                     </tr>
                     <tr>
                         <td>Tanggal </td>
                         <td>:</td>
-                        <td>{{ $faktur->tanggal_str }}</td>
+                        <td>{{ $ganti_rugi->tanggal_str }}</td>
                     </tr>
                 </table>
             </td>
@@ -73,20 +77,59 @@
                     <tr>
                         <td>Customer</td>
                         <td>:</td>
-                        <td>{{ $penyewaan->customer_nama }}</td>
+                        <td>{{ $customer->nama }}</td>
                     </tr>
                     <tr>
                         {{-- alamat --}}
                         <td></td>
                         <td></td>
-                        <td>{{ $penyewaan->customer_alamat }}</td>
+                        <td>{{ $customer->alamat }}</td>
                     </tr>
                 </table>
             </td>
         </tr>
     </table>
-
-    <table style="width: 100%; border-collapse:collapse" class="my-table">
+    <br><br>
+    <b>Keterangan:</b>
+    <p>{{ $ganti_rugi_head->nama }}, {{ $ganti_rugi_head->keterangan }}</p>
+    <br>
+    <table style="width: 100%; border-collapse:collapse; border:0">
+        <tr>
+            <td style="width: 50%; text-align: center">
+                <b>{{ $ganti_rugi->nama }}</b>
+                <h1>Rp {{ format_rupiah($ganti_rugi->nominal) }}</h1>
+            </td>
+            <td style="width: 50%">
+                <table style="border-collapse:collapse; border: 0">
+                    <tr>
+                        <td colspan="5" class="text-right no-border fw-bold">Total Ganti Rugi:</td>
+                        <td class="no-border text-right format_rupiah fw-bold"> Rp
+                            {{ format_rupiah($ganti_rugi_head->nominal) }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="5" class="text-right no-border">Ganti Rugi Dibayar:</td>
+                        <td class="no-border text-right format_rupiah"> Rp
+                            {{ format_rupiah($ganti_rugi->dibayar) }}
+                        </td>
+                    </tr>
+                    @if ($ganti_rugi->pembayaran_sebelumnya > 0)
+                        <tr>
+                            <td colspan="5" class="text-right no-border">Pembayaran Sebelumnya:</td>
+                            <td class="no-border text-right format_rupiah"> Rp
+                                {{ format_rupiah($ganti_rugi->pembayaran_sebelumnya) }}
+                            </td>
+                        </tr>
+                    @endif
+                    <tr>
+                        <td colspan="5" class="text-right no-border">Sisa:</td>
+                        <td class="no-border text-right format_rupiah"> Rp {{ format_rupiah($ganti_rugi->sisa) }}</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+    {{-- <table style="width: 100%; border-collapse:collapse" class="my-table">
         <thead>
             <th>No</th>
             <th>Nama Barang</th>
@@ -129,11 +172,11 @@
                 <td class="no-border text-right format_rupiah">Rp {{ format_rupiah($faktur->sisa) }}</td>
             </tr>
         </tbody>
-    </table>
+    </table> --}}
 
     <table class="my-table" style="width: 15cm; border-collapse:collapse">
         <tr>
-            <td>Terbilang: <i><small>{{ terbilang($faktur->jumlah) }} Rupiah</small></i></td>
+            <td>Terbilang: <i><small>{{ terbilang($ganti_rugi->nominal) }} Rupiah</small></i></td>
         </tr>
     </table>
 

@@ -8,7 +8,7 @@
 
 ## Pdf saat penyewaan (Surat atau laporan)
     [x] Laporan Pembayaran
-    [] Surat Pengembalian (Surat Pengembalian Barang) // sama seperti di laporan
+    [x] Surat Pengembalian (Surat Pengembalian Barang) // sama seperti di laporan
     [] Faktur Ganti Rugi
         [] Uang (Faktur)
         [] Barang (Surat Serah Terima Barang)

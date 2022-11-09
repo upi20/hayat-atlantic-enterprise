@@ -686,6 +686,7 @@ Route::controller(GantiRugiController::class)->prefix($prefix)->group(function (
     Route::controller(PenyewaanController::class)->group(function () use ($name) {
         Route::get('/customer_select2', 'customer_select2')->name("$name.customer_select2")->middleware("permission:$name");
     });
+    Route::get('/faktur/{ganti_rugi}', 'faktur')->name("$name.faktur")->middleware("permission:$name.faktur");
 
     $prefix = 'barang';
     Route::prefix($prefix)->group(function () use ($name, $prefix) {

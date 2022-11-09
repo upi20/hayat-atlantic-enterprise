@@ -828,7 +828,10 @@
                         {
                             data: 'tanggal_str',
                             name: 'tanggal',
-                            className: 'text-nowrap'
+                            className: 'text-nowrap',
+                            render(data, type, full, meta) {
+                                return `${data}<br><small data-toggle="tooltip" title="Nomor Faktur">${full.no_surat}</small>`;
+                            },
                         },
                         {
                             data: 'nominal',
@@ -1149,7 +1152,10 @@
                         {
                             data: 'tanggal_str',
                             name: 'tanggal',
-                            className: 'text-nowrap'
+                            className: 'text-nowrap',
+                            render(data, type, full, meta) {
+                                return `${data}<br><small data-toggle="tooltip" title="Nomor Faktur">${full.no_surat}</small>`;
+                            },
                         },
                         {
                             data: 'barang_nama',
@@ -1202,6 +1208,7 @@
                 });
 
                 new_table_barang.on('draw.dt', function() {
+                    tooltip_refresh();
                     var PageInfo = table_barang.DataTable().page.info();
                     new_table_barang.column(0, {
                         page: 'current'
@@ -1257,8 +1264,8 @@
             detail_dibayar = data.dibayar;
             detail_dibayar_barang = data.dibayar_barang;
             detail_sisa = data.sisa;
-            detail_customer = `${data.customer.nama}<br>
-                        <small>${data.customer.alamat}</small>`;
+            detail_customer = `${data.customer.nama ?? data.get_customer.nama}<br>
+                        <small>${data.customer.alamat ?? data.get_customer.alamat}</small>`;
             detail_keterangan = `${data.nama}<br>
                         <small>${data.keterangan}</small>`;
 

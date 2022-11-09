@@ -12,10 +12,12 @@ use App\Models\GantiRugi\GantiListBarang;
 use App\Models\GantiRugi\GantiRugiBarang;
 use App\Models\GantiRugi\GantiRugiPembayaran;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use League\Config\Exception\ValidationException;
 use Illuminate\Support\Facades\DB;
 use Yajra\Datatables\Datatables;
+use PDF;
 
 class GantiRugiController extends Controller
 {
@@ -291,7 +293,7 @@ class GantiRugiController extends Controller
             $ganti_rugi_uang->pembayaran_sebelumnya = $ganti_rugi->dibayar;
             $ganti_rugi_uang->status = 1;
             $ganti_rugi_uang->created_by = auth()->user()->id;
-            $ganti_rugi_uang->save();
+
 
             // ganti rugi header
             $ganti_rugi->dibayar = $ganti_rugi->dibayar + $request->nominal;
@@ -305,6 +307,12 @@ class GantiRugiController extends Controller
             if ($ganti_rugi->sisa <= 0) {
                 $ganti_rugi->status = 2;
             }
+            // simpan ganti rugi uang
+            $ganti_rugi_uang->dibayar = $ganti_rugi->dibayar;
+            $ganti_rugi_uang->sisa = $sisa;
+            $ganti_rugi_uang->save();
+
+            // simpan ganti rugi
             $ganti_rugi->save();
 
             // return data detail ganti rugi
@@ -852,4 +860,30 @@ class GantiRugiController extends Controller
         return $datatable->make(true);
     }
     // Ganti rugi barang ============================================================================================
+
+    public function faktur(GantiRugiPembayaran $ganti_rugi, Request $request)
+    {
+        $ganti_rugi->tanggal_str = Carbon::parse($ganti_rugi->tanggal)
+            ->isoFormat("D MMMM Y");
+
+        $ganti_rugi_head = $ganti_rugi->ganti_rugi;
+        $customer = $ganti_rugi->ganti_rugi->getCustomer;
+        $penyewaan = $ganti_rugi->ganti_rugi->penyewaan;
+        $surat_jalan = $penyewaan->surat_jalan;
+
+        $data = compact('ganti_rugi', 'ganti_rugi_head', 'customer', 'penyewaan', 'surat_jalan');
+        $data['compact'] = $data;
+
+        // return $data;
+
+        // return view('administrasi.ganti_rugi.faktur_pembayaran', $data);
+
+        view()->share('administrasi.ganti_rugi.faktur_pembayaran', $data);
+        $pdf = PDF::loadView('administrasi.ganti_rugi.faktur_pembayaran', $data)
+            ->setPaper('a4', 'landscape');
+
+        $name = "Invoice Ganti Rugi Uang $ganti_rugi->no_surat .pdf";
+        return $pdf->stream($name);
+        exit();
+    }
 }

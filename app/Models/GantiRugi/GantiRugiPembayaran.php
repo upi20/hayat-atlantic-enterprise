@@ -17,6 +17,6 @@ class GantiRugiPembayaran extends Model
 
     public function ganti_rugi()
     {
-        return $this->hasOne(GantiRugi::class, 'id', 'ganti_rugi_id');
+        return $this->belongsTo(GantiRugi::class, 'ganti_rugi_id', 'id');
     }
 }

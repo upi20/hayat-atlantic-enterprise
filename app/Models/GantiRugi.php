@@ -19,12 +19,12 @@ class GantiRugi extends Model
 
     public function getCustomer()
     {
-        return $this->hasOne(Customer::class, 'id', 'customer');
+        return $this->belongsTo(Customer::class, 'customer', 'id');
     }
 
     public function penyewaan()
     {
-        return $this->hasOne(Penyewaan::class, 'id', 'penyewaan_id');
+        return $this->belongsTo(Penyewaan::class, 'penyewaan_id', 'id');
     }
 
     public function pembayaran()

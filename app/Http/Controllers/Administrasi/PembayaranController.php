@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Administrasi;
 
 use App\Http\Controllers\Controller;
+use App\Models\Barang\Satuan;
 use Illuminate\Http\Request;
 use App\Models\Barang\Sewa;
 use App\Models\Faktur;
@@ -366,6 +367,7 @@ class PembayaranController extends Controller
         $t_penyewaan = Penyewaan::tableName;
         $t_customer = Customer::tableName;
         $t_surat_jalan = SuratJalan::tableName;
+        $t_satuan = Satuan::tableName;
         $table = FakturBarang::tableName;
 
         $faktur = Faktur::select([
@@ -393,10 +395,12 @@ class PembayaranController extends Controller
         $barangs = FakturBarang::select([
             DB::raw("$table.*"),
             DB::raw("$t_barang.nama as barang_nama"),
+            DB::raw("$t_satuan.nama as satuan_nama"),
             DB::raw("($table.qty * $table.harga) as harga_total"),
         ])
             ->where('faktur', $faktur->id)
             ->leftJoin($t_barang, "$t_barang.id", "$table.barang")
+            ->leftJoin($t_satuan, "$t_satuan.id", "$t_barang.satuan")
             ->get();
         $data = compact('faktur', 'barangs', 'model', 'penyewaan');
         $data['compact'] = $data;
