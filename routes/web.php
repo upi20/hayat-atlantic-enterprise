@@ -38,14 +38,9 @@ Route::controller(LoginController::class)->group(function () {
 
 
 // home default =======================================================================================================
-
 Route::get('/', function () {
     if (!auth()->user()) return Redirect::route('login');
-    if (auth_has_role(config('app.super_admin_role'))) {
-        return Redirect::route('admin.dashboard');
-    } else {
-        return Redirect::route('dashboard');
-    }
+    return Redirect::route('admin.dashboard');
 })->name("home");
 
 // artikel ============================================================================================================
@@ -82,11 +77,7 @@ Route::controller(GaleriControllerFrontend::class)->prefix($name)->group(functio
 // dashboard ==========================================================================================================
 Route::get('/dashboard', function () {
     if (!auth()->user()) return Redirect::route('login');
-    if (auth_has_role(config('app.super_admin_role')) || auth_has_role('Administrasi')) {
-        return Redirect::route('admin.dashboard');
-    } else {
-        return Redirect::route('pegawai.dashboard');
-    }
+    return Redirect::route('admin.dashboard');
 })->name("dashboard");
 
 // ====================================================================================================================
