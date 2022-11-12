@@ -309,8 +309,6 @@
         function cetak_laporan() {
             const data_table = table_html.DataTable();
             const params = data_table.ajax.params();
-            const order_column = order['column'];
-            const order_dir = order['dir'];
 
             const customer = params['filter[customer]'] ?? '';
             const dari_tanggal = params['filter[dari_tanggal]'] ?? '';
@@ -318,6 +316,8 @@
             const status = params['filter[status]'] ?? '';
             const status_pembayaran = params['filter[status_pembayaran]'] ?? '';
             const order = params['order'][0] ?? '';
+            const order_column = order['column'];
+            const order_dir = order['dir'];
             const search = params['search']['value'] ?? '';
             const search_value = encodeURIComponent(search);
 

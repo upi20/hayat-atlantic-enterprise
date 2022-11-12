@@ -12,6 +12,7 @@
     [] Ketika reciving order baru bisa tambah barang yang sama
     [] Crud barang sewa Ketika di tambah belum di clear
     [] Barang habis pakai (Total Rp.1.000.015.000.100.000) pas total penemmbalian penywaan
+    [] Laporan penywaan error
 
 =======================================================================================================================
 # Next
