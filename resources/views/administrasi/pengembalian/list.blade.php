@@ -611,7 +611,7 @@
                 let html = '';
                 let total = 0;
                 data.forEach(bhs => {
-                    total += bhs.total;
+                    total += Number(bhs.total);
                     const btn_update = can_barang_habis_pakai_update ? `<button type="button" data-toggle="tooltip" class="btn btn-rounded btn-primary btn-sm me-1" title="Edit Data"onClick="editFunc('${bhs.id}')">
                                 <i class="fas fa-edit"></i>
                                 </button>` : '';
