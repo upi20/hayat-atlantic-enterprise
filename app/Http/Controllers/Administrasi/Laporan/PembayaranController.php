@@ -41,7 +41,7 @@ class PembayaranController extends Controller
         }
 
         $page_attr = [
-            'title' => 'Laporan Pengembalian',
+            'title' => 'Laporan Pembayaran',
             'breadcrumbs' => [
                 ['name' => 'Dashboard'],
                 ['name' => 'Laporan'],

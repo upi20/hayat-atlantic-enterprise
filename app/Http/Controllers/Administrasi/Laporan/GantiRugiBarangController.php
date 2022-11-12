@@ -43,7 +43,7 @@ class GantiRugiBarangController extends Controller
         }
 
         $page_attr = [
-            'title' => 'Laporan Pengembalian',
+            'title' => 'Laporan Ganti Rugi',
             'breadcrumbs' => [
                 ['name' => 'Dashboard'],
                 ['name' => 'Laporan'],
