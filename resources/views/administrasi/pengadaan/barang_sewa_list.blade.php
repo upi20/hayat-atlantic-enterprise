@@ -390,7 +390,7 @@
                             showConfirmButton: false,
                             timer: 1500
                         })
-
+                        isEdit = true;
                     },
                     error: function(data) {
                         const res = data.responseJSON ?? {};

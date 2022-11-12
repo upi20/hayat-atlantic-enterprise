@@ -1,18 +1,18 @@
 =======================================================================================================================
 # Testing
-    [] Pengadaan barang -> Barang Sewa -> Tambah Data Pengadaan Barang Sewa Jika di tambah sotk barang awalnya satu ketika di tambah jadi error contoh 0 + 100 jadi 0100 harusnya 100
-        [] Ketika di tambah, barang sebelumnya masih ada masih satu kasus sama yang atas
-    [] Pengadaan barang -> Barang habis pakai -> Tambah Data Pengadaan Barang Sewa Jika di tambah sotk barang awalnya satu ketika di tambah jadi error contoh 0 + 100 jadi 0100 harusnya 100
-        [] Ketika di tambah, barang sebelumnya masih ada masih satu kasus sama yang atas
-    [] Pengurangan barang -> Barang Sewa -> Tambah Data Pengurangan Barang Sewa Jika di tambah sotk barang awalnya satu ketika di tambah jadi error contoh 0 + 100 jadi 0100 harusnya 100
-        [] Ketika di tambah, barang sebelumnya masih ada masih satu kasus sama yang atas
-    [] Pengurangan barang -> Barang habis pakai -> Tambah Data Pengurangan Barang Sewa Jika di tambah sotk barang awalnya satu ketika di tambah jadi error contoh 0 + 100 jadi 0100 harusnya 100
-        [] Ketika di tambah, barang sebelumnya masih ada masih satu kasus sama yang atas
+    [x] Pengadaan barang -> Barang Sewa -> Tambah Data Pengadaan Barang Sewa Jika di tambah sotk barang awalnya satu ketika di tambah jadi error contoh 0 + 100 jadi 0100 harusnya 100
+        [x] Ketika di tambah, barang sebelumnya masih ada masih satu kasus sama yang atas
+    [x] Pengadaan barang -> Barang habis pakai -> Tambah Data Pengadaan Barang Sewa Jika di tambah sotk barang awalnya satu ketika di tambah jadi error contoh 0 + 100 jadi 0100 harusnya 100
+        [x] Ketika di tambah, barang sebelumnya masih ada masih satu kasus sama yang atas
+    [x] Pengurangan barang -> Barang Sewa -> Tambah Data Pengurangan Barang Sewa Jika di tambah sotk barang awalnya satu ketika di tambah jadi error contoh 0 + 100 jadi 0100 harusnya 100
+        [x] Ketika di tambah, barang sebelumnya masih ada masih satu kasus sama yang atas
+    [x] Pengurangan barang -> Barang habis pakai -> Tambah Data Pengurangan Barang Sewa Jika di tambah sotk barang awalnya satu ketika di tambah jadi error contoh 0 + 100 jadi 0100 harusnya 100
+        [x] Ketika di tambah, barang sebelumnya masih ada masih satu kasus sama yang atas
 
-    [] Ketika reciving order baru bisa tambah barang yang sama
-    [] Crud barang sewa Ketika di tambah belum di clear
-    [] Barang habis pakai (Total Rp.1.000.015.000.100.000) pas total penemmbalian penywaan
-    [] Laporan penywaan error
+    [x] Ketika reciving order baru bisa tambah barang yang sama
+    [x] Crud barang sewa Ketika di tambah belum di clear
+    [x] Barang habis pakai (Total Rp.1.000.015.000.100.000) pas total penemmbalian penywaan
+    [x] Laporan penywaan error
 
 =======================================================================================================================
 # Next
@@ -25,9 +25,9 @@
 ## Pdf saat penyewaan (Surat atau laporan)
     [x] Laporan Pembayaran
     [x] Surat Pengembalian (Surat Pengembalian Barang) // sama seperti di laporan
-    [] Faktur Ganti Rugi
-        [] Uang (Faktur)
-        [] Barang (Surat Serah Terima Barang)
+    [x] Faktur Ganti Rugi
+        [x] Uang (Faktur)
+        [x] Barang (Surat Serah Terima Barang)
     [] Label Pengiriman
 
 ## Frontend

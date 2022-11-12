@@ -808,7 +808,7 @@ class PenyewaanController extends Controller
     {
         $request->validate(array_merge(['id' => ['required', 'int']], $this->validate_model_barang));
         DB::beginTransaction();
-        $model = PenyewaanBarang::findOrFail();
+        $model = PenyewaanBarang::findOrFail($request->id);
         $model->penyewaan = $request->penyewaan;
         $model->barang = $request->barang;
         $model->keterangan = $request->keterangan;
