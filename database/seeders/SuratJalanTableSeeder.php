@@ -14,8 +14,11 @@ class SuratJalanTableSeeder extends Seeder
      */
     public function run()
     {
-
+        
 
         \DB::table('surat_jalan')->delete();
+        
+        
+        
     }
 }

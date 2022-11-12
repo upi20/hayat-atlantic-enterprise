@@ -14,8 +14,11 @@ class PenyewaanTableSeeder extends Seeder
      */
     public function run()
     {
-
+        
 
         \DB::table('penyewaan')->delete();
+        
+        
+        
     }
 }

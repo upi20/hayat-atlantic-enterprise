@@ -14,8 +14,11 @@ class SuratJalanBarangHabisPakaiTableSeeder extends Seeder
      */
     public function run()
     {
-
+        
 
         \DB::table('surat_jalan_barang_habis_pakai')->delete();
+        
+        
+        
     }
 }

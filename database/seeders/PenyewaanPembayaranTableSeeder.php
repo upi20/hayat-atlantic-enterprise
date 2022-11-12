@@ -14,8 +14,11 @@ class PenyewaanPembayaranTableSeeder extends Seeder
      */
     public function run()
     {
-
+        
 
         \DB::table('penyewaan_pembayaran')->delete();
+        
+        
+        
     }
 }

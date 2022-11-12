@@ -14,8 +14,11 @@ class GantiRugiBarangTableSeeder extends Seeder
      */
     public function run()
     {
-
+        
 
         \DB::table('ganti_rugi_barang')->delete();
+        
+        
+        
     }
 }

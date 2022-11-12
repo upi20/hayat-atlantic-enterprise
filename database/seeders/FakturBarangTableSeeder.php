@@ -14,8 +14,11 @@ class FakturBarangTableSeeder extends Seeder
      */
     public function run()
     {
-
+        
 
         \DB::table('faktur_barang')->delete();
+        
+        
+        
     }
 }
