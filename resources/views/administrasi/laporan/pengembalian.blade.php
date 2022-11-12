@@ -83,10 +83,6 @@
 
     <script>
         const prefix_url = '{{ url(h_prefix_uri()) }}';
-        const can_batalkan = {{ $can_batalkan ? 'true' : 'false' }};
-        const can_reciving_order = {{ $can_reciving_order ? 'true' : 'false' }};
-        const can_selesai = {{ $can_selesai ? 'true' : 'false' }};
-        const can_delete = {{ $can_delete ? 'true' : 'false' }};
         const table_html = $('#tbl_main');
         let isEdit = true;
         let global_datatable_params;
