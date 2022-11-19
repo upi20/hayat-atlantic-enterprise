@@ -241,6 +241,15 @@
                 `${prefix_url}/cetak_laporan?&filter[sampai_tanggal]=${sampai_tanggal}&filter[dari_tanggal]=${dari_tanggal}&search[value]=${search_value}${columns_str}&order[0][column]=${order_column}&order[0][dir]=${order_dir}`;
             window.open(url, '_blank');
         }
+
+        function statusClass(status) {
+            if (status == 1) return 'primary';
+            else if (status == 2) return 'info';
+            else if (status == 3) return 'secondary';
+            else if (status == 4) return 'warning';
+            else if (status == 5) return 'success';
+            else return 'danger';
+        }
     </script>
     @include('component.penyewaan_detail_js')
 @endsection
