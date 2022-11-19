@@ -235,9 +235,9 @@ class PengambilanBarangController extends Controller
         $data['compact'] = $data;
 
         // dd($data);
-        // return view('administrasi.laporan.pengambilan_cetak_cetak', $data);
-        view()->share('administrasi.laporan.pengambilan_cetak_cetak', $data);
-        $pdf = PDF::loadView('administrasi.laporan.pengambilan_cetak_cetak', $data)
+        // return view('administrasi.laporan.pengambilan_cetak', $data);
+        view()->share('administrasi.laporan.pengambilan_cetak', $data);
+        $pdf = PDF::loadView('administrasi.laporan.pengambilan_cetak', $data)
             ->setPaper('a4', 'landscape');
 
         $name = "Laporan Pengambilan Barang $dari_tanggal-$sampai_tanggal.pdf";
