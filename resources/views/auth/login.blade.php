@@ -124,7 +124,7 @@ $page_attr_title = ($page_attr->title == '' ? '' : $page_attr->title . ' | ') . 
                             <img src="{{ asset(settings()->get(set_admin('app.foto_light_landscape_mode'))) }}"
                                 class="header-brand-img" alt="Logo Perusahaan" id="logo">
                         </div>
-                        <p class="text-center mt-5">Sistem Informasi Data Barang</p>
+                        <p class="text-center mt-5">Sistem Informasi Manajemen Pergudangan</p>
                         <div class="panel panel-primary">
                             <div class="panel-body tabs-menu-body p-0">
                                 <div class="tab-content">

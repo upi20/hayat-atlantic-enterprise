@@ -57,7 +57,7 @@
     @foreach ($surat_jalans as $surat_jalan)
         <table>
             <tr>
-                <td>Tanggal Suart Jalan</td>
+                <td>Tanggal Surat Jalan</td>
                 <td>:</td>
                 <td>{{ $surat_jalan->tanggal_str }}</td>
             </tr>
