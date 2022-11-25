@@ -253,7 +253,7 @@
                         data: 'customer_nama',
                         name: 'customer_nama',
                         render(data, type, full, meta) {
-                            return `<span data-toggle="tooltip" title="${data}">${data}</span><br>
+                            return `<span data-toggle="tooltip" title="${data??'Customer tidak terdaftar'}">${data??''}</span><br>
                             <small data-toggle="tooltip" title="${full.lokasi}">${full.lokasi}</small>`;
                         },
                         className: 'to-link'
