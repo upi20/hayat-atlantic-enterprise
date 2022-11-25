@@ -286,7 +286,7 @@
                                 <i class="fas fa-times"></i>
                                 </button>${(++br_counter %4==0)? '<br>':''}` : '';
 
-                            const btn_delete = (can_delete && (full.status <= 2 || full.status == 9)) ? `<button type="button" data-toggle="tooltip" class="btn btn-rounded btn-danger btn-sm me-1 mt-1" title="Delete Data" onClick="deleteFunc('${data}')">
+                            const btn_delete = (can_delete) ? `<button type="button" data-toggle="tooltip" class="btn btn-rounded btn-danger btn-sm me-1 mt-1" title="Delete Data" onClick="deleteFunc('${data}')">
                                 <i class="fas fa-trash"></i>
                                 </button>${(++br_counter %4==0)? '<br>':''}` : '';
 
