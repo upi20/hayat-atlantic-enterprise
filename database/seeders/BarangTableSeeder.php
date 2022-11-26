@@ -14,13 +14,13 @@ class BarangTableSeeder extends Seeder
      */
     public function run()
     {
-        
+
 
         \DB::table('barang')->delete();
-        
-        \DB::table('barang')->insert(array (
-            0 => 
-            array (
+
+        \DB::table('barang')->insert(array(
+            0 =>
+            array(
                 'id' => 1,
                 'nama' => 'Big Fan',
                 'kode' => 'APBFN01',
@@ -37,8 +37,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            1 => 
-            array (
+            1 =>
+            array(
                 'id' => 2,
                 'nama' => 'Kursi Belajar',
                 'kode' => 'APKBJ02',
@@ -55,16 +55,16 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            2 => 
-            array (
+            2 =>
+            array(
                 'id' => 3,
                 'nama' => 'Kursi Lipat',
                 'kode' => 'APKLP03',
                 'jenis' => 1,
                 'satuan' => 1,
                 'harga' => 4000,
-                'qty_total' => -10,
-                'qty_ada' => -10,
+                'qty_total' => 0,
+                'qty_ada' => 0,
                 'qty_rusak' => 0,
                 'qty_disewakan' => 0,
                 'keterangan' => 'Ditambahkan bersamaan dengan pembuatan aplikasi',
@@ -73,16 +73,16 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:24',
             ),
-            3 => 
-            array (
+            3 =>
+            array(
                 'id' => 4,
-            'nama' => 'Kursi Sofa (VIP)/Set (4 Meja + 1 Kursi)',
+                'nama' => 'Kursi Sofa (VIP)/Set (4 Meja + 1 Kursi)',
                 'kode' => 'APKSF04',
                 'jenis' => 1,
                 'satuan' => 2,
                 'harga' => 750000,
-                'qty_total' => -2,
-                'qty_ada' => -2,
+                'qty_total' => 0,
+                'qty_ada' => 0,
                 'qty_rusak' => 0,
                 'qty_disewakan' => 0,
                 'keterangan' => 'Ditambahkan bersamaan dengan pembuatan aplikasi',
@@ -91,8 +91,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:21',
             ),
-            4 => 
-            array (
+            4 =>
+            array(
                 'id' => 5,
                 'nama' => 'Kursi Susun',
                 'kode' => 'APKSS05',
@@ -109,8 +109,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            5 => 
-            array (
+            5 =>
+            array(
                 'id' => 6,
                 'nama' => 'Cover Kursi Susun Kain Putih',
                 'kode' => 'APCKS06',
@@ -127,8 +127,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            6 => 
-            array (
+            6 =>
+            array(
                 'id' => 7,
                 'nama' => 'Cover Kursi Susun Kain Hitam',
                 'kode' => 'APCKS07',
@@ -145,8 +145,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            7 => 
-            array (
+            7 =>
+            array(
                 'id' => 8,
                 'nama' => 'Cover Kursi Susun Strech Polos Putih',
                 'kode' => 'APCKS08',
@@ -163,8 +163,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            8 => 
-            array (
+            8 =>
+            array(
                 'id' => 9,
                 'nama' => 'Cover Kursi Susun Strech Polos Hitam',
                 'kode' => 'APCKS09',
@@ -181,8 +181,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            9 => 
-            array (
+            9 =>
+            array(
                 'id' => 10,
                 'nama' => 'Cover Kursi Susun Strech Polos Merah',
                 'kode' => 'APCKS10',
@@ -199,8 +199,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            10 => 
-            array (
+            10 =>
+            array(
                 'id' => 11,
                 'nama' => 'Cover Kursi Susun Strech Polos Biru',
                 'kode' => 'APCKS11',
@@ -217,8 +217,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            11 => 
-            array (
+            11 =>
+            array(
                 'id' => 12,
                 'nama' => 'Cover Kursi Susun Strech Polos Abu',
                 'kode' => 'APCKS12',
@@ -235,8 +235,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            12 => 
-            array (
+            12 =>
+            array(
                 'id' => 13,
                 'nama' => 'Pita Kursi Gold',
                 'kode' => 'APPKG13',
@@ -253,8 +253,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            13 => 
-            array (
+            13 =>
+            array(
                 'id' => 14,
                 'nama' => 'Pita Kursi Silver',
                 'kode' => 'APPKS14',
@@ -271,8 +271,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            14 => 
-            array (
+            14 =>
+            array(
                 'id' => 15,
                 'nama' => 'Pita Kursi Slayer Merah',
                 'kode' => 'APPKS15',
@@ -289,8 +289,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            15 => 
-            array (
+            15 =>
+            array(
                 'id' => 16,
                 'nama' => 'Pita Kursi Slayer Marun',
                 'kode' => 'APPKS16',
@@ -307,8 +307,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            16 => 
-            array (
+            16 =>
+            array(
                 'id' => 17,
                 'nama' => 'Pita Kursi Slayer Hijau',
                 'kode' => 'APPKS17',
@@ -325,8 +325,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            17 => 
-            array (
+            17 =>
+            array(
                 'id' => 18,
                 'nama' => 'Pita Kursi Slayer Hijau Muda',
                 'kode' => 'APPKS18',
@@ -343,8 +343,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            18 => 
-            array (
+            18 =>
+            array(
                 'id' => 19,
                 'nama' => 'Pita Kursi Slayer Biru',
                 'kode' => 'APPKS19',
@@ -361,8 +361,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            19 => 
-            array (
+            19 =>
+            array(
                 'id' => 20,
                 'nama' => 'Pita Kursi Slayer Kuning',
                 'kode' => 'APPKS20',
@@ -379,8 +379,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            20 => 
-            array (
+            20 =>
+            array(
                 'id' => 21,
                 'nama' => 'Misty Fan',
                 'kode' => 'APMFN21',
@@ -397,8 +397,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            21 => 
-            array (
+            21 =>
+            array(
                 'id' => 22,
                 'nama' => 'Meja Bulat 120',
                 'kode' => 'APMBS22',
@@ -415,8 +415,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            22 => 
-            array (
+            22 =>
+            array(
                 'id' => 23,
                 'nama' => 'Meja Kotak 60 x 120 cm ',
                 'kode' => 'APMKK23',
@@ -433,8 +433,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            23 => 
-            array (
+            23 =>
+            array(
                 'id' => 24,
                 'nama' => 'Meja Kotak 80 x 120 cm ',
                 'kode' => 'APMKS24',
@@ -451,8 +451,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            24 => 
-            array (
+            24 =>
+            array(
                 'id' => 25,
                 'nama' => 'Meja Bulat / Kotak + Set Taplak`',
                 'kode' => 'APMST25',
@@ -469,8 +469,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            25 => 
-            array (
+            25 =>
+            array(
                 'id' => 26,
                 'nama' => 'Meja Bulat 150 + Set Taplak',
                 'kode' => 'APMBS26',
@@ -487,8 +487,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            26 => 
-            array (
+            26 =>
+            array(
                 'id' => 27,
                 'nama' => 'Meja IBM',
                 'kode' => 'APIBM27',
@@ -505,8 +505,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            27 => 
-            array (
+            27 =>
+            array(
                 'id' => 28,
                 'nama' => 'Cover Meja IBM',
                 'kode' => 'APCMI28',
@@ -523,10 +523,10 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            28 => 
-            array (
+            28 =>
+            array(
                 'id' => 29,
-            'nama' => 'Taplak Alas Meja Bulat (120cm/150cm)',
+                'nama' => 'Taplak Alas Meja Bulat (120cm/150cm)',
                 'kode' => 'APTAM29',
                 'jenis' => 1,
                 'satuan' => 1,
@@ -541,10 +541,10 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            29 => 
-            array (
+            29 =>
+            array(
                 'id' => 30,
-            'nama' => 'Taplak Alas Meja Kotak (80cm/60cm)',
+                'nama' => 'Taplak Alas Meja Kotak (80cm/60cm)',
                 'kode' => 'APTAM30',
                 'jenis' => 1,
                 'satuan' => 1,
@@ -559,8 +559,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            30 => 
-            array (
+            30 =>
+            array(
                 'id' => 31,
                 'nama' => 'Taplak Pinggiran Meja Bulat / Kotak Putih',
                 'kode' => 'APTPM31',
@@ -577,8 +577,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            31 => 
-            array (
+            31 =>
+            array(
                 'id' => 32,
                 'nama' => 'Taplak Pinggiran Meja Bulat / Kotak Krem',
                 'kode' => 'APTPM32',
@@ -595,8 +595,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            32 => 
-            array (
+            32 =>
+            array(
                 'id' => 33,
                 'nama' => 'Taplak Pinggiran Meja Bulat / Kotak Merah',
                 'kode' => 'APTPM33',
@@ -613,8 +613,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            33 => 
-            array (
+            33 =>
+            array(
                 'id' => 34,
                 'nama' => 'Taplak Pinggiran Meja Bulat / Kotak Hijau',
                 'kode' => 'APTPM34',
@@ -631,8 +631,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            34 => 
-            array (
+            34 =>
+            array(
                 'id' => 35,
                 'nama' => 'Taplak Pinggiran Meja Bulat / Kotak Hitam',
                 'kode' => 'APTPM35',
@@ -649,8 +649,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            35 => 
-            array (
+            35 =>
+            array(
                 'id' => 36,
                 'nama' => 'Taplak Pinggiran Meja Bulat / Kotak Biru',
                 'kode' => 'APTPM36',
@@ -667,8 +667,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            36 => 
-            array (
+            36 =>
+            array(
                 'id' => 37,
                 'nama' => 'Q Line',
                 'kode' => 'APQLN37',
@@ -685,8 +685,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            37 => 
-            array (
+            37 =>
+            array(
                 'id' => 38,
                 'nama' => 'Taplak Bulat',
                 'kode' => 'APTBL38',
@@ -703,8 +703,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            38 => 
-            array (
+            38 =>
+            array(
                 'id' => 39,
                 'nama' => 'Barikade',
                 'kode' => 'APBRK39',
@@ -721,8 +721,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            39 => 
-            array (
+            39 =>
+            array(
                 'id' => 40,
                 'nama' => 'Mic Wireless',
                 'kode' => 'APMCW40',
@@ -739,8 +739,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            40 => 
-            array (
+            40 =>
+            array(
                 'id' => 41,
                 'nama' => 'Mic Kabel',
                 'kode' => 'APMCK41',
@@ -757,8 +757,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            41 => 
-            array (
+            41 =>
+            array(
                 'id' => 42,
                 'nama' => 'Mimbar',
                 'kode' => 'APMBR42',
@@ -775,8 +775,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            42 => 
-            array (
+            42 =>
+            array(
                 'id' => 43,
                 'nama' => 'Baki Bulat Stainless Besar',
                 'kode' => 'PBBBS01',
@@ -793,8 +793,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            43 => 
-            array (
+            43 =>
+            array(
                 'id' => 44,
                 'nama' => 'Baki Bulat Stainless Kecil',
                 'kode' => 'PBBBS02',
@@ -811,8 +811,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            44 => 
-            array (
+            44 =>
+            array(
                 'id' => 45,
                 'nama' => 'Baki Bulat Stainless Oval',
                 'kode' => 'PBBBS03',
@@ -829,8 +829,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            45 => 
-            array (
+            45 =>
+            array(
                 'id' => 46,
                 'nama' => 'Baki Kaca',
                 'kode' => 'PBBKC04',
@@ -847,8 +847,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            46 => 
-            array (
+            46 =>
+            array(
                 'id' => 47,
                 'nama' => 'Cangkir',
                 'kode' => 'PBCKR05',
@@ -865,8 +865,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            47 => 
-            array (
+            47 =>
+            array(
                 'id' => 48,
                 'nama' => 'Tatakan Cangkir',
                 'kode' => 'PBTCK06',
@@ -883,8 +883,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            48 => 
-            array (
+            48 =>
+            array(
                 'id' => 49,
                 'nama' => 'Coffe Maker',
                 'kode' => 'PBCMK07',
@@ -901,8 +901,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            49 => 
-            array (
+            49 =>
+            array(
                 'id' => 50,
                 'nama' => 'Garpu Besar',
                 'kode' => 'PBGBS08',
@@ -919,8 +919,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            50 => 
-            array (
+            50 =>
+            array(
                 'id' => 51,
                 'nama' => 'Garpu Kecil',
                 'kode' => 'PBGKC09',
@@ -937,8 +937,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            51 => 
-            array (
+            51 =>
+            array(
                 'id' => 52,
                 'nama' => 'Garpu Besar Polos',
                 'kode' => 'PBGBP10',
@@ -955,8 +955,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            52 => 
-            array (
+            52 =>
+            array(
                 'id' => 53,
                 'nama' => 'Garpu Kecil Polos',
                 'kode' => 'PBGKP11',
@@ -973,8 +973,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            53 => 
-            array (
+            53 =>
+            array(
                 'id' => 54,
                 'nama' => 'Garpu Hidang',
                 'kode' => 'PBGPH12',
@@ -991,8 +991,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            54 => 
-            array (
+            54 =>
+            array(
                 'id' => 55,
                 'nama' => 'Gelas Biasa / Soft Drink',
                 'kode' => 'PBGBS13',
@@ -1009,8 +1009,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            55 => 
-            array (
+            55 =>
+            array(
                 'id' => 56,
                 'nama' => 'Gelas Ice Cream',
                 'kode' => 'PBGIC14',
@@ -1027,8 +1027,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            56 => 
-            array (
+            56 =>
+            array(
                 'id' => 57,
                 'nama' => 'Gelas Water Goblet',
                 'kode' => 'PBGWG15',
@@ -1045,8 +1045,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            57 => 
-            array (
+            57 =>
+            array(
                 'id' => 58,
                 'nama' => 'Insert',
                 'kode' => 'PBINS16',
@@ -1063,8 +1063,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            58 => 
-            array (
+            58 =>
+            array(
                 'id' => 59,
                 'nama' => 'Jepitan',
                 'kode' => 'PBJPT17',
@@ -1081,8 +1081,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            59 => 
-            array (
+            59 =>
+            array(
                 'id' => 60,
                 'nama' => 'Mangkuk Soup Cup',
                 'kode' => 'PBMSC18',
@@ -1099,8 +1099,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            60 => 
-            array (
+            60 =>
+            array(
                 'id' => 61,
                 'nama' => 'Tatakan Soup Cup',
                 'kode' => 'PBTSC19',
@@ -1117,8 +1117,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            61 => 
-            array (
+            61 =>
+            array(
                 'id' => 62,
                 'nama' => 'Mangkuk Baso',
                 'kode' => 'PBMKB20',
@@ -1135,8 +1135,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            62 => 
-            array (
+            62 =>
+            array(
                 'id' => 63,
                 'nama' => 'Mangkuk Puding',
                 'kode' => 'PBMKP21',
@@ -1153,8 +1153,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            63 => 
-            array (
+            63 =>
+            array(
                 'id' => 64,
                 'nama' => 'Mangkuk Cina',
                 'kode' => 'PBMKC22',
@@ -1171,8 +1171,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            64 => 
-            array (
+            64 =>
+            array(
                 'id' => 65,
                 'nama' => 'Mangkuk Bulat Besar',
                 'kode' => 'PBMBB23',
@@ -1189,8 +1189,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            65 => 
-            array (
+            65 =>
+            array(
                 'id' => 66,
                 'nama' => 'Mangkuk Bulat Kecil',
                 'kode' => 'PBMBK24',
@@ -1207,8 +1207,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            66 => 
-            array (
+            66 =>
+            array(
                 'id' => 67,
                 'nama' => 'Pemanas Kotak Besar',
                 'kode' => 'PBPKB25',
@@ -1225,8 +1225,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            67 => 
-            array (
+            67 =>
+            array(
                 'id' => 68,
                 'nama' => 'Pemanas Sayur Bulat Kaca',
                 'kode' => 'PBPSB26',
@@ -1243,8 +1243,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            68 => 
-            array (
+            68 =>
+            array(
                 'id' => 69,
                 'nama' => 'Pemanas Sayur Bulat Besar',
                 'kode' => 'PBPSB27',
@@ -1261,8 +1261,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            69 => 
-            array (
+            69 =>
+            array(
                 'id' => 70,
                 'nama' => 'Pemanas Sayur Bulat Sedang',
                 'kode' => 'PBPSB28',
@@ -1279,8 +1279,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            70 => 
-            array (
+            70 =>
+            array(
                 'id' => 71,
                 'nama' => 'Piring Cekung',
                 'kode' => 'PBPCK29',
@@ -1297,8 +1297,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            71 => 
-            array (
+            71 =>
+            array(
                 'id' => 72,
                 'nama' => 'Piring Ceper',
                 'kode' => 'PBPCP30',
@@ -1315,8 +1315,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            72 => 
-            array (
+            72 =>
+            array(
                 'id' => 73,
                 'nama' => 'Pisau Steak Kayu',
                 'kode' => 'PBPSK31',
@@ -1333,8 +1333,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            73 => 
-            array (
+            73 =>
+            array(
                 'id' => 74,
                 'nama' => 'Pisau Steak Stainless Panjang',
                 'kode' => 'PBPSS32',
@@ -1351,8 +1351,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            74 => 
-            array (
+            74 =>
+            array(
                 'id' => 75,
                 'nama' => 'Pisau Steak Stainless Pendek',
                 'kode' => 'PBPSS33',
@@ -1369,8 +1369,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            75 => 
-            array (
+            75 =>
+            array(
                 'id' => 76,
                 'nama' => 'Pisin B&B',
                 'kode' => 'PBPBB34',
@@ -1387,8 +1387,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            76 => 
-            array (
+            76 =>
+            array(
                 'id' => 77,
                 'nama' => 'Pisin Sate',
                 'kode' => 'PBPST35',
@@ -1405,8 +1405,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            77 => 
-            array (
+            77 =>
+            array(
                 'id' => 78,
                 'nama' => 'Roll Top Bulat',
                 'kode' => 'PBRTB36',
@@ -1423,8 +1423,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            78 => 
-            array (
+            78 =>
+            array(
                 'id' => 79,
                 'nama' => 'Roll Top Persegi',
                 'kode' => 'PBPTP37',
@@ -1441,8 +1441,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            79 => 
-            array (
+            79 =>
+            array(
                 'id' => 80,
                 'nama' => 'Sendok Besar',
                 'kode' => 'PBSBS38',
@@ -1459,8 +1459,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            80 => 
-            array (
+            80 =>
+            array(
                 'id' => 81,
                 'nama' => 'Sendok Kecil',
                 'kode' => 'PBSKC39',
@@ -1477,8 +1477,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            81 => 
-            array (
+            81 =>
+            array(
                 'id' => 82,
                 'nama' => 'Sendok Besar Polos',
                 'kode' => 'PBSBP40',
@@ -1495,8 +1495,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            82 => 
-            array (
+            82 =>
+            array(
                 'id' => 83,
                 'nama' => 'Sendok Kecil Polos',
                 'kode' => 'PBSKP41',
@@ -1513,8 +1513,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            83 => 
-            array (
+            83 =>
+            array(
                 'id' => 84,
                 'nama' => 'Sendok Bebek',
                 'kode' => 'PBSBB42',
@@ -1531,8 +1531,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            84 => 
-            array (
+            84 =>
+            array(
                 'id' => 85,
                 'nama' => 'Sendok Kerang Besar',
                 'kode' => 'PBSKB43',
@@ -1549,8 +1549,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            85 => 
-            array (
+            85 =>
+            array(
                 'id' => 86,
                 'nama' => 'Sendok Kerang Kecil',
                 'kode' => 'PBSKK44',
@@ -1567,8 +1567,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            86 => 
-            array (
+            86 =>
+            array(
                 'id' => 87,
                 'nama' => 'Sendok Hidang',
                 'kode' => 'PBSHD45',
@@ -1585,8 +1585,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            87 => 
-            array (
+            87 =>
+            array(
                 'id' => 88,
                 'nama' => 'Sendok Nasi',
                 'kode' => 'PBSNS46',
@@ -1603,8 +1603,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            88 => 
-            array (
+            88 =>
+            array(
                 'id' => 89,
                 'nama' => 'Sendok Sayur',
                 'kode' => 'PBSSY47',
@@ -1621,8 +1621,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            89 => 
-            array (
+            89 =>
+            array(
                 'id' => 90,
                 'nama' => 'Sendok Soup Cup',
                 'kode' => 'PBSSC48',
@@ -1639,8 +1639,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            90 => 
-            array (
+            90 =>
+            array(
                 'id' => 91,
                 'nama' => 'Sendok Soup Cup Polos',
                 'kode' => 'PBSSC49',
@@ -1657,8 +1657,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            91 => 
-            array (
+            91 =>
+            array(
                 'id' => 92,
                 'nama' => 'Siboli',
                 'kode' => 'PBSBL50',
@@ -1675,8 +1675,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            92 => 
-            array (
+            92 =>
+            array(
                 'id' => 93,
                 'nama' => 'Soup Warmer Listrik',
                 'kode' => 'PBSWL51',
@@ -1693,8 +1693,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            93 => 
-            array (
+            93 =>
+            array(
                 'id' => 94,
                 'nama' => 'Toples Kerupuk',
                 'kode' => 'PBTKR52',
@@ -1711,8 +1711,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            94 => 
-            array (
+            94 =>
+            array(
                 'id' => 95,
                 'nama' => 'Termos Air Stainless 16 Liter',
                 'kode' => 'PBTAS53',
@@ -1729,8 +1729,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            95 => 
-            array (
+            95 =>
+            array(
                 'id' => 96,
                 'nama' => 'Termos Nasi',
                 'kode' => 'PBTNS54',
@@ -1747,10 +1747,10 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            96 => 
-            array (
+            96 =>
+            array(
                 'id' => 97,
-            'nama' => 'Pergola Stand (Tanpa Meja)',
+                'nama' => 'Pergola Stand (Tanpa Meja)',
                 'kode' => 'DKPST01',
                 'jenis' => 3,
                 'satuan' => 2,
@@ -1765,8 +1765,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            97 => 
-            array (
+            97 =>
+            array(
                 'id' => 98,
                 'nama' => 'Pergola Stand + Set Meja',
                 'kode' => 'DKPSS02',
@@ -1783,8 +1783,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            98 => 
-            array (
+            98 =>
+            array(
                 'id' => 99,
                 'nama' => 'Permadani',
                 'kode' => 'DKPRD03',
@@ -1801,8 +1801,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            99 => 
-            array (
+            99 =>
+            array(
                 'id' => 100,
                 'nama' => 'Tenda Standart /',
                 'kode' => 'DKTSD04',
@@ -1819,8 +1819,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            100 => 
-            array (
+            100 =>
+            array(
                 'id' => 101,
                 'nama' => 'Tenda Plafon / m',
                 'kode' => 'DKTPF05',
@@ -1837,8 +1837,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            101 => 
-            array (
+            101 =>
+            array(
                 'id' => 102,
                 'nama' => 'Tenda Plafon Rumbe Dekorasi',
                 'kode' => 'DKTPR06',
@@ -1855,8 +1855,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            102 => 
-            array (
+            102 =>
+            array(
                 'id' => 103,
                 'nama' => 'Tenda Full Dekorasi / m',
                 'kode' => 'DKTFD07',
@@ -1873,10 +1873,10 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            103 => 
-            array (
+            103 =>
+            array(
                 'id' => 104,
-            'nama' => 'Tenda Sarnafil (5x5 m)',
+                'nama' => 'Tenda Sarnafil (5x5 m)',
                 'kode' => 'DKTSR08',
                 'jenis' => 3,
                 'satuan' => 4,
@@ -1891,10 +1891,10 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            104 => 
-            array (
+            104 =>
+            array(
                 'id' => 105,
-            'nama' => 'Tenda Sarnafil (3x3 m)',
+                'nama' => 'Tenda Sarnafil (3x3 m)',
                 'kode' => 'DKTSR09',
                 'jenis' => 3,
                 'satuan' => 4,
@@ -1909,8 +1909,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            105 => 
-            array (
+            105 =>
+            array(
                 'id' => 106,
                 'nama' => 'Tenda Rodder . M ',
                 'kode' => 'DKTRD10',
@@ -1927,8 +1927,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            106 => 
-            array (
+            106 =>
+            array(
                 'id' => 107,
                 'nama' => 'Terplas Rungkup / m',
                 'kode' => 'DKTPR11',
@@ -1945,8 +1945,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            107 => 
-            array (
+            107 =>
+            array(
                 'id' => 108,
                 'nama' => 'Cover Dinding Baru / m',
                 'kode' => 'DKCDB12',
@@ -1963,8 +1963,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            108 => 
-            array (
+            108 =>
+            array(
                 'id' => 109,
                 'nama' => 'Cover Dinding Second / m',
                 'kode' => 'DKCDS13',
@@ -1981,8 +1981,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            109 => 
-            array (
+            109 =>
+            array(
                 'id' => 110,
                 'nama' => 'Rumbe Kain Dekorasi  / m',
                 'kode' => 'DKRKD14',
@@ -1999,8 +1999,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            110 => 
-            array (
+            110 =>
+            array(
                 'id' => 111,
                 'nama' => 'Kain Skat /m',
                 'kode' => 'DKKSK15',
@@ -2017,8 +2017,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            111 => 
-            array (
+            111 =>
+            array(
                 'id' => 112,
                 'nama' => 'Level / Stis / Panggung 1x1 m',
                 'kode' => 'DKLSP16',
@@ -2035,8 +2035,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            112 => 
-            array (
+            112 =>
+            array(
                 'id' => 113,
                 'nama' => 'Level / Stis / Panggung 1x2 m',
                 'kode' => 'DKLSP17',
@@ -2053,8 +2053,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            113 => 
-            array (
+            113 =>
+            array(
                 'id' => 114,
                 'nama' => 'Karpet Baru',
                 'kode' => 'DKKPB18',
@@ -2071,8 +2071,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            114 => 
-            array (
+            114 =>
+            array(
                 'id' => 115,
                 'nama' => 'Karpet Lama',
                 'kode' => 'DKDPL19',
@@ -2089,8 +2089,8 @@ class BarangTableSeeder extends Seeder
                 'created_at' => '2022-09-17 22:04:43',
                 'updated_at' => '2022-11-27 03:04:01',
             ),
-            115 => 
-            array (
+            115 =>
+            array(
                 'id' => 116,
                 'nama' => 'Terpal 3x3, 4x4, 6x6, 8x8, 10x10 ',
                 'kode' => 'DKTRP20',
@@ -2108,7 +2108,5 @@ class BarangTableSeeder extends Seeder
                 'updated_at' => '2022-11-27 03:04:01',
             ),
         ));
-        
-        
     }
 }
