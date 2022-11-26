@@ -217,6 +217,9 @@ class GantiRugiController extends Controller
         ];
 
         $customer = $model->getCustomer;
+        if (is_null($customer)) {
+            $customer = new Customer();
+        }
         $penyewaan = $model->penyewaan;
 
         return view('administrasi.ganti_rugi.detail', compact('page_attr', 'model', 'customer', 'barangs', 'penyewaan'));

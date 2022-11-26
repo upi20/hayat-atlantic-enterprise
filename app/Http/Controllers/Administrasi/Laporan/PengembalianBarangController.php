@@ -125,8 +125,8 @@ class PengembalianBarangController extends Controller
         $model = SuratJalan::select(array_merge([
             DB::raw("$table.*"),
         ], $to_db_raw))
-            ->join($t_penyewaan, "$t_penyewaan.id", '=', "$table.penyewaan")
-            ->join($t_customer, "$t_customer.id", '=', "$t_penyewaan.customer");
+            ->leftJoin($t_penyewaan, "$t_penyewaan.id", '=', "$table.penyewaan")
+            ->leftJoin($t_customer, "$t_customer.id", '=', "$t_penyewaan.customer");
 
         // Filter =====================================================================================================
         // filter check

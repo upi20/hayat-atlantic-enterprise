@@ -135,8 +135,8 @@ class GantiRugiBarangController extends Controller
         $model = GantiRugi::select(array_merge([
             DB::raw("$table.*"),
         ], $to_db_raw))
-            ->join($t_penyewaan, "$t_penyewaan.id", '=', "$table.penyewaan_id")
-            ->join($t_customer, "$t_customer.id", '=', "$t_penyewaan.customer");
+            ->leftJoin($t_penyewaan, "$t_penyewaan.id", '=', "$table.penyewaan_id")
+            ->leftJoin($t_customer, "$t_customer.id", '=', "$t_penyewaan.customer");
 
         // Filter =====================================================================================================
         // filter check
@@ -261,6 +261,7 @@ class GantiRugiBarangController extends Controller
             // ganti rugi barang
             $barangs = GantiRugiBarang::selectRaw("
                 $t_ganti_rugi_barang.no_surat,
+                $t_ganti_rugi_barang.tanggal,
                 (DATE_FORMAT($t_ganti_rugi_barang.tanggal, '%d-%b-%Y')) as tanggal_str,
                 $t_ganti_rugi_barang.oleh,
                 $t_barang_sewa.kode,
