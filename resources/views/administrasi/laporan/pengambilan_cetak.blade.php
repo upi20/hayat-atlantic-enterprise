@@ -57,24 +57,20 @@
     @foreach ($surat_jalans as $surat_jalan)
         <table>
             <tr>
-                <td>Tanggal Surat Jalan</td>
+                <td>Surat Jalan</td>
                 <td>:</td>
-                <td>{{ $surat_jalan->tanggal_str }}</td>
+                <td>{{ $surat_jalan->no_surat_jalan . ' - ' . $surat_jalan->tanggal_str }}</td>
             </tr>
-            <tr>
-                <td>Nomor Surat Jalan</td>
-                <td>:</td>
-                <td>{{ $surat_jalan->no_surat_jalan }}</td>
-            </tr>
-            <tr>
+            {{-- <tr>
                 <td>Customer/Pelanggan</td>
                 <td>:</td>
                 <td>{{ $surat_jalan->customer_nama }}, {{ $surat_jalan->customer_alamat }}</td>
-            </tr>
+            </tr> --}}
             <tr>
-                <td>Lokasi Penyewaan</td>
+                <td>Penyewaan</td>
                 <td>:</td>
-                <td>{{ $surat_jalan->penyewaan_kepada }}, {{ $surat_jalan->penyewaan_lokasi }}</td>
+                <td>{{ $surat_jalan->penyewaan_number }} - {{ $surat_jalan->penyewaan_kepada }},
+                    {{ $surat_jalan->penyewaan_lokasi }}</td>
             </tr>
         </table>
 

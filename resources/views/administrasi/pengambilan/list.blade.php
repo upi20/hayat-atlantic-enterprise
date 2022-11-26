@@ -31,8 +31,8 @@
                     <div class="col-md-9">
                         <p><i class="fas fa-user"></i> {{ $model->kepada }} </p>
                         <p><i class="fas fa-map-marker-alt"></i> {{ $model->lokasi }} </p>
-                        <p><i class="fab fa-whatsapp"></i> {{ $customer->no_whatsapp }}
-                            <i class="fas fa-phone-alt ms-3"></i> {{ $customer->no_telepon }}
+                        <p><i class="fab fa-whatsapp"></i> {{ is_null($customer) ? '' : $customer->no_whatsapp }}
+                            <i class="fas fa-phone-alt ms-3"></i> {{ is_null($customer) ? '' : $customer->no_telepon }}
                         </p>
 
                     </div>

@@ -253,7 +253,7 @@
                         data: 'customer_nama',
                         name: 'customer_nama',
                         render(data, type, full, meta) {
-                            return `<span data-toggle="tooltip" title="${data??'Customer tidak terdaftar'}">${data??''}</span><br>
+                            return `<span data-toggle="tooltip" title="${data??'Customer tidak terdaftar'}">${data??'Data customer sudah dihapus'}</span><br>
                             <small data-toggle="tooltip" title="${full.lokasi}">${full.lokasi}</small>`;
                         },
                         className: 'to-link'
@@ -297,6 +297,9 @@
                     {
                         data: 'tanggal_order_str',
                         name: 'tanggal_order_str',
+                        render(data, type, full, meta) {
+                            return `${data}<br>${full.number}`;
+                        },
                         className: 'text-nowrap to-link'
                     },
                     {
@@ -356,7 +359,7 @@
                 ],
                 order: [
                     [2, 'asc'],
-                    [8, 'asc']
+                    [3, 'desc']
                 ],
                 language: {
                     url: datatable_indonesia_language_url

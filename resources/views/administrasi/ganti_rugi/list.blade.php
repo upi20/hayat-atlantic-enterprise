@@ -53,7 +53,7 @@
                     <tr>
                         <th>No</th>
                         <th>Customer</th>
-                        <th>Barang</th>
+                        <th>Penyewaan</th>
                         <th>Nominal</th>
                         <th>Dibayar</th>
                         <th>Sisa</th>
@@ -129,16 +129,19 @@
                         name: 'customer_nama',
                         render(data, type, full, meta) {
                             return `
-                            ${data}<br>
-                            <small><i class="fas fa-phone-alt me-1"></i> ${full.customer_no_telepon}</small><br>
-                            <small><i class="fab fa-whatsapp me-1"></i> ${full.customer_no_whatsapp}</small><br>`;
+                            ${data??full.nama}<br>
+                            ${full.customer_no_telepon ?`<small><i class="fas fa-phone-alt me-1"></i> ${full.customer_no_telepon}</small><br>`:''}
+                            ${full.customer_no_whatsapp ?`<small><i class="fab fa-whatsapp me-1"></i> ${full.customer_no_whatsapp}</small><br>`:''}`;
                         },
                         className: 'text-nowrap to-link'
                     },
                     {
                         data: 'jumlah_barang',
                         name: 'jumlah_barang',
-                        className: 'text-nowrap text-right to-link'
+                        render(data, type, full, meta) {
+                            return `${full.penyewaan_number}<br>${data} Barang`;
+                        },
+                        className: 'text-nowrap to-link'
                     },
                     {
                         data: 'nominal',

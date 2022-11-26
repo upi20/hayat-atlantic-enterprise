@@ -129,7 +129,7 @@ $page_attr_title = ($page_attr->title == '' ? '' : $page_attr->title . ' | ') . 
                         @yield('content')
                         <div class="text-center">
                             <a class="btn btn-secondary mt-5 mb-5" href="{{ url('') }}"> <i
-                                    class="fa fa-long-arrow-left"></i> Back to Home
+                                    class="fa fa-long-arrow-left"></i> Kembali ke halaman utama
                             </a>
                         </div>
                     </div>

@@ -12,4 +12,9 @@ class PenyewaanPembayaran extends Model
     protected $primaryKey = 'id';
     protected $table = 'penyewaan_pembayaran';
     const tableName = 'penyewaan_pembayaran';
+
+    public function faktur()
+    {
+        return $this->hasOne(Faktur::class, 'pembayaran', 'id');
+    }
 }

@@ -114,7 +114,7 @@
                         data: 'nama',
                         name: 'nama',
                         render(data, type, full, meta) {
-                            return `<span data-toggle="tooltip" title="${data}">${data}</span><br>
+                            return `<span data-toggle="tooltip" title="${data??''}">${data??''}</span><br>
                             <small data-toggle="tooltip" title="${full.keterangan}">${full.keterangan}</small>`;
                         },
                     },

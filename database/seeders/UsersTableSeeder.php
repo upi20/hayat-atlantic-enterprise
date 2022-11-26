@@ -21,7 +21,7 @@ class UsersTableSeeder extends Seeder
         \DB::table('users')->insert(array (
             0 => 
             array (
-                'id' => '1',
+                'id' => 1,
                 'name' => 'Super Admin',
                 'email' => 'superadmin@gmail.com',
                 'nik' => '0000000',
@@ -34,7 +34,7 @@ class UsersTableSeeder extends Seeder
                 'remember_token' => NULL,
                 'current_team_id' => NULL,
                 'profile_photo_path' => NULL,
-                'active' => '1',
+                'active' => 1,
                 'created_at' => NULL,
                 'updated_at' => '2022-09-15 08:38:55',
                 'updated_by' => NULL,
@@ -42,7 +42,7 @@ class UsersTableSeeder extends Seeder
             ),
             1 => 
             array (
-                'id' => '2',
+                'id' => 2,
                 'name' => 'Rusdi Salim',
                 'email' => NULL,
                 'nik' => '0104001',
@@ -55,7 +55,7 @@ class UsersTableSeeder extends Seeder
                 'remember_token' => NULL,
                 'current_team_id' => NULL,
                 'profile_photo_path' => NULL,
-                'active' => '1',
+                'active' => 1,
                 'created_at' => '2022-09-15 11:53:04',
                 'updated_at' => '2022-09-15 11:53:04',
                 'updated_by' => NULL,
@@ -63,7 +63,7 @@ class UsersTableSeeder extends Seeder
             ),
             2 => 
             array (
-                'id' => '3',
+                'id' => 3,
                 'name' => 'M Farhan',
                 'email' => NULL,
                 'nik' => '0203001',
@@ -76,7 +76,7 @@ class UsersTableSeeder extends Seeder
                 'remember_token' => NULL,
                 'current_team_id' => NULL,
                 'profile_photo_path' => NULL,
-                'active' => '1',
+                'active' => 1,
                 'created_at' => '2022-09-15 11:53:49',
                 'updated_at' => '2022-09-15 11:53:49',
                 'updated_by' => NULL,
@@ -84,7 +84,7 @@ class UsersTableSeeder extends Seeder
             ),
             3 => 
             array (
-                'id' => '4',
+                'id' => 4,
                 'name' => 'Nafis Bacthir',
                 'email' => NULL,
                 'nik' => '0302001',
@@ -97,7 +97,7 @@ class UsersTableSeeder extends Seeder
                 'remember_token' => NULL,
                 'current_team_id' => NULL,
                 'profile_photo_path' => NULL,
-                'active' => '1',
+                'active' => 1,
                 'created_at' => '2022-09-15 11:54:33',
                 'updated_at' => '2022-09-15 11:54:33',
                 'updated_by' => NULL,
@@ -105,28 +105,28 @@ class UsersTableSeeder extends Seeder
             ),
             4 => 
             array (
-                'id' => '5',
+                'id' => 5,
                 'name' => 'Yuli Yanti',
                 'email' => NULL,
                 'nik' => '0401001',
                 'jenis_kelamin' => 'p',
                 'email_verified_at' => NULL,
-                'password' => '$2y$10$K1TY3Q/bHS3JHAgkVAu8AOdAeF/n06Fscrw4ZovdJR4GwxABP2zdW',
+                'password' => '$2y$10$81OF9tNz6NP/uF9CgyVP/eSCkpthd7TI9smzoAog8d3Cno6Uq5BCu',
                 'two_factor_secret' => NULL,
                 'two_factor_recovery_codes' => NULL,
                 'two_factor_confirmed_at' => NULL,
                 'remember_token' => NULL,
                 'current_team_id' => NULL,
                 'profile_photo_path' => NULL,
-                'active' => '1',
+                'active' => 1,
                 'created_at' => '2022-09-15 11:55:37',
-                'updated_at' => '2022-09-15 11:55:37',
+                'updated_at' => '2022-11-27 03:23:00',
                 'updated_by' => NULL,
                 'created_by' => NULL,
             ),
             5 => 
             array (
-                'id' => '6',
+                'id' => 6,
                 'name' => 'Budiman',
                 'email' => NULL,
                 'nik' => '0501001',
@@ -139,7 +139,7 @@ class UsersTableSeeder extends Seeder
                 'remember_token' => NULL,
                 'current_team_id' => NULL,
                 'profile_photo_path' => NULL,
-                'active' => '1',
+                'active' => 1,
                 'created_at' => '2022-09-15 11:57:55',
                 'updated_at' => '2022-09-15 11:57:55',
                 'updated_by' => NULL,
@@ -147,7 +147,7 @@ class UsersTableSeeder extends Seeder
             ),
             6 => 
             array (
-                'id' => '7',
+                'id' => 7,
                 'name' => 'M Sidik',
                 'email' => NULL,
                 'nik' => '0501002',
@@ -160,7 +160,7 @@ class UsersTableSeeder extends Seeder
                 'remember_token' => NULL,
                 'current_team_id' => NULL,
                 'profile_photo_path' => NULL,
-                'active' => '1',
+                'active' => 1,
                 'created_at' => '2022-09-15 11:58:28',
                 'updated_at' => '2022-09-15 11:58:28',
                 'updated_by' => NULL,
@@ -168,7 +168,7 @@ class UsersTableSeeder extends Seeder
             ),
             7 => 
             array (
-                'id' => '8',
+                'id' => 8,
                 'name' => 'Jamal',
                 'email' => NULL,
                 'nik' => '0502003',
@@ -181,7 +181,7 @@ class UsersTableSeeder extends Seeder
                 'remember_token' => NULL,
                 'current_team_id' => NULL,
                 'profile_photo_path' => NULL,
-                'active' => '1',
+                'active' => 1,
                 'created_at' => '2022-09-15 11:59:22',
                 'updated_at' => '2022-09-15 11:59:22',
                 'updated_by' => NULL,
@@ -189,7 +189,7 @@ class UsersTableSeeder extends Seeder
             ),
             8 => 
             array (
-                'id' => '9',
+                'id' => 9,
                 'name' => 'Rusmin',
                 'email' => NULL,
                 'nik' => '0502004',
@@ -202,7 +202,7 @@ class UsersTableSeeder extends Seeder
                 'remember_token' => NULL,
                 'current_team_id' => NULL,
                 'profile_photo_path' => NULL,
-                'active' => '1',
+                'active' => 1,
                 'created_at' => '2022-09-15 11:59:59',
                 'updated_at' => '2022-09-15 11:59:59',
                 'updated_by' => NULL,
@@ -210,7 +210,7 @@ class UsersTableSeeder extends Seeder
             ),
             9 => 
             array (
-                'id' => '10',
+                'id' => 10,
                 'name' => 'Dikun',
                 'email' => NULL,
                 'nik' => '0502005',
@@ -223,7 +223,7 @@ class UsersTableSeeder extends Seeder
                 'remember_token' => NULL,
                 'current_team_id' => NULL,
                 'profile_photo_path' => NULL,
-                'active' => '1',
+                'active' => 1,
                 'created_at' => '2022-09-15 12:00:57',
                 'updated_at' => '2022-09-15 12:00:57',
                 'updated_by' => NULL,
@@ -231,7 +231,7 @@ class UsersTableSeeder extends Seeder
             ),
             10 => 
             array (
-                'id' => '11',
+                'id' => 11,
                 'name' => 'Rustandi',
                 'email' => NULL,
                 'nik' => '0502006',
@@ -244,7 +244,7 @@ class UsersTableSeeder extends Seeder
                 'remember_token' => NULL,
                 'current_team_id' => NULL,
                 'profile_photo_path' => NULL,
-                'active' => '1',
+                'active' => 1,
                 'created_at' => '2022-09-15 12:01:30',
                 'updated_at' => '2022-09-15 12:01:30',
                 'updated_by' => NULL,
@@ -252,7 +252,7 @@ class UsersTableSeeder extends Seeder
             ),
             11 => 
             array (
-                'id' => '12',
+                'id' => 12,
                 'name' => 'Dadan',
                 'email' => NULL,
                 'nik' => '0502007',
@@ -265,7 +265,7 @@ class UsersTableSeeder extends Seeder
                 'remember_token' => NULL,
                 'current_team_id' => NULL,
                 'profile_photo_path' => NULL,
-                'active' => '1',
+                'active' => 1,
                 'created_at' => '2022-09-15 12:02:08',
                 'updated_at' => '2022-09-15 12:02:08',
                 'updated_by' => NULL,
@@ -273,7 +273,7 @@ class UsersTableSeeder extends Seeder
             ),
             12 => 
             array (
-                'id' => '13',
+                'id' => 13,
                 'name' => 'Turiman',
                 'email' => NULL,
                 'nik' => '0502008',
@@ -286,7 +286,7 @@ class UsersTableSeeder extends Seeder
                 'remember_token' => NULL,
                 'current_team_id' => NULL,
                 'profile_photo_path' => NULL,
-                'active' => '1',
+                'active' => 1,
                 'created_at' => '2022-09-15 12:02:42',
                 'updated_at' => '2022-09-15 12:02:42',
                 'updated_by' => NULL,
@@ -294,7 +294,7 @@ class UsersTableSeeder extends Seeder
             ),
             13 => 
             array (
-                'id' => '14',
+                'id' => 14,
                 'name' => 'Gilang Sutani',
                 'email' => NULL,
                 'nik' => '0601001',
@@ -307,7 +307,7 @@ class UsersTableSeeder extends Seeder
                 'remember_token' => NULL,
                 'current_team_id' => NULL,
                 'profile_photo_path' => NULL,
-                'active' => '1',
+                'active' => 1,
                 'created_at' => '2022-09-15 12:03:11',
                 'updated_at' => '2022-09-15 12:03:11',
                 'updated_by' => NULL,
@@ -315,7 +315,7 @@ class UsersTableSeeder extends Seeder
             ),
             14 => 
             array (
-                'id' => '15',
+                'id' => 15,
                 'name' => 'Aep',
                 'email' => NULL,
                 'nik' => '0602002',
@@ -328,7 +328,7 @@ class UsersTableSeeder extends Seeder
                 'remember_token' => NULL,
                 'current_team_id' => NULL,
                 'profile_photo_path' => NULL,
-                'active' => '1',
+                'active' => 1,
                 'created_at' => '2022-09-15 12:03:43',
                 'updated_at' => '2022-11-11 03:32:47',
                 'updated_by' => NULL,
@@ -336,7 +336,7 @@ class UsersTableSeeder extends Seeder
             ),
             15 => 
             array (
-                'id' => '16',
+                'id' => 16,
                 'name' => 'Jabkan Muttaqien',
                 'email' => NULL,
                 'nik' => '0602003',
@@ -349,7 +349,7 @@ class UsersTableSeeder extends Seeder
                 'remember_token' => NULL,
                 'current_team_id' => NULL,
                 'profile_photo_path' => NULL,
-                'active' => '1',
+                'active' => 1,
                 'created_at' => '2022-09-15 12:04:11',
                 'updated_at' => '2022-09-15 12:04:11',
                 'updated_by' => NULL,
@@ -357,7 +357,7 @@ class UsersTableSeeder extends Seeder
             ),
             16 => 
             array (
-                'id' => '17',
+                'id' => 17,
                 'name' => 'Abdul Farhan',
                 'email' => NULL,
                 'nik' => '0602004',
@@ -370,10 +370,10 @@ class UsersTableSeeder extends Seeder
                 'remember_token' => NULL,
                 'current_team_id' => NULL,
                 'profile_photo_path' => NULL,
-                'active' => '0',
+                'active' => 0,
                 'created_at' => '2022-09-15 12:04:49',
                 'updated_at' => '2022-10-22 08:52:52',
-                'updated_by' => '1',
+                'updated_by' => 1,
                 'created_by' => NULL,
             ),
         ));

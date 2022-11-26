@@ -16,7 +16,7 @@ class Penyewaan extends Model
 
     public function barangs()
     {
-        return $this->hasMany(PenyewaanBarang::class, 'penyewaan_id', 'id');
+        return $this->hasMany(PenyewaanBarang::class, 'penyewaan', 'id');
     }
 
     public function getCustomer()

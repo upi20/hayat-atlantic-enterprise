@@ -19,12 +19,12 @@
 
             // data customer
             data_customer.html(` <div class="col-md-6">
-                            <p><i class="fas fa-user me-2"></i>${data.customer}</p>
-                            <p><i class="fas fa-map-marker-alt me-2"></i>${data.customer_alamat}</p>
+                            <p><i class="fas fa-user me-2"></i>${data.customer?? 'Data customer sudah dihapus'}</p>
+                            <p><i class="fas fa-map-marker-alt me-2"></i>${data.customer_alamat?? ''}</p>
                         </div>
                         <div class="col-md-6">
-                            <p><i class="fas fa-phone me-2"></i> ${data.customer_no_telepon}</p>
-                            <p><i class="fab fa-whatsapp me-2"></i> ${data.customer_no_whatsapp}</p>
+                            <p><i class="fas fa-phone me-2"></i> ${data.customer_no_telepon?? ''}</p>
+                            <p><i class="fab fa-whatsapp me-2"></i> ${data.customer_no_whatsapp?? ''}</p>
                         </div> `);
 
             // data penyewaan

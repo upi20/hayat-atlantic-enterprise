@@ -107,6 +107,11 @@ class PengambilanBarangController extends Controller
         $this->query[$c_penyewaan_id] = "$t_penyewaan.id";
         $this->query["{$c_penyewaan_id}_alias"] = $c_penyewaan_id;
 
+        // number
+        $c_penyewaan_number = 'penyewaan_number';
+        $this->query[$c_penyewaan_number] = "$t_penyewaan.number";
+        $this->query["{$c_penyewaan_number}_alias"] = $c_penyewaan_number;
+
         $model_filter = [
             $c_tanggal,
             $c_customer,
@@ -114,7 +119,8 @@ class PengambilanBarangController extends Controller
             $c_kepada,
             $c_lokasi,
             $c_tanggal_kembali,
-            $c_penyewaan_id
+            $c_penyewaan_id,
+            $c_penyewaan_number,
         ];
 
         $to_db_raw = array_map(function ($a) use ($sraa) {

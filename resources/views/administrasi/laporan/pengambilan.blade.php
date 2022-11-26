@@ -168,7 +168,7 @@
                         data: 'penyewaan_kepada',
                         name: 'penyewaan_kepada',
                         render(data, type, full, meta) {
-                            return `<span data-toggle="tooltip" title="${data}">${data}</span><br>
+                            return `${full.penyewaan_number} | <span data-toggle="tooltip" title="${data}">${data}</span><br>
                             <small data-toggle="tooltip" title="${full.penyewaan_lokasi}">${full.penyewaan_lokasi}</small>`;
                         },
                     },

@@ -56,25 +56,29 @@
 
     @foreach ($surat_jalans as $surat_jalan)
         <table>
-            <tr>
+            {{-- <tr>
                 <td>Tanggal</td>
                 <td>:</td>
                 <td>Kirim {{ $surat_jalan->tanggal_str }} | Kembali {{ $surat_jalan->tanggal_kembali_str }}</td>
-            </tr>
+            </tr> --}}
             <tr>
-                <td>Nomor Surat Jalan</td>
+                <td>Surat Jalan</td>
                 <td>:</td>
-                <td>{{ $surat_jalan->no_surat_jalan }}</td>
+                <td>{{ $surat_jalan->no_surat_jalan }} -
+                    Kirim {{ $surat_jalan->tanggal_str }} |
+                    Kembali {{ $surat_jalan->tanggal_kembali_str }}
+                </td>
             </tr>
-            <tr>
+            {{-- <tr>
                 <td>Customer/Pelanggan</td>
                 <td>:</td>
                 <td>{{ $surat_jalan->customer_nama }}, {{ $surat_jalan->customer_alamat }}</td>
-            </tr>
+            </tr> --}}
             <tr>
-                <td>Lokasi Penyewaan</td>
+                <td>Penyewaan</td>
                 <td>:</td>
-                <td>{{ $surat_jalan->penyewaan_kepada }}, {{ $surat_jalan->penyewaan_lokasi }}</td>
+                <td>{{ $surat_jalan->penyewaan_number }} - {{ $surat_jalan->penyewaan_kepada }},
+                    {{ $surat_jalan->penyewaan_lokasi }}</td>
             </tr>
         </table>
 

@@ -55,10 +55,9 @@
                     <div class="col-md-9">
                         <p><i class="fas fa-user"></i> {{ $model->kepada }} </p>
                         <p><i class="fas fa-map-marker-alt"></i> {{ $model->lokasi }} </p>
-                        <p><i class="fab fa-whatsapp"></i> {{ $customer->no_whatsapp }}
-                            <i class="fas fa-phone-alt ms-3"></i> {{ $customer->no_telepon }}
+                        <p><i class="fab fa-whatsapp"></i> {{ is_null($customer) ? '' : $customer->no_whatsapp }}
+                            <i class="fas fa-phone-alt ms-3"></i> {{ is_null($customer) ? '' : $customer->no_telepon }}
                         </p>
-
                     </div>
                 </div>
                 <div class=" row mb-4">
@@ -133,10 +132,12 @@
                                             onchange="refresh_total('{{ $barang->id }}')"
                                             onclick="refresh_total('{{ $barang->id }}')" type="number" min="0"
                                             max="{{ $barang->qty }}"
-                                            value="{{ $surat_jalan->status == 3 ? $barang->pengembalian_hilang : 0 }}"
+                                            value="{{ $surat_jalan->status == 3 ? $barang->pengembalian_rusak : 0 }}"
                                             class="form-control" style="max-width: 100px"
-                                            name="rusak[{{ $barang->id }}]" id="rusak-{{ $barang->id }}"
+                                            name="hilang[{{ $barang->id }}]" id="hilang-{{ $barang->id }}"
                                             required="" />
+                                        <input type="hidden" id="disewa-{{ $barang->id }}"
+                                            value="{{ $barang->qty }}" />
                                         <div class="input-group-text">{{ $barang->barang_satuan }}</div>
                                     </div>
                                 </td>
@@ -146,12 +147,10 @@
                                             onchange="refresh_total('{{ $barang->id }}')"
                                             onclick="refresh_total('{{ $barang->id }}')" type="number" min="0"
                                             max="{{ $barang->qty }}"
-                                            value="{{ $surat_jalan->status == 3 ? $barang->pengembalian_rusak : 0 }}"
+                                            value="{{ $surat_jalan->status == 3 ? $barang->pengembalian_hilang : 0 }}"
                                             class="form-control" style="max-width: 100px"
-                                            name="hilang[{{ $barang->id }}]" id="hilang-{{ $barang->id }}"
+                                            name="rusak[{{ $barang->id }}]" id="rusak-{{ $barang->id }}"
                                             required="" />
-                                        <input type="hidden" id="disewa-{{ $barang->id }}"
-                                            value="{{ $barang->qty }}" />
                                         <div class="input-group-text">{{ $barang->barang_satuan }}</div>
                                     </div>
                                 </td>

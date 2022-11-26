@@ -3,11 +3,18 @@
 namespace App\Http\Controllers\Administrasi;
 
 use App\Http\Controllers\Controller;
+use App\Models\Barang\HabisPakai;
+use App\Models\Barang\HabisPakai\Pengadaan as HabisPakaiPengadaan;
+use App\Models\Barang\HabisPakai\PengadaanList as HabisPakaiPengadaanList;
+use App\Models\Barang\HabisPakai\Pengurangan as HabisPakaiPengurangan;
+use App\Models\Barang\HabisPakai\PenguranganList as HabisPakaiPenguranganList;
 use App\Models\Barang\Jenis;
 use App\Models\Barang\Satuan;
 use App\Models\Barang\Sewa;
 use App\Models\Barang\Sewa\Pengadaan;
 use App\Models\Barang\Sewa\PengadaanList;
+use App\Models\Barang\Sewa\Pengurangan;
+use App\Models\Barang\Sewa\PenguranganList;
 use App\Models\Customer;
 use App\Models\Faktur;
 use App\Models\GantiRugi;
@@ -309,16 +316,161 @@ class PenyewaanController extends Controller
     public function delete(Penyewaan $model): mixed
     {
         try {
-            // penyewaan bisa di hapus jika status nya sama dengan 1
-            if ($model->status == 1 || $model->status == 9) {
-                $model->delete();
-                return response()->json($model);
-            } else {
-                return response()->json([
-                    'message' => 'Peyewaan tidak dapat dihapus karena faktur sudah dibuat. silahkan batalkan saja.',
-                    'error' => '',
-                ], 500);
+            DB::beginTransaction();
+
+            // data pembayaran ========================================================================================
+            $pembayarans = PenyewaanPembayaran::where('penyewaan', $model->id)->get();
+            foreach ($pembayarans as $pembayaran) {
+                $faktur = $pembayaran->faktur;
+                $faktur_barangs = $faktur->barangs;
+
+                // delete faktur barang
+                foreach ($faktur_barangs as $barang) {
+                    $barang->delete();
+                }
+
+                // delete faktur
+                $faktur->delete();
             }
+            // delete pembayaran
+            foreach ($pembayarans as $pembayaran) {
+                $pembayaran->delete();
+            }
+
+            // Data surat jalan =======================================================================================
+            $surat_jalan = SuratJalan::where('penyewaan', $model->id)->first();
+            $surat_jalan_barang_sewa = $surat_jalan->barang_sewas;
+            $surat_jalan_barang_habis_pakai = $surat_jalan->barang_habis_pakais;
+
+            // delete surat jalan barang
+            foreach ($surat_jalan_barang_sewa as $barang_sewa) {
+                $barang_data = $barang_sewa->barang_data;
+                if ($surat_jalan->status >= 4) {
+                    // status 4 Pengembalian Selesai berarti barang rusak atau hilang sudah di simpan ke stok
+                    // ubah barang rusak dan barang hilang
+
+                    // set barang rusak
+                    $barang_data->qty_rusak = $barang_data->qty_rusak - $barang_sewa->pengembalian_rusak;
+
+                    // set barang rusak di qty ada
+                    $barang_data->qty_ada = $barang_data->qty_ada + $barang_sewa->pengembalian_rusak;
+                    $barang_data->save();
+                }
+                // status 2 Barang Dikirim, 3 Pengembalian Disimpan
+                else if ($surat_jalan->status >= 2 && $surat_jalan->status < 4) {
+                    // ubah barang rusak dan barang hilang
+                    // set barang disewa
+                    $barang_data->qty_disewakan = $barang_data->qty_disewakan - $barang_sewa->qty;
+
+                    // set barang ada
+                    $barang_data->qty_ada = $barang_data->qty_ada + $barang_sewa->qty;
+                    $barang_data->save();
+                }
+
+                $barang_sewa->delete();
+            }
+
+            // delete surat jalan habis pakai
+            foreach ($surat_jalan_barang_habis_pakai as $barang_habis_pakai) {
+                $barang_habis_pakai->delete();
+            }
+
+            // delete surat jalan
+            $surat_jalan->delete();
+
+            // Data ganti rugi ========================================================================================
+            $ganti_rugi = GantiRugi::where('penyewaan_id', $model->id)->first();
+            if ($ganti_rugi) {
+                $ganti_rugi_list_barangs = $ganti_rugi->list_barang ?? [];
+                $ganti_rugi_pembayarans = $ganti_rugi->pembayaran ?? [];
+                $ganti_rugi_ganti_barangs = $ganti_rugi->ganti_barangs ?? [];
+
+                // delete ganti list barang
+                foreach ($ganti_rugi_list_barangs as $barang) {
+                    $barang->delete();
+                }
+
+                // delete ganti pembayaran
+                foreach ($ganti_rugi_pembayarans as $pembayaran) {
+                    $pembayaran->delete();
+                }
+
+                // delete ganti barang
+                foreach ($ganti_rugi_ganti_barangs as $barang) {
+                    $barang->delete();
+                }
+
+                // delete ganti rugi
+                $ganti_rugi->delete();
+            }
+
+            // Sinkron data barang ====================================================================================
+            // delete pengadaan barang (sinkron dengan data barang) sewa
+            $pengadaans = Pengadaan::where('penyewaan', $model->id)->get();
+            foreach ($pengadaans as $pengadaan) {
+                $pengadaan_barang_sewa = PengadaanList::where('pengadaan', $pengadaan->id)->get();
+                foreach ($pengadaan_barang_sewa as $pengadaan) {
+                    $barang = Sewa::findOrFail($pengadaan->barang);
+                    $barang->qty_total = $barang->qty_total - $pengadaan->qty;
+                    $barang->qty_ada = $barang->qty_ada - $pengadaan->qty;
+                    $barang->save();
+                    $pengadaan->delete();
+                }
+                // delete pengadaan
+                $pengadaan->delete();
+            }
+
+            // delete pengurangan barang (sinkron dengan data barang) sewa
+            $pengurangans = Pengurangan::where('penyewaan', $model->id)->get();
+            foreach ($pengurangans as $pengurangan) {
+                $pengurangan_barang_sewa = PenguranganList::where('pengurangan', $pengurangan->id)->get();
+                foreach ($pengurangan_barang_sewa as $pengurangan) {
+                    $barang = Sewa::findOrFail($pengurangan->barang);
+                    $barang->qty_total = $barang->qty_total + $pengurangan->qty;
+                    $barang->qty_ada = $barang->qty_ada + $pengurangan->qty;
+                    $barang->save();
+                    $pengurangan->delete();
+                }
+                // delete pengurangan
+                $pengurangan->delete();
+            }
+
+            // delete pengurangan barang (sinkron dengan data barang) habis pakai
+            $pengurangans = HabisPakaiPengurangan::where('penyewaan', $model->id)->get();
+            foreach ($pengurangans as $pengurangan) {
+                $pengurangan_barang_sewa = HabisPakaiPenguranganList::where('pengurangan', $pengurangan->id)->get();
+                foreach ($pengurangan_barang_sewa as $pengurangan) {
+                    $barang = HabisPakai::findOrFail($pengurangan->barang);
+                    $barang->qty = $barang->qty + $pengurangan->qty;
+                    $barang->save();
+                    $pengurangan->delete();
+                }
+                // delete pengurangan
+                $pengurangan->delete();
+            }
+
+            // delete penyewaan barang
+            $penyewaan_barangs = $model->barangs;
+            foreach ($penyewaan_barangs as $barang) {
+                $barang->delete();
+            }
+
+            // delete penyewaan
+            $model->delete();
+            DB::commit();
+            return response()->json($model);
+
+            // old ====================================================================================================
+            // penyewaan bisa di hapus jika status nya sama dengan 1
+            // if ($model->status == 1 || $model->status == 9) {
+            //     $model->delete();
+            //     return response()->json($model);
+            // } else {
+            //     return response()->json([
+            //         'message' => 'Peyewaan tidak dapat dihapus karena faktur sudah dibuat. silahkan batalkan saja.',
+            //         'error' => '',
+            //     ], 500);
+            // }
         } catch (ValidationException $error) {
             return response()->json([
                 'message' => 'Something went wrong',

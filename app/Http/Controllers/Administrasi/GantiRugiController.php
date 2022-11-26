@@ -11,6 +11,7 @@ use App\Models\GantiRugi;
 use App\Models\GantiRugi\GantiListBarang;
 use App\Models\GantiRugi\GantiRugiBarang;
 use App\Models\GantiRugi\GantiRugiPembayaran;
+use App\Models\Penyewaan;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -60,6 +61,7 @@ class GantiRugiController extends Controller
         $t_user = User::tableName;
         $t_customer = Customer::tableName;
         $table = GantiRugi::tableName;
+        $t_penyewaan = Penyewaan::tableName;
 
         // cusotm query
         // ========================================================================================================
@@ -91,6 +93,11 @@ class GantiRugiController extends Controller
         $t_updated_by = 'c';
         $this->query[$c_updated_by] = "$t_updated_by.name";
         $this->query["{$c_updated_by}_alias"] = $c_updated_by;
+
+        // penyewaan_number
+        $c_penyewaan_number = 'penyewaan_number';
+        $this->query[$c_penyewaan_number] = "$t_penyewaan.number";
+        $this->query["{$c_penyewaan_number}_alias"] = $c_penyewaan_number;
         // ========================================================================================================
 
 
@@ -106,6 +113,7 @@ class GantiRugiController extends Controller
             $c_updated_str,
             $c_created_by,
             $c_updated_by,
+            $c_penyewaan_number
         ];
 
         $to_db_raw = array_map(function ($a) use ($sraa) {
@@ -125,7 +133,8 @@ class GantiRugiController extends Controller
         ], $to_db_raw))
             ->leftJoin($t_customer, "$t_customer.id", '=', "$table.customer")
             ->leftJoin("$t_user as $t_created_by", "$t_created_by.id", '=', "$table.created_by")
-            ->leftJoin("$t_user as $t_updated_by", "$t_updated_by.id", '=', "$table.updated_by");
+            ->leftJoin("$t_user as $t_updated_by", "$t_updated_by.id", '=', "$table.updated_by")
+            ->leftJoin($t_penyewaan, "$t_penyewaan.id", '=', "$table.penyewaan_id");
 
         // Filter =====================================================================================================
         // filter check
@@ -159,7 +168,7 @@ class GantiRugiController extends Controller
         // search
         // ========================================================================================================
         $query_filter = $this->query;
-        $datatable->filter(function ($query) use ($model_filter, $query_filter, $table, $t_customer) {
+        $datatable->filter(function ($query) use ($model_filter, $query_filter, $table, $t_customer, $t_penyewaan) {
             $search = request('search');
             $search = isset($search['value']) ? $search['value'] : null;
             if ((is_null($search) || $search == '') && count($model_filter) > 0) return false;
@@ -184,6 +193,7 @@ class GantiRugiController extends Controller
                 "$t_customer.alamat",
                 "$t_customer.no_telepon",
                 "$t_customer.no_whatsapp",
+                "$t_penyewaan.number",
             ];
 
             $search_arr = array_merge($model_filter, $search_add);

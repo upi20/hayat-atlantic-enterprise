@@ -150,9 +150,7 @@ class PengembalianBarangController extends Controller
 
             // update list barang
             foreach ($request->baik as $id => $qty) {
-                $barang = SuratJalanBarang::selectRaw("$t_surat_jalan_barang.* ,$t_barang.nama as barang_nama")
-                    ->join($t_barang, "$t_barang.id", "=", "$t_surat_jalan_barang.barang")
-                    ->where("$t_surat_jalan_barang.id", $id)->first();
+                $barang = SuratJalanBarang::find($id);
 
                 $baik = $qty;
                 $hilang = $request->hilang[$id];
@@ -161,8 +159,9 @@ class PengembalianBarangController extends Controller
                 $total = $baik + $hilang + $rusak;
 
                 if ($disewa != $total) {
+                    $barang_data = $barang->barang_data;
                     return response()->json([
-                        'message' => "Total pengembalian $barang->barang_nama lebih/kurang dari penyewaan. Mohon periksa kembali",
+                        'message' => "Total pengembalian $barang_data->nama lebih/kurang dari penyewaan. Mohon periksa kembali",
                         'error' => null,
                     ], 401);
                 }

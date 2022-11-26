@@ -12,4 +12,9 @@ class Faktur extends Model
     protected $primaryKey = 'id';
     protected $table = 'faktur';
     const tableName = 'faktur';
+
+    public function barangs()
+    {
+        return $this->hasMany(FakturBarang::class, 'faktur', 'id');
+    }
 }

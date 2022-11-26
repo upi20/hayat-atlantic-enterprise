@@ -21,7 +21,7 @@ class PRolesTableSeeder extends Seeder
         \DB::table('p_roles')->insert(array (
             0 => 
             array (
-                'id' => '1',
+                'id' => 1,
                 'name' => 'SuperAdmin',
                 'guard_name' => 'web',
                 'created_at' => '2022-08-04 16:05:41',
@@ -31,17 +31,17 @@ class PRolesTableSeeder extends Seeder
             ),
             1 => 
             array (
-                'id' => '2',
+                'id' => 2,
                 'name' => 'Direktur',
                 'guard_name' => 'web',
                 'created_at' => '2022-09-15 08:24:00',
                 'updated_at' => '2022-09-18 21:05:37',
-                'updated_by' => '5',
+                'updated_by' => 5,
                 'created_by' => NULL,
             ),
             2 => 
             array (
-                'id' => '3',
+                'id' => 3,
                 'name' => 'Keuangan',
                 'guard_name' => 'web',
                 'created_at' => '2022-09-15 08:25:40',
@@ -51,7 +51,7 @@ class PRolesTableSeeder extends Seeder
             ),
             3 => 
             array (
-                'id' => '4',
+                'id' => 4,
                 'name' => 'Human Resource Development',
                 'guard_name' => 'web',
                 'created_at' => '2022-09-15 08:25:50',
@@ -61,27 +61,27 @@ class PRolesTableSeeder extends Seeder
             ),
             4 => 
             array (
-                'id' => '5',
+                'id' => 5,
                 'name' => 'Administrasi',
                 'guard_name' => 'web',
                 'created_at' => '2022-09-15 08:25:59',
                 'updated_at' => '2022-09-18 21:01:24',
-                'updated_by' => '1',
+                'updated_by' => 1,
                 'created_by' => NULL,
             ),
             5 => 
             array (
-                'id' => '6',
+                'id' => 6,
                 'name' => 'General Manager',
                 'guard_name' => 'web',
                 'created_at' => '2022-09-15 08:27:03',
                 'updated_at' => '2022-09-18 21:00:07',
-                'updated_by' => '1',
+                'updated_by' => 1,
                 'created_by' => NULL,
             ),
             6 => 
             array (
-                'id' => '7',
+                'id' => 7,
                 'name' => 'Kepala Bagian Warehouse',
                 'guard_name' => 'web',
                 'created_at' => '2022-09-15 08:27:24',
@@ -91,7 +91,7 @@ class PRolesTableSeeder extends Seeder
             ),
             7 => 
             array (
-                'id' => '8',
+                'id' => 8,
                 'name' => 'Warehouse',
                 'guard_name' => 'web',
                 'created_at' => '2022-09-15 08:27:35',
@@ -101,7 +101,7 @@ class PRolesTableSeeder extends Seeder
             ),
             8 => 
             array (
-                'id' => '9',
+                'id' => 9,
                 'name' => 'Kepala Bagian Delivery',
                 'guard_name' => 'web',
                 'created_at' => '2022-09-15 08:27:43',
@@ -111,11 +111,11 @@ class PRolesTableSeeder extends Seeder
             ),
             9 => 
             array (
-                'id' => '10',
-                'name' => 'Delivery',
+                'id' => 10,
+                'name' => 'Dilivery',
                 'guard_name' => 'web',
                 'created_at' => '2022-09-15 08:27:50',
-                'updated_at' => '2022-11-25 16:53:25',
+                'updated_at' => '2022-09-15 08:27:50',
                 'updated_by' => NULL,
                 'created_by' => NULL,
             ),

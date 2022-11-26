@@ -73,7 +73,7 @@
                     <tr>
                         <td>Customer</td>
                         <td>:</td>
-                        <td>{{ $penyewaan->customer_nama }}</td>
+                        <td>{{ $penyewaan->customer_nama ?? 'Data customer sudah dihapus' }}</td>
                     </tr>
                     <tr>
                         {{-- alamat --}}
