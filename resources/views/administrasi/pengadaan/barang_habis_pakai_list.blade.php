@@ -9,7 +9,7 @@
 
     <div class="card">
         <div class="card-header d-md-flex flex-row justify-content-between">
-            <h3 class="card-title">{{ $page_attr['title'] }} Table List</h3>
+            <h3 class="card-title">{{ $page_attr['title'] }}</h3>
             <div>
                 <a href="{{ route(h_prefix(null, 2)) }}" class="btn btn-rounded btn-secondary btn-sm">
                     <i class="fas fa-arrow-left"></i> Kembali

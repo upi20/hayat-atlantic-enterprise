@@ -93,6 +93,8 @@ Route::group(
         $name = "$name.$prefix"; // admin.dashboard
         Route::get('/', 'index')->name($name);
         Route::get('/chart_reciving_order', 'reciving_order')->name("$name.chart_reciving_order");
+        Route::get('/chart_barang_sewa', 'barang_sewa')->name("$name.chart_barang_sewa");
+        Route::get('/chart_barang_hs', 'barang_hs')->name("$name.chart_barang_hs");
         Route::get('/penyewaan_barang_rusak', 'penyewaan_barang_rusak')->name("$name.penyewaan_barang_rusak");
         Route::get('/penyewaan_barang_hilang', 'penyewaan_barang_hilang')->name("$name.penyewaan_barang_hilang");
         Route::get('/penggunaan_bhs', 'penggunaan_bhs')->name("$name.penggunaan_bhs");

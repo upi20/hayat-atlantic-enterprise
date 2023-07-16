@@ -8,64 +8,72 @@
     <!-- ROW OPEN -->
     <div class="row">
         <div class="col-sm-6 col-md-6 col-lg-6 col-xl-3">
-            <div class="card bg-primary img-card box-primary-shadow card-main">
-                <div class="card-body">
-                    <div class="d-flex">
-                        <div class="text-white">
-                            <h2 class="mb-0 number-font">{{ $total->penyewaan }}</h2>
-                            <p class="text-white mb-0">Total Penyewaan </p>
-                        </div>
-                        <div class="ms-auto">
-                            <i class="fas fa-sign-out-alt text-white fs-30 me-2 mt-2"></i>
+            <a href="{{ route('admin.penyewaan') }}">
+                <div class="card bg-primary img-card box-primary-shadow card-main">
+                    <div class="card-body">
+                        <div class="d-flex">
+                            <div class="text-white">
+                                <h2 class="mb-0 number-font">{{ $total->penyewaan }}</h2>
+                                <p class="text-white mb-0">Pesanan</p>
+                            </div>
+                            <div class="ms-auto">
+                                <i class="fas fa-phone text-white fs-30 me-2 mt-2"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </a>
         </div>
         <div class="col-sm-6 col-md-6 col-lg-6 col-xl-3">
-            <div class="card bg-secondary img-card box-secondary-shadow card-main">
-                <div class="card-body">
-                    <div class="d-flex">
-                        <div class="text-white">
-                            <h2 class="mb-0 number-font">{{ $total->customer }}</h2>
-                            <p class="text-white mb-0">Total Customer </p>
-                        </div>
-                        <div class="ms-auto">
-                            <i class="fas fa-users text-white fs-30 me-2 mt-2"></i>
+            <a href="{{ route('admin.customer') }}">
+                <div class="card bg-secondary img-card box-secondary-shadow card-main">
+                    <div class="card-body">
+                        <div class="d-flex">
+                            <div class="text-white">
+                                <h2 class="mb-0 number-font">{{ $total->customer }}</h2>
+                                <p class="text-white mb-0">Customer</p>
+                            </div>
+                            <div class="ms-auto">
+                                <i class="fas fa-users text-white fs-30 me-2 mt-2"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </a>
         </div>
         <div class="col-sm-6 col-md-6 col-lg-6 col-xl-3">
-            <div class="card bg-success img-card box-success-shadow card-main">
-                <div class="card-body">
-                    <div class="d-flex">
-                        <div class="text-white">
-                            <h2 class="mb-0 number-font">{{ $total->karyawan }}</h2>
-                            <p class="text-white mb-0">Total Karyawan </p>
-                        </div>
-                        <div class="ms-auto">
-                            <i class="fas fa-user text-white fs-30 me-2 mt-2"></i>
+            <a href="{{ route('admin.penyewaan') }}">
+                <div class="card bg-success img-card box-success-shadow card-main">
+                    <div class="card-body">
+                        <div class="d-flex">
+                            <div class="text-white">
+                                <h2 class="mb-0 number-font">{{ $ringkasan_penyewaan->total_penyewaan }}</h2>
+                                <p class="text-white mb-0">Penyewaan</p>
+                            </div>
+                            <div class="ms-auto">
+                                <i class="fas fa-box-open text-white fs-30 me-2 mt-2"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </a>
         </div>
         <div class="col-sm-6 col-md-6 col-lg-6 col-xl-3">
-            <div class="card bg-danger img-card box-danger-shadow card-main">
-                <div class="card-body">
-                    <div class="d-flex">
-                        <div class="text-white">
-                            <h2 class="mb-0 number-font">{{ $total->barang_rusak }}</h2>
-                            <p class="text-white mb-0">Barang Rusak </p>
-                        </div>
-                        <div class="ms-auto">
-                            <i class="fas fa-times text-white fs-30 me-2 mt-2"></i>
+            <a href="{{ route('admin.pembayaran') }}">
+                <div class="card bg-indigo img-card box-indigo-shadow card-main" title="Jumlah semua pembayaran/struk">
+                    <div class="card-body">
+                        <div class="d-flex">
+                            <div class="text-white">
+                                <h2 class="mb-0 number-font">{{ $ringkasan_penyewaan->jml_pembayaran }}</h2>
+                                <p class="text-white mb-0">Pembayaran</p>
+                            </div>
+                            <div class="ms-auto">
+                                <i class="fas fa-dollar-sign text-white fs-30 me-2 mt-2"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </a>
         </div>
     </div>
 
@@ -87,15 +95,17 @@
                     <div class="clearfix row mb-4">
                         <div class="col">
                             <div class="float-start">
-                                <h5 class="mb-0"><i class="fas fa-box-open me-1"></i>
-                                    <strong>Penyewaan</strong>
-                                </h5>
-                                <small class="text-muted">Penyewaan yang belum selesai</small>
+                                <a href="{{ route('admin.penyewaan') }}">
+                                    <h5 class="mb-0"><i class="fas fa-box-open me-1"></i>
+                                        <strong>Penyewaan</strong>
+                                    </h5>
+                                </a>
+                                <small class="text-muted">Total penyewaan hari ini</small>
                             </div>
                         </div>
                         <div class="col">
                             <div class="float-end">
-                                <h4 class="fw-bold mb-0 mt-2 text-blue">{{ $ringkasan_penyewaan->penyewaan }}</h4>
+                                <h4 class="fw-bold mb-0 mt-2 text-blue">{{ $ringkasan_penyewaan->penyewaan_hari_ini }}</h4>
                             </div>
                         </div>
                     </div>
@@ -118,14 +128,15 @@
                         <div class="col">
                             <div class="float-start">
                                 <h5 class="mb-0"><i class="fas fa-sign-out-alt me-1"></i>
-                                    <strong>Pengambilan Barang</strong>
+                                    <strong>Pengiriman Barang Barang</strong>
                                 </h5>
-                                <small class="text-muted">Penyewaan yang barang nya belum dikirim</small>
+                                <small class="text-muted">Barang yang harus dikirim hari ini</small>
                             </div>
                         </div>
                         <div class="col">
                             <div class="float-end">
-                                <h4 class="fw-bold mt-2 mb-0 text-info">{{ $ringkasan_penyewaan->pengambilan }}</h4>
+                                <h4 class="fw-bold mt-2 mb-0 text-info">{{ $ringkasan_penyewaan->pengiriman_hari_ini }}
+                                </h4>
                             </div>
                         </div>
                     </div>
@@ -133,18 +144,19 @@
                         <div class="col">
                             <div class="float-start">
                                 <h5 class="mb-0"><i class="fas fa-sign-in-alt me-1"></i>
-                                    <strong>Pengembalian Barang</strong>
+                                    <strong>Pengambilan Barang</strong>
                                 </h5>
-                                <small class="text-muted">Penyewaan yang barang nya sedang ada di luar</small>
+                                <small class="text-muted">Barang yang harus diambil hari ini</small>
                             </div>
                         </div>
                         <div class="col">
                             <div class="float-end">
-                                <h4 class="fw-bold mt-2 mb-0 text-wrning">{{ $ringkasan_penyewaan->pengembalian }}</h4>
+                                <h4 class="fw-bold mt-2 mb-0 text-wrning">{{ $ringkasan_penyewaan->pengembalian_hari_ini }}
+                                </h4>
                             </div>
                         </div>
                     </div>
-                    <div class="clearfix row mb-4">
+                    {{-- <div class="clearfix row mb-4">
                         <div class="col">
                             <div class="float-start">
                                 <h5 class="mb-0"><i class="fas fa-sync me-1"></i>
@@ -158,7 +170,7 @@
                                 <h4 class="fw-bold mt-2 mb-0 text-danger">{{ $ringkasan_penyewaan->ganti_rugi }}</h4>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>
@@ -168,8 +180,8 @@
             <div class="card">
                 <div class="card-header d-md-flex flex-row justify-content-between">
                     <div>
-                        <h3 class="card-title mb-1">Reciving Order</h3>
-                        <small>Jumlah Reciving Order Per Tahun</small>
+                        <h3 class="card-title mb-1">Penyewaan</h3>
+                        <small>Jumlah Penyewaan Per Bulan</small>
                     </div>
                     <div>
                         <select id="chart-penyewaan-filter" class="form-control form-select form-select-sm select2"
@@ -188,66 +200,16 @@
             </div>
         </div>
 
-        {{-- multiple jumlah barang, qty barang --}}
+        {{-- Barang sewa --}}
         <div class="col-lg-6 col-md-12">
             <div class="card">
                 <div class="card-header d-md-flex flex-row justify-content-between">
                     <div>
-                        <h3 class="card-title mb-1">Penyewaan Barang Rusak</h3>
-                        <small>Jumlah Penyewaan Barang Rusak Per Tahun</small>
+                        <h3 class="card-title mb-1">Barang Sewa</h3>
+                        <small>Barang yang Sering Disewakan </small>
                     </div>
                     <div>
-                        <select id="chart-penyewaan-barang-rusak-filter"
-                            class="form-control form-select form-select-sm select2" data-bs-placeholder="Select Country">
-                            @foreach ($years as $year)
-                                <option value="{{ $year->year }}" {{ $year->year == date('Y') ? 'selected' : '' }}>
-                                    {{ $year->year }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <div id="chart-penyewaan-barang-rusak" class="chartsh"></div>
-                </div>
-            </div>
-        </div>
-
-        {{-- multiple jumlah barang, qty barang --}}
-        <div class="col-lg-6 col-md-12">
-            <div class="card">
-                <div class="card-header d-md-flex flex-row justify-content-between">
-                    <div>
-                        <h3 class="card-title mb-1">Penyewaan Barang Hilang</h3>
-                        <small>Jumlah Penyewaan Barang Hilang Per Tahun</small>
-                    </div>
-                    <div>
-                        <select id="chart-penyewaan-barang-hilang-filter"
-                            class="form-control form-select form-select-sm select2" data-bs-placeholder="Select Country">
-                            @foreach ($years as $year)
-                                <option value="{{ $year->year }}" {{ $year->year == date('Y') ? 'selected' : '' }}>
-                                    {{ $year->year }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <div id="chart-penyewaan-barang-hilang" class="chartsh"></div>
-                </div>
-            </div>
-        </div>
-
-        {{-- Penyewaan barang habis pakai --}}
-        <div class="col-lg-6 col-md-12">
-            <div class="card">
-                <div class="card-header d-md-flex flex-row justify-content-between">
-                    <div>
-                        <h3 class="card-title mb-1">Penggunaan Barang Habis Pakai</h3>
-                        <small>Penggunaan Dalam Penyewaan Per Tahun</small>
-                    </div>
-                    <div>
-                        <select id="chart-penyewaan-bhs-filter" class="form-control form-select form-select-sm select2"
+                        <select id="chart-barang-sewa-filter" class="form-control form-select form-select-sm select2"
                             data-bs-placeholder="Select Country">
                             @foreach ($years as $year)
                                 <option value="{{ $year->year }}" {{ $year->year == date('Y') ? 'selected' : '' }}>
@@ -258,21 +220,21 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <div id="chart-penyewaan-bhs" class="chartsh"></div>
+                    <div id="chart-barang-sewa" class="chartsh"></div>
                 </div>
             </div>
         </div>
 
-        {{-- ganti rugi multiple uang, barang --}}
+        {{-- Barang Habis pakai --}}
         <div class="col-lg-6 col-md-12">
             <div class="card">
                 <div class="card-header d-md-flex flex-row justify-content-between">
                     <div>
-                        <h3 class="card-title mb-1">Ganti Rugi</h3>
-                        <small>Perbandingan Ganti Rugi Barang Dengan Uang Per Tahun</small>
+                        <h3 class="card-title mb-1">Barang Habis Pakai</h3>
+                        <small>Barang yang Sering Dipakai</small>
                     </div>
                     <div>
-                        <select id="chart-ganti-rugi-filter" class="form-control form-select form-select-sm select2"
+                        <select id="chart-barang-hs-filter" class="form-control form-select form-select-sm select2"
                             data-bs-placeholder="Select Country">
                             @foreach ($years as $year)
                                 <option value="{{ $year->year }}" {{ $year->year == date('Y') ? 'selected' : '' }}>
@@ -283,11 +245,10 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <div id="chart-ganti-rugi" class="chartsh"></div>
+                    <div id="chart-barang-hs" class="chartsh"></div>
                 </div>
             </div>
         </div>
-
     </div>
 @endsection
 
@@ -327,19 +288,13 @@
                 chart_reciving_order();
             });
 
-            $('#chart-penyewaan-barang-rusak-filter').on('select2:select', function(e) {
-                chart_penyewaan_barang_rusak();
+            $('#chart-barang-sewa-filter').on('select2:select', function(e) {
+                chart_barang_sewa();
             });
 
-            $('#chart-penyewaan-bhs-filter').on('select2:select', function(e) {
-                chart_penggunaan_bhs();
+            $('#chart-barang-hs-filter').on('select2:select', function(e) {
+                chart_barang_hs();
             });
-
-            $('#chart-ganti-rugi-filter').on('select2:select', function(e) {
-                chart_ganti_rugi();
-            });
-
-
         });
 
         function chart_reciving_order() {
@@ -392,7 +347,7 @@
                             width: 16
                         },
                         legend: {
-                            show: true, //hide legend
+                            show: false, //hide legend
                         },
                         padding: {
                             bottom: 0,
@@ -416,13 +371,13 @@
 
         }
 
-        function chart_penyewaan_barang_rusak() {
-            const card = $('#chart-penyewaan-barang-rusak').parent().parent();
-            const year = $('#chart-penyewaan-barang-rusak-filter').val();
+        function chart_barang_sewa() {
+            const card = $('#chart-barang-sewa').parent().parent();
+            const year = $('#chart-barang-sewa-filter').val();
             card.LoadingOverlay("show");
             $.ajax({
                 type: "GET",
-                url: `{{ route(h_prefix('penyewaan_barang_rusak')) }}`,
+                url: `{{ route(h_prefix('chart_barang_sewa')) }}`,
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
@@ -432,34 +387,27 @@
                 success: (res) => {
                     console.log(res);
 
-                    const columns = [
-                        ['barang'],
-                        ['qty'],
-                    ];
+                    const columns = ['data1'];
                     const categories = [];
 
                     res.data.forEach(e => {
-                        columns[0].push(e.data.barang);
-                        columns[1].push(e.data.qty);
+                        columns.push(e.data);
                         categories.push(e.name);
                     })
-                    // penyewaan barang rusak
                     var chart = c3.generate({
-                        bindto: '#chart-penyewaan-barang-rusak', // id of chart wrapper
+                        bindto: '#chart-barang-sewa', // id of chart wrapper
                         data: {
-                            columns: columns,
-                            type: 'bar', // default type of chart
-                            groups: [
-                                ['barang', 'qty']
+                            columns: [
+                                // each columns data
+                                columns
                             ],
+                            type: 'bar', // default type of chart
                             colors: {
-                                barang: '#6c5ffc',
-                                qty: '#05c3fb'
+                                data1: '#6c5ffc'
                             },
                             names: {
                                 // name of each serie
-                                'barang': 'Barang',
-                                'qty': 'Qty/Jumlah'
+                                'data1': res.title
                             }
                         },
                         axis: {
@@ -473,7 +421,7 @@
                             width: 16
                         },
                         legend: {
-                            show: true, //hide legend
+                            show: false, //hide legend
                         },
                         padding: {
                             bottom: 0,
@@ -497,13 +445,13 @@
 
         }
 
-        function chart_penyewaan_barang_hilang() {
-            const card = $('#chart-penyewaan-barang-hilang').parent().parent();
-            const year = $('#chart-penyewaan-barang-hilang-filter').val();
+        function chart_barang_hs() {
+            const card = $('#chart-barang-hs').parent().parent();
+            const year = $('#chart-barang-hs-filter').val();
             card.LoadingOverlay("show");
             $.ajax({
                 type: "GET",
-                url: `{{ route(h_prefix('penyewaan_barang_hilang')) }}`,
+                url: `{{ route(h_prefix('chart_barang_hs')) }}`,
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
@@ -513,194 +461,27 @@
                 success: (res) => {
                     console.log(res);
 
-                    const columns = [
-                        ['barang'],
-                        ['qty'],
-                    ];
+                    const columns = ['data1'];
                     const categories = [];
 
                     res.data.forEach(e => {
-                        columns[0].push(e.data.barang);
-                        columns[1].push(e.data.qty);
+                        columns.push(e.data);
                         categories.push(e.name);
                     })
-                    // penyewaan barang hilang
                     var chart = c3.generate({
-                        bindto: '#chart-penyewaan-barang-hilang', // id of chart wrapper
+                        bindto: '#chart-barang-hs', // id of chart wrapper
                         data: {
-                            columns: columns,
-                            type: 'bar', // default type of chart
-                            groups: [
-                                ['barang', 'qty']
+                            columns: [
+                                // each columns data
+                                columns
                             ],
-                            colors: {
-                                barang: '#6c5ffc',
-                                qty: '#05c3fb'
-                            },
-                            names: {
-                                // name of each serie
-                                'barang': 'Barang',
-                                'qty': 'Qty/Jumlah'
-                            }
-                        },
-                        axis: {
-                            x: {
-                                type: 'category',
-                                // name of each category
-                                categories: categories
-                            },
-                        },
-                        bar: {
-                            width: 16
-                        },
-                        legend: {
-                            show: true, //hide legend
-                        },
-                        padding: {
-                            bottom: 0,
-                            top: 0
-                        },
-                    });
-                },
-                error: function(data) {
-                    Swal.fire({
-                        position: 'top-end',
-                        icon: 'error',
-                        title: 'Something went wrong',
-                        showConfirmButton: false,
-                        timer: 1500
-                    })
-                },
-                complete: function() {
-                    card.LoadingOverlay("hide");
-                }
-            });
-
-        }
-
-        function chart_penggunaan_bhs() {
-            const card = $('#chart-penyewaan-bhs').parent().parent();
-            const year = $('#chart-penyewaan-bhs-filter').val();
-            card.LoadingOverlay("show");
-            $.ajax({
-                type: "GET",
-                url: `{{ route(h_prefix('penggunaan_bhs')) }}`,
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                data: {
-                    year
-                },
-                success: (res) => {
-                    console.log(res);
-
-                    const columns = [
-                        ['barang'],
-                        ['qty'],
-                    ];
-                    const categories = [];
-
-                    res.data.forEach(e => {
-                        columns[0].push(e.data.barang);
-                        columns[1].push(e.data.qty);
-                        categories.push(e.name);
-                    })
-                    // penyewaan barang rusak
-                    var chart = c3.generate({
-                        bindto: '#chart-penyewaan-bhs', // id of chart wrapper
-                        data: {
-                            columns: columns,
-                            type: 'bar', // default type of chart
-                            groups: [
-                                ['barang', 'qty']
-                            ],
-                            colors: {
-                                barang: '#6c5ffc',
-                                qty: '#05c3fb'
-                            },
-                            names: {
-                                // name of each serie
-                                'barang': 'Barang',
-                                'qty': 'Qty/Jumlah'
-                            }
-                        },
-                        axis: {
-                            x: {
-                                type: 'category',
-                                // name of each category
-                                categories: categories
-                            },
-                        },
-                        bar: {
-                            width: 16
-                        },
-                        legend: {
-                            show: true, //hide legend
-                        },
-                        padding: {
-                            bottom: 0,
-                            top: 0
-                        },
-                    });
-                },
-                error: function(data) {
-                    Swal.fire({
-                        position: 'top-end',
-                        icon: 'error',
-                        title: 'Something went wrong',
-                        showConfirmButton: false,
-                        timer: 1500
-                    })
-                },
-                complete: function() {
-                    card.LoadingOverlay("hide");
-                }
-            });
-
-        }
-
-        function chart_ganti_rugi() {
-            const card = $('#chart-ganti-rugi').parent().parent();
-            const year = $('#chart-ganti-rugi-filter').val();
-            card.LoadingOverlay("show");
-            $.ajax({
-                type: "GET",
-                url: `{{ route(h_prefix('ganti_rugi')) }}`,
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                data: {
-                    year
-                },
-                success: (res) => {
-                    console.log(res);
-
-                    const columns = [
-                        ['barang'],
-                        ['uang'],
-                    ];
-                    const categories = [];
-
-                    res.data.forEach(e => {
-                        columns[0].push(e.data.barang);
-                        columns[1].push(e.data.uang);
-                        categories.push(e.name);
-                    })
-
-                    // ganti rugi
-                    var chart = c3.generate({
-                        bindto: '#chart-ganti-rugi', // id of chart wrapper
-                        data: {
-                            columns: columns,
                             type: 'bar', // default type of chart
                             colors: {
-                                barang: '#6c5ffc',
-                                uang: '#05c3fb'
+                                data1: '#6c5ffc'
                             },
                             names: {
                                 // name of each serie
-                                'barang': 'Barang',
-                                'uang': 'Uang'
+                                'data1': res.title
                             }
                         },
                         axis: {
@@ -714,7 +495,7 @@
                             width: 16
                         },
                         legend: {
-                            show: true, //hide legend
+                            show: false, //hide legend
                         },
                         padding: {
                             bottom: 0,
@@ -740,9 +521,7 @@
 
         // initial
         chart_reciving_order();
-        chart_penyewaan_barang_rusak();
-        chart_penyewaan_barang_hilang();
-        chart_penggunaan_bhs();
-        chart_ganti_rugi();
+        chart_barang_sewa();
+        chart_barang_hs();
     </script>
 @endsection

@@ -58,7 +58,7 @@ class PenyewaanController extends Controller
         }
 
         $page_attr = [
-            'title' => 'Penyewaan',
+            'title' => 'Pesanan',
             'breadcrumbs' => [
                 ['name' => 'Dashboard'],
             ]

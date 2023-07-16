@@ -3,14 +3,18 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Barang\HabisPakai;
 use App\Models\Barang\HabisPakai\Pengurangan;
 use App\Models\Barang\HabisPakai\PenguranganList;
 use App\Models\Barang\Sewa;
 use App\Models\Customer;
 use App\Models\GantiRugi;
 use App\Models\Penyewaan;
+use App\Models\PenyewaanBarang;
+use App\Models\PenyewaanPembayaran;
 use App\Models\SuratJalan;
 use App\Models\SuratJalanBarang;
+use App\Models\SuratJalanBarangHabisPakai;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -67,24 +71,42 @@ class DashboardController extends Controller
     private function getRingkasanPenyewaan()
     {
         $result = collect();
+        $hari_ini = date('Y-m-d');
 
         // Penyewaan
         // Penyewaan yang belum selesai
         $result->penyewaan = Penyewaan::where('status', '<>', 0)
             ->where('status', '<', 5)->count();
 
+        // Total penyewaan
+        $result->total_penyewaan = Penyewaan::where('status', '<>', 0)
+            ->where('status', '<=', 5)->count();
+
+        // Penyewaan Hari ini
+        // barang diambil dan penggunaan nya hari ini
+        $result->penyewaan_hari_ini = Penyewaan::where('status', 3)->whereRaw("('$hari_ini' >= tanggal_pakai_dari and '$hari_ini' <= tanggal_pakai_sampai)")->count();
+
         // Pembayaran
         // Penyewaan yang belum lunas
         $result->pembayaran = Penyewaan::where('status', '<>', 0)
             ->where('status_pembayaran', '<', 1)->count();
 
+        // jumlah total pembayaran
+        $result->jml_pembayaran = PenyewaanPembayaran::count();
+
         //  Pengambilan Barang
         // Penyewaan yang barang nya belum dikirim
         $result->pengambilan = Penyewaan::where('status', '=', 2)->count();
 
+        // barang yang harus di kirim hari ini
+        $result->pengiriman_hari_ini = Penyewaan::where('status', '=', 2)->where('tanggal_kirim', $hari_ini)->count();
+
         //  Pengembalian Barang
         // Penyewaan yang barang nya sedang ada di luar
         $result->pengembalian = Penyewaan::where('status', '=', 3)->count();
+
+        // barang yang harus di kirim hari ini
+        $result->pengembalian_hari_ini = Penyewaan::where('status', '=', 3)->where('tanggal_pakai_sampai', '<', $hari_ini)->count();
 
         //  Ganti Rugi
         // Penyewan yang ganti rugi nya belum selesai
@@ -225,5 +247,38 @@ class DashboardController extends Controller
             $results[] = $item;
         }
         return response()->json(['data' => $results, 'title' => "Perbandingan Ganti Rugi Barang Dengan Uang $year_"]);
+    }
+
+    // revisi
+    public function barang_sewa(Request $request)
+    {
+        $t_a = PenyewaanBarang::tableName;
+        $t_b = Penyewaan::tableName;
+        $t_c = Sewa::tableName;
+        $year = $request->year ?? date('Y');
+        $results = PenyewaanBarang::selectRaw("$t_c.nama as name, SUM($t_a .qty) data")
+            ->join($t_b, "$t_b.id", '=', "$t_a.penyewaan")
+            ->join($t_c, "$t_c.id", '=', "$t_a.barang")
+            ->whereRaw("YEAR($t_b.tanggal_order) = '$year'")
+            ->groupBy("$t_a.barang")->get();
+
+        return response()->json(['data' => $results, 'title' => "Barang Sewa"]);
+    }
+
+    public function barang_hs(Request $request)
+    {
+        $t_a = SuratJalanBarangHabisPakai::tableName;
+        $t_b = SuratJalan::tableName;
+        $t_c = Penyewaan::tableName;
+        $t_d = HabisPakai::tableName;
+        $year = $request->year ?? date('Y');
+        $results = SuratJalanBarangHabisPakai::selectRaw("$t_d.nama as name, SUM($t_a.qty) data")
+            ->join($t_b, "$t_b.id", '=', "$t_a.surat_jalan")
+            ->join($t_c, "$t_c.id", '=', "$t_b.penyewaan")
+            ->join($t_d, "$t_d.id", '=', "$t_a.barang_id")
+            ->whereRaw("YEAR($t_c.tanggal_order) = '$year'")
+            ->groupBy("$t_a.barang_id")->get();
+
+        return response()->json(['data' => $results, 'title' => "Barang Sewa"]);
     }
 }

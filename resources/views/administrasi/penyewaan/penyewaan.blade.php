@@ -10,10 +10,10 @@
 
     <div class="card">
         <div class="card-header d-md-flex flex-row justify-content-between">
-            <h3 class="card-title">{{ $page_attr['title'] }} Table List</h3>
+            <h3 class="card-title">{{ $page_attr['title'] }}</h3>
             @if ($can_reciving_order)
                 <a class="btn btn-rounded btn-success btn-sm" href="{{ route('admin.penyewaan.reciving_order') }}">
-                    <i class="fas fa-plus"></i> Reciving Order
+                    <i class="fas fa-plus"></i> Tambah Pesanan
                 </a>
             @endif
         </div>
