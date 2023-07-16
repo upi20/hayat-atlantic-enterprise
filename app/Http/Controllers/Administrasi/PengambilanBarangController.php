@@ -26,7 +26,7 @@ class PengambilanBarangController extends Controller
     public function index(Request $request)
     {
         $page_attr = [
-            'title' => 'Pengambilan Barang',
+            'title' => 'Pengiriman Barang',
             'breadcrumbs' => [
                 ['name' => 'Dashboard'],
             ]
@@ -37,7 +37,7 @@ class PengambilanBarangController extends Controller
     public function list(Penyewaan $model)
     {
         $page_attr = [
-            'title' => 'Pengambilan Barang',
+            'title' => 'Pengiriman Barang',
             'breadcrumbs' => [
                 ['name' => 'Dashboard'],
                 ['name' => 'SuratJalan', 'route' => route(h_prefix(null, 2))],

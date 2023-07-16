@@ -38,8 +38,8 @@ class Admin extends Model
             $menu->join("$t_role_has_menu", "$t_role_has_menu.menu_id", '=', "$table.id");
             $menu->join("$t_user_has_role", "$t_user_has_role.role_id", '=', "$t_role_has_menu.role_id");
             $menu->where("$t_user_has_role.model_id", '=', $user_id);
-            $menu->where("$table.active", '=', 1);
         }
+        $menu->where("$table.active", '=', 1);
 
         $menu->leftJoin("$table as b", "b.id", "=", "$table.parent_id");
         $menu->groupBy("$table.id");
