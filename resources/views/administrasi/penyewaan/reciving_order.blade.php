@@ -12,7 +12,7 @@
 
     <div class="card">
         <div class="card-header d-md-flex flex-row justify-content-between">
-            <h3 class="card-title">Detail Reciving Order</h3>
+            <h3 class="card-title">Faktur Penyewaan</h3>
             <div>
                 <a href="{{ route(h_prefix(null, $is_edit ? 2 : 1)) }}" class="btn btn-rounded btn-secondary btn-sm">
                     <i class="fas fa-arrow-left"></i> Kembali
@@ -43,7 +43,7 @@
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label class="form-label" for="number">Nomor
+                            <label class="form-label" for="number">Nomor Faktur Penyewaan
                                 <span class="text-danger">*</span>
                             </label>
                             <input type="text" placeholder="Nomor Penyewaan" class="form-control" id="number"
@@ -52,7 +52,7 @@
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label class="form-label" for="tanggal_pakai_dari">Tanggal Pakai Dari
+                            <label class="form-label" for="tanggal_pakai_dari">Tanggal Sewa
                                 <span class="text-danger">*</span>
                             </label>
                             <input type="date" class="date-input-str form-control" id="tanggal_pakai_dari"
@@ -61,7 +61,7 @@
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label class="form-label" for="durasi_pakai">Lama Pakai</label>
+                            <label class="form-label" for="durasi_pakai">Jangka Waktu Sewa</label>
                             <div class="input-group">
                                 <input type="number" min="1" class="form-control" placeholder="Berapa hari ?"
                                     aria-label="Berapa hari ?" id="durasi_pakai" name="durasi_pakai"
@@ -72,7 +72,7 @@
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label class="form-label" for="tanggal_pakai_sampai">Tanggal Pakai Sampai
+                            <label class="form-label" for="tanggal_pakai_sampai">Tanggal Selesai Sewa
                                 <span class="text-danger">*</span>
                             </label>
                             <input type="date" class="date-input-str form-control tanggal-refresh"
@@ -92,7 +92,7 @@
                     </div>
                     <div class="col-lg-4">
                         <div class="form-group">
-                            <label class="form-label" for="tanggal_order">Tanggal Order
+                            <label class="form-label" for="tanggal_order">Tanggal Pesan
                                 <span class="text-danger">*</span>
                             </label>
                             <input type="date" class="form-control date-input-str" id="tanggal_order"
@@ -139,7 +139,7 @@
     @if ($can_barang)
         <div class="card">
             <div class="card-header d-md-flex flex-row justify-content-between">
-                <h3 class="card-title">{{ $page_attr['title'] }} Barang
+                <h3 class="card-title">Daftar Barang
                     <span id="total"></span>
                 </h3>
                 <div>
@@ -203,12 +203,12 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Barang</th>
-                            <th>Qty</th>
-                            <th>Harga</th>
-                            <th>Total Harga</th>
-                            <th>Diubah</th>
-                            {!! $can_barang_delete || $can_barang_update ? '<th>Aksi</th>' : '' !!}
+                            <th>Nama Barang</th>
+                            <th>Jumlah Barang</th>
+                            <th>Harga Barang</th>
+                            <th>Total Harga Barang</th>
+                            <th>Oleh</th>
+                            {!! $can_barang_delete || $can_barang_update ? '<th>Ubah</th>' : '' !!}
                         </tr>
                     </thead>
                     <tbody> </tbody>
@@ -231,7 +231,7 @@
                             <input type="hidden" name="id" id="barang_id">
                             <input type="hidden" name="penyewaan" id="penyewaan" value="{{ $model->id }}">
                             <div class="form-group">
-                                <label class="form-label" for="nama">Barang <span
+                                <label class="form-label" for="nama">Nama Barang <span
                                         class="text-danger">*</span></label>
                                 <select class="form-control" id="barang" name="barang" style="width: 100%;"
                                     required>
@@ -239,7 +239,8 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="form-label" for="harga">Harga <span class="text-danger">*</span></label>
+                                <label class="form-label" for="harga">Harga Barang<span
+                                        class="text-danger">*</span></label>
                                 <div class="input-group">
                                     <span class="input-group-text">Rp </span>
                                     <input type="number" min="1" class="form-control" placeholder="Harga"
@@ -250,7 +251,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="form-label" for="qty">Quantity/Jumlah
+                                <label class="form-label" for="qty">Jumlah Barang
                                     <span class="text-danger">*</span></label>
                                 <div class="input-group">
                                     <input type="number" min="1" class="form-control"
@@ -269,7 +270,7 @@
                             <hr>
                             <h6 class="fw-bold h5">Total</h6>
                             <div class="form-group">
-                                <label class="form-label" for="total_harga">Total Harga</label>
+                                <label class="form-label" for="total_harga">Total Harga Barang</label>
                                 <div class="input-group">
                                     <span class="input-group-text">Rp </span>
                                     <input type="text" class="form-control" placeholder="Total Harga"

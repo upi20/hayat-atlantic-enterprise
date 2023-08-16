@@ -112,9 +112,11 @@
                     <div class="clearfix row mb-4">
                         <div class="col">
                             <div class="float-start">
-                                <h5 class="mb-0"><i class="fas fa-dollar-sign me-1"></i>
-                                    <strong>Pembayaran</strong>
-                                </h5>
+                                <a href="{{ route('admin.pembayaran') }}">
+                                    <h5 class="mb-0"><i class="fas fa-dollar-sign me-1"></i>
+                                        <strong>Pembayaran</strong>
+                                    </h5>
+                                </a>
                                 <small class="text-muted">Penyewaan yang belum lunas</small>
                             </div>
                         </div>
@@ -127,9 +129,11 @@
                     <div class="clearfix row mb-4">
                         <div class="col">
                             <div class="float-start">
-                                <h5 class="mb-0"><i class="fas fa-sign-out-alt me-1"></i>
-                                    <strong>Pengiriman Barang Barang</strong>
-                                </h5>
+                                <a href="{{ route('admin.pengambilan') }}">
+                                    <h5 class="mb-0"><i class="fas fa-sign-out-alt me-1"></i>
+                                        <strong>Pengiriman Barang Barang</strong>
+                                    </h5>
+                                </a>
                                 <small class="text-muted">Barang yang harus dikirim hari ini</small>
                             </div>
                         </div>
@@ -143,9 +147,11 @@
                     <div class="clearfix row mb-4">
                         <div class="col">
                             <div class="float-start">
-                                <h5 class="mb-0"><i class="fas fa-sign-in-alt me-1"></i>
-                                    <strong>Pengambilan Barang</strong>
-                                </h5>
+                                <a href="{{ route('admin.pengembalian') }}">
+                                    <h5 class="mb-0"><i class="fas fa-sign-in-alt me-1"></i>
+                                        <strong>Pengambilan Barang</strong>
+                                    </h5>
+                                </a>
                                 <small class="text-muted">Barang yang harus diambil hari ini</small>
                             </div>
                         </div>

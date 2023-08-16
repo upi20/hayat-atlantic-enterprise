@@ -43,7 +43,7 @@ class PengembalianBarangController extends Controller
     public function index(Request $request)
     {
         $page_attr = [
-            'title' => 'Pengambilan Barang',
+            'title' => 'Pengembalian Barang',
             'breadcrumbs' => [
                 ['name' => 'Dashboard'],
             ]
@@ -54,10 +54,10 @@ class PengembalianBarangController extends Controller
     public function list(Penyewaan $model)
     {
         $page_attr = [
-            'title' => 'Pengambilan Barang',
+            'title' => 'Pengembalian Barang',
             'breadcrumbs' => [
                 ['name' => 'Dashboard'],
-                ['name' => 'Pengambilan Barang', 'route' => route(h_prefix(null, 2))],
+                ['name' => 'Pengembalian Barang', 'route' => route(h_prefix(null, 2))],
             ],
             'navigation' => h_prefix(null, 2)
         ];
@@ -541,7 +541,7 @@ class PengembalianBarangController extends Controller
         $pdf = PDF::loadView('administrasi.pengembalian.surat_pengembalian', $data)
             ->setPaper('a4', 'landscape');
 
-        $name = "Surat Pengambilan Barang $surat_jalan->no_surat_jalan.pdf";
+        $name = "Surat Pengembalian Barang $surat_jalan->no_surat_jalan.pdf";
         return $pdf->stream($name);
         exit();
     }

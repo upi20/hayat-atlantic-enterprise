@@ -13,7 +13,7 @@
             <h3 class="card-title">{{ $page_attr['title'] }}</h3>
             @if ($can_reciving_order)
                 <a class="btn btn-rounded btn-success btn-sm" href="{{ route('admin.penyewaan.reciving_order') }}">
-                    <i class="fas fa-plus"></i> Tambah Pesanan
+                    <i class="fas fa-plus"></i> Tambah Penyewaan
                 </a>
             @endif
         </div>
@@ -93,20 +93,16 @@
             <table class="table table-hover" id="tbl_main">
                 <thead>
                     <tr>
-                        <th rowspan="2" class="align-middle text-center">No</th>
-                        <th rowspan="2" class="align-middle text-center">Customer</th>
-                        <th rowspan="2" class="align-middle text-center">Penyewaan</th>
-                        <th class="text-center" colspan="3">Tanggal</th>
-                        <th class="text-center" colspan="3">Pembayaran</th>
-                        <th rowspan="2" class="align-middle text-center">Diubah</th>
-                    </tr>
-                    <tr>
-                        <th>Order</th>
-                        <th>Kirim</th>
-                        <th>Pakai</th>
-                        <th>Total</th>
-                        <th>Dibayar</th>
-                        <th>Sisa</th>
+                        <th>No</th>
+                        <th>Customer</th>
+                        <th>Faktur Penyewaan</th>
+                        <th>Tanggal Kirim</th>
+                        <th>Tanggal Pengambilan Barang</th>
+                        <th>Total Pembayaran</th>
+                        <th>Membayar</th>
+                        <th>Sisa Pembayaran</th>
+                        <th>Status Barang</th>
+                        <th>Oleh</th>
                     </tr>
                 </thead>
                 <tbody> </tbody>
@@ -259,6 +255,47 @@
                         className: 'to-link'
                     },
                     {
+                        data: 'number',
+                        name: 'number',
+                    },
+                    {
+                        data: 'tanggal_kirim_str',
+                        name: 'tanggal_kirim_str',
+                        className: 'text-nowrap to-link'
+                    },
+                    {
+                        data: 'tanggal_pengambilan_str',
+                        name: 'tanggal_pengambilan',
+                        className: ' to-link'
+                    },
+                    {
+                        data: 'total_harga',
+                        name: 'total_harga',
+                        render(data, type, full, meta) {
+                            return 'Rp. ' + format_rupiah(data);
+                        },
+                        className: ' text-right to-link'
+                    },
+                    {
+                        data: 'dibayar',
+                        name: 'dibayar',
+                        render(data, type, full, meta) {
+                            return 'Rp. ' + format_rupiah(data);
+                        },
+                        className: ' text-right to-link'
+                    },
+                    {
+                        data: 'sisa',
+                        name: 'sisa',
+                        render(data, type, full, meta) {
+                            const sisa = 'Rp. ' + format_rupiah(data);
+                            const status =
+                                `<i class="fas fa-circle me-1 text-${full.status_pembayaran == 1 ? 'success':'danger'}"></i>${full.status_pembayaran_str}`;
+                            return `${sisa}<br>${status}`;
+                        },
+                        className: ' text-right to-link'
+                    },
+                    {
                         data: 'id',
                         name: 'status',
                         render(data, type, full, meta) {
@@ -292,59 +329,7 @@
 
                             return `${status}<br>${btn_selesai} ${btn_update} ${btn_detail} ${btn_batalkan} ${btn_delete}`;
                         },
-                        className: 'text-nowrap'
-                    },
-                    {
-                        data: 'tanggal_order_str',
-                        name: 'tanggal_order_str',
-                        render(data, type, full, meta) {
-                            return `${data}<br>${full.number}`;
-                        },
-                        className: 'text-nowrap to-link'
-                    },
-                    {
-                        data: 'tanggal_kirim_str',
-                        name: 'tanggal_kirim_str',
-                        className: 'text-nowrap to-link'
-                    },
-                    {
-                        data: 'tanggal_pakai_dari',
-                        name: 'tanggal_pakai_dari',
-                        render(data, type, full, meta) {
-                            if (full.tanggal_pakai_dari_str == full.tanggal_pakai_sampai_str) {
-                                return full.tanggal_pakai_dari_str;
-                            } else {
-                                return `${full.tanggal_pakai_dari_str ?? ''} s/d <br> ${full.tanggal_pakai_sampai_str ?? ''}`;
-                            }
-                        },
-                        className: 'text-nowrap to-link'
-                    },
-                    {
-                        data: 'total_harga',
-                        name: 'total_harga',
-                        render(data, type, full, meta) {
-                            return 'Rp. ' + format_rupiah(data);
-                        },
-                        className: 'text-nowrap text-right to-link'
-                    },
-                    {
-                        data: 'dibayar',
-                        name: 'dibayar',
-                        render(data, type, full, meta) {
-                            return 'Rp. ' + format_rupiah(data);
-                        },
-                        className: 'text-nowrap text-right to-link'
-                    },
-                    {
-                        data: 'sisa',
-                        name: 'sisa',
-                        render(data, type, full, meta) {
-                            const sisa = 'Rp. ' + format_rupiah(data);
-                            const status =
-                                `<i class="fas fa-circle me-1 text-${full.status_pembayaran == 1 ? 'success':'danger'}"></i>${full.status_pembayaran_str}`;
-                            return `${sisa}<br>${status}`;
-                        },
-                        className: 'text-nowrap text-right to-link'
+                        className: ''
                     },
                     {
                         data: 'updated',
@@ -358,7 +343,7 @@
                     },
                 ],
                 order: [
-                    [2, 'asc'],
+                    [8, 'asc'],
                     [3, 'desc']
                 ],
                 language: {

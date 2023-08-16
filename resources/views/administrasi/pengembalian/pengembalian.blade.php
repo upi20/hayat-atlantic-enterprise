@@ -75,10 +75,11 @@
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>Penyewaan</th>
+                        <th>Faktur Penyewaan</th>
                         <th>Tanggal Kirim</th>
-                        <th>Tanggal Pakai</th>
-                        <th>Status</th>
+                        {{-- <th>Tanggal Pakai</th> --}}
+                        <th>Tanggal Pengambilan Barang</th>
+                        <th>Status Barang</th>
                     </tr>
                 </thead>
                 <tbody> </tbody>
@@ -199,17 +200,22 @@
                         className: 'text-nowrap to-link'
                     },
                     {
-                        data: 'tanggal_pakai_dari_str',
-                        name: 'tanggal_pakai_dari_str',
-                        render(data, type, full, meta) {
-                            if (data == full.tanggal_pakai_sampai_str) {
-                                return data;
-                            } else {
-                                return `${data ?? ''} s/d ${full.tanggal_pakai_sampai_str ?? ''}`;
-                            }
-                        },
+                        data: 'tanggal_pengambilan_str',
+                        name: 'tanggal_pengambilan',
                         className: 'text-nowrap to-link'
                     },
+                    // {
+                    //     data: 'tanggal_pakai_dari_str',
+                    //     name: 'tanggal_pakai_dari_str',
+                    //     render(data, type, full, meta) {
+                    //         if (data == full.tanggal_pakai_sampai_str) {
+                    //             return data;
+                    //         } else {
+                    //             return `${data ?? ''} s/d ${full.tanggal_pakai_sampai_str ?? ''}`;
+                    //         }
+                    //     },
+                    //     className: 'text-nowrap to-link'
+                    // },
                     {
                         data: 'status_pengambilan',
                         name: 'status_pengambilan',
@@ -223,7 +229,7 @@
                 ],
                 order: [
                     [4, 'asc'],
-                    [3, 'desc'],
+                    [1, 'asc'],
                 ],
                 language: {
                     url: datatable_indonesia_language_url

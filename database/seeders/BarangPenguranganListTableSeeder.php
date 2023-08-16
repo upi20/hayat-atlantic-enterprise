@@ -21,12 +21,12 @@ class BarangPenguranganListTableSeeder extends Seeder
         \DB::table('barang_pengurangan_list')->insert(array (
             0 => 
             array (
-                'id' => '2',
-                'qty' => '1',
-                'barang' => '6',
-                'pengurangan' => '2',
+                'id' => 2,
+                'qty' => 1,
+                'barang' => 6,
+                'pengurangan' => 2,
                 'updated_by' => NULL,
-                'created_by' => '5',
+                'created_by' => 5,
                 'created_at' => '2022-12-19 14:28:47',
                 'updated_at' => '2022-12-19 14:28:47',
             ),

@@ -53,11 +53,11 @@
                     <tr>
                         <th>No</th>
                         <th>Customer</th>
-                        <th>Penyewaan</th>
-                        <th>Nominal</th>
-                        <th>Dibayar</th>
-                        <th>Sisa</th>
-                        <th>Status</th>
+                        <th>Faktur Penyewaan</th>
+                        <th>Nominal Ganti Rugi</th>
+                        {{-- <th>Dibayar</th> --}}
+                        <th>Sisa Ganti Rugi</th>
+                        <th>Status Ganti Rugi</th>
                         <th>Keterangan</th>
                     </tr>
                 </thead>
@@ -151,14 +151,14 @@
                         },
                         className: 'text-nowrap text-right to-link'
                     },
-                    {
-                        data: 'dibayar',
-                        name: 'dibayar',
-                        render(data, type, full, meta) {
-                            return `Rp. ${format_rupiah(Number(data)+Number(full.dibayar_barang))}`;
-                        },
-                        className: 'text-nowrap text-right to-link'
-                    },
+                    // {
+                    //     data: 'dibayar',
+                    //     name: 'dibayar',
+                    //     render(data, type, full, meta) {
+                    //         return `Rp. ${format_rupiah(Number(data)+Number(full.dibayar_barang))}`;
+                    //     },
+                    //     className: 'text-nowrap text-right to-link'
+                    // },
                     {
                         data: 'sisa',
                         name: 'sisa',

@@ -15,7 +15,7 @@ class KaryawanController extends Controller
 {
     private $validate_model = [
         'name' => ['required', 'string', 'max:255'],
-        'email' => ['nullable', 'string', 'email'],
+        'no_telepon' => ['nullable', 'string'],
         'active' => ['required', 'int', 'in:1,0'],
         'nik' => ['required', 'string', 'max:16'],
     ];
@@ -45,7 +45,7 @@ class KaryawanController extends Controller
             $model = new User();
 
             $model->name = $request->name;
-            $model->email = $request->email;
+            $model->no_telepon = $request->no_telepon;
             $model->nik = $request->nik;
             $model->active = $request->active;
             $model->jenis_kelamin = $request->jenis_kelamin;
@@ -70,7 +70,7 @@ class KaryawanController extends Controller
             $request->validate(array_merge(['id' => ['required', 'int']], $this->validate_model));
 
             $model->name = $request->name;
-            $model->email = $request->email;
+            $model->no_telepon = $request->no_telepon;
             $model->nik = $request->nik;
             $model->active = $request->active;
             $model->jenis_kelamin = $request->jenis_kelamin;
@@ -249,7 +249,7 @@ class KaryawanController extends Controller
             // tambah pencarian
             $search_add = [
                 "$table.name",
-                "$table.email",
+                "$table.no_telepon",
                 "$table.nik",
                 "$table.jenis_kelamin",
                 "$table.updated_by",

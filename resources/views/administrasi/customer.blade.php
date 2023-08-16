@@ -64,8 +64,8 @@
                     <tr>
                         <th>No</th>
                         <th>Nama</th>
-                        <th>Kontak</th>
-                        <th>Diubah</th>
+                        <th>Alamat</th>
+                        <th>Oleh</th>
                         {!! $can_delete || $can_update ? '<th>Aksi</th>' : '' !!}
                     </tr>
                 </thead>
@@ -97,11 +97,11 @@
                                 placeholder="No Telepon" />
                         </div>
 
-                        <div class="form-group">
+                        {{-- <div class="form-group">
                             <label class="form-label" for="no_whatsapp">No Whatsapp</label>
                             <input type="text" class="form-control" id="no_whatsapp" name="no_whatsapp"
                                 placeholder="No Whatsapp" />
-                        </div>
+                        </div> --}}
 
                         <div class="form-group">
                             <label class="form-label" for="alamat">Alamat <span class="text-danger">*</span></label>
@@ -207,15 +207,15 @@
                         name: 'nama',
                         render(data, type, full, meta) {
                             return `<span class="fw-bold">${data}</span><br>
-                            <small>${full.alamat}</small>`;
+                            <i class="fas fa-phone me-1"></i><a href="tel:${full.no_telepon}" target="_blank">${full.no_telepon}</a>`;
+                            // <i class="fab fa-whatsapp me-1"></i><a href="https://wa.me/${getNoWa(full.no_whatsapp)}" target="_blank">${full.no_whatsapp}</a>
                         }
                     },
                     {
-                        data: 'no_telepon',
-                        name: 'no_telepon',
+                        data: 'alamat',
+                        name: 'alamat',
                         render(data, type, full, meta) {
-                            return `<i class="fas fa-phone me-1"></i>${data}<br>
-                            <i class="fab fa-whatsapp me-1"></i>${full.no_whatsapp}`;
+                            return `<small>${data}</small>`;
                         }
                     },
                     {
@@ -418,6 +418,13 @@
                     });
                 }
             });
+        }
+
+        function getNoWa(no_wa) {
+            no_wa = String(no_wa);
+            if (no_wa[0] == 8) return `62${no_wa}`;
+            if (no_wa[0] == 0) return `62${no_wa.substring(1)}`;
+            return no_wa;
         }
     </script>
 @endsection

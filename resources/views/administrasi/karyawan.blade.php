@@ -96,7 +96,7 @@
                         <th>NIK</th>
                         <th>Nama</th>
                         <th>Jenis Kelamin</th>
-                        <th>Email</th>
+                        <th>No Telepon</th>
                         <th>Diubah</th>
                         {!! $can_delete || $can_update ? '<th>Action</th>' : '' !!}
                     </tr>
@@ -126,9 +126,9 @@
 
                         </div>
                         <div class="form-group">
-                            <label class="form-label" for="email">Email</label>
-                            <input type="email" id="email" name="email" class="form-control"
-                                placeholder="Email Address" />
+                            <label class="form-label" for="no_telepon">No Telepon</label>
+                            <input type="text" id="no_telepon" name="no_telepon" class="form-control"
+                                placeholder="No Telepon" />
                             <div class="help-block"></div>
                         </div>
                         <div class="form-group">
@@ -296,8 +296,8 @@
                         className: 'text-nowrap',
                     },
                     {
-                        data: 'email',
-                        name: 'email',
+                        data: 'no_telepon',
+                        name: 'no_telepon',
                         className: 'text-nowrap',
                         orderable: false
                     },
@@ -435,7 +435,7 @@
                     $('#UserForm').trigger("reset");
                     $('#id').val(data.id);
                     $('#name').val(data.name);
-                    $('#email').val(data.email);
+                    $('#no_telepon').val(data.no_telepon);
                     $('#nik').val(data.nik);
                     $('#jenis_kelamin').val(data.jenis_kelamin);
                     $('#role').val(data.role).trigger('change');

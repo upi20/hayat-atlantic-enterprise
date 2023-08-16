@@ -75,12 +75,12 @@
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>Penyewaan</th>
-                        <th>Total Harga</th>
-                        <th>Dibayar</th>
-                        <th>Sisa</th>
-                        <th>Tanggal Pakai</th>
-                        <th>Status</th>
+                        <th>Faktur Penyewaan</th>
+                        <th>Total Pembayaran</th>
+                        <th>Membayar</th>
+                        <th>Sisa Pembayaran</th>
+                        <th>Status Barang</th>
+                        <th>Oleh</th>
                     </tr>
                 </thead>
                 <tbody> </tbody>
@@ -214,18 +214,18 @@
                         },
                         className: `text-nowrap text-right to-link`
                     },
-                    {
-                        data: 'tanggal_pakai_dari_str',
-                        name: 'tanggal_pakai_dari_str',
-                        render(data, type, full, meta) {
-                            if (data == full.tanggal_pakai_sampai_str) {
-                                return data;
-                            } else {
-                                return `${data ?? ''} s/d ${full.tanggal_pakai_sampai_str ?? ''}`;
-                            }
-                        },
-                        className: `text-nowrap to-link`
-                    },
+                    // {
+                    //     data: 'tanggal_pakai_dari_str',
+                    //     name: 'tanggal_pakai_dari_str',
+                    //     render(data, type, full, meta) {
+                    //         if (data == full.tanggal_pakai_sampai_str) {
+                    //             return data;
+                    //         } else {
+                    //             return `${data ?? ''} s/d ${full.tanggal_pakai_sampai_str ?? ''}`;
+                    //         }
+                    //     },
+                    //     className: `text-nowrap to-link`
+                    // },
                     {
                         data: 'status_pembayaran',
                         name: 'status_pembayaran',
@@ -237,10 +237,20 @@
                         },
                         className: 'text-nowrap'
                     },
+                    {
+                        data: 'updated',
+                        name: 'updated_by_str',
+                        render(data, type, full, meta) {
+                            const tanggal = data ?? full.created;
+                            const oleh = full.updated_by_str ?? full.created_by_str
+                            return `${oleh}<br><small>${tanggal}</small>`;
+                        },
+                        className: 'text-nowrap to-link'
+                    },
                 ],
                 order: [
-                    [6, 'asc'],
-                    [5, 'desc'],
+                    [5, 'asc'],
+                    [1, 'asc'],
                 ],
                 language: {
                     url: datatable_indonesia_language_url

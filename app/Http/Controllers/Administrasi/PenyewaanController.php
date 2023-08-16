@@ -124,6 +124,26 @@ class PenyewaanController extends Controller
         $this->query[$c_customer_alamat] = "$t_customer.alamat";
         $this->query["{$c_customer_alamat}_alias"] = $c_customer_alamat;
 
+        // tanggal_kembali
+        $c_tanggal_kembali = 'tanggal_kembali';
+        $this->query[$c_tanggal_kembali] = "$t_surat_jalan.tanggal_kembali";
+        $this->query["{$c_tanggal_kembali}_alias"] = $c_tanggal_kembali;
+
+        // tanggal_kembali
+        $c_tanggal_kembali_str = 'tanggal_kembali_str';
+        $this->query[$c_tanggal_kembali_str] = "(DATE_FORMAT($t_surat_jalan.tanggal_kembali, '%d-%b-%Y'))";
+        $this->query["{$c_tanggal_kembali_str}_alias"] = $c_tanggal_kembali_str;
+
+        // tanggal_kembali
+        $c_tanggal_pengambilan = 'tanggal_pengambilan';
+        $this->query[$c_tanggal_pengambilan] = "$t_surat_jalan.tanggal";
+        $this->query["{$c_tanggal_pengambilan}_alias"] = $c_tanggal_pengambilan;
+
+        // tanggal_pengambilan
+        $c_tanggal_pengambilan_str = 'tanggal_pengambilan_str';
+        $this->query[$c_tanggal_pengambilan_str] = "(DATE_FORMAT($t_surat_jalan.tanggal, '%d-%b-%Y'))";
+        $this->query["{$c_tanggal_pengambilan_str}_alias"] = $c_tanggal_pengambilan_str;
+
         // status
         $c_status_str = 'status_str';
         $this->query[$c_status_str] = <<<SQL
@@ -232,7 +252,11 @@ class PenyewaanController extends Controller
             $c_proses_penyewaan,
             $c_customer_alamat,
             $c_status_ganti_rugi_str,
-            $c_status_ganti_rugi
+            $c_status_ganti_rugi,
+            $c_tanggal_kembali,
+            $c_tanggal_kembali_str,
+            $c_tanggal_pengambilan,
+            $c_tanggal_pengambilan_str,
         ];
 
         $to_db_raw = array_map(function ($a) use ($sraa) {
