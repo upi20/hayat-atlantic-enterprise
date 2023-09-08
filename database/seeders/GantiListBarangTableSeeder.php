@@ -47,6 +47,20 @@ class GantiListBarangTableSeeder extends Seeder
                 'created_at' => '2022-12-19 14:28:47',
                 'updated_at' => '2022-12-19 14:28:47',
             ),
+            2 => 
+            array (
+                'id' => 3,
+                'ganti_rugi_id' => 2,
+                'barang' => 100,
+                'qty_rusak' => 0,
+                'qty_hilang' => 2,
+                'qty_diganti' => 0,
+                'harga' => 12500,
+                'updated_by' => NULL,
+                'created_by' => NULL,
+                'created_at' => '2023-09-08 23:09:06',
+                'updated_at' => '2023-09-08 23:09:06',
+            ),
         ));
         
         

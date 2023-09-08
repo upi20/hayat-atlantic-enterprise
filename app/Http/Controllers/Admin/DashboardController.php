@@ -41,7 +41,7 @@ class DashboardController extends Controller
         $data['compact'] = $data;
         if (auth_has_role('General Manager')) {
             return view('gm.dashboard', $data);
-        } else if (auth_has_role('Kepala Bagian Warehouse')) {
+        } else if (auth_has_role('Warehouse')) {
             return view('gudang.dashboard', $data);
         }
         return view('admin.dashboard', $data);
@@ -75,6 +75,8 @@ class DashboardController extends Controller
         $total->barang_rusak = Sewa::sum('qty_rusak');
 
         $total->ganti_rugi = GantiRugi::count();
+
+        $total->pengiriman = Penyewaan::where('status', '=', 2)->count();
 
         return $total;
     }

@@ -262,7 +262,7 @@
     [] barang habis pakai tambah status aktif/nonaktif
     [] barang sewa tambah status aktif/nonaktif
     [] Crud Setting Surat Jalan
-    [] Konfirmasi Pengambilan Barang (Oleh Warehouse)
+    [] Konfirmasi Pengiriman Barang (Oleh Warehouse)
     [] Format Nomor Penyewaan jadi (SP/00000)
 
 ### Penyewaan Selesai

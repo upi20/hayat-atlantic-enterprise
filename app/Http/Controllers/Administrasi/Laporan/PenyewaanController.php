@@ -136,8 +136,8 @@ class PenyewaanController extends Controller
         $this->query[$c_status_pengambilan_str] = <<<SQL
             (if($t_surat_jalan.status = 1,'Data Disimpan', 
             if($t_surat_jalan.status = 2,'Barang Dikirim',
-            if($t_surat_jalan.status = 3,'Pengembalian Disimpan',
-            if($t_surat_jalan.status = 4,'Pengembalian Selesai', 'Data Dibuat')))))
+            if($t_surat_jalan.status = 3,'Pengambilan Disimpan',
+            if($t_surat_jalan.status = 4,'Pengambilan Selesai', 'Data Dibuat')))))
         SQL;
         $this->query["{$c_status_pengambilan_str}_alias"] = $c_status_pengambilan_str;
 

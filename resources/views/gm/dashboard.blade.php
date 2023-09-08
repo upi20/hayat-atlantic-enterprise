@@ -169,7 +169,9 @@
             <div class="card">
                 <div class="card-header d-md-flex flex-row justify-content-between">
                     <div>
-                        <h3 class="card-title mb-1">Penyewaan</h3>
+                        <h3 class="card-title mb-1 text-dark">
+                            <a href="{{ route('admin.penyewaan') }}"> Penyewaan</a>
+                        </h3>
                         <small>Jumlah Penyewaan Per Bulan</small>
                     </div>
                     <div>

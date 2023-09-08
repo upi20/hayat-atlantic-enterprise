@@ -291,7 +291,7 @@ class GantiRugiBarangController extends Controller
         $pdf = PDF::loadView('administrasi.laporan.ganti_rugi_cetak', $data)
             ->setPaper('a4', 'landscape');
 
-        $name = "Laporan Pengembalian Barang $dari_tanggal-$sampai_tanggal.pdf";
+        $name = "Laporan Pengambilan Barang $dari_tanggal-$sampai_tanggal.pdf";
         return $pdf->stream($name);
         exit();
     }

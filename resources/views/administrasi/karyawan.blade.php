@@ -161,13 +161,14 @@
                                 <option value="p">Perempuan</option>
                             </select>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group d-none">
                             <label class="form-label" for="active">Active</label>
-                            <select class="form-control" style="width: 100%;" required="" id="active"
+                            <input type="hidden" id="active" name="active" value="1">
+                            {{-- <select class="form-control" style="width: 100%;" required="" id="active"
                                 name="active">
                                 <option value="1">Yes</option>
                                 <option value="0">No</option>
-                            </select>
+                            </select> --}}
                         </div>
                     </form>
                 </div>
@@ -285,7 +286,9 @@
                         render(data, type, full, meta) {
                             const class_el = full.active == 1 ? 'success' :
                                 'danger';
-                            return `<span class="fw-bold" data-toggle="tooltip" title="Akun Karyawan ${full.active_str}" ><i class="fas fa-circle me-1 text-${class_el}"></i> ${data}</span><br>
+                            // return `<span class="fw-bold" data-toggle="tooltip" title="Akun Karyawan ${full.active_str}" ><i class="fas fa-circle me-1 text-${class_el}"></i> ${data}</span><br>
+                        // <small>${full.role_str}</small>`;
+                            return `${data}</span><br>
                             <small>${full.role_str}</small>`;
                         },
                         className: 'text-nowrap',

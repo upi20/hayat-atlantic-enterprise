@@ -387,10 +387,10 @@ class UsersTableSeeder extends Seeder
                 'remember_token' => NULL,
                 'current_team_id' => NULL,
                 'profile_photo_path' => NULL,
-                'active' => 0,
+                'active' => 1,
                 'created_at' => '2022-09-15 12:04:49',
-                'updated_at' => '2023-08-16 22:00:43',
-                'updated_by' => 1,
+                'updated_at' => '2023-09-08 22:18:47',
+                'updated_by' => 5,
                 'created_by' => NULL,
             ),
             17 => 

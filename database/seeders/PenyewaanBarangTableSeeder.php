@@ -123,6 +123,71 @@ class PenyewaanBarangTableSeeder extends Seeder
                 'created_at' => '2023-08-17 00:47:08',
                 'updated_at' => '2023-08-17 00:47:08',
             ),
+            8 => 
+            array (
+                'id' => 9,
+                'penyewaan' => 5,
+                'barang' => 2,
+                'qty' => 1,
+                'harga' => 10000,
+                'keterangan' => 'Kp. Tanjungmukti, Girimukti, Pasirkuda, Cianjur',
+                'updated_by' => NULL,
+                'created_by' => 5,
+                'created_at' => '2023-09-08 22:48:47',
+                'updated_at' => '2023-09-08 22:48:47',
+            ),
+            9 => 
+            array (
+                'id' => 10,
+                'penyewaan' => 5,
+                'barang' => 5,
+                'qty' => 2,
+                'harga' => 10000,
+                'keterangan' => NULL,
+                'updated_by' => NULL,
+                'created_by' => 5,
+                'created_at' => '2023-09-08 22:48:56',
+                'updated_at' => '2023-09-08 22:48:56',
+            ),
+            10 => 
+            array (
+                'id' => 11,
+                'penyewaan' => 5,
+                'barang' => 100,
+                'qty' => 22,
+                'harga' => 12500,
+                'keterangan' => NULL,
+                'updated_by' => NULL,
+                'created_by' => 5,
+                'created_at' => '2023-09-08 22:49:05',
+                'updated_at' => '2023-09-08 22:49:05',
+            ),
+            11 => 
+            array (
+                'id' => 12,
+                'penyewaan' => 7,
+                'barang' => 2,
+                'qty' => 1,
+                'harga' => 10000,
+                'keterangan' => NULL,
+                'updated_by' => NULL,
+                'created_by' => 5,
+                'created_at' => '2023-09-08 22:57:43',
+                'updated_at' => '2023-09-08 22:57:43',
+            ),
+            12 => 
+            array (
+                'id' => 13,
+                'penyewaan' => 7,
+                'barang' => 9,
+                'qty' => 2,
+                'harga' => 7500,
+                'keterangan' => NULL,
+                'updated_by' => NULL,
+                'created_by' => 5,
+                'created_at' => '2023-09-08 22:57:52',
+                'updated_at' => '2023-09-08 22:57:52',
+            ),
         ));
         
         

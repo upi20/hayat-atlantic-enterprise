@@ -175,7 +175,7 @@
                 <button type="button" class="btn btn-success" id="btn-konfirmasi"
                     onclick="konfirmasiFun('{{ $surat_jalan->id }}')"
                     style="{{ $surat_jalan->status != 1 ? 'display:none' : '' }}">
-                    <li class="fas fa-check"></li> Konfirmasi Pengembalian Barang Selesai
+                    <li class="fas fa-check"></li> Konfirmasi Pengambilan Barang Selesai
                 </button>
             @endif
         </div>
@@ -491,7 +491,7 @@
         function konfirmasiFun(id) {
             swal.fire({
                 title: 'Apakah anda yakin?',
-                text: "Untuk mengkofirmsi pengmabilan barang. ?",
+                text: "Untuk mengkofirmsi pengambilan barang. ?",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonText: 'Yes'

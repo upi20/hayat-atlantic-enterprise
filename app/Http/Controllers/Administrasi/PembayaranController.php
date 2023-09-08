@@ -187,9 +187,6 @@ class PembayaranController extends Controller
 
     public function delete(PenyewaanPembayaran $model): mixed
     {
-        // hanya admin
-        // hapus faktur
-        // hapus faktur barang
         try {
             DB::beginTransaction();
             $penyewaan = Penyewaan::find($model->penyewaan);

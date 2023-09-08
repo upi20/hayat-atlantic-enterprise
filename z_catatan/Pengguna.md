@@ -7,5 +7,5 @@ General Manager
     12345678
 
 Gudang
-    0501001
+    0502007
     12345678

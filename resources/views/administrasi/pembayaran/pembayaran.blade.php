@@ -80,6 +80,7 @@
                         <th>Membayar</th>
                         <th>Sisa Pembayaran</th>
                         <th>Status Barang</th>
+                        <th>Status Pembayaran</th>
                         <th>Oleh</th>
                     </tr>
                 </thead>
@@ -227,6 +228,16 @@
                     //     className: `text-nowrap to-link`
                     // },
                     {
+                        data: 'status',
+                        name: 'status_str',
+                        render(data, type, full, meta) {
+                            const status = `<i class="fas fa-circle me-1 text-${statusClass(full.status)}"></i>
+                                ${full.status_str}`;
+                            return status;
+                            // return `<i class="fas fa-circle text-${data == 1 ? 'success':'danger'} me-1"></i>${full.status_pengambilan_str}<br>`;
+                        }
+                    },
+                    {
                         data: 'status_pembayaran',
                         name: 'status_pembayaran',
                         render(data, type, full, meta) {
@@ -249,8 +260,8 @@
                     },
                 ],
                 order: [
-                    [5, 'asc'],
-                    [1, 'asc'],
+                    [6, 'asc'],
+                    [1, 'desc'],
                 ],
                 language: {
                     url: datatable_indonesia_language_url

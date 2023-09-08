@@ -424,19 +424,6 @@ class PMenuTableSeeder extends Seeder
             ),
             31 => 
             array (
-                'id' => 438,
-                'parent_id' => NULL,
-                'title' => 'Pengembalian Barang',
-                'icon' => 'fas fa-sign-in-alt',
-                'route' => 'admin.pengembalian',
-                'sequence' => 7,
-                'active' => 1,
-                'type' => 1,
-                'created_at' => '2022-10-02 14:09:12',
-                'updated_at' => '2023-09-08 20:12:29',
-            ),
-            32 => 
-            array (
                 'id' => 440,
                 'parent_id' => NULL,
                 'title' => 'Menu Data Barang',
@@ -448,7 +435,7 @@ class PMenuTableSeeder extends Seeder
                 'created_at' => '2022-10-03 08:09:26',
                 'updated_at' => '2023-09-07 13:04:36',
             ),
-            33 => 
+            32 => 
             array (
                 'id' => 441,
                 'parent_id' => NULL,
@@ -461,7 +448,7 @@ class PMenuTableSeeder extends Seeder
                 'created_at' => '2022-10-03 08:11:55',
                 'updated_at' => '2023-09-07 13:04:36',
             ),
-            34 => 
+            33 => 
             array (
                 'id' => 442,
                 'parent_id' => NULL,
@@ -474,7 +461,7 @@ class PMenuTableSeeder extends Seeder
                 'created_at' => '2022-10-17 00:18:29',
                 'updated_at' => '2023-09-07 13:04:36',
             ),
-            35 => 
+            34 => 
             array (
                 'id' => 444,
                 'parent_id' => 420,
@@ -487,7 +474,7 @@ class PMenuTableSeeder extends Seeder
                 'created_at' => '2022-11-07 20:52:22',
                 'updated_at' => '2023-09-07 13:04:36',
             ),
-            36 => 
+            35 => 
             array (
                 'id' => 445,
                 'parent_id' => NULL,
@@ -500,7 +487,7 @@ class PMenuTableSeeder extends Seeder
                 'created_at' => '2023-09-07 13:04:19',
                 'updated_at' => '2023-09-08 20:12:29',
             ),
-            37 => 
+            36 => 
             array (
                 'id' => 446,
                 'parent_id' => NULL,

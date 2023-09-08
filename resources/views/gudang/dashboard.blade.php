@@ -27,12 +27,29 @@
         </div>
         <div class="col-sm-6 col-md-6 col-lg-6 col-xl-3">
             <a href="{{ route('admin.penyewaan') }}">
-                <div class="card bg-success img-card box-success-shadow card-main">
+                <div class="card bg-info img-card box-info-shadow card-main">
                     <div class="card-body">
                         <div class="d-flex">
                             <div class="text-white">
                                 <h2 class="mb-0 number-font">{{ $total->penyewaan }}</h2>
                                 <p class="text-white mb-0">Penyewaan</p>
+                            </div>
+                            <div class="ms-auto">
+                                <i class="fas fa-sign-out-alt text-white fs-30 me-2 mt-2"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-sm-6 col-md-6 col-lg-6 col-xl-3">
+            <a href="{{ route('admin.pengambilan') }}">
+                <div class="card bg-success img-card box-success-shadow card-main">
+                    <div class="card-body">
+                        <div class="d-flex">
+                            <div class="text-white">
+                                <h2 class="mb-0 number-font">{{ $total->pengiriman }}</h2>
+                                <p class="text-white mb-0">Pengiriman Barang</p>
                             </div>
                             <div class="ms-auto">
                                 <i class="fas fa-sign-out-alt text-white fs-30 me-2 mt-2"></i>

@@ -96,7 +96,7 @@
             @if ($can_konfirmasi)
                 <button type="button" class="btn btn-success" id="btn-konfirmasi"
                     onclick="konfirmasiFun('{{ $surat_jalan->id }}')">
-                    <li class="fas fa-check"></li> Konfirmasi Pengambilan Barang
+                    <li class="fas fa-check"></li> Konfirmasi Pengiriman Barang
                 </button>
             @endif
         </div>
@@ -196,7 +196,7 @@
         function konfirmasiFun(id) {
             swal.fire({
                 title: 'Apakah anda yakin?',
-                text: "Untuk mengkofirmsi pengmabilan barang. ?",
+                text: "Untuk mengkonfirmasi pengiriman barang. ?",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonText: 'Yes'

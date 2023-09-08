@@ -68,7 +68,7 @@ class PenyewaanController extends Controller
             $dashboardController = new DashboardController();
             $years = $dashboardController->getYear();
             return view('gm.penyewaan.penyewaan', compact('page_attr', 'years'));
-        } else if (auth_has_role('Kepala Bagian Warehouse')) {
+        } else if (auth_has_role('Warehouse')) {
             $dashboardController = new DashboardController();
             $years = $dashboardController->getYear();
             return view('gudang.penyewaan.penyewaan', compact('page_attr', 'years'));
@@ -157,10 +157,10 @@ class PenyewaanController extends Controller
         // status
         $c_status_str = 'status_str';
         $this->query[$c_status_str] = <<<SQL
-            (if($table.status = 1,'Penyewaan Dibuat', 
-            if($table.status = 2,'Faktur Dibuat', 
-            if($table.status = 3,'Barang Diambil', 
-            if($table.status = 4,'Barang Dikembalikan', 
+            (if($table.status = 1,'Belum Selesai', 
+            if($table.status = 2,'Pengiriman Barang', 
+            if($table.status = 3,'Barang Di Customer', 
+            if($table.status = 4,'Pengambalian Barang', 
             if($table.status = 5,'Selesai',  
             if($table.status = 9,'Dibatalkan',  'Tidak Diketahui')))))))
         SQL;
@@ -178,8 +178,8 @@ class PenyewaanController extends Controller
         $this->query[$c_status_pengambilan_str] = <<<SQL
             (if($t_surat_jalan.status = 1,'Data Disimpan', 
             if($t_surat_jalan.status = 2,'Barang Dikirim',
-            if($t_surat_jalan.status = 3,'Pengembalian Disimpan',
-            if($t_surat_jalan.status = 4,'Pengembalian Selesai', 'Data Dibuat')))))
+            if($t_surat_jalan.status = 3,'Pengambilan Disimpan',
+            if($t_surat_jalan.status = 4,'Pengambilan Selesai', 'Data Dibuat')))))
         SQL;
         $this->query["{$c_status_pengambilan_str}_alias"] = $c_status_pengambilan_str;
 
@@ -398,7 +398,7 @@ class PenyewaanController extends Controller
                     $barang_data->qty_ada = $barang_data->qty_ada + $barang_sewa->pengembalian_rusak;
                     $barang_data->save();
                 }
-                // status 2 Barang Dikirim, 3 Pengembalian Disimpan
+                // status 2 Barang Dikirim, 3 Pengambilan Disimpan
                 else if ($surat_jalan->status >= 2 && $surat_jalan->status < 4) {
                     // ubah barang rusak dan barang hilang
                     // set barang disewa

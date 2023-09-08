@@ -190,7 +190,7 @@
                         name: 'customer_nama',
                         render(data, type, full, meta) {
                             return `${full.number} | <span class="fw-bold">${data??full.number}</span> <br>
-                            <i class="fas fa-circle text-${statusClass(full.status)} me-1"></i>${full.status_str}`;
+                            <i class="fas fa-circle text-${statusClass(full.status_pengambilan)} me-1"></i>${full.status_pengambilan_str}`;
                         },
                         className: `to-link`
                     },
@@ -216,16 +216,30 @@
                     //     },
                     //     className: 'text-nowrap to-link'
                     // },
+                    // {
+                    //     data: 'status_pengambilan',
+                    //     name: 'status_pengambilan',
+                    //     render(data, type, full, meta) {
+                    //         return `<i class="fas fa-circle text-${colorClass(data)} me-1"></i>${full.status_pengambilan_str}<br>
+                //     <button type="button" data-toggle="tooltip" class="btn btn-rounded btn-info btn-sm me-1" title="Detail Data" onClick="detailFunc('${full.id}')">
+                //         <i class="fas fa-file-alt"></i> Detail
+                //         </button>`;
+                    //     }
+                    // },
                     {
-                        data: 'status_pengambilan',
-                        name: 'status_pengambilan',
+                        data: 'status',
+                        name: 'status_str',
                         render(data, type, full, meta) {
-                            return `<i class="fas fa-circle text-${colorClass(data)} me-1"></i>${full.status_pengambilan_str}<br>
-                        <button type="button" data-toggle="tooltip" class="btn btn-rounded btn-info btn-sm me-1" title="Detail Data" onClick="detailFunc('${full.id}')">
-                            <i class="fas fa-file-alt"></i> Detail
-                            </button>`;
+                            const status = `<i class="fas fa-circle me-1 text-${statusClass(full.status)}"></i>
+                                ${full.status_str} <br>
+                                <button type="button" data-toggle="tooltip" class="btn btn-rounded btn-info btn-sm me-1" title="Detail Data" onClick="detailFunc('${full.id}')">
+                                <i class="fas fa-file-alt"></i> Detail
+                                </button>`;
+                            return status;
+                            // return `<i class="fas fa-circle text-${data == 1 ? 'success':'danger'} me-1"></i>${full.status_pengambilan_str}<br>`;
                         }
                     },
+
                 ],
                 order: [
                     [4, 'asc'],
