@@ -315,7 +315,7 @@
                                 <i class="fas fa-file-alt"></i>
                                 </button> ${(++br_counter %4==0)? '<br>':''}`;
 
-                            const btn_update = (can_reciving_order && full.status <= 2) ? `<a href="{{ route('admin.penyewaan.reciving_order') }}/${data}"  data-toggle="tooltip" class="btn btn-rounded btn-primary btn-sm me-1 mt-1" title="Edit Data">
+                            const btn_update = (can_reciving_order && full.status <= 2) ? `<a href="{{ route('admin.penyewaan.reciving_order') }}/${data}"  data-toggle="tooltip" class="btn btn-rounded btn-primary btn-sm me-1 mt-1" title="Ubah Data">
                                 <i class="fas fa-edit"></i>
                                 </a>${(++br_counter %4==0)? '<br>':''}` : '';
 
@@ -323,7 +323,7 @@
                                 <i class="fas fa-times"></i>
                                 </button>${(++br_counter %4==0)? '<br>':''}` : '';
 
-                            const btn_delete = (can_delete) ? `<button type="button" data-toggle="tooltip" class="btn btn-rounded btn-danger btn-sm me-1 mt-1" title="Delete Data" onClick="deleteFunc('${data}')">
+                            const btn_delete = (can_delete) ? `<button type="button" data-toggle="tooltip" class="btn btn-rounded btn-danger btn-sm me-1 mt-1" title="Hapus Data" onClick="deleteFunc('${data}')">
                                 <i class="fas fa-trash"></i>
                                 </button>${(++br_counter %4==0)? '<br>':''}` : '';
 
@@ -413,7 +413,7 @@
                             setErrorAfterInput(res.errors[property], `#${property}`);
                         }
                         Swal.fire({
-                            position: 'top-end',
+                            position: 'center',
                             icon: 'error',
                             title: res.message ?? 'Something went wrong',
                             showConfirmButton: false,

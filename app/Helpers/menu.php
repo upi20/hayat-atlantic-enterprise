@@ -88,9 +88,9 @@ if (!function_exists('menu')) {
      *
      * @return array
      */
-    function menu(?int $user_id = null)
+    function menu(?int $user_id = null, $all = false)
     {
-        $menu = MenuAdmin::menuHasRole($user_id);
+        $menu = MenuAdmin::menuHasRole($user_id, $all);
         return menu_parse($menu);
     }
 }

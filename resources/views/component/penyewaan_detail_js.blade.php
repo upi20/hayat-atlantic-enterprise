@@ -98,7 +98,7 @@
             $.LoadingOverlay("hide");
         }).fail(($xhr) => {
             Swal.fire({
-                position: 'top-end',
+                position: 'center',
                 icon: 'error',
                 title: 'Something went wrong, try again later',
                 showConfirmButton: false,

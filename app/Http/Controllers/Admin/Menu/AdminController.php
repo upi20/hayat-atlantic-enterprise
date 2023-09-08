@@ -48,7 +48,7 @@ class AdminController extends Controller
 
     public function list()
     {
-        return response()->json(['data' => menu()]);
+        return response()->json(['data' => menu(all: true)]);
     }
 
     public function parent_list(Request $request)

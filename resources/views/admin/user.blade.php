@@ -242,11 +242,11 @@
                         data: 'id',
                         name: 'id',
                         render(data, type, full, meta) {
-                            const btn_update = can_update ? `<button type="button" class="btn btn-rounded btn-primary btn-sm me-1" title="Edit Data"
+                            const btn_update = can_update ? `<button type="button" class="btn btn-rounded btn-primary btn-sm me-1" title="Ubah Data"
                                 onClick="editFunc('${full.id}')">
                                 <i class="fas fa-edit"></i> Edit
                                 </button>` : '';
-                            const btn_delete = can_delete ? `<button type="button" class="btn btn-rounded btn-danger btn-sm me-1" title="Delete Data" onClick="deleteFunc('${data}')">
+                            const btn_delete = can_delete ? `<button type="button" class="btn btn-rounded btn-danger btn-sm me-1" title="Hapus Data" onClick="deleteFunc('${data}')">
                                 <i class="fas fa-trash"></i> Delete
                                 </button>` : '';
                             return btn_update + btn_delete;
@@ -316,7 +316,7 @@
                             setErrorAfterInput(res.errors[property], `#${property}`);
                         }
                         Swal.fire({
-                            position: 'top-end',
+                            position: 'center',
                             icon: 'error',
                             title: res.message ?? 'Something went wrong',
                             showConfirmButton: false,
@@ -368,7 +368,7 @@
                 },
                 error: function(data) {
                     Swal.fire({
-                        position: 'top-end',
+                        position: 'center',
                         icon: 'error',
                         title: 'Something went wrong',
                         showConfirmButton: false,
@@ -408,7 +408,7 @@
                         },
                         success: function(data) {
                             Swal.fire({
-                                position: 'top-end',
+                                position: 'center',
                                 icon: 'success',
                                 title: 'Data deleted successfully',
                                 showConfirmButton: false,

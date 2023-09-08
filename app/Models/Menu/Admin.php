@@ -15,7 +15,7 @@ class Admin extends Model
     protected $table = 'p_menu';
     const tableName = 'p_menu';
 
-    public static function menuHasRole(?int $user_id = null)
+    public static function menuHasRole(?int $user_id = null, $all = false)
     {
         $tableNames = config('permission.table_names');
         $table = self::tableName;
@@ -39,7 +39,9 @@ class Admin extends Model
             $menu->join("$t_user_has_role", "$t_user_has_role.role_id", '=', "$t_role_has_menu.role_id");
             $menu->where("$t_user_has_role.model_id", '=', $user_id);
         }
-        $menu->where("$table.active", '=', 1);
+        if (!$all) {
+            $menu->where("$table.active", '=', 1);
+        }
 
         $menu->leftJoin("$table as b", "b.id", "=", "$table.parent_id");
         $menu->groupBy("$table.id");

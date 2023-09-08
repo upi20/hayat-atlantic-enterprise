@@ -1,10 +1,10 @@
 @extends('templates.admin.master')
 @section('content')
     @php
-    $can_insert = auth_can(h_prefix('insert'));
-    $can_update = auth_can(h_prefix('update'));
-    $can_delete = auth_can(h_prefix('delete'));
-    $can_save = auth_can(h_prefix('save'));
+        $can_insert = auth_can(h_prefix('insert'));
+        $can_update = auth_can(h_prefix('update'));
+        $can_delete = auth_can(h_prefix('delete'));
+        $can_save = auth_can(h_prefix('save'));
     @endphp
     <div class="row">
         <div class="col-lg-6">
@@ -211,7 +211,7 @@
                             setErrorAfterInput(res.errors[property], `#${property}`);
                         }
                         Swal.fire({
-                            position: 'top-end',
+                            position: 'center',
                             icon: 'error',
                             title: res.message ?? 'Something went wrong',
                             showConfirmButton: false,
@@ -326,7 +326,7 @@
                 },
                 error: function(data) {
                     Swal.fire({
-                        position: 'top-end',
+                        position: 'center',
                         icon: 'error',
                         title: 'Something went wrong',
                         showConfirmButton: false,
@@ -400,7 +400,7 @@
                         },
                         success: function(data) {
                             Swal.fire({
-                                position: 'top-end',
+                                position: 'center',
                                 icon: 'success',
                                 title: 'Data saved successfully.',
                                 showConfirmButton: false,

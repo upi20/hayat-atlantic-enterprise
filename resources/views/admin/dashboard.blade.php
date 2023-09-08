@@ -363,7 +363,7 @@
                 },
                 error: function(data) {
                     Swal.fire({
-                        position: 'top-end',
+                        position: 'center',
                         icon: 'error',
                         title: 'Something went wrong',
                         showConfirmButton: false,
@@ -437,7 +437,7 @@
                 },
                 error: function(data) {
                     Swal.fire({
-                        position: 'top-end',
+                        position: 'center',
                         icon: 'error',
                         title: 'Something went wrong',
                         showConfirmButton: false,
@@ -511,7 +511,7 @@
                 },
                 error: function(data) {
                     Swal.fire({
-                        position: 'top-end',
+                        position: 'center',
                         icon: 'error',
                         title: 'Something went wrong',
                         showConfirmButton: false,

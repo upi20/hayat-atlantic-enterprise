@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Console\Commands;
+
 use mikehaertl\shellcommand\Command as shellcommand;
 
 use Illuminate\Console\Command;
@@ -119,7 +120,9 @@ class backup extends Command
                 'ganti_rugi',
                 'ganti_list_barang',
                 'ganti_rugi_barang',
-                'ganti_rugi_pembayaran'
+                'ganti_rugi_pembayaran',
+                'pesanan',
+                'pesanan_barang',
             ],
         ];
         if ($opt_users == 1 || $arg_type == 'users') $this->command_exec('php artisan iseed users --force');
@@ -136,12 +139,13 @@ class backup extends Command
         return 1;
     }
 
-    private function command_exec($command_str){
+    private function command_exec($command_str)
+    {
         $command = new shellcommand($command_str);
         if ($command->execute()) {
-            echo $command->getOutput(). PHP_EOL;
+            echo $command->getOutput() . PHP_EOL;
         } else {
-            echo $command->getError(). PHP_EOL;
+            echo $command->getError() . PHP_EOL;
             $exitCode = $command->getExitCode();
         }
     }

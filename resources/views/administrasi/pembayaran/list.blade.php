@@ -150,7 +150,7 @@
                         <th>Nominal</th>
                         <th>Faktur</th>
                         <th>Diubah</th>
-                        {!! $can_batalkan ? '<th>Aksi</th>' : '' !!}
+                        {!! $can_batalkan ? '<th>Ubah Data</th>' : '' !!}
                     </tr>
                 </thead>
                 <tbody> </tbody>
@@ -351,7 +351,7 @@
                     },
                     error: function(data) {
                         Swal.fire({
-                            position: 'top-end',
+                            position: 'center',
                             icon: 'error',
                             title: 'Something went wrong',
                             showConfirmButton: false,
@@ -489,7 +489,7 @@
                                 <i class="fas fa-times"></i> Batalkan
                                 </button>` : '';
 
-                            const btn_delete = can_delete ? `<button type="button" class="btn btn-rounded btn-danger btn-sm me-1" title="Delete Data" onClick="deleteFunc('${data}')">
+                            const btn_delete = can_delete ? `<button type="button" class="btn btn-rounded btn-danger btn-sm me-1" title="Hapus Data" onClick="deleteFunc('${data}')">
                                 <i class="fas fa-trash"></i> Hapus
                                 </button>` : '';
                             return btn_batalkan + btn_delete;
@@ -562,7 +562,7 @@
                             setErrorAfterInput(res.errors[property], `#${property}`);
                         }
                         Swal.fire({
-                            position: 'top-end',
+                            position: 'center',
                             icon: 'error',
                             title: res.message ?? 'Something went wrong',
                             showConfirmButton: false,
@@ -613,7 +613,7 @@
                             setErrorAfterInput(res.errors[property], `#${property}`);
                         }
                         Swal.fire({
-                            position: 'top-end',
+                            position: 'center',
                             icon: 'error',
                             title: res.message ?? 'Something went wrong',
                             showConfirmButton: false,
@@ -671,7 +671,7 @@
                 },
                 error: function(data) {
                     Swal.fire({
-                        position: 'top-end',
+                        position: 'center',
                         icon: 'error',
                         title: 'Something went wrong',
                         showConfirmButton: false,

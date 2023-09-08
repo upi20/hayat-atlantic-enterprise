@@ -260,10 +260,10 @@
                         name: 'id',
                         render(data, type, full, meta) {
                             const can_edit = full.penyewaan == null;
-                            const btn_update = can_update && can_edit ? `<button type="button" data-toggle="tooltip" class="btn btn-rounded btn-primary btn-sm me-1" title="Edit Data" onClick="editFunc('${data}')">
+                            const btn_update = can_update && can_edit ? `<button type="button" data-toggle="tooltip" class="btn btn-rounded btn-primary btn-sm me-1" title="Ubah Data" onClick="editFunc('${data}')">
                                 <i class="fas fa-edit"></i>
                                 </button>` : '';
-                            const btn_delete = can_delete && can_edit ? `<button type="button" data-toggle="tooltip" class="btn btn-rounded btn-danger btn-sm me-1" title="Delete Data" onClick="deleteFunc('${data}')">
+                            const btn_delete = can_delete && can_edit ? `<button type="button" data-toggle="tooltip" class="btn btn-rounded btn-danger btn-sm me-1" title="Hapus Data" onClick="deleteFunc('${data}')">
                                 <i class="fas fa-trash"></i>
                                 </button>` : '';
                             return btn_update + btn_delete;
@@ -349,7 +349,7 @@
                             setErrorAfterInput(res.errors[property], `#${property}`);
                         }
                         Swal.fire({
-                            position: 'top-end',
+                            position: 'center',
                             icon: 'error',
                             title: res.message ?? 'Something went wrong',
                             showConfirmButton: false,
@@ -398,7 +398,7 @@
                 },
                 error: function(data) {
                     Swal.fire({
-                        position: 'top-end',
+                        position: 'center',
                         icon: 'error',
                         title: 'Something went wrong',
                         showConfirmButton: false,

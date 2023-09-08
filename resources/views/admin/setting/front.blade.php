@@ -260,7 +260,7 @@
                     error: function(data) {
                         const res = data.responseJSON ?? {};
                         Swal.fire({
-                            position: 'top-end',
+                            position: 'center',
                             icon: 'error',
                             title: res.message ?? 'Something went wrong',
                             showConfirmButton: false,
@@ -297,7 +297,7 @@
                     error: function(data) {
                         const res = data.responseJSON ?? {};
                         Swal.fire({
-                            position: 'top-end',
+                            position: 'center',
                             icon: 'error',
                             title: res.message ?? 'Something went wrong',
                             showConfirmButton: false,
@@ -348,7 +348,7 @@
                             setErrorAfterInput(res.errors[property], `#${property}`);
                         }
                         Swal.fire({
-                            position: 'top-end',
+                            position: 'center',
                             icon: 'error',
                             title: res.message ?? 'Something went wrong',
                             showConfirmButton: false,
@@ -448,7 +448,7 @@
                         },
                         success: function(data) {
                             Swal.fire({
-                                position: 'top-end',
+                                position: 'center',
                                 icon: 'success',
                                 title: 'Data deleted successfully',
                                 showConfirmButton: false,

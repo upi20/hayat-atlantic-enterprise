@@ -79,7 +79,7 @@ use App\Http\Controllers\Administrasi\Laporan\PengambilanBarangController as Lap
 use App\Http\Controllers\Administrasi\Laporan\PengembalianBarangController as LaporanPengembalianBarangController;
 use App\Http\Controllers\Administrasi\Laporan\PenyewaanController as LaporanPenyewaanController;
 use App\Http\Controllers\Administrasi\Laporan\PembayaranController as LaporanPembayaranController;
-
+use App\Http\Controllers\Administrasi\PesananController;
 
 $name = 'admin';
 $prefix = 'dashboard';
@@ -604,6 +604,17 @@ Route::prefix($prefix)->controller(PenyewaanController::class)->group(function (
             Route::delete('/{model}', 'reciving_order_barang_delete')->name("$name.delete")->middleware("permission:$name.delete");
         });
     });
+});
+
+$prefix = "pesanan";
+Route::prefix($prefix)->controller(PesananController::class)->group(function () use ($name, $prefix) {
+    $name = "$name.$prefix"; // admin.pesanan
+    Route::get('/', 'index')->name($name)->middleware("permission:$name");
+    Route::post('/insert', 'insert')->name("$name.insert")->middleware("permission:$name.insert");
+    Route::post('/update', 'update')->name("$name.update")->middleware("permission:$name.update");
+    Route::post('/status', 'status')->name("$name.status")->middleware("permission:$name.status");
+    Route::get('/find', 'find')->name("$name.find")->middleware("permission:$name");
+    Route::delete('/{model}', 'delete')->name("$name.delete")->middleware("permission:$name.delete");
 });
 
 $prefix = "pembayaran";

@@ -274,7 +274,7 @@ function format_tanggal(tanggal_input) {
     const tanggal_str = hari + ", " + tanggal + " " + bulan + " " + tahun;
     const waktu = jam + ":" + menit + ":" + detik;
     return {
-        tanggal: tanggal_str,
+        tanggal: tanggal_input != '' ? tanggal_str : '',
         waktu
     }
 }
