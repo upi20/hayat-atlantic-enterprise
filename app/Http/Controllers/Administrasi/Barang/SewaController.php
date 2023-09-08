@@ -37,6 +37,9 @@ class SewaController extends Controller
                 ['name' => 'Dashboard'],
             ]
         ];
+        if (auth_has_role('General Manager')) {
+            return view('gm.barang.sewa', compact('page_attr', 'jenis', 'satuan'));
+        }
         return view('administrasi.barang.sewa', compact('page_attr', 'jenis', 'satuan'));
     }
 

@@ -39,6 +39,9 @@ class DashboardController extends Controller
             'donat'
         );
         $data['compact'] = $data;
+        if (auth_has_role('General Manager')) {
+            return view('gm.dashboard', $data);
+        }
         return view('admin.dashboard', $data);
     }
 
@@ -50,6 +53,11 @@ class DashboardController extends Controller
         $t_model_has_roles = $tableNames['model_has_roles'];
 
         $total = collect();
+        // total penyewaan
+        $total->penyewaan = Penyewaan::where('status', '<>', '0')
+            ->where('status', '<>', '9')
+            ->count();
+
         // total pesanan
         $total->pesanan = Pesanan::count();
 
@@ -63,6 +71,8 @@ class DashboardController extends Controller
 
         // qty barang rusak
         $total->barang_rusak = Sewa::sum('qty_rusak');
+
+        $total->ganti_rugi = GantiRugi::count();
 
         return $total;
     }
@@ -115,7 +125,7 @@ class DashboardController extends Controller
     }
 
     // statistik
-    private function getYear()
+    public function getYear()
     {
         // menggunakan tanggal reciving order
         $t_penyewaan = Penyewaan::tableName;

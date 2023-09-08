@@ -69,7 +69,7 @@
                         <th>No</th>
                         <th>Barang</th>
                         <th>Qty</th>
-                        <th>Diubah</th>
+                        <th>Oleh</th>
                         {!! $can_delete || $can_update ? '<th>Ubah Data</th>' : '' !!}
                     </tr>
                 </thead>

@@ -71,7 +71,7 @@
                         <th>Qty</th>
                         <th>Harga</th>
                         <th>Total Harga</th>
-                        <th>Diubah</th>
+                        <th>Oleh</th>
                         {!! $can_delete || $can_update ? '<th>Ubah Data</th>' : '' !!}
                     </tr>
                 </thead>

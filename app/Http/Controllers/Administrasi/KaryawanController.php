@@ -35,6 +35,9 @@ class KaryawanController extends Controller
                 ['name' => 'Dashboard'],
             ]
         ];
+        if (auth_has_role('General Manager')) {
+            return view('gm.karyawan', compact('page_attr', 'user_role'));
+        }
         return view('administrasi.karyawan', compact('page_attr', 'user_role'));
     }
 

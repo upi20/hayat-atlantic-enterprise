@@ -149,7 +149,7 @@
                         <th>Tanggal</th>
                         <th>Nominal</th>
                         <th>Faktur</th>
-                        <th>Diubah</th>
+                        <th>Oleh</th>
                         {!! $can_batalkan ? '<th>Ubah Data</th>' : '' !!}
                     </tr>
                 </thead>

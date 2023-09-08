@@ -52,7 +52,7 @@ class GantiRugiController extends Controller
                 ['name' => 'Dashboard'],
             ]
         ];
-        return view('administrasi.ganti_rugi.list', compact('page_attr'));
+        return view('gm.ganti_rugi.list', compact('page_attr'));
     }
 
     public function datatable(Request $request): mixed
@@ -98,6 +98,14 @@ class GantiRugiController extends Controller
         $c_penyewaan_number = 'penyewaan_number';
         $this->query[$c_penyewaan_number] = "$t_penyewaan.number";
         $this->query["{$c_penyewaan_number}_alias"] = $c_penyewaan_number;
+
+        $c_keterangan_gm = 'keterangan_gm';
+        $this->query[$c_keterangan_gm] = <<<SQL
+                if($table.status = 0, 'Belum Melakukan Ganti Rugi', (
+                    if($table.dibayar <> 0, 'Ganti Rugi Dalam Bentuk Uang', 'Ganti Rugi Dalam Bentuk Barang')
+                ))
+        SQL;
+        $this->query["{$c_keterangan_gm}_alias"] = $c_keterangan_gm;
         // ========================================================================================================
 
 
@@ -106,6 +114,7 @@ class GantiRugiController extends Controller
         $sraa = function (string $col): string {
             return $this->query[$col] . ' as ' . $this->query[$col . '_alias'];
         };
+
         $model_filter = [
             $c_created,
             $c_created_str,
@@ -113,7 +122,8 @@ class GantiRugiController extends Controller
             $c_updated_str,
             $c_created_by,
             $c_updated_by,
-            $c_penyewaan_number
+            $c_penyewaan_number,
+            $c_keterangan_gm,
         ];
 
         $to_db_raw = array_map(function ($a) use ($sraa) {
@@ -232,7 +242,7 @@ class GantiRugiController extends Controller
         }
         $penyewaan = $model->penyewaan;
 
-        return view('administrasi.ganti_rugi.detail', compact('page_attr', 'model', 'customer', 'barangs', 'penyewaan'));
+        return view('gm.ganti_rugi.detail', compact('page_attr', 'model', 'customer', 'barangs', 'penyewaan'));
     }
 
     public function simpan_status(GantiRugi $ganti_rugi, Request $request)
@@ -889,10 +899,10 @@ class GantiRugiController extends Controller
 
         // return $data;
 
-        // return view('administrasi.ganti_rugi.faktur_pembayaran', $data);
+        // return view('gm.ganti_rugi.faktur_pembayaran', $data);
 
-        view()->share('administrasi.ganti_rugi.faktur_pembayaran', $data);
-        $pdf = PDF::loadView('administrasi.ganti_rugi.faktur_pembayaran', $data)
+        view()->share('gm.ganti_rugi.faktur_pembayaran', $data);
+        $pdf = PDF::loadView('gm.ganti_rugi.faktur_pembayaran', $data)
             ->setPaper('a4', 'landscape');
 
         $name = "Invoice Ganti Rugi Uang $ganti_rugi->no_surat.pdf";
@@ -909,10 +919,10 @@ class GantiRugiController extends Controller
 
         // return $ganti_rugi->penyewaan->number;
 
-        // return view('administrasi.ganti_rugi.surat_terima_barang', $data);
+        // return view('gm.ganti_rugi.surat_terima_barang', $data);
 
-        view()->share('administrasi.ganti_rugi.surat_terima_barang', $data);
-        $pdf = PDF::loadView('administrasi.ganti_rugi.surat_terima_barang', $data)
+        view()->share('gm.ganti_rugi.surat_terima_barang', $data);
+        $pdf = PDF::loadView('gm.ganti_rugi.surat_terima_barang', $data)
             ->setPaper('a4', 'landscape');
 
         $name = "Surat Ganti Rugi Barang {$ganti_rugi->penyewaan->number}.pdf";

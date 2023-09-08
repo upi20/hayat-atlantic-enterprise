@@ -97,7 +97,7 @@
                         <th>Nama</th>
                         <th>Jenis Kelamin</th>
                         <th>No Telepon</th>
-                        <th>Diubah</th>
+                        <th>Oleh</th>
                         {!! $can_delete || $can_update ? '<th>Action</th>' : '' !!}
                     </tr>
                 </thead>

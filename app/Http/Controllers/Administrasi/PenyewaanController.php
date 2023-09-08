@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Administrasi;
 
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Controller;
 use App\Models\Barang\HabisPakai;
 use App\Models\Barang\HabisPakai\Pengadaan as HabisPakaiPengadaan;
@@ -58,11 +59,16 @@ class PenyewaanController extends Controller
         }
 
         $page_attr = [
-            'title' => 'Pesanan',
+            'title' => 'Penyewaan',
             'breadcrumbs' => [
                 ['name' => 'Dashboard'],
             ]
         ];
+        if (auth_has_role('General Manager')) {
+            $dashboardController = new DashboardController();
+            $years = $dashboardController->getYear();
+            return view('gm.penyewaan.penyewaan', compact('page_attr', 'years'));
+        }
         return view('administrasi.penyewaan.penyewaan', compact('page_attr'));
     }
 
@@ -300,6 +306,14 @@ class PenyewaanController extends Controller
         }
 
         $model->where("$table.status", '<>', 0);
+
+        if (isset($request->filter['bulan']) && isset($request->filter['tahun'])) {
+            $bulan = $request->filter['bulan'];
+            $tahun = $request->filter['tahun'];
+            $bulan_next = $bulan == 12 ? 1 : $bulan + 1;
+            $tahun_next = $bulan == 12 ? $tahun + 1 : $tahun;
+            $model->whereRaw("($table.tanggal_order >= '$tahun-$bulan-01' and $table.tanggal_order < '$tahun_next-$bulan_next-01')");
+        }
         // ========================================================================================================
 
 
