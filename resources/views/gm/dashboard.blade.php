@@ -114,7 +114,7 @@
                             <div class="float-start">
                                 <a href="{{ route('admin.pengambilan') }}">
                                     <h5 class="mb-0"><i class="fas fa-sign-out-alt me-1"></i>
-                                        <strong>Pengiriman Barang Barang</strong>
+                                        <strong>Pengiriman Barang</strong>
                                     </h5>
                                 </a>
                                 <small class="text-muted">Barang yang harus dikirim hari ini</small>

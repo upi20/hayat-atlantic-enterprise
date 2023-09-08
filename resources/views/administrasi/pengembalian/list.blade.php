@@ -202,7 +202,7 @@
                             <th class="text-right">Harga</th>
                             <th class="text-right">Total</th>
 
-                            {!! $can_barang_habis_pakai_action ? '<th class="text-center bhs_aksi">Aksi</th>' : '' !!}
+                            {!! $can_barang_habis_pakai_action ? '<th class="text-center bhs_aksi">Ubah Data</th>' : '' !!}
                         </tr>
                     </thead>
                     <tbody id="bhs-table-body"></tbody>

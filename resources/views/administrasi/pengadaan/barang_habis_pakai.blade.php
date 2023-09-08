@@ -62,17 +62,16 @@
             <table class="table table-hover" id="tbl_main">
                 <thead>
                     <tr>
-                        <th rowspan="2" class="align-middle text-center">No</th>
-                        <th rowspan="2" class="align-middle text-center">Nama</th>
-                        <th rowspan="2" class="align-middle text-center">Tanggal</th>
-                        <th class="text-center" colspan="3">Barang</th>
-                        <th rowspan="2" class="align-middle text-center">Diubah</th>
-                        {!! $can_delete || $can_update ? '<th rowspan="2" class="align-middle text-center">Aksi</th>' : '' !!}
+                        <th></th>
                     </tr>
                     <tr>
-                        <th>Jumlah</th>
-                        <th>Qty Total</th>
-                        <th>Harga</th>
+                        <th>No</th>
+                        <th>Nama Pengadaan Barang</th>
+                        <th>Tanggal Pengadaan Barang</th>
+                        <th>Jumlah Barang</th>
+                        <th>Harga Barang</th>
+                        <th>Oleh</th>
+                        {!! $can_delete || $can_update ? '<th class="align-middle text-center">Ubah Data</th>' : '' !!}
                     </tr>
                 </thead>
                 <tbody> </tbody>
@@ -93,21 +92,17 @@
                         enctype="multipart/form-data">
                         <input type="hidden" name="id" id="id">
                         <div class="form-group">
-                            <label class="form-label" for="nama">Nama <span class="text-danger">*</span></label>
+                            <label class="form-label" for="nama">Nama Pengadaan Barang<span
+                                    class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="nama" name="nama" placeholder="Nama"
                                 required="" />
                         </div>
 
                         <div class="form-group">
-                            <label class="form-label" for="tanggal">Tanggal<span class="text-danger">*</span></label>
+                            <label class="form-label" for="tanggal">Tanggal Pengadaan Barang<span
+                                    class="text-danger">*</span></label>
                             <input type="datetime-local" class="form-control" id="tanggal" name="tanggal"
                                 placeholder="Tanggal" required="" />
-                        </div>
-
-                        <div class="form-group">
-                            <label class="form-label" for="keterangan">Keterangan </label>
-                            <textarea type="text" class="form-control" rows="3" id="keterangan" name="keterangan"
-                                placeholder="Keterangan"></textarea>
                         </div>
                     </form>
                 </div>
@@ -227,14 +222,6 @@
                     {
                         data: 'barang_jumlah',
                         name: 'barang_jumlah',
-                        className: 'text-nowrap text-right to-link'
-                    },
-                    {
-                        data: 'barang_total_qty',
-                        name: 'barang_total_qty',
-                        render(data, type, full, meta) {
-                            return data ?? 0;
-                        },
                         className: 'text-nowrap text-right to-link'
                     },
                     {

@@ -26,33 +26,16 @@
             </a>
         </div>
         <div class="col-sm-6 col-md-6 col-lg-6 col-xl-3">
-            <a href="{{ route('admin.customer') }}">
-                <div class="card bg-secondary img-card box-secondary-shadow card-main">
-                    <div class="card-body">
-                        <div class="d-flex">
-                            <div class="text-white">
-                                <h2 class="mb-0 number-font">{{ $total->customer }}</h2>
-                                <p class="text-white mb-0">Customer</p>
-                            </div>
-                            <div class="ms-auto">
-                                <i class="fas fa-users text-white fs-30 me-2 mt-2"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </a>
-        </div>
-        <div class="col-sm-6 col-md-6 col-lg-6 col-xl-3">
             <a href="{{ route('admin.penyewaan') }}">
                 <div class="card bg-success img-card box-success-shadow card-main">
                     <div class="card-body">
                         <div class="d-flex">
                             <div class="text-white">
-                                <h2 class="mb-0 number-font">{{ $ringkasan_penyewaan->total_penyewaan }}</h2>
+                                <h2 class="mb-0 number-font">{{ $total->penyewaan }}</h2>
                                 <p class="text-white mb-0">Penyewaan</p>
                             </div>
                             <div class="ms-auto">
-                                <i class="fas fa-box-open text-white fs-30 me-2 mt-2"></i>
+                                <i class="fas fa-sign-out-alt text-white fs-30 me-2 mt-2"></i>
                             </div>
                         </div>
                     </div>
@@ -60,16 +43,16 @@
             </a>
         </div>
         <div class="col-sm-6 col-md-6 col-lg-6 col-xl-3">
-            <a href="{{ route('admin.pembayaran') }}">
-                <div class="card bg-indigo img-card box-indigo-shadow card-main" title="Jumlah semua pembayaran/struk">
+            <a href="{{ route('admin.ganti_rugi') }}">
+                <div class="card bg-danger img-card box-danger-shadow card-main">
                     <div class="card-body">
                         <div class="d-flex">
                             <div class="text-white">
-                                <h2 class="mb-0 number-font">{{ $ringkasan_penyewaan->jml_pembayaran }}</h2>
-                                <p class="text-white mb-0">Pembayaran</p>
+                                <h2 class="mb-0 number-font">{{ $total->ganti_rugi }}</h2>
+                                <p class="text-white mb-0">Pengambilan Barang</p>
                             </div>
                             <div class="ms-auto">
-                                <i class="fas fa-dollar-sign text-white fs-30 me-2 mt-2"></i>
+                                <i class="fas fa-box-open text-white fs-30 me-2 mt-2"></i>
                             </div>
                         </div>
                     </div>
@@ -107,23 +90,6 @@
                         <div class="col">
                             <div class="float-end">
                                 <h4 class="fw-bold mb-0 mt-2 text-blue">{{ $ringkasan_penyewaan->penyewaan_hari_ini }}</h4>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="clearfix row mb-4">
-                        <div class="col">
-                            <div class="float-start">
-                                <a href="{{ route('admin.pembayaran') }}">
-                                    <h5 class="mb-0"><i class="fas fa-dollar-sign me-1"></i>
-                                        <strong>Pembayaran</strong>
-                                    </h5>
-                                </a>
-                                <small class="text-muted">Penyewaan yang belum lunas</small>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="float-end">
-                                <h4 class="fw-bold mt-2 mb-0 text-success">{{ $ringkasan_penyewaan->pembayaran }}</h4>
                             </div>
                         </div>
                     </div>
@@ -212,7 +178,9 @@
             <div class="card">
                 <div class="card-header d-md-flex flex-row justify-content-between">
                     <div>
-                        <h3 class="card-title mb-1">Barang Sewa</h3>
+                        <h3 class="card-title mb-1 text-dark">
+                            <a href="{{ route('admin.barang.sewa') }}"> Barang Sewa</a>
+                        </h3>
                         <small>Barang yang Sering Disewakan </small>
                     </div>
                     <div>
@@ -237,7 +205,9 @@
             <div class="card">
                 <div class="card-header d-md-flex flex-row justify-content-between">
                     <div>
-                        <h3 class="card-title mb-1">Barang Habis Pakai</h3>
+                        <h3 class="card-title mb-1 text-dark">
+                            <a href="{{ route('admin.barang.habis_pakai') }}"> Barang Habis Pakai </a>
+                        </h3>
                         <small>Barang yang Sering Dipakai</small>
                     </div>
                     <div>

@@ -87,9 +87,9 @@
                 <thead>
                     <tr>
                         <th class="text-center">No</th>
-                        <th class="text-center">Nama</th>
+                        <th class="text-center">Nama Barang</th>
                         <th class="text-center">Jumlah Barang Tersedia di Gudang</th>
-                        <th class="text-center">Jumlah Barang Disewakan</th>
+                        <th class="text-center">Jumlah Barang di Disewakan</th>
                         <th class="text-center">Jumlah Barang Total</th>
                         <th class="text-center">Tanggal Pengadaan barang</th>
                     </tr>
@@ -317,8 +317,8 @@
                         className: 'text-nowrap text-right'
                     },
                     {
-                        data: 'created',
-                        name: 'created_at',
+                        data: 'tanggal_pengadaan_str',
+                        name: 'tanggal_pengadaan',
                     },
                     ...(can_update || can_delete ? [{
                         data: 'id',

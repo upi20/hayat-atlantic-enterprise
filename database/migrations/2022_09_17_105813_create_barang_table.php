@@ -20,6 +20,7 @@ return new class extends Migration
             $table->bigInteger('jenis', false, true)->nullable()->default(null);
             $table->bigInteger('satuan', false, true)->nullable()->default(null);
             $table->bigInteger('harga', false, true)->default(0);
+            $table->date('tanggal_pengadaan')->nullable()->default(null);
 
             $table->integer('qty_total')->default(0);
             $table->integer('qty_ada')->default(0);

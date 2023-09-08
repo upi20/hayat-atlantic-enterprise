@@ -95,13 +95,13 @@
                         <input type="hidden" name="id" id="id">
                         <input type="hidden" name="pengadaan" id="pengadaan" value="{{ $model->id }}">
                         <div class="form-group">
-                            <label class="form-label" for="nama">Barang <span class="text-danger">*</span></label>
+                            <label class="form-label" for="nama">Nama Barang <span class="text-danger">*</span></label>
                             <select class="form-control" id="barang" name="barang" style="width: 100%;" required>
                             </select>
                         </div>
 
                         <div class="form-group">
-                            <label class="form-label" for="harga">Harga <span class="text-danger">*</span></label>
+                            <label class="form-label" for="harga">Harga Barang<span class="text-danger">*</span></label>
                             <div class="input-group">
                                 <span class="input-group-text">Rp </span>
                                 <input type="number" min="1" class="form-control" placeholder="Harga"
@@ -112,7 +112,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="form-label" for="qty">Quantity/Jumlah
+                            <label class="form-label" for="qty">Jumlah Barang
                                 <span class="text-danger">*</span></label>
                             <div class="input-group">
                                 <input type="number" min="1" class="form-control" placeholder="Quantity/Jumlah"

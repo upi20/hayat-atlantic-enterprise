@@ -27,7 +27,7 @@
                         <th>Nama Customer</th>
                         <th>Tanggal Sewa</th>
                         <th>Total Harga</th>
-                        <th>Ubah Data</th>
+                        {!! $can_delete || $can_update ? '<th>Ubah Data</th>' : '' !!}
                     </tr>
                 </thead>
                 <tbody> </tbody>
@@ -209,7 +209,7 @@
                         },
                         className: `to-link`
                     },
-                    {
+                    ...(can_update || can_delete ? [{
                         data: 'status',
                         name: 'status',
                         render(data, type, full, meta) {
@@ -226,7 +226,7 @@
                             return status_text + btn_status + btn_update + btn_delete;
                         },
                         className: 'text-nowrap'
-                    },
+                    }] : []),
                 ],
                 order: [
                     [2, 'desc']

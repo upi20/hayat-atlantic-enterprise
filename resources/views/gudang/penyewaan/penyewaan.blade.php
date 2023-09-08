@@ -60,11 +60,9 @@
                     <tr>
                         <th>No</th>
                         <th>Faktur Penyewaan</th>
-                        <th>Tanggal Pemesanan</th>
                         <th>Tanggal Kirim</th>
                         <th>Tanggal Pengambilan Barang</th>
-                        <th>Total Pembayaran</th>
-                        <th>Sisa Pembayaran</th>
+                        <th>Status Barang</th>
                     </tr>
                 </thead>
                 <tbody> </tbody>
@@ -215,11 +213,6 @@
                         name: 'number',
                     },
                     {
-                        data: 'tanggal_order_str',
-                        name: 'tanggal_order_str',
-                        className: 'text-nowrap to-link'
-                    },
-                    {
                         data: 'tanggal_kirim_str',
                         name: 'tanggal_kirim',
                         className: ' to-link'
@@ -230,23 +223,24 @@
                         className: ' to-link'
                     },
                     {
-                        data: 'total_harga',
-                        name: 'total_harga',
+                        data: 'id',
+                        name: 'status',
                         render(data, type, full, meta) {
-                            return 'Rp. ' + format_rupiah(data);
+                            const status = `<i class="fas fa-circle me-1 text-${statusClass(full.status)}"></i>
+                                ${full.status_str}`;
+
+                            // button
+                            let br_counter = 0;
+                            const btn_selesai = (can_selesai &&
+                                (full.status_pembayaran == 1) &&
+                                (full.status == 4) &&
+                                (full.status_ganti_rugi == 2)) ? `<br><button type="button" data-toggle="tooltip" class="btn btn-rounded btn-success btn-sm me-1 mt-1" title="Penyewaan Selesai" onClick="selesaiFunc('${data}')">
+                                <i class="fas fa-check"></i>
+                                </button>` : '';
+
+                            return `${status}`;
                         },
-                        className: ' text-right to-link'
-                    },
-                    {
-                        data: 'sisa',
-                        name: 'sisa',
-                        render(data, type, full, meta) {
-                            const sisa = 'Rp. ' + format_rupiah(data);
-                            const status =
-                                `<i class="fas fa-circle me-1 text-${full.status_pembayaran == 1 ? 'success':'danger'}"></i>${full.status_pembayaran_str}`;
-                            return `${sisa}<br>${status}`;
-                        },
-                        className: ' text-right to-link'
+                        className: ''
                     },
                 ],
                 order: [

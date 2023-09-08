@@ -36,10 +36,10 @@ class BarangHabisPakaiPengadaanTableSeeder extends Seeder
                 'nama' => 'Pelunasan',
                 'keterangan' => NULL,
                 'tanggal' => '2023-07-16 13:03:00',
-                'updated_by' => NULL,
+                'updated_by' => 6,
                 'created_by' => 6,
                 'created_at' => '2023-07-16 13:03:19',
-                'updated_at' => '2023-07-16 13:03:19',
+                'updated_at' => '2023-09-08 21:09:27',
             ),
         ));
         

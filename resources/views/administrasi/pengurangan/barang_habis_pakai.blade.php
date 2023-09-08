@@ -67,7 +67,7 @@
                         <th rowspan="2" class="align-middle text-center">Tanggal</th>
                         <th class="text-center" colspan="2">Barang</th>
                         <th rowspan="2" class="align-middle text-center">Diubah</th>
-                        {!! $can_delete || $can_update ? '<th rowspan="2" class="align-middle text-center">Aksi</th>' : '' !!}
+                        {!! $can_delete || $can_update ? '<th rowspan="2" class="align-middle text-center">Ubah Data</th>' : '' !!}
                     </tr>
                     <tr>
                         <th>Jumlah</th>

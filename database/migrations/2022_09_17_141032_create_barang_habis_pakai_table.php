@@ -22,6 +22,7 @@ return new class extends Migration
             $table->bigInteger('harga', false, true)->default(0);
             $table->integer('qty')->default(0);
             $table->text('keterangan')->nullable()->default(null);
+            $table->date('tanggal_pengadaan')->nullable()->default(null);
             $table->bigInteger('updated_by', false, true)->nullable()->default(null);
             $table->bigInteger('created_by', false, true)->nullable()->default(null);
 

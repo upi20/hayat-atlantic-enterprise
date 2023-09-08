@@ -87,9 +87,9 @@
                 <thead>
                     <tr>
                         <th class="text-center">No</th>
-                        <th class="text-center">Nama</th>
+                        <th class="text-center">Nama Barang</th>
                         <th class="text-center">Jumlah Barang Tersedia di Gudang</th>
-                        <th class="text-center">Tanggal Pengadaan Barang</th>
+                        <th class="text-center">Tanggal Pengadaan barang</th>
                     </tr>
                 </thead>
                 <tbody> </tbody>
@@ -299,9 +299,24 @@
                         className: 'text-nowrap text-right'
                     },
                     {
-                        data: 'created',
-                        name: 'created_at',
+                        data: 'tanggal_pengadaan_str',
+                        name: 'tanggal_pengadaan',
                     },
+                    ...(can_update || can_delete ? [{
+                        data: 'id',
+                        name: 'id',
+                        render(data, type, full, meta) {
+                            const btn_update = can_update ? `<button type="button" data-toggle="tooltip" class="btn btn-rounded btn-primary btn-sm me-1" title="Ubah Data" onClick="editFunc('${data}')">
+                                <i class="fas fa-edit"></i>
+                                </button>` : '';
+                            const btn_delete = can_delete ? `<button type="button" data-toggle="tooltip" class="btn btn-rounded btn-danger btn-sm me-1" title="Hapus Data" onClick="deleteFunc('${data}')">
+                                <i class="fas fa-trash"></i>
+                                </button>` : '';
+                            return btn_update + btn_delete;
+                        },
+                        className: 'text-nowrap',
+                        orderable: false,
+                    }] : []),
                 ],
                 order: [
                     [1, 'asc']

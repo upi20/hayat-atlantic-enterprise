@@ -86,12 +86,12 @@
             <table class="table table-hover" id="tbl_main">
                 <thead>
                     <tr>
-                        <th class="text-nowrap text-center">No</th>
-                        <th class="text-nowrap text-center">Nama</th>
-                        <th class="text-nowrap text-center">Harga</th>
-                        <th class="text-nowrap text-center">Jumlah</th>
-                        <th class="text-nowrap text-center">Keterangan</th>
-                        <th class="text-nowrap text-center">Diubah</th>
+                        <th>No</th>
+                        <th>Nama Barang</th>
+                        <th>Harga Barang</th>
+                        <th>Jumlah Barang</th>
+                        <th>Umur Barang</th>
+                        <th>Oleh</th>
                         {!! $can_delete || $can_update ? '<th>Ubah Data</th>' : '' !!}
                     </tr>
                 </thead>
@@ -115,7 +115,7 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="form-group">
-                                    <label class="form-label" for="nama">Nama <span
+                                    <label class="form-label" for="nama">Nama Barang<span
                                             class="text-danger">*</span></label>
                                     <input type="text" class="form-control" id="nama" name="nama"
                                         placeholder="Nama" required="" />
@@ -123,7 +123,7 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group">
-                                    <label class="form-label" for="kode">Kode <span
+                                    <label class="form-label" for="kode">Kode Barang<span
                                             class="text-danger">*</span></label>
                                     <input type="text" class="form-control" id="kode" name="kode"
                                         placeholder="Kode" required="" />
@@ -132,7 +132,7 @@
 
                             <div class="col-lg-6">
                                 <div class="form-group">
-                                    <label class="form-label" for="harga">Harga <span
+                                    <label class="form-label" for="harga">Harga Barang<span
                                             class="text-danger">*</span></label>
                                     <input type="number" min="1" class="form-control" id="harga"
                                         name="harga" placeholder="Harga" required="" />
@@ -141,7 +141,7 @@
 
                             <div class="col-lg-6">
                                 <div class="form-group">
-                                    <label class="form-label" for="jenis">Jenis <span
+                                    <label class="form-label" for="jenis">Jenis Barang<span
                                             class="text-danger">*</span></label>
                                     <select class="form-control" id="jenis" name="jenis" style="width: 100%;">
                                         @foreach ($jenis as $v)
@@ -154,7 +154,7 @@
 
                             <div class="col-lg-6">
                                 <div class="form-group">
-                                    <label class="form-label" for="satuan">Satuan <span
+                                    <label class="form-label" for="satuan">Satuan Barang<span
                                             class="text-danger">*</span></label>
                                     <select class="form-control" id="satuan" name="satuan" style="width: 100%;">
                                         @foreach ($satuan as $v)
@@ -164,13 +164,12 @@
                                     </select>
                                 </div>
                             </div>
-
-
-                            <div class="col-12">
+                            <div class="col-lg-6">
                                 <div class="form-group">
-                                    <label class="form-label" for="keterangan">Keterangan</label>
-                                    <textarea type="text" class="form-control" rows="3" id="keterangan" name="keterangan"
-                                        placeholder="Keterangan"> </textarea>
+                                    <label class="form-label" for="tanggal_pengadaan">Tanggal Pengadaan Barang
+                                        <span class="text-danger">*</span></label>
+                                    <input type="date" class="form-control date-input-str" id="tanggal_pengadaan"
+                                        name="tanggal_pengadaan" placeholder="Tanggal Pengadaan" required="" />
                                 </div>
                             </div>
                         </div>
@@ -293,7 +292,7 @@
                             <small>${full.kode}</small><br>
                             <small>${full.jenis_str}</small>`;
                         },
-                        className: 'text-nowrap'
+
                     },
                     {
                         data: 'harga',
@@ -312,10 +311,10 @@
                         className: 'text-nowrap text-right'
                     },
                     {
-                        data: 'keterangan',
-                        name: 'keterangan',
+                        data: 'tanggal_pengadaan',
+                        name: 'tanggal_pengadaan',
                         render(data, type, full, meta) {
-                            return `<small>${data??''}</small>`;
+                            return `${full.umur ? full.umur + ' Tahun' : '<small>Tidak ada data Tanggal Pengadan</small>'}`;
                         },
                     },
                     {
@@ -326,7 +325,7 @@
                             const oleh = full.updated_by_str ?? full.created_by_str
                             return `${oleh ??''}<br><small>${tanggal}</small>`;
                         },
-                        className: 'text-nowrap'
+
                     },
                     ...(can_update || can_delete ? [{
                         data: 'id',
@@ -341,7 +340,7 @@
                             return btn_update + btn_delete;
                         },
                         orderable: false,
-                        className: 'text-nowrap'
+
                     }] : []),
                 ],
                 order: [
@@ -436,6 +435,8 @@
             $('#modal-default').modal('show');
             $('#id').val('');
             resetErrorAfterInput();
+            $('#tanggal_pengadaan').val('');
+            render_tanggal('#tanggal_pengadaan');
             isEdit = false;
             return true;
         }
@@ -462,6 +463,8 @@
                     $('#jenis').val(data.jenis).trigger('change');
                     $('#satuan').val(data.satuan).trigger('change');
                     $('#keterangan').val(data.keterangan);
+                    $('#tanggal_pengadaan').val(data.tanggal_pengadaan);
+                    render_tanggal('#tanggal_pengadaan');
                 },
                 error: function(data) {
                     Swal.fire({

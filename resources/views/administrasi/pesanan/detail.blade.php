@@ -84,7 +84,7 @@
                         <div class="form-group">
                             <label class="form-label" for="stok">Total Stok</label>
                             <input type="number" class="form-control" id="stok" name="stok"
-                                placeholder="Total Stok" required readonly />
+                                placeholder="Total Stok" required />
                         </div>
                     </form>
                 </div>

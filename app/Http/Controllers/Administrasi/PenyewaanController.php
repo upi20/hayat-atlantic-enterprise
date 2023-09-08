@@ -68,6 +68,10 @@ class PenyewaanController extends Controller
             $dashboardController = new DashboardController();
             $years = $dashboardController->getYear();
             return view('gm.penyewaan.penyewaan', compact('page_attr', 'years'));
+        } else if (auth_has_role('Kepala Bagian Warehouse')) {
+            $dashboardController = new DashboardController();
+            $years = $dashboardController->getYear();
+            return view('gudang.penyewaan.penyewaan', compact('page_attr', 'years'));
         }
         return view('administrasi.penyewaan.penyewaan', compact('page_attr'));
     }

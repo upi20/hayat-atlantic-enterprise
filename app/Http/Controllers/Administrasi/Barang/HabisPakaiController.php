@@ -55,6 +55,7 @@ class HabisPakaiController extends Controller
             $model->jenis = $request->jenis;
             $model->satuan = $request->satuan;
             $model->harga = $request->harga;
+            $model->tanggal_pengadaan = $request->tanggal_pengadaan;
 
             $model->created_by = auth()->user()->id;
             $model->save();
@@ -81,6 +82,7 @@ class HabisPakaiController extends Controller
             $model->jenis = $request->jenis;
             $model->satuan = $request->satuan;
             $model->harga = $request->harga;
+            $model->tanggal_pengadaan = $request->tanggal_pengadaan;
 
             $model->updated_by = auth()->user()->id;
 
@@ -134,10 +136,12 @@ class HabisPakaiController extends Controller
         $c_created_str = 'created_str';
         $c_updated = 'updated';
         $c_updated_str = 'updated_str';
+        $c_tanggal_pengadaan_str = 'tanggal_pengadaan_str';
         $this->query = array_merge($this->query, $date_format_fun('created_at', '%d-%b-%Y', $c_created));
         $this->query = array_merge($this->query, $date_format_fun('created_at', '%W, %d %M %Y %H:%i:%s', $c_created_str));
         $this->query = array_merge($this->query, $date_format_fun('updated_at', '%d-%b-%Y', $c_updated));
         $this->query = array_merge($this->query, $date_format_fun('updated_at', '%W, %d %M %Y %H:%i:%s', $c_updated_str));
+        $this->query = array_merge($this->query, $date_format_fun('tanggal_pengadaan', '%d-%b-%Y', $c_tanggal_pengadaan_str));
 
         // created_by
         $c_created_by = 'created_by_str';
@@ -161,6 +165,11 @@ class HabisPakaiController extends Controller
         $this->query[$c_satuan] = "$t_satuan.nama";
         $this->query["{$c_satuan}_alias"] = $c_satuan;
 
+        // satuan
+        $c_umur = 'umur';
+        $this->query[$c_umur] = "(DATE_FORMAT(FROM_DAYS(DATEDIFF(NOW(),$table.tanggal_pengadaan)), '%Y') + 0)";
+        $this->query["{$c_umur}_alias"] = $c_umur;
+
         // ========================================================================================================
 
 
@@ -178,6 +187,8 @@ class HabisPakaiController extends Controller
             $c_updated_by,
             $c_jenis,
             $c_satuan,
+            $c_umur,
+            $c_tanggal_pengadaan_str,
         ];
 
         $to_db_raw = array_map(function ($a) use ($sraa) {

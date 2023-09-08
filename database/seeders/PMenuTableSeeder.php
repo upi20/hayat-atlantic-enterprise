@@ -195,11 +195,11 @@ class PMenuTableSeeder extends Seeder
                 'title' => 'Barang Sewa',
                 'icon' => 'fas fa-box',
                 'route' => 'admin.barang.sewa',
-                'sequence' => 17,
+                'sequence' => 23,
                 'active' => 1,
                 'type' => 1,
                 'created_at' => '2022-09-18 21:17:27',
-                'updated_at' => '2023-09-07 13:04:36',
+                'updated_at' => '2023-09-08 20:15:58',
             ),
             14 => 
             array (
@@ -208,11 +208,11 @@ class PMenuTableSeeder extends Seeder
                 'title' => 'Barang Habis Pakai',
                 'icon' => 'fas fa-toolbox',
                 'route' => 'admin.barang.habis_pakai',
-                'sequence' => 18,
+                'sequence' => 24,
                 'active' => 1,
                 'type' => 1,
                 'created_at' => '2022-09-18 21:19:13',
-                'updated_at' => '2023-09-07 13:04:36',
+                'updated_at' => '2023-09-08 20:15:58',
             ),
             15 => 
             array (
@@ -299,11 +299,11 @@ class PMenuTableSeeder extends Seeder
                 'title' => 'Customer',
                 'icon' => 'far fa-id-badge',
                 'route' => 'admin.customer',
-                'sequence' => 4,
+                'sequence' => 3,
                 'active' => 1,
                 'type' => 1,
                 'created_at' => '2022-09-22 22:47:27',
-                'updated_at' => '2023-09-07 13:04:36',
+                'updated_at' => '2023-09-08 20:12:29',
             ),
             22 => 
             array (
@@ -312,11 +312,11 @@ class PMenuTableSeeder extends Seeder
                 'title' => 'Pengadaan Barang',
                 'icon' => 'fas fa-truck',
                 'route' => NULL,
-                'sequence' => 19,
+                'sequence' => 17,
                 'active' => 1,
                 'type' => 1,
                 'created_at' => '2022-09-23 00:08:36',
-                'updated_at' => '2023-09-07 13:04:36',
+                'updated_at' => '2023-09-08 20:15:58',
             ),
             23 => 
             array (
@@ -325,11 +325,11 @@ class PMenuTableSeeder extends Seeder
                 'title' => 'Pengurangan Barang',
                 'icon' => 'fas fa-people-carry',
                 'route' => NULL,
-                'sequence' => 22,
+                'sequence' => 20,
                 'active' => 1,
                 'type' => 1,
                 'created_at' => '2022-09-23 00:09:48',
-                'updated_at' => '2023-09-07 13:04:36',
+                'updated_at' => '2023-09-08 20:15:58',
             ),
             24 => 
             array (
@@ -338,11 +338,11 @@ class PMenuTableSeeder extends Seeder
                 'title' => 'Barang Sewa',
                 'icon' => NULL,
                 'route' => 'admin.barang.pengadaan.sewa',
-                'sequence' => 20,
+                'sequence' => 18,
                 'active' => 1,
                 'type' => 1,
                 'created_at' => '2022-09-23 00:12:16',
-                'updated_at' => '2023-09-07 13:04:36',
+                'updated_at' => '2023-09-08 20:15:58',
             ),
             25 => 
             array (
@@ -351,11 +351,11 @@ class PMenuTableSeeder extends Seeder
                 'title' => 'Barang Habis Pakai',
                 'icon' => NULL,
                 'route' => 'admin.barang.pengadaan.habis_pakai',
-                'sequence' => 21,
+                'sequence' => 19,
                 'active' => 1,
                 'type' => 1,
                 'created_at' => '2022-09-23 00:13:05',
-                'updated_at' => '2023-09-07 13:04:36',
+                'updated_at' => '2023-09-08 20:15:58',
             ),
             26 => 
             array (
@@ -364,11 +364,11 @@ class PMenuTableSeeder extends Seeder
                 'title' => 'Barang Sewa',
                 'icon' => NULL,
                 'route' => 'admin.barang.pengurangan.sewa',
-                'sequence' => 23,
+                'sequence' => 21,
                 'active' => 1,
                 'type' => 1,
                 'created_at' => '2022-09-23 00:14:48',
-                'updated_at' => '2023-09-07 13:04:36',
+                'updated_at' => '2023-09-08 20:15:58',
             ),
             27 => 
             array (
@@ -377,11 +377,11 @@ class PMenuTableSeeder extends Seeder
                 'title' => 'Barang Habis Pakai',
                 'icon' => NULL,
                 'route' => 'admin.barang.pengurangan.habis_pakai',
-                'sequence' => 24,
+                'sequence' => 22,
                 'active' => 1,
                 'type' => 1,
                 'created_at' => '2022-09-23 00:21:11',
-                'updated_at' => '2023-09-07 13:04:36',
+                'updated_at' => '2023-09-08 20:15:58',
             ),
             28 => 
             array (
@@ -390,11 +390,11 @@ class PMenuTableSeeder extends Seeder
                 'title' => 'Penyewaan',
                 'icon' => 'fas fa-box-open',
                 'route' => 'admin.penyewaan',
-                'sequence' => 5,
+                'sequence' => 4,
                 'active' => 1,
                 'type' => 1,
                 'created_at' => '2022-09-25 10:06:57',
-                'updated_at' => '2023-09-07 13:04:36',
+                'updated_at' => '2023-09-08 20:12:29',
             ),
             29 => 
             array (
@@ -403,11 +403,11 @@ class PMenuTableSeeder extends Seeder
                 'title' => 'Pembayaran',
                 'icon' => 'fas fa-dollar-sign',
                 'route' => 'admin.pembayaran',
-                'sequence' => 6,
+                'sequence' => 5,
                 'active' => 1,
                 'type' => 1,
                 'created_at' => '2022-10-01 12:50:57',
-                'updated_at' => '2023-09-07 13:04:36',
+                'updated_at' => '2023-09-08 20:12:29',
             ),
             30 => 
             array (
@@ -416,11 +416,11 @@ class PMenuTableSeeder extends Seeder
                 'title' => 'Pengiriman Barang',
                 'icon' => 'fas fa-sign-out-alt',
                 'route' => 'admin.pengambilan',
-                'sequence' => 7,
+                'sequence' => 6,
                 'active' => 1,
                 'type' => 1,
                 'created_at' => '2022-10-02 14:04:55',
-                'updated_at' => '2023-09-07 13:04:36',
+                'updated_at' => '2023-09-08 20:12:29',
             ),
             31 => 
             array (
@@ -429,11 +429,11 @@ class PMenuTableSeeder extends Seeder
                 'title' => 'Pengembalian Barang',
                 'icon' => 'fas fa-sign-in-alt',
                 'route' => 'admin.pengembalian',
-                'sequence' => 8,
+                'sequence' => 7,
                 'active' => 1,
                 'type' => 1,
                 'created_at' => '2022-10-02 14:09:12',
-                'updated_at' => '2023-09-07 13:04:36',
+                'updated_at' => '2023-09-08 20:12:29',
             ),
             32 => 
             array (
@@ -494,11 +494,24 @@ class PMenuTableSeeder extends Seeder
                 'title' => 'Pesanan',
                 'icon' => 'fas fa-file-alt',
                 'route' => 'admin.pesanan',
-                'sequence' => 3,
+                'sequence' => 2,
                 'active' => 1,
                 'type' => 1,
                 'created_at' => '2023-09-07 13:04:19',
-                'updated_at' => '2023-09-07 13:04:36',
+                'updated_at' => '2023-09-08 20:12:29',
+            ),
+            37 => 
+            array (
+                'id' => 446,
+                'parent_id' => NULL,
+                'title' => 'Pengambilan Barang',
+                'icon' => 'fas fa-sign-in-alt',
+                'route' => 'admin.pengembalian',
+                'sequence' => 8,
+                'active' => 1,
+                'type' => 1,
+                'created_at' => '2023-09-08 20:12:24',
+                'updated_at' => '2023-09-08 20:12:29',
             ),
         ));
         
