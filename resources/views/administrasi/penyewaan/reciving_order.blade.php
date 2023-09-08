@@ -624,7 +624,7 @@
                 e.preventDefault();
                 resetErrorAfterInput();
                 var formData = new FormData(this);
-                setBtnLoading('#btn-save', 'Save Changes');
+                setBtnLoading('#btn-save', 'Simpan');
                 const route = ($('#barang_id').val() == '') ?
                     "{{ url(h_prefix_uri('barang/insert', $pre)) }}" :
                     "{{ url(h_prefix_uri('barang/update', $pre)) }}";

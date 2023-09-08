@@ -5,74 +5,43 @@
         $can_insert = auth_can(h_prefix('insert'));
         $can_update = auth_can(h_prefix('update'));
         $can_delete = auth_can(h_prefix('delete'));
+        $can_status = auth_can(h_prefix('status'));
+        $can_detail = auth_can(h_prefix('detail'));
     @endphp
 
     <div class="card">
         <div class="card-header d-md-flex flex-row justify-content-between">
-            <h3 class="card-title">{{ $page_attr['title'] }}</h3>
-            @if ($can_insert)
+            <h3 class="card-title">
+                Pesanan (Total: <span id="total_harga">Rp. </span>)
+            </h3>
+            <div>
+                <a href="{{ route(h_prefix(min: 2)) }}" class="btn btn-rounded btn-secondary btn-sm">
+                    <i class="fas fa-arrow-left"></i> Kembali
+                </a>
                 <button type="button" class="btn btn-rounded btn-success btn-sm" data-bs-effect="effect-scale"
                     data-bs-toggle="modal" href="#modal-default" onclick="add()" data-target="#modal-default">
                     <i class="fas fa-plus"></i> Tambah
                 </button>
-            @endif
+            </div>
         </div>
         <div class="card-body">
-            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                <div class="panel panel-default active mb-2">
-                    <div class="panel-heading " role="tab" id="headingOne1">
-                        <h4 class="panel-title">
-                            <a role="button" data-bs-toggle="collapse" data-bs-parent="#accordion" href="#collapse1"
-                                aria-expanded="true" aria-controls="collapse1">
-                                Filter Data
-                            </a>
-                        </h4>
-                    </div>
-                    <div id="collapse1" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne1">
-                        <div class="panel-body">
-                            <form action="javascript:void(0)" class="ml-md-3 mb-md-3" id="FilterForm">
-
-                                <div class="form-group float-start me-2" style="min-width: 300px">
-                                    <label for="created_by">Dibuat Oleh</label>
-                                    <br>
-                                    <select class="form-control" id="created_by" name="created_by" style="width: 100%;">
-                                        <option value="" selected>Semua</option>
-                                    </select>
-                                </div>
-
-                                <div class="form-group float-start me-2" style="min-width: 300px">
-                                    <label for="updated_by">Diubah Oleh</label>
-                                    <br>
-                                    <select class="form-control" id="updated_by" name="updated_by" style="width: 100%;">
-                                        <option value="" selected>Semua</option>
-                                    </select>
-                                </div>
-
-                            </form>
-                            <div style="clear: both"></div>
-                            <button type="submit" form="FilterForm" class="btn btn-rounded btn-md btn-info"
-                                data-toggle="tooltip" title="Refresh Filter Table">
-                                <i class="bi bi-arrow-repeat"></i> Terapkan filter
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <table class="table table-hover " id="tbl_main">
+            <table class="table table-hover" id="tbl_main">
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>Nama</th>
-                        <th>Alamat</th>
-                        <th>Oleh</th>
-                        {!! $can_delete || $can_update ? '<th>Ubah Data</th>' : '' !!}
+                        <th>Nama Barang</th>
+                        <th>Jumlah Barang</th>
+                        <th>Jumlah Barang Tersedia di Gudang</th>
+                        <th>Harga Barang</th>
+                        <th>Total Harga Barang</th>
+                        <th>Ubah Data</th>
                     </tr>
                 </thead>
                 <tbody> </tbody>
             </table>
         </div>
     </div>
+
     <!-- End Row -->
     <div class="modal fade" id="modal-default">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -85,28 +54,36 @@
                     <form action="javascript:void(0)" id="MainForm" name="MainForm" method="POST"
                         enctype="multipart/form-data">
                         <input type="hidden" name="id" id="id">
+                        <input type="hidden" name="pesanan_id" id="pesanan_id" value="{{ $model->id }}">
                         <div class="form-group">
-                            <label class="form-label" for="nama">Nama <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="nama" name="nama" placeholder="Nama"
-                                required="" />
+                            <label class="form-label" for="barang">Nama Barang <span class="text-danger">*</span></label>
+                            <select class="form-control select2" id="barang_id" name="barang_id" style="width: 100%"
+                                required>
+                                <option value="">Pilih Barang</option>
+                                @foreach ($barangs as $barang)
+                                    <option value="{{ $barang->id }}">
+                                        {{ $barang->nama }} | {{ $barang->kode }}
+                                    </option>
+                                @endforeach
+                            </select>
                         </div>
 
                         <div class="form-group">
-                            <label class="form-label" for="no_telepon">No Telepon</label>
-                            <input type="text" class="form-control" id="no_telepon" name="no_telepon"
-                                placeholder="No Telepon" />
+                            <label class="form-label" for="qty">Jumlah Barang</label>
+                            <input type="number" class="form-control" id="qty" name="qty" min="1"
+                                placeholder="Jumlah Barang" required />
                         </div>
 
-                        {{-- <div class="form-group">
-                            <label class="form-label" for="no_whatsapp">No Whatsapp</label>
-                            <input type="text" class="form-control" id="no_whatsapp" name="no_whatsapp"
-                                placeholder="No Whatsapp" />
-                        </div> --}}
+                        <div class="form-group">
+                            <label class="form-label" for="harga">Harga Barang</label>
+                            <input type="number" class="form-control" id="harga" name="harga" min="1"
+                                placeholder="Harga Barang" required />
+                        </div>
 
                         <div class="form-group">
-                            <label class="form-label" for="alamat">Alamat <span class="text-danger">*</span></label>
-                            <textarea type="text" class="form-control" rows="3" id="alamat" name="alamat"
-                                placeholder="Alamat"required=""></textarea>
+                            <label class="form-label" for="stok">Total Stok</label>
+                            <input type="number" class="form-control" id="stok" name="stok"
+                                placeholder="Total Stok" required readonly />
                         </div>
                     </form>
                 </div>
@@ -137,42 +114,26 @@
     {{-- sweetalert --}}
     <script src="{{ asset('assets/templates/admin/plugins/sweet-alert/sweetalert2.all.js') }}"></script>
     <script src="{{ asset('assets/templates/admin/plugins/select2/js/select2.full.min.js') }}"></script>
-
     <script>
         const can_update = {{ $can_update ? 'true' : 'false' }};
         const can_delete = {{ $can_delete ? 'true' : 'false' }};
         const table_html = $('#tbl_main');
         let isEdit = true;
+        const barangs = JSON.parse(`{!! str_replace('`', '\\`', $barangs->toJson()) !!}`);
         $(document).ready(function() {
-            $('#created_by').select2({
-                ajax: {
-                    url: "{{ route('member_select2') }}",
-                    type: "POST",
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    data: function(params) {
-                        var query = {
-                            search: params.term,
-                        }
-                        return query;
-                    }
-                }
+            $('.select2').select2({
+                dropdownParent: $('#MainForm'),
             });
-            $('#updated_by').select2({
-                ajax: {
-                    url: "{{ route('member_select2') }}",
-                    type: "POST",
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    data: function(params) {
-                        var query = {
-                            search: params.term,
-                        }
-                        return query;
-                    }
+
+            $('#barang_id').on('select2:select', function(e) {
+                const barang = barangs.find(e => e.id == this.value);
+                if (barang == undefined) {
+                    $('#stok').val(``);
+                    $('#harga').val('');
+                    return;
                 }
+                $('#stok').val(barang.qty_ada);
+                $('#harga').val(barang.harga);
             });
 
             // datatable ====================================================================================
@@ -191,10 +152,15 @@
                 bAutoWidth: false,
                 type: 'GET',
                 ajax: {
-                    url: "{{ route(h_prefix()) }}",
+                    url: "{{ route(h_prefix('datatable', min: 1)) }}",
                     data: function(d) {
-                        d['filter[updated_by]'] = $('#updated_by').val();
-                        d['filter[created_by]'] = $('#created_by').val();
+                        d['filter[pesanan_id]'] = $('#pesanan_id').val();
+                    },
+                    complete: (res) => {
+                        if (res.status == 200) {
+                            const data = res.responseJSON;
+                            $('#total_harga').html('Rp. ' + format_rupiah(data.total_harga));
+                        }
                     }
                 },
                 columns: [{
@@ -203,30 +169,30 @@
                         orderable: false,
                     },
                     {
-                        data: 'nama',
-                        name: 'nama',
+                        data: 'barang_nama',
+                        name: 'barang_nama',
+                    },
+                    {
+                        data: 'qty',
+                        name: 'qty',
+                    },
+                    {
+                        data: 'stok',
+                        name: 'stok',
+                    },
+                    {
+                        data: 'harga',
+                        name: 'harga',
                         render(data, type, full, meta) {
-                            return `<span class="fw-bold">${data}</span><br>
-                            <i class="fas fa-phone me-1"></i><a href="tel:${full.no_telepon}" target="_blank">${full.no_telepon}</a>`;
-                            // <i class="fab fa-whatsapp me-1"></i><a href="https://wa.me/${getNoWa(full.no_whatsapp)}" target="_blank">${full.no_whatsapp}</a>
+                            return 'Rp. ' + format_rupiah(data);
                         }
                     },
                     {
-                        data: 'alamat',
-                        name: 'alamat',
+                        data: 'total_harga',
+                        name: 'total_harga',
                         render(data, type, full, meta) {
-                            return `<small>${data}</small>`;
+                            return 'Rp. ' + format_rupiah(data);
                         }
-                    },
-                    {
-                        data: 'updated',
-                        name: 'updated_by_str',
-                        render(data, type, full, meta) {
-                            const tanggal = data ?? full.created;
-                            const oleh = full.updated_by_str ?? full.created_by_str
-                            return `${oleh}<br><small>${tanggal}</small>`;
-                        },
-                        className: 'text-nowrap'
                     },
                     ...(can_update || can_delete ? [{
                         data: 'id',
@@ -258,15 +224,7 @@
                 }).nodes().each(function(cell, i) {
                     cell.innerHTML = i + 1 + PageInfo.start;
                 });
-                tooltip_refresh();
             });
-
-            $('#FilterForm').submit(function(e) {
-                e.preventDefault();
-                var oTable = table_html.dataTable();
-                oTable.fnDraw(false);
-            });
-
 
             // insertForm ===================================================================================
             $('#MainForm').submit(function(e) {
@@ -275,8 +233,8 @@
                 var formData = new FormData(this);
                 setBtnLoading('#btn-save', 'Simpan');
                 const route = ($('#id').val() == '') ?
-                    "{{ route(h_prefix('insert')) }}" :
-                    "{{ route(h_prefix('update')) }}";
+                    "{{ route(h_prefix('insert', 1)) }}" :
+                    "{{ route(h_prefix('update', 1)) }}";
                 $.ajax({
                     type: "POST",
                     url: route,
@@ -327,7 +285,7 @@
         function add() {
             if (!isEdit) return false;
             $('#MainForm').trigger("reset");
-            $('#modal-default-title').html("Tambah {{ $page_attr['title'] }}");
+            $('#modal-default-title').html("Tambah Barang");
             $('#modal-default').modal('show');
             $('#id').val('');
             resetErrorAfterInput();
@@ -339,7 +297,7 @@
             $.LoadingOverlay("show");
             $.ajax({
                 type: "GET",
-                url: `{{ route(h_prefix('find')) }}`,
+                url: `{{ route(h_prefix('find', 1)) }}`,
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
@@ -348,13 +306,14 @@
                 },
                 success: (data) => {
                     isEdit = true;
-                    $('#modal-default-title').html("Ubah {{ $page_attr['title'] }}");
+                    $('#modal-default-title').html("Ubah Barang");
                     $('#modal-default').modal('show');
                     $('#id').val(data.id);
-                    $('#nama').val(data.nama);
-                    $('#no_telepon').val(data.no_telepon);
-                    $('#no_whatsapp').val(data.no_whatsapp);
-                    $('#alamat').val(data.alamat);
+                    $('#pesanan_id').val(data.pesanan_id);
+                    $('#barang_id').val(data.barang_id).trigger('change');
+                    $('#qty').val(data.qty);
+                    $('#harga').val(data.harga);
+                    $('#stok').val(data.stok);
                 },
                 error: function(data) {
                     Swal.fire({
@@ -382,7 +341,7 @@
             }).then(function(result) {
                 if (result.value) {
                     $.ajax({
-                        url: `{{ url(h_prefix_uri()) }}/${id}`,
+                        url: `{{ url(h_prefix_uri('detail_delete', 2)) }}/${id}`,
                         type: 'DELETE',
                         dataType: 'json',
                         headers: {
@@ -401,7 +360,7 @@
                             Swal.fire({
                                 position: 'center',
                                 icon: 'success',
-                                title: '{{ $page_attr['title'] }} berhasil dihapus',
+                                title: 'Barang berhasil dihapus',
                                 showConfirmButton: false,
                                 timer: 1500
                             })
@@ -418,13 +377,6 @@
                     });
                 }
             });
-        }
-
-        function getNoWa(no_wa) {
-            no_wa = String(no_wa);
-            if (no_wa[0] == 8) return `62${no_wa}`;
-            if (no_wa[0] == 0) return `62${no_wa.substring(1)}`;
-            return no_wa;
         }
     </script>
 @endsection

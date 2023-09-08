@@ -692,7 +692,7 @@
                     e.preventDefault();
                     resetErrorAfterInput();
                     var formData = new FormData(this);
-                    setBtnLoading('[form=UangMainForm][type=submit]', 'Save Changes');
+                    setBtnLoading('[form=UangMainForm][type=submit]', 'Simpan');
                     $.ajax({
                         type: "POST",
                         url: "{{ route(h_prefix('uang.insert', 2)) }}",
@@ -747,7 +747,7 @@
                     e.preventDefault();
                     resetErrorAfterInput();
                     var formData = new FormData(this);
-                    setBtnLoading('button[form=UangBatalkanForm]', 'Save Changes');
+                    setBtnLoading('button[form=UangBatalkanForm]', 'Simpan');
                     $.ajax({
                         type: "POST",
                         url: "{{ route(h_prefix('uang.batalkan', 2)) }}",
@@ -1018,7 +1018,7 @@
                     e.preventDefault();
                     resetErrorAfterInput();
                     var formData = new FormData(this);
-                    setBtnLoading('[form=BarangMainForm][type=submit]', 'Save Changes');
+                    setBtnLoading('[form=BarangMainForm][type=submit]', 'Simpan');
                     $.ajax({
                         type: "POST",
                         url: "{{ route(h_prefix('barang.insert', 2)) }}",
@@ -1073,7 +1073,7 @@
                     e.preventDefault();
                     resetErrorAfterInput();
                     var formData = new FormData(this);
-                    setBtnLoading('button[form=BarangBatalkanForm]', 'Save Changes');
+                    setBtnLoading('button[form=BarangBatalkanForm]', 'Simpan');
                     $.ajax({
                         type: "POST",
                         url: "{{ route(h_prefix('barang.batalkan', 2)) }}",

@@ -169,4 +169,14 @@ class Pesanan extends Model
         // create datatable
         return $datatable->make(true);
     }
+
+    public static function refreshTotalHarga(int $id)
+    {
+        $total = PesananBarang::selectRaw('SUM(qty * harga) as total_harga')->wherePesananId($id)->first();
+        $total = $total->total_harga ?? 0;
+
+        $pesanan = static::find($id);
+        $pesanan->total_harga = $total;
+        $pesanan->save();
+    }
 }

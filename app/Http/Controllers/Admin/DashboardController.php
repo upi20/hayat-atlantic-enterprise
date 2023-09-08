@@ -12,6 +12,7 @@ use App\Models\GantiRugi;
 use App\Models\Penyewaan;
 use App\Models\PenyewaanBarang;
 use App\Models\PenyewaanPembayaran;
+use App\Models\Pesanan;
 use App\Models\SuratJalan;
 use App\Models\SuratJalanBarang;
 use App\Models\SuratJalanBarangHabisPakai;
@@ -49,10 +50,8 @@ class DashboardController extends Controller
         $t_model_has_roles = $tableNames['model_has_roles'];
 
         $total = collect();
-        // total penyewaan
-        $total->penyewaan = Penyewaan::where('status', '<>', '0')
-            ->where('status', '<>', '9')
-            ->count();
+        // total pesanan
+        $total->pesanan = Pesanan::count();
 
         // total customer
         $total->customer = Customer::count();

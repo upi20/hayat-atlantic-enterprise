@@ -314,7 +314,7 @@
                 e.preventDefault();
                 resetErrorAfterInput();
                 var formData = new FormData(this);
-                setBtnLoading('#btn-save', 'Save Changes');
+                setBtnLoading('#btn-save', 'Simpan');
                 const route = ($('#id').val() == '') ?
                     "{{ route(h_prefix('insert')) }}" :
                     "{{ route(h_prefix('update')) }}";

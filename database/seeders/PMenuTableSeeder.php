@@ -443,10 +443,10 @@ class PMenuTableSeeder extends Seeder
                 'icon' => NULL,
                 'route' => NULL,
                 'sequence' => 2,
-                'active' => 1,
+                'active' => 0,
                 'type' => 0,
                 'created_at' => '2022-10-03 08:07:56',
-                'updated_at' => '2022-10-03 08:12:43',
+                'updated_at' => '2023-09-08 10:41:24',
             ),
             33 => 
             array (

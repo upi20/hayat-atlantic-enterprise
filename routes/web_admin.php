@@ -615,6 +615,14 @@ Route::prefix($prefix)->controller(PesananController::class)->group(function () 
     Route::post('/status', 'status')->name("$name.status")->middleware("permission:$name.status");
     Route::get('/find', 'find')->name("$name.find")->middleware("permission:$name");
     Route::delete('/{model}', 'delete')->name("$name.delete")->middleware("permission:$name.delete");
+
+    // detail
+    Route::get('/detail/datatable', 'detail_datatable')->name("$name.detail.datatable")->middleware("permission:$name.detail");
+    Route::post('/detail/insert', 'detail_insert')->name("$name.detail.insert")->middleware("permission:$name.detail.insert");
+    Route::post('/detail/update', 'detail_update')->name("$name.detail.update")->middleware("permission:$name.detail.update");
+    Route::get('/detail/find', 'detail_find')->name("$name.detail.find")->middleware("permission:$name");
+    Route::get('/detail/{model}', 'detail')->name("$name.detail")->middleware("permission:$name.detail");
+    Route::delete('/detail_delete/{model}', 'detail_delete')->name("$name.detail.delete")->middleware("permission:$name.detail.delete");
 });
 
 $prefix = "pembayaran";

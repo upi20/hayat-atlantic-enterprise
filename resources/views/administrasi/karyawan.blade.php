@@ -356,7 +356,7 @@
             $('#UserForm').submit(function(e) {
                 e.preventDefault();
                 var formData = new FormData(this);
-                setBtnLoading('#btn-save', 'Save Changes');
+                setBtnLoading('#btn-save', 'Simpan');
                 resetErrorAfterInput();
                 const route = ($('#id').val() == '') ? "{{ route(h_prefix('insert')) }}" :
                     "{{ route(h_prefix('update')) }}";

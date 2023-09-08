@@ -530,7 +530,7 @@
                 e.preventDefault();
                 resetErrorAfterInput();
                 var formData = new FormData(this);
-                setBtnLoading('#btn-save', 'Save Changes');
+                setBtnLoading('#btn-save', 'Simpan');
                 $.ajax({
                     type: "POST",
                     url: "{{ route(h_prefix('insert', 2)) }}",
@@ -581,7 +581,7 @@
                 e.preventDefault();
                 resetErrorAfterInput();
                 var formData = new FormData(this);
-                setBtnLoading('button[form=BatalkanForm]', 'Save Changes');
+                setBtnLoading('button[form=BatalkanForm]', 'Simpan');
                 $.ajax({
                     type: "POST",
                     url: "{{ route(h_prefix('batalkan', 2)) }}",

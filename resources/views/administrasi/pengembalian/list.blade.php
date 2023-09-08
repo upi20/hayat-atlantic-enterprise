@@ -408,7 +408,7 @@
                 e.preventDefault();
                 resetErrorAfterInput();
                 var formData = new FormData(this);
-                setBtnLoading('[form=BarangHabisPakaiForm][type=submit]', 'Save Changes');
+                setBtnLoading('[form=BarangHabisPakaiForm][type=submit]', 'Simpan');
                 const route = ($('#id').val() == '') ?
                     "{{ route(h_prefix('barang_habis_pakai.insert', 2)) }}" :
                     "{{ route(h_prefix('barang_habis_pakai.update', 2)) }}";

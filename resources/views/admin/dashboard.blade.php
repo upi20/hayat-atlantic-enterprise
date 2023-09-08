@@ -8,12 +8,13 @@
     <!-- ROW OPEN -->
     <div class="row">
         <div class="col-sm-6 col-md-6 col-lg-6 col-xl-3">
-            <a href="{{ route('admin.penyewaan') }}">
-                <div class="card bg-primary img-card box-primary-shadow card-main">
+            <a href="{{ route('admin.pesanan') }}">
+                <div data-toggle="tooltip" class="card bg-primary img-card box-primary-shadow card-main"
+                    title="Jumlah Pesanan Dibuat">
                     <div class="card-body">
                         <div class="d-flex">
                             <div class="text-white">
-                                <h2 class="mb-0 number-font">{{ $total->penyewaan }}</h2>
+                                <h2 class="mb-0 number-font">{{ $total->pesanan }}</h2>
                                 <p class="text-white mb-0">Pesanan</p>
                             </div>
                             <div class="ms-auto">

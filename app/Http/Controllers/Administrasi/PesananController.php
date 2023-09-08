@@ -3,55 +3,23 @@
 namespace App\Http\Controllers\Administrasi;
 
 use App\Http\Controllers\Controller;
-use App\Models\Barang\HabisPakai;
-use App\Models\Barang\HabisPakai\Pengadaan as HabisPakaiPengadaan;
-use App\Models\Barang\HabisPakai\PengadaanList as HabisPakaiPengadaanList;
-use App\Models\Barang\HabisPakai\Pengurangan as HabisPakaiPengurangan;
-use App\Models\Barang\HabisPakai\PenguranganList as HabisPakaiPenguranganList;
-use App\Models\Barang\Jenis;
-use App\Models\Barang\Satuan;
 use App\Models\Barang\Sewa;
-use App\Models\Barang\Sewa\Pengadaan;
-use App\Models\Barang\Sewa\PengadaanList;
-use App\Models\Barang\Sewa\Pengurangan;
-use App\Models\Barang\Sewa\PenguranganList;
 use App\Models\Customer;
-use App\Models\Faktur;
-use App\Models\GantiRugi;
-use App\Models\Penyewaan;
-use App\Models\PenyewaanBarang;
-use App\Models\PenyewaanPembayaran;
 use App\Models\Pesanan;
 use App\Models\PesananBarang;
-use App\Models\SuratJalan;
-use App\Models\User;
 use Illuminate\Http\Request;
 use League\Config\Exception\ValidationException;
 use Illuminate\Support\Facades\DB;
-use Yajra\Datatables\Datatables;
 
 class PesananController extends Controller
 {
     private $validate_model = [
-        'customer' => ['required', 'int'],
-        'lokasi' => ['required', 'string'],
-        'kepada' => ['required', 'string'],
-        'tanggal_pakai_dari' => ['required', 'date'],
-        'tanggal_pakai_sampai' => ['required', 'date'],
-        'tanggal_kirim' => ['required', 'date'],
-        'tanggal_order' => ['required', 'string'],
-        'durasi_pakai' => ['required', 'int'],
+        'pesanan_id' => ['required', 'int'],
+        'barang_id' => ['required', 'int'],
+        'qty' => ['required', 'int'],
+        'harga' => ['required', 'int'],
+        'stok' => ['required', 'int'],
     ];
-
-    private $validate_model_barang = [
-        'penyewaan' => ['required', 'int'],
-        'barang' => ['required', 'int'],
-        'keterangan' => ['nullable', 'string'],
-        'harga' => ['required', 'int', 'min:1', 'max:9999999999'],
-        'qty' => ['required', 'int', 'min:1', 'max:9999999999'],
-    ];
-
-    private $query = [];
 
     public function index(Request $request)
     {
@@ -177,6 +145,121 @@ class PesananController extends Controller
 
             // delete model
             $model->delete();
+            DB::commit();
+            return response()->json($model);
+        } catch (ValidationException $error) {
+            return response()->json([
+                'message' => 'Something went wrong',
+                'error' => $error,
+            ], 500);
+        }
+    }
+
+    public function detail(Pesanan $model): mixed
+    {
+        $page_attr = [
+            'title' => 'Pesanan Detail',
+            'breadcrumbs' => [
+                ['name' => 'Dashboard'],
+                ['name' => 'Pesanan', 'url' => h_prefix(min: 2)],
+            ]
+        ];
+
+        $customers = Customer::orderBy('nama')->get();
+        $barangs = Sewa::with(['getSatuan'])->orderBy('nama')->get();
+        return view('administrasi.pesanan.detail', compact('page_attr', 'customers', 'barangs', 'model'));
+    }
+
+    public function detail_datatable(Request $request)
+    {
+        return PesananBarang::datatable($request);
+    }
+
+    public function detail_insert(Request $request): mixed
+    {
+        try {
+            $request->validate($this->validate_model);
+
+            $cek = PesananBarang::whereBarangId($request->barang_id)->wherePesananId($request->pesanan_id)->count();
+            if ($cek > 0) return response()->json(['message' => 'Barang Sudah Ada',], 400);
+
+            DB::beginTransaction();
+            $model = new PesananBarang();
+            $model->pesanan_id = $request->pesanan_id;
+            $model->barang_id = $request->barang_id;
+            $model->qty = $request->qty;
+            $model->harga = $request->harga;
+            $model->stok = $request->stok;
+            $model->updated_by = auth()->user()->id;
+            $model->save();
+
+            // refresh total harga
+            Pesanan::refreshTotalHarga($request->pesanan_id);
+
+            DB::commit();
+            return response()->json($model);
+        } catch (ValidationException $error) {
+            return response()->json([
+                'message' => 'Something went wrong',
+                'error' => $error,
+            ], 500);
+        }
+    }
+
+    public function detail_update(Request $request): mixed
+    {
+        try {
+            $request->validate($this->validate_model);
+
+            $model = PesananBarang::find($request->id);
+            if ($model->barang_id != $request->barang_id) {
+                $cek = PesananBarang::whereBarangId($request->barang_id)->wherePesananId($request->pesanan_id)->count();
+                if ($cek > 0) return response()->json(['message' => 'Barang Sudah Ada',], 400);
+            }
+
+            DB::beginTransaction();
+            $model->pesanan_id = $request->pesanan_id;
+            $model->barang_id = $request->barang_id;
+            $model->qty = $request->qty;
+            $model->harga = $request->harga;
+            $model->stok = $request->stok;
+            $model->updated_by = auth()->user()->id;
+            $model->save();
+
+            // refresh total harga
+            Pesanan::refreshTotalHarga($request->pesanan_id);
+
+            DB::commit();
+            return response()->json($model);
+        } catch (ValidationException $error) {
+            return response()->json([
+                'message' => 'Something went wrong',
+                'error' => $error,
+            ], 500);
+        }
+    }
+
+    public function detail_find(Request $request): mixed
+    {
+        try {
+            return PesananBarang::findOrFail($request->id);
+        } catch (ValidationException $error) {
+            return response()->json([
+                'message' => 'Something went wrong',
+                'error' => $error,
+            ], 500);
+        }
+    }
+
+    public function detail_delete(PesananBarang $model): mixed
+    {
+        try {
+            DB::beginTransaction();
+            $pesanan_id = $model->pesanan_id;
+            $model->delete();
+
+            Pesanan::refreshTotalHarga($pesanan_id);
+
             DB::commit();
             return response()->json($model);
         } catch (ValidationException $error) {

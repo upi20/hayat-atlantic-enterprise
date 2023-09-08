@@ -6,6 +6,7 @@
         $can_update = auth_can(h_prefix('update'));
         $can_delete = auth_can(h_prefix('delete'));
         $can_status = auth_can(h_prefix('status'));
+        $can_detail = auth_can(h_prefix('detail'));
     @endphp
 
     <div class="card">
@@ -157,6 +158,7 @@
         const can_update = {{ $can_update ? 'true' : 'false' }};
         const can_delete = {{ $can_delete ? 'true' : 'false' }};
         const can_status = {{ $can_status ? 'true' : 'false' }};
+        const can_detail = {{ $can_detail ? 'true' : 'false' }};
         const table_html = $('#tbl_main');
         let stores = [];
         let isEdit = true;
@@ -183,24 +185,27 @@
                     }
                 },
                 columns: [{
-                        data: null,
+                        data: 'id',
                         name: 'id',
                         orderable: false,
                     },
                     {
                         data: 'customer_nama',
-                        name: 'customer_nama'
+                        name: 'customer_nama',
+                        className: `to-link`
                     },
                     {
                         data: 'tanggal',
-                        name: 'tanggal_pakai_dari'
+                        name: 'tanggal_pakai_dari',
+                        className: `to-link`
                     },
                     {
                         data: 'total_harga',
                         name: 'total_harga',
                         render(data, type, full, meta) {
                             return 'Rp. ' + format_rupiah(data ?? 0);
-                        }
+                        },
+                        className: `to-link`
                     },
                     {
                         data: 'status',
@@ -208,13 +213,13 @@
                         render(data, type, full, meta) {
                             const status_text =
                                 `<span class="text-nowrap"><i class="fas fa-circle me-1 text-${full.status_class}"></i> ${full.status_str}</span><br>`;
-                            const btn_status = can_status && full.status == 1 ? `<button type="button" data-toggle="tooltip" class="btn btn-rounded btn-success btn-sm me-1" title="Terima Pesanan" onClick="setStatus('${data}', 2)">
+                            const btn_status = can_status && full.status == 1 ? `<button type="button" data-toggle="tooltip" class="btn btn-rounded btn-success btn-sm me-1" title="Terima Pesanan" onClick="setStatus('${full.id}', 2)">
                                 <i class="fas fa-check"></i>
                                 </button>` : '';
-                            const btn_update = can_update ? `<button type="button" data-toggle="tooltip" class="btn btn-rounded btn-primary btn-sm me-1" title="Ubah Data" onClick="editFunc('${data}')">
+                            const btn_update = can_update ? `<button type="button" data-toggle="tooltip" class="btn btn-rounded btn-primary btn-sm me-1" title="Ubah Data" onClick="editFunc('${full.id}')">
                                 <i class="fas fa-edit"></i>
                                 </button>` : '';
-                            const btn_delete = can_delete ? `<button type="button" class="btn btn-rounded btn-danger btn-sm me-1" data-toggle="tooltip" title="Hapus Data" onClick="deleteFunc('${data}')">
+                            const btn_delete = can_delete ? `<button type="button" class="btn btn-rounded btn-danger btn-sm me-1" data-toggle="tooltip" title="Hapus Data" onClick="deleteFunc('${full.id}')">
                                 <i class="fas fa-trash"></i> </button>` : '';
                             return status_text + btn_status + btn_update + btn_delete;
                         },
@@ -235,7 +240,15 @@
                 new_table.column(0, {
                     page: 'current'
                 }).nodes().each(function(cell, i) {
+                    var id = cell.innerHTML;
                     cell.innerHTML = i + 1 + PageInfo.start;
+                    if (can_detail) {
+                        var link =
+                            `window.location.href = '{{ url(h_prefix_uri('detail')) }}/${id}'`
+                        var ele = $(cell).parent().find('.to-link');
+                        ele.css('cursor', 'pointer');
+                        ele.attr("onclick", link);
+                    }
                 });
             });
 
@@ -277,7 +290,7 @@
                 var formData = new FormData(this);
                 formData.append('datas', JSON.stringify(stores));
                 formData.append('total_harga', total_harga);
-                setBtnLoading('#btn-save', 'Save Changes');
+                setBtnLoading('#btn-save', 'Simpan');
                 const route = ($('#id').val() == '') ?
                     "{{ route(h_prefix('insert')) }}" :
                     "{{ route(h_prefix('update')) }}";
