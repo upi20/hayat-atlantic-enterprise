@@ -393,6 +393,28 @@ class UsersTableSeeder extends Seeder
                 'updated_by' => 1,
                 'created_by' => NULL,
             ),
+            17 => 
+            array (
+                'id' => 18,
+                'name' => 'General Manager',
+                'email' => NULL,
+                'no_telepon' => '123',
+                'nik' => '0000001',
+                'jenis_kelamin' => 'l',
+                'email_verified_at' => NULL,
+                'password' => '$2y$10$fGyajfAv7mxdHec7qD8iNeCqkZJFS9CrvRDRepEbia30fymigjD1S',
+                'two_factor_secret' => NULL,
+                'two_factor_recovery_codes' => NULL,
+                'two_factor_confirmed_at' => NULL,
+                'remember_token' => NULL,
+                'current_team_id' => NULL,
+                'profile_photo_path' => NULL,
+                'active' => 1,
+                'created_at' => '2023-09-08 16:39:20',
+                'updated_at' => '2023-09-08 16:39:20',
+                'updated_by' => NULL,
+                'created_by' => 1,
+            ),
         ));
         
         

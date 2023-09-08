@@ -82,10 +82,10 @@ class PRolesTableSeeder extends Seeder
             6 => 
             array (
                 'id' => 7,
-                'name' => 'Kepala Bagian Warehouse',
+                'name' => 'Kepala Bagian Gudang',
                 'guard_name' => 'web',
                 'created_at' => '2022-09-15 08:27:24',
-                'updated_at' => '2022-09-15 08:27:24',
+                'updated_at' => '2023-09-08 16:41:00',
                 'updated_by' => NULL,
                 'created_by' => NULL,
             ),

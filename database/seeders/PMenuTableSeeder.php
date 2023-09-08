@@ -437,19 +437,6 @@ class PMenuTableSeeder extends Seeder
             ),
             32 => 
             array (
-                'id' => 439,
-                'parent_id' => NULL,
-                'title' => 'Menu Penyewaan',
-                'icon' => NULL,
-                'route' => NULL,
-                'sequence' => 2,
-                'active' => 0,
-                'type' => 0,
-                'created_at' => '2022-10-03 08:07:56',
-                'updated_at' => '2023-09-08 10:41:24',
-            ),
-            33 => 
-            array (
                 'id' => 440,
                 'parent_id' => NULL,
                 'title' => 'Menu Data Barang',
@@ -461,7 +448,7 @@ class PMenuTableSeeder extends Seeder
                 'created_at' => '2022-10-03 08:09:26',
                 'updated_at' => '2023-09-07 13:04:36',
             ),
-            34 => 
+            33 => 
             array (
                 'id' => 441,
                 'parent_id' => NULL,
@@ -474,7 +461,7 @@ class PMenuTableSeeder extends Seeder
                 'created_at' => '2022-10-03 08:11:55',
                 'updated_at' => '2023-09-07 13:04:36',
             ),
-            35 => 
+            34 => 
             array (
                 'id' => 442,
                 'parent_id' => NULL,
@@ -487,7 +474,7 @@ class PMenuTableSeeder extends Seeder
                 'created_at' => '2022-10-17 00:18:29',
                 'updated_at' => '2023-09-07 13:04:36',
             ),
-            36 => 
+            35 => 
             array (
                 'id' => 444,
                 'parent_id' => 420,
@@ -500,7 +487,7 @@ class PMenuTableSeeder extends Seeder
                 'created_at' => '2022-11-07 20:52:22',
                 'updated_at' => '2023-09-07 13:04:36',
             ),
-            37 => 
+            36 => 
             array (
                 'id' => 445,
                 'parent_id' => NULL,

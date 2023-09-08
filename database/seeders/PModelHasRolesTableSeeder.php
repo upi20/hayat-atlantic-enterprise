@@ -51,71 +51,77 @@ class PModelHasRolesTableSeeder extends Seeder
             ),
             5 => 
             array (
-                'role_id' => 7,
+                'role_id' => 6,
                 'model_type' => 'App\\Models\\User',
-                'model_id' => 6,
+                'model_id' => 18,
             ),
             6 => 
             array (
-                'role_id' => 8,
+                'role_id' => 7,
                 'model_type' => 'App\\Models\\User',
-                'model_id' => 7,
+                'model_id' => 6,
             ),
             7 => 
             array (
                 'role_id' => 8,
                 'model_type' => 'App\\Models\\User',
-                'model_id' => 8,
+                'model_id' => 7,
             ),
             8 => 
             array (
                 'role_id' => 8,
                 'model_type' => 'App\\Models\\User',
-                'model_id' => 9,
+                'model_id' => 8,
             ),
             9 => 
             array (
                 'role_id' => 8,
                 'model_type' => 'App\\Models\\User',
-                'model_id' => 10,
+                'model_id' => 9,
             ),
             10 => 
             array (
                 'role_id' => 8,
                 'model_type' => 'App\\Models\\User',
-                'model_id' => 11,
+                'model_id' => 10,
             ),
             11 => 
             array (
                 'role_id' => 8,
                 'model_type' => 'App\\Models\\User',
-                'model_id' => 12,
+                'model_id' => 11,
             ),
             12 => 
             array (
                 'role_id' => 8,
                 'model_type' => 'App\\Models\\User',
-                'model_id' => 13,
+                'model_id' => 12,
             ),
             13 => 
+            array (
+                'role_id' => 8,
+                'model_type' => 'App\\Models\\User',
+                'model_id' => 13,
+            ),
+            14 => 
             array (
                 'role_id' => 9,
                 'model_type' => 'App\\Models\\User',
                 'model_id' => 14,
             ),
-            14 => 
+            15 => 
             array (
                 'role_id' => 10,
                 'model_type' => 'App\\Models\\User',
                 'model_id' => 15,
             ),
-            15 => 
+            16 => 
             array (
                 'role_id' => 10,
                 'model_type' => 'App\\Models\\User',
                 'model_id' => 16,
             ),
-            16 => 
+            17 => 
             array (
                 'role_id' => 10,
                 'model_type' => 'App\\Models\\User',

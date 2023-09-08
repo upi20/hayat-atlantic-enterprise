@@ -37,13 +37,13 @@ class PesananBarangTableSeeder extends Seeder
                 'id' => 35,
                 'pesanan_id' => 8,
                 'barang_id' => 43,
-                'qty' => 1,
+                'qty' => 11,
                 'stok' => 0,
                 'harga' => 15000,
-                'updated_by' => 1,
+                'updated_by' => 5,
                 'created_by' => NULL,
                 'created_at' => '2023-09-08 15:56:08',
-                'updated_at' => '2023-09-08 15:56:08',
+                'updated_at' => '2023-09-08 16:48:24',
             ),
             2 => 
             array (

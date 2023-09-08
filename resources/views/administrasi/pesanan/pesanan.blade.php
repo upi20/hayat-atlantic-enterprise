@@ -12,10 +12,12 @@
     <div class="card">
         <div class="card-header d-md-flex flex-row justify-content-between">
             <h3 class="card-title">{{ $page_attr['title'] }}</h3>
-            <button type="button" class="btn btn-rounded btn-success btn-sm" data-bs-effect="effect-scale"
-                data-bs-toggle="modal" href="#modal-default" onclick="addPesanan()" data-target="#modal-default">
-                <i class="fas fa-plus"></i> Tambah Pesanan
-            </button>
+            @if ($can_insert)
+                <button type="button" class="btn btn-rounded btn-success btn-sm" data-bs-effect="effect-scale"
+                    data-bs-toggle="modal" href="#modal-default" onclick="addPesanan()" data-target="#modal-default">
+                    <i class="fas fa-plus"></i> Tambah Pesanan
+                </button>
+            @endif
         </div>
         <div class="card-body">
             <table class="table table-hover" id="tbl_main">

@@ -1277,27 +1277,19 @@ class PRoleHasMenuTableSeeder extends Seeder
             ),
             157 => 
             array (
-                'id' => 346,
+                'id' => 349,
                 'role_id' => 1,
                 'menu_id' => 445,
-                'created_at' => '2023-09-07 13:04:19',
-                'updated_at' => '2023-09-07 13:04:19',
+                'created_at' => '2023-09-08 16:43:22',
+                'updated_at' => '2023-09-08 16:43:22',
             ),
             158 => 
             array (
-                'id' => 347,
-                'role_id' => 1,
-                'menu_id' => 439,
-                'created_at' => '2023-09-08 10:41:24',
-                'updated_at' => '2023-09-08 10:41:24',
-            ),
-            159 => 
-            array (
-                'id' => 348,
+                'id' => 350,
                 'role_id' => 5,
-                'menu_id' => 439,
-                'created_at' => '2023-09-08 10:41:24',
-                'updated_at' => '2023-09-08 10:41:24',
+                'menu_id' => 445,
+                'created_at' => '2023-09-08 16:43:22',
+                'updated_at' => '2023-09-08 16:43:22',
             ),
         ));
         

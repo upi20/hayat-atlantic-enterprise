@@ -1379,6 +1379,78 @@ class PPermissionsTableSeeder extends Seeder
                 'created_at' => '2022-11-07 23:42:24',
                 'updated_at' => '2022-11-07 23:42:24',
             ),
+            170 => 
+            array (
+                'id' => 278,
+                'name' => 'admin.pesanan.insert',
+                'guard_name' => 'web',
+                'created_at' => '2023-09-08 16:43:52',
+                'updated_at' => '2023-09-08 16:43:52',
+            ),
+            171 => 
+            array (
+                'id' => 279,
+                'name' => 'admin.pesanan.update',
+                'guard_name' => 'web',
+                'created_at' => '2023-09-08 16:43:56',
+                'updated_at' => '2023-09-08 16:43:56',
+            ),
+            172 => 
+            array (
+                'id' => 280,
+                'name' => 'admin.pesanan.delete',
+                'guard_name' => 'web',
+                'created_at' => '2023-09-08 16:44:00',
+                'updated_at' => '2023-09-08 16:44:00',
+            ),
+            173 => 
+            array (
+                'id' => 281,
+                'name' => 'admin.pesanan',
+                'guard_name' => 'web',
+                'created_at' => '2023-09-08 16:44:04',
+                'updated_at' => '2023-09-08 16:44:04',
+            ),
+            174 => 
+            array (
+                'id' => 282,
+                'name' => 'admin.pesanan.detail',
+                'guard_name' => 'web',
+                'created_at' => '2023-09-08 16:44:08',
+                'updated_at' => '2023-09-08 16:44:08',
+            ),
+            175 => 
+            array (
+                'id' => 283,
+                'name' => 'admin.pesanan.status',
+                'guard_name' => 'web',
+                'created_at' => '2023-09-08 16:44:18',
+                'updated_at' => '2023-09-08 16:44:18',
+            ),
+            176 => 
+            array (
+                'id' => 284,
+                'name' => 'admin.pesanan.detail.insert',
+                'guard_name' => 'web',
+                'created_at' => '2023-09-08 16:44:24',
+                'updated_at' => '2023-09-08 16:44:24',
+            ),
+            177 => 
+            array (
+                'id' => 285,
+                'name' => 'admin.pesanan.detail.update',
+                'guard_name' => 'web',
+                'created_at' => '2023-09-08 16:44:28',
+                'updated_at' => '2023-09-08 16:44:28',
+            ),
+            178 => 
+            array (
+                'id' => 286,
+                'name' => 'admin.pesanan.detail.delete',
+                'guard_name' => 'web',
+                'created_at' => '2023-09-08 16:44:33',
+                'updated_at' => '2023-09-08 16:44:33',
+            ),
         ));
         
         

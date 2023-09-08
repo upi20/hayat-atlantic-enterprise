@@ -162,7 +162,8 @@ class PesananController extends Controller
             'breadcrumbs' => [
                 ['name' => 'Dashboard'],
                 ['name' => 'Pesanan', 'url' => h_prefix(min: 2)],
-            ]
+            ],
+            'navigation' => h_prefix(min: 2)
         ];
 
         $customers = Customer::orderBy('nama')->get();

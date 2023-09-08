@@ -2,11 +2,10 @@
 
 @section('content')
     @php
-        $can_insert = auth_can(h_prefix('insert'));
-        $can_update = auth_can(h_prefix('update'));
-        $can_delete = auth_can(h_prefix('delete'));
-        $can_status = auth_can(h_prefix('status'));
-        $can_detail = auth_can(h_prefix('detail'));
+        $can_insert = auth_can(h_prefix('insert', 1));
+        $can_update = auth_can(h_prefix('update', 1));
+        $can_delete = auth_can(h_prefix('delete', 1));
+        $can_detail = auth_can(h_prefix('detail', 1));
     @endphp
 
     <div class="card">
@@ -18,10 +17,12 @@
                 <a href="{{ route(h_prefix(min: 2)) }}" class="btn btn-rounded btn-secondary btn-sm">
                     <i class="fas fa-arrow-left"></i> Kembali
                 </a>
-                <button type="button" class="btn btn-rounded btn-success btn-sm" data-bs-effect="effect-scale"
-                    data-bs-toggle="modal" href="#modal-default" onclick="add()" data-target="#modal-default">
-                    <i class="fas fa-plus"></i> Tambah
-                </button>
+                @if ($can_insert)
+                    <button type="button" class="btn btn-rounded btn-success btn-sm" data-bs-effect="effect-scale"
+                        data-bs-toggle="modal" href="#modal-default" onclick="add()" data-target="#modal-default">
+                        <i class="fas fa-plus"></i> Tambah
+                    </button>
+                @endif
             </div>
         </div>
         <div class="card-body">
@@ -34,7 +35,7 @@
                         <th>Jumlah Barang Tersedia di Gudang</th>
                         <th>Harga Barang</th>
                         <th>Total Harga Barang</th>
-                        <th>Ubah Data</th>
+                        {!! $can_delete || $can_update ? '<th>Ubah Data</th>' : '' !!}
                     </tr>
                 </thead>
                 <tbody> </tbody>
