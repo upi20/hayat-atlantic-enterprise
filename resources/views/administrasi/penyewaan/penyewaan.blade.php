@@ -239,11 +239,10 @@
                         data: 'id',
                         name: 'id',
                         orderable: false,
-                        className: 'to-link',
                         render(data, type, full, meta) {
                             return (can_reciving_order && full.status <= 2) ? data : '';
                         },
-                        className: 'to-link'
+                        className: 'to-link',
                     },
                     {
                         data: 'customer_nama',
@@ -257,6 +256,13 @@
                     {
                         data: 'number',
                         name: 'number',
+                        render(data, type, full, meta) {
+                            const btn_detail = `<br><button type="button" data-toggle="tooltip" class="btn btn-rounded btn-info btn-sm me-1 mt-1" title="Detail Data" onClick="detailFunc('${full.id}')">
+                                <i class="fas fa-file-alt"></i>
+                                </button>`;
+
+                            return data + btn_detail;
+                        },
                     },
                     {
                         data: 'tanggal_kirim_str',
@@ -311,10 +317,6 @@
                                 <i class="fas fa-check"></i>
                                 </button>` : '';
 
-                            const btn_detail = `<button type="button" data-toggle="tooltip" class="btn btn-rounded btn-info btn-sm me-1 mt-1" title="Detail Data" onClick="detailFunc('${data}')">
-                                <i class="fas fa-file-alt"></i>
-                                </button> ${(++br_counter %4==0)? '<br>':''}`;
-
                             const btn_update = (can_reciving_order && full.status <= 2) ? `<a href="{{ route('admin.penyewaan.reciving_order') }}/${data}"  data-toggle="tooltip" class="btn btn-rounded btn-primary btn-sm me-1 mt-1" title="Ubah Data">
                                 <i class="fas fa-edit"></i>
                                 </a>${(++br_counter %4==0)? '<br>':''}` : '';
@@ -327,7 +329,7 @@
                                 <i class="fas fa-trash"></i>
                                 </button>${(++br_counter %4==0)? '<br>':''}` : '';
 
-                            return `${status}<br>${btn_selesai} ${btn_update} ${btn_detail} ${btn_batalkan} ${btn_delete}`;
+                            return `${status}<br>${btn_selesai} ${btn_update} ${btn_batalkan} ${btn_delete}`;
                         },
                         className: ''
                     },

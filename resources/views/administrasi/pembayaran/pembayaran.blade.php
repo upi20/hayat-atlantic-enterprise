@@ -186,8 +186,7 @@
                         data: 'customer_nama',
                         name: 'customer_nama',
                         render(data, type, full, meta) {
-                            return `${full.number} | <span class="fw-bold">${data??full.number}</span> <br>
-                            <i class="fas fa-circle text-${statusClass(full.status)} me-1"></i>${full.status_str}`;
+                            return `${full.number} | <span class="fw-bold">${data??full.number}</span>`;
                         },
                         className: `to-link`
                     },

@@ -67,8 +67,8 @@
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>Barang</th>
-                        <th>Qty</th>
+                        <th>Nama Barang</th>
+                        <th>Jumlah Barang</th>
                         <th>Oleh</th>
                         {!! $can_delete || $can_update ? '<th>Ubah Data</th>' : '' !!}
                     </tr>
@@ -91,13 +91,13 @@
                         <input type="hidden" name="id" id="id">
                         <input type="hidden" name="pengurangan" id="pengurangan" value="{{ $model->id }}">
                         <div class="form-group">
-                            <label class="form-label" for="nama">Barang <span class="text-danger">*</span></label>
+                            <label class="form-label" for="nama">Nama Barang <span class="text-danger">*</span></label>
                             <select class="form-control" id="barang" name="barang" style="width: 100%;" required>
                             </select>
                         </div>
 
                         <div class="form-group">
-                            <label class="form-label" for="qty">Quantity/Jumlah
+                            <label class="form-label" for="qty">Jumlah Barang
                                 <span class="text-danger">*</span></label>
                             <div class="input-group">
                                 <input type="number" min="1" class="form-control" placeholder="Quantity/Jumlah"
@@ -108,7 +108,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="form-label" for="qty_total">Total Quantity/Jumlah Menjadi</label>
+                            <label class="form-label" for="qty_total">Total Jumlah Barang Menjadi</label>
                             <div class="input-group">
                                 <input type="number" min="1" class="form-control"
                                     placeholder="Total Quantity/Jumlah Menjadi" aria-label="Total Quantity/Jumlah Menjadi"

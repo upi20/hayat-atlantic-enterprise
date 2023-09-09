@@ -68,9 +68,9 @@
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>Barang</th>
-                        <th>Qty</th>
-                        <th>Harga</th>
+                        <th>Nama Barang</th>
+                        <th>Jumlah Barang</th>
+                        <th>Harga Barang</th>
                         <th>Total Harga</th>
                         <th>Oleh</th>
                         {!! $can_delete || $can_update ? '<th>Ubah Data</th>' : '' !!}

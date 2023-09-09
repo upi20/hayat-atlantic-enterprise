@@ -96,11 +96,11 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>Barang</th>
-                                    <td class="text-right">Rusak</th>
-                                    <td class="text-right">Hilang</th>
-                                    <td class="text-right">Diganti</th>
-                                    <td class="text-right">Harga</th>
+                                    <th>Nama Barang</th>
+                                    <td class="text-right">Jumlah Rusak</th>
+                                    <td class="text-right">Jumlah Hilang</th>
+                                    <td class="text-right">Jumlah Diganti</th>
+                                    <td class="text-right">Harga Barang</th>
                                     <td class="text-right">Total Harga</th>
                                 </tr>
                             </thead>

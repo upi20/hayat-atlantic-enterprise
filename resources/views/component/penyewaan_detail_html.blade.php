@@ -20,13 +20,13 @@
                 <table class="table table-hover border-bottom table-responsive" id="tbl_detail">
                     <thead>
                         <tr>
-                            <th class="text-nowrap">No</th>
-                            <th class="text-nowrap">Barang</th>
-                            <th class="text-nowrap text-center">Qty</th>
-                            <th class="text-nowrap text-center">Harga</th>
-                            <th class="text-nowrap text-center">Total Harga</th>
-                            <th class="text-nowrap">Keterangan</th>
-                            <th class="text-nowrap">Diubah</th>
+                            <th>No</th>
+                            <th>Nama Barang</th>
+                            <th class="text-center">Jumlah Barang</th>
+                            <th class="text-center">Harga Barang</th>
+                            <th class="text-center">Total Harga</th>
+                            <th>Keterangan</th>
+                            <th>Diubah</th>
                         </tr>
                     </thead>
                     <tbody id="tbl_detail_body">
@@ -38,12 +38,12 @@
                 <table class="table table-hover border-bottom table-responsive" id="tbl_pembayaran">
                     <thead>
                         <tr>
-                            <th class="text-nowrap">No</th>
-                            <th class="text-nowrap">Nama</th>
-                            <th class="text-nowrap">Tanggal</th>
-                            <th class="text-nowrap text-center">Nominal</th>
-                            <th class="text-nowrap">Keterangan</th>
-                            <th class="text-nowrap">Diubah</th>
+                            <th>No</th>
+                            <th>Nama Pembayaran</th>
+                            <th>Tanggal Bayar</th>
+                            <th class="text-center">Nominal</th>
+                            <th>Keterangan</th>
+                            <th>Diubah</th>
                         </tr>
                     </thead>
                     <tbody id="tbl_pembayaran_body">
