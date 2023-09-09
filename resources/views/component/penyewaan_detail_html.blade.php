@@ -26,7 +26,7 @@
                             <th class="text-center">Harga Barang</th>
                             <th class="text-center">Total Harga</th>
                             <th>Keterangan</th>
-                            <th>Diubah</th>
+                            <th>Oleh</th>
                         </tr>
                     </thead>
                     <tbody id="tbl_detail_body">
@@ -43,7 +43,7 @@
                             <th>Tanggal Bayar</th>
                             <th class="text-center">Nominal</th>
                             <th>Keterangan</th>
-                            <th>Diubah</th>
+                            <th>Oleh</th>
                         </tr>
                     </thead>
                     <tbody id="tbl_pembayaran_body">

@@ -98,12 +98,12 @@
                             <th rowspan="2" class="align-middle">Nama Barang</th>
                             <th rowspan="2" class="text-right align-middle">Jml. Disewa</th>
                             <th colspan="3" class="text-center">Kondisi Barang Saat Dikembalikan</th>
-                            <th rowspan="2" class="align-middle">Total</th>
+                            <th rowspan="2" class="align-middle">Jml. Total</th>
                         </tr>
                         <tr>
-                            <th>Baik <span class="text-danger">*</span></th>
-                            <th>Rusak <span class="text-danger">*</span></th>
-                            <th>Hilang <span class="text-danger">*</span></th>
+                            <th>Jml. Baik <span class="text-danger">*</span></th>
+                            <th>Jml. Rusak <span class="text-danger">*</span></th>
+                            <th>Jml. Hilang <span class="text-danger">*</span></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -197,10 +197,10 @@
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th class="text-left">Barang</th>
-                            <th class="text-center">Qty</th>
-                            <th class="text-right">Harga</th>
-                            <th class="text-right">Total</th>
+                            <th class="text-left">Nama Barang</th>
+                            <th class="text-center">Jumlah Barang</th>
+                            <th class="text-right">Harga Barang</th>
+                            <th class="text-right">Total Harga</th>
 
                             {!! $can_barang_habis_pakai_action ? '<th class="text-center bhs_aksi">Ubah Data</th>' : '' !!}
                         </tr>
@@ -223,7 +223,7 @@
                             <input type="hidden" name="id" id="id">
                             <input type="hidden" name="surat_jalan" id="surat_jalan" value="{{ $surat_jalan->id }}">
                             <div class="form-group">
-                                <label class="form-label" for="nama">Barang
+                                <label class="form-label" for="nama">Nama Barang
                                     <span class="text-danger">*</span>
                                 </label>
                                 <select class="form-control" id="barang_id" name="barang_id" style="width: 100%;"
@@ -232,7 +232,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="form-label" for="qty">Quantity/Jumlah
+                                <label class="form-label" for="qty">Jumlah Barang
                                     <span class="text-danger">*</span>
                                 </label>
                                 <div class="input-group">
@@ -243,7 +243,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="form-label" for="harga">Harga
+                                <label class="form-label" for="harga">Harga Barang
                                     <span class="text-danger">*</span>
                                 </label>
                                 <div class="input-group">
