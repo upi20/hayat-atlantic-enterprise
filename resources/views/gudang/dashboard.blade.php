@@ -60,12 +60,12 @@
             </a>
         </div>
         <div class="col-sm-6 col-md-6 col-lg-6 col-xl-3">
-            <a href="{{ route('admin.ganti_rugi') }}">
+            <a href="{{ route('admin.pengembalian') }}">
                 <div class="card bg-danger img-card box-danger-shadow card-main">
                     <div class="card-body">
                         <div class="d-flex">
                             <div class="text-white">
-                                <h2 class="mb-0 number-font">{{ $total->ganti_rugi }}</h2>
+                                <h2 class="mb-0 number-font">{{ $ringkasan_penyewaan->pengembalian }}</h2>
                                 <p class="text-white mb-0">Pengambilan Barang</p>
                             </div>
                             <div class="ms-auto">
