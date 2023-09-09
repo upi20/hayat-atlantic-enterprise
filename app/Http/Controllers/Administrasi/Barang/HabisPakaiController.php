@@ -37,7 +37,7 @@ class HabisPakaiController extends Controller
                 ['name' => 'Dashboard'],
             ]
         ];
-        if (auth_has_role('General Manager')) {
+        if (auth_has_role(6)) {
             return view('gm.barang.habis_pakai', compact('page_attr', 'jenis', 'satuan'));
         }
         return view('administrasi.barang.habis_pakai', compact('page_attr', 'jenis', 'satuan'));

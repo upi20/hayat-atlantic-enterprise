@@ -39,9 +39,9 @@ class DashboardController extends Controller
             'donat'
         );
         $data['compact'] = $data;
-        if (auth_has_role('General Manager')) {
+        if (auth_has_role(6)) {
             return view('gm.dashboard', $data);
-        } else if (auth_has_role('Warehouse')) {
+        } else if (auth_has_role([7, 8])) {
             return view('gudang.dashboard', $data);
         }
         return view('admin.dashboard', $data);

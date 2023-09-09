@@ -64,11 +64,11 @@ class PenyewaanController extends Controller
                 ['name' => 'Dashboard'],
             ]
         ];
-        if (auth_has_role('General Manager')) {
+        if (auth_has_role(6)) {
             $dashboardController = new DashboardController();
             $years = $dashboardController->getYear();
             return view('gm.penyewaan.penyewaan', compact('page_attr', 'years'));
-        } else if (auth_has_role('Warehouse')) {
+        } else if (auth_has_role([7, 8])) {
             $dashboardController = new DashboardController();
             $years = $dashboardController->getYear();
             return view('gudang.penyewaan.penyewaan', compact('page_attr', 'years'));
