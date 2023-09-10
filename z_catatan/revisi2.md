@@ -2,8 +2,8 @@
 # Administrasi
 ➖ [x] Data Penyewaan, filternya tambhain perbulan (yg kaya General Manager)
 ➖ Fitur pesanan 
-[] setelah terima pesanan, 
-    [] nanti nama cust yg baru muncul di tabel cust & nanti si pesanan ini muncul di tabel penyewaan Jadi nge link langsung ke data customer sama data penyewaan
+[x] setelah terima pesanan, 
+    [x] nanti nama cust yg baru muncul di tabel cust & nanti si pesanan ini muncul di tabel penyewaan Jadi nge link langsung ke data customer sama data penyewaan
     [x] Data pesanan jadi data penyewaan
 [x] Filternya tambahin perbulan (yg kaya general manager) 
 

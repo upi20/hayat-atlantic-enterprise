@@ -614,6 +614,7 @@ Route::prefix($prefix)->controller(PesananController::class)->group(function () 
     Route::post('/update', 'update')->name("$name.update")->middleware("permission:$name.update");
     Route::post('/status', 'status')->name("$name.status")->middleware("permission:$name.status");
     Route::get('/find', 'find')->name("$name.find")->middleware("permission:$name");
+    Route::get('/customer_select2', 'customer_select2')->name("$name.customer_select2")->middleware("permission:$name");
     Route::delete('/{model}', 'delete')->name("$name.delete")->middleware("permission:$name.delete");
 
     // detail

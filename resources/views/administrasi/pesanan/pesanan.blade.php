@@ -76,22 +76,50 @@
                         enctype="multipart/form-data">
                         <input type="hidden" name="id" id="id" value="">
 
-                        <div class="row mb-4">
-                            <label for="inputName" class="col-lg-3 form-label">Nama Customer</label>
+                        <div class="row mb-2">
+                            <div class="col-lg-3">
+                                <label for="customer_id" class="form-label fw-bold">Customer</label>
+                                <hr>
+                                <label class="custom-switch form-switch">
+                                    <input type="checkbox" name="customer_baru" id="customer_baru"
+                                        class="custom-switch-input" onchange="customerContainer()">
+                                    <span class="custom-switch-indicator"></span>
+                                    <span class="custom-switch-description">Customer Baru</span>
+                                </label>
+                            </div>
                             <div class="col-lg-9">
-                                <select class="form-control select2" id="customer_id" name="customer_id"
-                                    style="width: 100%;" required>
-                                    <option value="">Pilih Customer</option>
-                                    @foreach ($customers as $customer)
-                                        <option value="{{ $customer->id }}">
-                                            {{ $customer->nama }} | {{ $customer->alamat }}
-                                        </option>
-                                    @endforeach
-                                </select>
+                                <div id="customer_lama_input" class="mt-2" style="display: none">
+                                    <select class="form-control select2" id="customer_id" name="customer_id"
+                                        style="width: 100%;">
+                                        <option value="">Pilih Customer</option>
+                                        @foreach ($customers as $customer)
+                                            <option value="{{ $customer->id }}">
+                                                {{ $customer->nama }} | {{ $customer->alamat }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div id="customer_baru_input" class="mt-2" style="display: none">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="customer_nama" name="customer_nama"
+                                            placeholder="Nama" />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="customer_no_telepon"
+                                            name="customer_no_telepon" placeholder="No Telepon" />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <textarea type="text" class="form-control" rows="3" id="customer_alamat" name="customer_alamat"
+                                            placeholder="Alamat"></textarea>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="row mb-4">
+                        <div class="row mb-2">
                             <label for="inputName" class="col-lg-3 form-label">Tanggal Pakai</label>
                             <div class="col-lg-9 d-lg-flex flex-row">
                                 <div class="w-100">
@@ -300,6 +328,21 @@
                 dropdownParent: $('#BarangForm'),
             });
 
+            $('#customer_id').select2({
+                ajax: {
+                    url: "{{ route(h_prefix('customer_select2')) }}",
+                    type: "GET",
+                    data: function(params) {
+                        var query = {
+                            search: params.term,
+                            semua: 1
+                        }
+                        return query;
+                    }
+                },
+                dropdownParent: $('#BarangForm'),
+            });
+
             $('#barang_id').on('select2:select', function(e) {
                 const barang = barangs.find(e => e.id == this.value);
                 if (barang == undefined) {
@@ -319,10 +362,12 @@
                     Swal.fire({
                         position: 'center',
                         icon: 'error',
-                        text: 'Silahkan pilih barang terlebih dahulu',
+                        text: 'Jumlah barang yang dipesan minimal 1',
                         showConfirmButton: false,
                         timer: 3500
                     });
+
+                    return false;
                 }
 
                 var formData = new FormData(this);
@@ -380,7 +425,7 @@
 
         function addPesanan() {
             if (!isEdit) return;
-            $('#MainForm').trigger("reset");
+            $('#BarangForm').trigger("reset");
             $('#id').val('');
             $('#tanggal_pakai_dari').val('');
             $('#tanggal_pakai_sampai').val('');
@@ -390,6 +435,11 @@
             isEdit = false;
             renderTableBody();
             $('#modal-default-title').html("Tambah {{ $page_attr['title'] }}");
+            $('#customer_baru').prop('checked', true);
+            $('#customer_id')
+                .append((new Option("Pilih Customer", '', true, true)))
+                .trigger('change');
+            customerContainer();
         }
 
         function addBarang() {
@@ -512,8 +562,20 @@
                     $('#id').val(data.id);
                     $('#tanggal_pakai_dari').val(data.tanggal_pakai_dari);
                     $('#tanggal_pakai_sampai').val(data.tanggal_pakai_sampai);
+                    render_tanggal('#tanggal_pakai_dari');
+                    render_tanggal('#tanggal_pakai_sampai');
+
                     $('#total_harga').val(data.total_harga);
-                    $('#customer_id').val(data.customer_id).trigger('change');
+                    $('#customer_id')
+                        .append((new Option((data.customer ? data.customer.nama : "Pilih Customer"),
+                            (data.customer_id ?? ''), true, true))).trigger('change');
+
+                    $('#customer_nama').val(data.customer_nama);
+                    $('#customer_no_telepon').val(data.customer_no_telepon);
+                    $('#customer_alamat').val(data.customer_alamat);
+
+                    $('#customer_baru').prop('checked', data.customer_id == null);
+
                     stores = [];
                     data.barangs.forEach(e => {
                         stores.push({
@@ -524,6 +586,7 @@
                         });
                     });
                     renderTableBody();
+                    customerContainer();
                 },
                 error: function(data) {
                     Swal.fire({
@@ -647,6 +710,19 @@
             $('#bulan').val(bulan);
             var oTable = table_html.dataTable();
             oTable.fnDraw(false);
+        }
+
+        function customerContainer() {
+            const val = $('#customer_baru').prop('checked');
+            const baru = $('#customer_baru_input');
+            const lama = $('#customer_lama_input');
+            if (val) {
+                baru.fadeIn();
+                lama.hide();
+            } else {
+                baru.hide();
+                lama.fadeIn();
+            }
         }
     </script>
 @endsection

@@ -88,7 +88,7 @@ class Pesanan extends Model
         $query["{$c_status_class}_alias"] = $c_status_class;
 
         $c_customer_nama = 'customer';
-        $query[$c_customer_nama] = "$t_customer.nama";
+        $query[$c_customer_nama] = "ifnull($t_customer.nama, $table.customer_nama)";
         $query["{$c_customer_nama}_alias"] = $c_customer_nama;
         // ========================================================================================================
 
@@ -119,7 +119,7 @@ class Pesanan extends Model
         $model = static::select(array_merge([
             DB::raw("$table.*"),
         ], $to_db_raw))
-            ->join($t_customer, "$t_customer.id", '=', "$table.customer_id");
+            ->leftJoin($t_customer, "$t_customer.id", '=', "$table.customer_id");
 
         // Filter =====================================================================================================
         // filter check

@@ -48,11 +48,31 @@ class PesananController extends Controller
         try {
             DB::beginTransaction();
             $model = new Pesanan();
-            $model->customer_id = $request->customer_id;
+            if (is_null($request->customer_baru)) {
+                // Customer lama
+                $model->customer_id = $request->customer_id;
+                $model->customer_nama = null;
+                $model->customer_no_telepon = null;
+                $model->customer_alamat = null;
+
+                if (is_null($request->customer_id)) return response()->json(['message' => 'Customer belum dipilih'], 400);
+            } else {
+                // Customer baru
+                $model->customer_id = null;
+                $model->customer_nama = $request->customer_nama;
+                $model->customer_no_telepon = $request->customer_no_telepon;
+                $model->customer_alamat = $request->customer_alamat;
+
+                if (is_null($request->customer_nama)) return response()->json(['message' => 'Nama Customer Harus di isi'], 400);
+                if (is_null($request->customer_no_telepon)) return response()->json(['message' => 'No Telepon Customer Harus di isi'], 400);
+                if (is_null($request->customer_alamat)) return response()->json(['message' => 'Alamat Customer Harus di isi'], 400);
+            }
+
+
             $model->tanggal_pakai_dari = $request->tanggal_pakai_dari;
             $model->tanggal_pakai_sampai = $request->tanggal_pakai_sampai;
             $model->total_harga = $request->total_harga;
-            $model->updated_by = auth()->user()->id;
+            $model->created_by = auth()->user()->id;
             $model->save();
 
             $barangs = json_decode($request->datas);
@@ -63,7 +83,7 @@ class PesananController extends Controller
                 $new->qty = $barang->qty;
                 $new->stok = $barang->stok;
                 $new->harga = $barang->harga;
-                $new->updated_by = auth()->user()->id;
+                $new->created_by = auth()->user()->id;
                 $new->save();
             }
 
@@ -83,7 +103,26 @@ class PesananController extends Controller
         try {
             DB::beginTransaction();
             $model = Pesanan::findOrFail($request->id);
-            $model->customer_id = $request->customer_id;
+            if (is_null($request->customer_baru)) {
+                // Customer lama
+                $model->customer_id = $request->customer_id;
+                $model->customer_nama = null;
+                $model->customer_no_telepon = null;
+                $model->customer_alamat = null;
+
+                if (is_null($request->customer_id)) return response()->json(['message' => 'Customer belum dipilih'], 400);
+            } else {
+                // Customer baru
+                $model->customer_id = null;
+                $model->customer_nama = $request->customer_nama;
+                $model->customer_no_telepon = $request->customer_no_telepon;
+                $model->customer_alamat = $request->customer_alamat;
+
+                if (is_null($request->customer_nama)) return response()->json(['message' => 'Nama Customer Harus di isi'], 400);
+                if (is_null($request->customer_no_telepon)) return response()->json(['message' => 'No Telepon Customer Harus di isi'], 400);
+                if (is_null($request->customer_alamat)) return response()->json(['message' => 'Alamat Customer Harus di isi'], 400);
+            }
+
             $model->tanggal_pakai_dari = $request->tanggal_pakai_dari;
             $model->tanggal_pakai_sampai = $request->tanggal_pakai_sampai;
             $model->total_harga = $request->total_harga;
@@ -121,15 +160,27 @@ class PesananController extends Controller
     {
         try {
             DB::beginTransaction();
-            $model = Pesanan::findOrFail($request->id);
-            $model->status = $request->status;
-            $model->updated_by = auth()->user()->id;
-            $model->save();
+            $pesanan = Pesanan::findOrFail($request->id);
+            $pesanan->status = $request->status;
+            $pesanan->updated_by = auth()->user()->id;
+
+            // simpan customer baru
+            if ($request->status == 2 && is_null($pesanan->customer_id)) {
+                $customer = new Customer();
+                $customer->nama = $pesanan->customer_nama;
+                $customer->no_telepon = $pesanan->customer_no_telepon;
+                $customer->alamat = $pesanan->customer_alamat;
+                $customer->created_by = auth()->user()->id;
+                $customer->save();
+
+                $pesanan->customer_id = $customer->id;
+            }
+            $pesanan->save();
 
             // simpan penyewaan
-            if ($request->status == 2) Penyewaan::insertFromPesanan($model);
+            if ($request->status == 2) Penyewaan::insertFromPesanan($pesanan);
             DB::commit();
-            return response()->json($model);
+            return response()->json($pesanan);
         } catch (ValidationException $error) {
             return response()->json([
                 'message' => 'Something went wrong',
@@ -142,6 +193,7 @@ class PesananController extends Controller
     {
         $pesanan = Pesanan::findOrFail($request->id);
         $pesanan->barangs;
+        $pesanan->customer;
         return $pesanan;
     }
 
@@ -277,6 +329,26 @@ class PesananController extends Controller
                 'message' => 'Something went wrong',
                 'error' => $error,
             ], 500);
+        }
+    }
+
+    public function customer_select2(Request $request)
+    {
+        try {
+            $model = Customer::selectRaw("id, concat(nama,' | ',alamat) as text, alamat, nama")
+                ->whereRaw("(
+                    `nama` like '%$request->search%' or
+                    `alamat` like '%$request->search%' or
+                    `no_whatsapp` like '%$request->search%' or
+                    `no_telepon` like '%$request->search%' or
+                    `id` like '%$request->search%'
+                    )")
+                ->limit(50)
+                ->orderBy('updated_at', 'desc')->get()->toArray();
+
+            return response()->json(['results' => $model]);
+        } catch (\Exception $error) {
+            return response()->json($error, 500);
         }
     }
 }
