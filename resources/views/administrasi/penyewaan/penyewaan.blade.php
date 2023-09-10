@@ -90,6 +90,34 @@
                     </div>
                 </div>
             </div>
+            <ul class="nav nav-pills nav-pills-circle mb-2" role="tablist">
+                <input type="hidden" id="bulan" value="{{ date('m') }}">
+                @php
+                    $bulans = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+                @endphp
+                @foreach ($bulans as $k => $bulan)
+                    <li class="nav-item">
+                        <button type="button"
+                            class="nav-link border py-1 px-3 me-2 mb-2 tabs {{ date('m') == $k + 1 ? 'active' : '' }}"
+                            id="tab{{ $k + 1 }}" data-bs-toggle="tab" role="tab"
+                            onclick="gantiBulan({{ $k + 1 }})">
+                            <span class="nav-link-icon d-block">
+                                {{ $bulan }}
+                            </span>
+                        </button>
+                    </li>
+                @endforeach
+                <li>
+                    <select id="tahun" class="form-control form-select form-select-sm select2 float-start me-2"
+                        style="min-width: 100px">
+                        @foreach ($years as $year)
+                            <option value="{{ $year->year }}" {{ $year->year == date('Y') ? 'selected' : '' }}>
+                                {{ $year->year }}
+                            </option>
+                        @endforeach
+                    </select>
+                </li>
+            </ul>
             <table class="table table-hover" id="tbl_main">
                 <thead>
                     <tr>
@@ -169,6 +197,13 @@
         const table_html = $('#tbl_main');
         let isEdit = true;
         $(document).ready(function() {
+            $('#tahun').select2();
+            // clear child
+            $('#tahun').on('select2:select', function(e) {
+                var oTable = table_html.dataTable();
+                oTable.fnDraw(false);
+            });
+
             $('#created_by').select2({
                 ajax: {
                     url: "{{ route('member_select2') }}",
@@ -233,6 +268,8 @@
                         d['filter[customer]'] = $('#customer').val();
                         d['filter[status]'] = $('#filter_status').val();
                         d['filter[status_pembayaran]'] = $('#filter_status_pembayaran').val();
+                        d['filter[tahun]'] = $('#tahun').val();
+                        d['filter[bulan]'] = $('#bulan').val();
                     }
                 },
                 columns: [{
@@ -549,6 +586,12 @@
             $('#modal-batalkan').modal('show');
             $('#batalkan_id').val(id);
             $('#alasan').val('');
+        }
+
+        function gantiBulan(bulan) {
+            $('#bulan').val(bulan);
+            var oTable = table_html.dataTable();
+            oTable.fnDraw(false);
         }
     </script>
     @include('component.penyewaan_detail_js')

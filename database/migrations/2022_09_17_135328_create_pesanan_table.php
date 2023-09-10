@@ -21,6 +21,11 @@ return new class extends Migration
             $table->bigInteger('total_harga', false)->default(0);
             $table->boolean('status')->nullable()->default(1)->comment("1 = Pesanan Dibuat, 2 = Pesanan Diterima");
 
+            // customer
+            $table->string('customer_nama')->nullable()->default(null);
+            $table->string('customer_no_telepon')->nullable()->default(null);
+            $table->text('customer_alamat')->nullable()->default(null);
+
             $table->unsignedBigInteger('updated_by')->nullable()->default(null);
             $table->unsignedBigInteger('created_by')->nullable()->default(null);
             $table->timestamps();

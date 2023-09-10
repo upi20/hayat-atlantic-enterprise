@@ -1,10 +1,11 @@
 
 # Administrasi
-➖ Data Penyewaan, filternya tambhain perbulan (yg kaya General Manager)
+➖ [x] Data Penyewaan, filternya tambhain perbulan (yg kaya General Manager)
 ➖ Fitur pesanan 
-- setelah terima pesanan, 
-    - nanti nama cust yg baru muncul di tabel cust & nanti si pesanan ini muncul di tabel penyewaan Jadi nge link langsung ke data customer sama data penyewaan
-- Filternya tambahin perbulan (yg kaya general manager) 
+[] setelah terima pesanan, 
+    [] nanti nama cust yg baru muncul di tabel cust & nanti si pesanan ini muncul di tabel penyewaan Jadi nge link langsung ke data customer sama data penyewaan
+    [x] Data pesanan jadi data penyewaan
+[x] Filternya tambahin perbulan (yg kaya general manager) 
 
 # Gudang
 [x] Dashboardnya sesuain yg kaya di word (gaada menu customer & pembayaran) 
@@ -28,3 +29,9 @@
         [x] List data barang di halaman edit data
     [x] Pengurangan barang habis pakai
         [x] List data barang di halaman edit data
+
+# Update hosting
+ALTER TABLE `pesanan` 
+ADD `customer_nama` VARCHAR(255) NULL DEFAULT NULL AFTER `status`, 
+ADD `customer_no_telepon` VARCHAR(255) NULL DEFAULT NULL AFTER `customer_nama`, 
+ADD `customer_alamat` TEXT NULL DEFAULT NULL AFTER `customer_no_telepon`;

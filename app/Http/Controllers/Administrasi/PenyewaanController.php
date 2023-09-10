@@ -64,16 +64,14 @@ class PenyewaanController extends Controller
                 ['name' => 'Dashboard'],
             ]
         ];
+        $dashboardController = new DashboardController();
+        $years = $dashboardController->getYear();
         if (auth_has_role(6)) {
-            $dashboardController = new DashboardController();
-            $years = $dashboardController->getYear();
             return view('gm.penyewaan.penyewaan', compact('page_attr', 'years'));
         } else if (auth_has_role([7, 8])) {
-            $dashboardController = new DashboardController();
-            $years = $dashboardController->getYear();
             return view('gudang.penyewaan.penyewaan', compact('page_attr', 'years'));
         }
-        return view('administrasi.penyewaan.penyewaan', compact('page_attr'));
+        return view('administrasi.penyewaan.penyewaan', compact('page_attr', 'years'));
     }
 
     public function datatable(Request $request): mixed
@@ -642,7 +640,7 @@ class PenyewaanController extends Controller
         $model->customer_nama = is_null($customer) ? null : $customer->nama;
         if ($model->tanggal_pakai_dari != null) {
             $date = date_create($model->tanggal_pakai_dari);
-            $date2 = date_create($model->tanggal_pakai_dari);
+            $date2 = date_create($model->tanggal_pakai_sampai);
             $model->durasi_pakai = $date->diff($date2)->d + 1;
         } else {
             $model->durasi_pakai = 1;
@@ -688,7 +686,7 @@ class PenyewaanController extends Controller
         $model->customer_nama = is_null($customer) ? null : $customer->nama;
         if ($model->tanggal_pakai_dari != null) {
             $date = date_create($model->tanggal_pakai_dari);
-            $date2 = date_create($model->tanggal_pakai_dari);
+            $date2 = date_create($model->tanggal_pakai_sampai);
             $model->durasi_pakai = $date->diff($date2)->d + 1;
         } else {
             $model->durasi_pakai = 1;

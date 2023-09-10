@@ -17,6 +17,9 @@ class Pesanan extends Model
         'tanggal_pakai_sampai',
         'total_harga',
         'status',
+        'customer_nama',
+        'customer_no_telepon',
+        'customer_alamat',
         'updated_by',
         'created_by',
     ];
@@ -84,7 +87,7 @@ class Pesanan extends Model
         SQL;
         $query["{$c_status_class}_alias"] = $c_status_class;
 
-        $c_customer_nama = 'customer_nama';
+        $c_customer_nama = 'customer';
         $query[$c_customer_nama] = "$t_customer.nama";
         $query["{$c_customer_nama}_alias"] = $c_customer_nama;
         // ========================================================================================================
@@ -131,6 +134,14 @@ class Pesanan extends Model
             if ($f_c($f) !== false) {
                 $model->whereRaw("$table.$f='{$f_c($f)}'");
             }
+        }
+
+        if (isset($request->filter['bulan']) && isset($request->filter['tahun'])) {
+            $bulan = $request->filter['bulan'];
+            $tahun = $request->filter['tahun'];
+            $bulan_next = $bulan == 12 ? 1 : $bulan + 1;
+            $tahun_next = $bulan == 12 ? $tahun + 1 : $tahun;
+            $model->whereRaw("($table.tanggal_pakai_dari >= '$tahun-$bulan-01' and $table.tanggal_pakai_dari < '$tahun_next-$bulan_next-01')");
         }
         // ========================================================================================================
 

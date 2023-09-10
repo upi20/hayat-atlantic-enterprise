@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Administrasi;
 
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Controller;
 use App\Models\Barang\Sewa;
 use App\Models\Customer;
+use App\Models\Penyewaan;
 use App\Models\Pesanan;
 use App\Models\PesananBarang;
 use Illuminate\Http\Request;
@@ -36,7 +38,9 @@ class PesananController extends Controller
 
         $customers = Customer::orderBy('nama')->get();
         $barangs = Sewa::with(['getSatuan'])->orderBy('nama')->get();
-        return view('administrasi.pesanan.pesanan', compact('page_attr', 'customers', 'barangs'));
+        $dashboardController = new DashboardController();
+        $years = $dashboardController->getYear();
+        return view('administrasi.pesanan.pesanan', compact('page_attr', 'customers', 'barangs', 'years'));
     }
 
     public function insert(Request $request): mixed
@@ -116,10 +120,15 @@ class PesananController extends Controller
     public function status(Request $request): mixed
     {
         try {
+            DB::beginTransaction();
             $model = Pesanan::findOrFail($request->id);
             $model->status = $request->status;
             $model->updated_by = auth()->user()->id;
             $model->save();
+
+            // simpan penyewaan
+            if ($request->status == 2) Penyewaan::insertFromPesanan($model);
+            DB::commit();
             return response()->json($model);
         } catch (ValidationException $error) {
             return response()->json([
