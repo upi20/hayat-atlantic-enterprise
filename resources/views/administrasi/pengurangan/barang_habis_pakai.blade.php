@@ -64,7 +64,7 @@
                     <tr>
                         <th>No</th>
                         <th>Nama Pengurangan Barang</th>
-                        <th>Tanggal</th>
+                        <th>Tanggal Barang Berkurang</th>
                         <th>Jumlah Barang</th>
                         <th>Oleh</th>
                         {!! $can_delete || $can_update ? '<th >Ubah Data</th>' : '' !!}
