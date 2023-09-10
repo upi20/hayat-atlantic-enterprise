@@ -63,7 +63,7 @@
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>Nama</th>
+                        <th>Nama & No Telp</th>
                         <th>Alamat</th>
                         <th>Oleh</th>
                         {!! $can_delete || $can_update ? '<th>Ubah Data</th>' : '' !!}

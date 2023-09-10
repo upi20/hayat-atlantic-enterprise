@@ -254,14 +254,37 @@
                         className: 'to-link'
                     },
                     {
-                        data: 'number',
-                        name: 'number',
+                        data: 'id',
+                        name: 'id',
                         render(data, type, full, meta) {
-                            const btn_detail = `<br><button type="button" data-toggle="tooltip" class="btn btn-rounded btn-info btn-sm me-1 mt-1" title="Detail Data" onClick="detailFunc('${full.id}')">
-                                <i class="fas fa-file-alt"></i>
-                                </button>`;
 
-                            return data + btn_detail;
+                            // button
+                            let br_counter = 0;
+                            const btn_selesai = (can_selesai &&
+                                (full.status_pembayaran == 1) &&
+                                (full.status == 4) &&
+                                (full.status_ganti_rugi == 2)) ? `<br><button type="button" data-toggle="tooltip" class="btn btn-rounded btn-success btn-sm me-1 mt-1" title="Penyewaan Selesai" onClick="selesaiFunc('${data}')">
+                                <i class="fas fa-check"></i>
+                                </button>` : '';
+
+                            const btn_detail = `<button type="button" data-toggle="tooltip" class="btn btn-rounded btn-info btn-sm me-1 mt-1" title="Detail Data" onClick="detailFunc('${data}')">
+                                <i class="fas fa-file-alt"></i>
+                                </button> ${(++br_counter %4==0)? '<br>':''}`;
+
+                            const btn_update = (can_reciving_order && full.status <= 2) ? `<a href="{{ route('admin.penyewaan.reciving_order') }}/${data}"  data-toggle="tooltip" class="btn btn-rounded btn-primary btn-sm me-1 mt-1" title="Edit Data">
+                                <i class="fas fa-edit"></i>
+                                </a>${(++br_counter %4==0)? '<br>':''}` : '';
+
+                            const btn_batalkan = (full.status <= 2 && can_batalkan) ? `<button type="button" data-toggle="tooltip" class="btn btn-rounded btn-warning btn-sm me-1 mt-1" title="Batalkan" onClick="batalFunc('${data}')">
+                                <i class="fas fa-times"></i>
+                                </button>${(++br_counter %4==0)? '<br>':''}` : '';
+
+                            const btn_delete = (can_delete) ? `<button type="button" data-toggle="tooltip" class="btn btn-rounded btn-danger btn-sm me-1 mt-1" title="Delete Data" onClick="deleteFunc('${data}')">
+                                <i class="fas fa-trash"></i>
+                                </button>${(++br_counter %4==0)? '<br>':''}` : '';
+
+                            return `${full.number}<br>${btn_selesai} ${btn_update} ${btn_detail} ${btn_batalkan} ${btn_delete}`;
+
                         },
                     },
                     {
@@ -302,34 +325,10 @@
                         className: ' text-right to-link'
                     },
                     {
-                        data: 'id',
+                        data: 'status',
                         name: 'status',
                         render(data, type, full, meta) {
-                            const status = `<i class="fas fa-circle me-1 text-${statusClass(full.status)}"></i>
-                                ${full.status_str}`;
-
-                            // button
-                            let br_counter = 0;
-                            const btn_selesai = (can_selesai &&
-                                (full.status_pembayaran == 1) &&
-                                (full.status == 4) &&
-                                (full.status_ganti_rugi == 2)) ? `<br><button type="button" data-toggle="tooltip" class="btn btn-rounded btn-success btn-sm me-1 mt-1" title="Penyewaan Selesai" onClick="selesaiFunc('${data}')">
-                                <i class="fas fa-check"></i>
-                                </button>` : '';
-
-                            const btn_update = (can_reciving_order && full.status <= 2) ? `<a href="{{ route('admin.penyewaan.reciving_order') }}/${data}"  data-toggle="tooltip" class="btn btn-rounded btn-primary btn-sm me-1 mt-1" title="Ubah Data">
-                                <i class="fas fa-edit"></i>
-                                </a>${(++br_counter %4==0)? '<br>':''}` : '';
-
-                            const btn_batalkan = (full.status <= 2 && can_batalkan) ? `<button type="button" data-toggle="tooltip" class="btn btn-rounded btn-warning btn-sm me-1 mt-1" title="Batalkan" onClick="batalFunc('${data}')">
-                                <i class="fas fa-times"></i>
-                                </button>${(++br_counter %4==0)? '<br>':''}` : '';
-
-                            const btn_delete = (can_delete) ? `<button type="button" data-toggle="tooltip" class="btn btn-rounded btn-danger btn-sm me-1 mt-1" title="Hapus Data" onClick="deleteFunc('${data}')">
-                                <i class="fas fa-trash"></i>
-                                </button>${(++br_counter %4==0)? '<br>':''}` : '';
-
-                            return `${status}<br>${btn_selesai} ${btn_update} ${btn_batalkan} ${btn_delete}`;
+                            return `<i class="fas fa-circle me-1 text-${statusClass(full.status)}"></i> ${full.status_str}`;
                         },
                         className: ''
                     },

@@ -187,7 +187,9 @@
             <div class="card">
                 <div class="card-header d-md-flex flex-row justify-content-between">
                     <div>
-                        <h3 class="card-title mb-1">Penyewaan</h3>
+                        <h3 class="card-title mb-1 text-dark">
+                            <a href="{{ route('admin.penyewaan') }}"> Penyewaan</a>
+                        </h3>
                         <small>Jumlah Penyewaan Per Bulan</small>
                     </div>
                     <div>
@@ -212,7 +214,9 @@
             <div class="card">
                 <div class="card-header d-md-flex flex-row justify-content-between">
                     <div>
-                        <h3 class="card-title mb-1">Barang Sewa</h3>
+                        <h3 class="card-title mb-1 text-dark">
+                            <a href="{{ route('admin.barang.sewa') }}"> Barang Sewa</a>
+                        </h3>
                         <small>Barang yang Sering Disewakan </small>
                     </div>
                     <div>
@@ -237,7 +241,9 @@
             <div class="card">
                 <div class="card-header d-md-flex flex-row justify-content-between">
                     <div>
-                        <h3 class="card-title mb-1">Barang Habis Pakai</h3>
+                        <h3 class="card-title mb-1 text-dark">
+                            <a href="{{ route('admin.barang.habis_pakai') }}"> Barang Habis Pakai</a>
+                        </h3>
                         <small>Barang yang Sering Dipakai</small>
                     </div>
                     <div>

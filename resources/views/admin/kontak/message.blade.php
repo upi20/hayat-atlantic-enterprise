@@ -85,7 +85,7 @@
                                 <div style="clear: both"></div>
                                 <button type="submit" form="setting_form" class="btn btn-rounded btn-md btn-info"
                                     data-toggle="tooltip" title="Simpan Setting" id="setting_btn_submit">
-                                    <li class="fas fa-save mr-1"></li> Save Changes
+                                    <li class="fas fa-save mr-1"></li> Simpan
                                 </button>
                             </div>
                         </div>
@@ -200,7 +200,7 @@
                     e.preventDefault();
                     resetErrorAfterInput();
                     var formData = new FormData(this);
-                    setBtnLoading('#setting_btn_submit', 'Save Changes');
+                    setBtnLoading('#setting_btn_submit', 'Simpan');
                     $.ajax({
                         type: "POST",
                         url: "{{ route(h_prefix('setting')) }}",
@@ -237,7 +237,7 @@
                         },
                         complete: function() {
                             setBtnLoading('#setting_btn_submit',
-                                '<li class="fas fa-save mr-1"></li> Save changes',
+                                '<li class="fas fa-save mr-1"></li> Simpan',
                                 false);
                         }
                     });

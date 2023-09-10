@@ -40,7 +40,7 @@
                             <th>Route</th>
                             <th>Detail</th>
                             <th>Status</th>
-                            <th>Action</th>
+                            <th>Ubah Data</th>
                         </tr>
                     </thead>
                     <tbody> </tbody>
@@ -114,7 +114,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary" id="btn-save" form="MainForm">
-                        <li class="fas fa-save mr-1"></li> Save changes
+                        <li class="fas fa-save mr-1"></li> Simpan
                     </button>
                     <button class="btn btn-light" data-bs-dismiss="modal">
                         <i class="fas fa-times"></i>
@@ -310,7 +310,7 @@
                 e.preventDefault();
                 resetErrorAfterInput();
                 var formData = new FormData(this);
-                setBtnLoading('#btn-save', 'Save Changes');
+                setBtnLoading('#btn-save', 'Simpan');
                 const route = ($('#id').val() == '') ?
                     "{{ route('admin.pendaftaran.insert') }}" :
                     "{{ route('admin.pendaftaran.update') }}";
@@ -354,7 +354,7 @@
                     },
                     complete: function() {
                         setBtnLoading('#btn-save',
-                            '<li class="fas fa-save mr-1"></li> Save changes',
+                            '<li class="fas fa-save mr-1"></li> Simpan',
                             false);
                     }
                 });

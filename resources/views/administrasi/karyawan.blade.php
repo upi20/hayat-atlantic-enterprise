@@ -98,7 +98,7 @@
                         <th>Jenis Kelamin</th>
                         <th>No Telepon</th>
                         <th>Oleh</th>
-                        {!! $can_delete || $can_update ? '<th>Action</th>' : '' !!}
+                        {!! $can_delete || $can_update ? '<th>Ubah Data</th>' : '' !!}
                     </tr>
                 </thead>
                 <tbody></tbody>
@@ -175,7 +175,7 @@
 
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary" id="btn-save" form="UserForm">
-                        <li class="fas fa-save mr-1"></li> Save changes
+                        <li class="fas fa-save mr-1"></li> Simpan
                     </button>
                     <button class="btn btn-light" data-bs-dismiss="modal">
                         <i class="fas fa-times"></i>
@@ -403,7 +403,7 @@
                     },
                     complete: function() {
                         setBtnLoading('#btn-save',
-                            '<li class="fas fa-save mr-1"></li> Save changes',
+                            '<li class="fas fa-save mr-1"></li> Simpan',
                             false);
                     }
                 });

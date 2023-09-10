@@ -132,7 +132,7 @@
                         </div>
                         <div class="card-footer text-end">
                             <button type="submit" class="btn btn-primary" id="btn-save" form="menu-form">
-                                <li class="fas fa-save mr-1"></li> Save changes
+                                <li class="fas fa-save mr-1"></li> Simpan
                             </button>
                         </div>
                     </div>
@@ -206,7 +206,7 @@
                 e.preventDefault();
                 var formData = new FormData(this);
                 formData.append('sequence', sequence_max++);
-                setBtnLoading('#btn-save', 'Save Changes');
+                setBtnLoading('#btn-save', 'Simpan');
                 resetErrorAfterInput();
                 const route = isUpdate ? `{{ route(h_prefix('update')) }}` :
                     `{{ route(h_prefix('insert')) }}`;
@@ -247,7 +247,7 @@
                     },
                     complete: function() {
                         setBtnLoading('#btn-save',
-                            '<li class="fas fa-save mr-1"></li> Save changes',
+                            '<li class="fas fa-save mr-1"></li> Simpan',
                             false);
                     }
                 });

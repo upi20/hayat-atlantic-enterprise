@@ -173,7 +173,7 @@ $(document).ready(() => {
         e.preventDefault();
         resetErrorAfterInput();
         var formData = new FormData(this);
-        setBtnLoading('button[type=submit][form=basic_profile]', 'Save Changes');
+        setBtnLoading('button[type=submit][form=basic_profile]', 'Simpan');
         const route = "{{ route('member.profile.save_basic') }}";
         $.ajax({
             type: "POST",
@@ -212,7 +212,7 @@ $(document).ready(() => {
             },
             complete: function () {
                 setBtnLoading('button[type=submit][form=basic_profile]',
-                    '<li class="fa fa-save mr-1"></li> Save changes',
+                    '<li class="fa fa-save mr-1"></li> Simpan',
                     false);
             }
         });
@@ -223,7 +223,7 @@ $(document).ready(() => {
         e.preventDefault();
         resetErrorAfterInput();
         var formData = new FormData(this);
-        setBtnLoading('button[type=submit][form=address_profile]', 'Save Changes');
+        setBtnLoading('button[type=submit][form=address_profile]', 'Simpan');
         const route = "{{ route('member.profile.save_address') }}";
         $.ajax({
             type: "POST",
@@ -262,7 +262,7 @@ $(document).ready(() => {
             },
             complete: function () {
                 setBtnLoading('button[type=submit][form=address_profile]',
-                    '<li class="fa fa-save mr-1"></li> Save changes',
+                    '<li class="fa fa-save mr-1"></li> Simpan',
                     false);
             }
         });
@@ -273,7 +273,7 @@ $(document).ready(() => {
         e.preventDefault();
         resetErrorAfterInput();
         var formData = new FormData(this);
-        setBtnLoading('button[type=submit][form=detail_profile]', 'Save Changes');
+        setBtnLoading('button[type=submit][form=detail_profile]', 'Simpan');
         const route = "{{ route('member.profile.save_detail') }}";
         $.ajax({
             type: "POST",
@@ -312,7 +312,7 @@ $(document).ready(() => {
             },
             complete: function () {
                 setBtnLoading('button[type=submit][form=detail_profile]',
-                    '<li class="fa fa-save mr-1"></li> Save changes',
+                    '<li class="fa fa-save mr-1"></li> Simpan',
                     false);
             }
         });
@@ -331,7 +331,7 @@ $(document).ready(() => {
         e.preventDefault();
         resetErrorAfterInput();
         var formData = new FormData(this);
-        setBtnLoading('button[type=submit][form=kontak_form]', 'Save Changes');
+        setBtnLoading('button[type=submit][form=kontak_form]', 'Simpan');
         const route = ($('#kontak_id').val() == '') ?
             "{{ route('member.profile.kontak_insert') }}" :
             "{{ route('member.profile.kontak_update') }}";
@@ -373,7 +373,7 @@ $(document).ready(() => {
             },
             complete: function () {
                 setBtnLoading('button[type=submit][form=kontak_form]',
-                    '<li class="fa fa-save mr-1"></li> Save changes',
+                    '<li class="fa fa-save mr-1"></li> Simpan',
                     false);
             }
         });
@@ -384,7 +384,7 @@ $(document).ready(() => {
         e.preventDefault();
         resetErrorAfterInput();
         var formData = new FormData(this);
-        setBtnLoading('button[type=submit][form=hobi_form]', 'Save Changes');
+        setBtnLoading('button[type=submit][form=hobi_form]', 'Simpan');
         const route = "{{ route('member.profile.hobby_save') }}";
         $.ajax({
             type: "POST",
@@ -423,7 +423,7 @@ $(document).ready(() => {
             },
             complete: function () {
                 setBtnLoading('button[type=submit][form=hobi_form]',
-                    '<li class="fa fa-save mr-1"></li> Save changes',
+                    '<li class="fa fa-save mr-1"></li> Simpan',
                     false);
             }
         });
@@ -434,7 +434,7 @@ $(document).ready(() => {
         e.preventDefault();
         resetErrorAfterInput();
         var formData = new FormData(this);
-        setBtnLoading('button[type=submit][form=pendidikan_form]', 'Save Changes');
+        setBtnLoading('button[type=submit][form=pendidikan_form]', 'Simpan');
         const route = ($('#pendidikan_id').val() == '') ?
             "{{ route('member.profile.pendidikan_insert') }}" :
             "{{ route('member.profile.pendidikan_update') }}";
@@ -476,7 +476,7 @@ $(document).ready(() => {
             },
             complete: function () {
                 setBtnLoading('button[type=submit][form=pendidikan_form]',
-                    '<li class="fa fa-save mr-1"></li> Save changes',
+                    '<li class="fa fa-save mr-1"></li> Simpan',
                     false);
             }
         });
@@ -487,7 +487,7 @@ $(document).ready(() => {
         e.preventDefault();
         resetErrorAfterInput();
         var formData = new FormData(this);
-        setBtnLoading('button[type=submit][form=pengalaman_organisasi_form]', 'Save Changes');
+        setBtnLoading('button[type=submit][form=pengalaman_organisasi_form]', 'Simpan');
         const route = ($('#pengalaman_organisasi_id').val() == '') ?
             "{{ route('member.profile.pengalaman_organisasi_insert') }}" :
             "{{ route('member.profile.pengalaman_organisasi_update') }}";
@@ -529,7 +529,7 @@ $(document).ready(() => {
             },
             complete: function () {
                 setBtnLoading('button[type=submit][form=pengalaman_organisasi_form]',
-                    '<li class="fa fa-save mr-1"></li> Save changes',
+                    '<li class="fa fa-save mr-1"></li> Simpan',
                     false);
             }
         });
@@ -540,7 +540,7 @@ $(document).ready(() => {
         e.preventDefault();
         resetErrorAfterInput();
         var formData = new FormData(this);
-        setBtnLoading('button[type=submit][form=pengalaman_lain_form]', 'Save Changes');
+        setBtnLoading('button[type=submit][form=pengalaman_lain_form]', 'Simpan');
         const route = ($('#pengalaman_lain_id').val() == '') ?
             "{{ route('member.profile.pengalaman_lain_insert') }}" :
             "{{ route('member.profile.pengalaman_lain_update') }}";
@@ -582,7 +582,7 @@ $(document).ready(() => {
             },
             complete: function () {
                 setBtnLoading('button[type=submit][form=pengalaman_lain_form]',
-                    '<li class="fa fa-save mr-1"></li> Save changes',
+                    '<li class="fa fa-save mr-1"></li> Simpan',
                     false);
             }
         });

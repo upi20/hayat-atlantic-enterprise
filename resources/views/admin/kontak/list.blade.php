@@ -49,7 +49,7 @@
                                 <div style="clear: both"></div>
                                 <button type="submit" form="setting_form" class="btn btn-rounded btn-md btn-info"
                                     data-toggle="tooltip" title="Simpan Setting" id="setting_btn_submit">
-                                    <li class="fas fa-save mr-1"></li> Save Changes
+                                    <li class="fas fa-save mr-1"></li> Simpan
                                 </button>
                             </div>
                         </div>
@@ -102,7 +102,7 @@
                             <th>Urutan</th>
                             <th>Status</th>
                             @if ($can_update || $can_delete)
-                                <th>Action</th>
+                                <th>Ubah Data</th>
                             @endif
                         </tr>
                     </thead>
@@ -164,7 +164,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary" id="btn-save" form="MainForm">
-                        <li class="fas fa-save mr-1"></li> Save changes
+                        <li class="fas fa-save mr-1"></li> Simpan
                     </button>
                     <button class="btn btn-light" data-bs-dismiss="modal">
                         <i class="fas fa-times"></i>
@@ -293,7 +293,7 @@
                 e.preventDefault();
                 resetErrorAfterInput();
                 var formData = new FormData(this);
-                setBtnLoading('#btn-save', 'Save Changes');
+                setBtnLoading('#btn-save', 'Simpan');
                 const route = ($('#id').val() == '') ?
                     "{{ route(h_prefix('insert')) }}" :
                     "{{ route(h_prefix('update')) }}";
@@ -337,7 +337,7 @@
                     },
                     complete: function() {
                         setBtnLoading('#btn-save',
-                            '<li class="fas fa-save mr-1"></li> Save changes',
+                            '<li class="fas fa-save mr-1"></li> Simpan',
                             false);
                     }
                 });
@@ -349,7 +349,7 @@
                     e.preventDefault();
                     resetErrorAfterInput();
                     var formData = new FormData(this);
-                    setBtnLoading('#setting_btn_submit', 'Save Changes');
+                    setBtnLoading('#setting_btn_submit', 'Simpan');
                     $.ajax({
                         type: "POST",
                         url: "{{ route(h_prefix('setting')) }}",
@@ -386,7 +386,7 @@
                         },
                         complete: function() {
                             setBtnLoading('#setting_btn_submit',
-                                '<li class="fas fa-save mr-1"></li> Save changes',
+                                '<li class="fas fa-save mr-1"></li> Simpan',
                                 false);
                         }
                     });

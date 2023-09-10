@@ -43,7 +43,7 @@
                             <th>Kilasan</th>
                             <th>Tanggal</th>
                             <th>Status</th>
-                            {!! $can_delete || $can_update ? '<th>Action</th>' : '' !!}
+                            {!! $can_delete || $can_update ? '<th>Ubah Data</th>' : '' !!}
                         </tr>
                     </thead>
                     <tbody> </tbody>

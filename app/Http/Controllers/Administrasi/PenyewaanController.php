@@ -159,7 +159,7 @@ class PenyewaanController extends Controller
         $this->query[$c_status_str] = <<<SQL
             (if($table.status = 1,'Belum Selesai', 
             if($table.status = 2,'Pengiriman Barang', 
-            if($table.status = 3,'Barang Di Customer', 
+            if($table.status = 3,'Barang di Customer', 
             if($table.status = 4,'Pengambalian Barang', 
             if($table.status = 5,'Selesai',  
             if($table.status = 9,'Dibatalkan',  'Tidak Diketahui')))))))

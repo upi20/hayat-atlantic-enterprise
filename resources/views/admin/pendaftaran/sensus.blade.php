@@ -74,7 +74,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary" id="btn-save" form="MainForm">
-                        <li class="fas fa-save mr-1"></li> Save changes
+                        <li class="fas fa-save mr-1"></li> Simpan
                     </button>
                     <button class="btn btn-light" data-bs-dismiss="modal">
                         <i class="fas fa-times"></i>

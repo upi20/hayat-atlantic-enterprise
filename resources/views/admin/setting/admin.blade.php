@@ -85,7 +85,7 @@
                 </div>
                 <div class="card-footer text-end">
                     <button type="submit" class="btn btn-primary" form="app-form">
-                        <li class="fas fa-save mr-1"></li> Save changes
+                        <li class="fas fa-save mr-1"></li> Simpan
                     </button>
                 </div>
             </div>
@@ -136,7 +136,7 @@
                 </div>
                 <div class="card-footer text-end">
                     <button type="submit" class="btn btn-primary" form="meta-form">
-                        <li class="fas fa-save mr-1"></li> Save changes
+                        <li class="fas fa-save mr-1"></li> Simpan
                     </button>
                 </div>
             </div>
@@ -209,7 +209,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary" form="meta_list_form">
-                        <li class="fas fa-save mr-1"></li> Save changes
+                        <li class="fas fa-save mr-1"></li> Simpan
                     </button>
                     <button class="btn btn-light" data-bs-dismiss="modal">
                         <i class="fas fa-times"></i>
@@ -316,7 +316,7 @@
                 resetErrorAfterInput();
                 var formData = new FormData(this);
                 const submit_element = $(this).parent().parent().find('button[type=submit]');
-                setBtnLoading(submit_element, 'Save Changes');
+                setBtnLoading(submit_element, 'Simpan');
                 const route = ($('#meta_list_id').val() == '') ?
                     "{{ route(h_prefix('meta.insert')) }}" :
                     "{{ route(h_prefix('meta.update')) }}";
@@ -357,7 +357,7 @@
                     },
                     complete: function() {
                         setBtnLoading(submit_element,
-                            '<li class="fas fa-save mr-1"></li> Save changes',
+                            '<li class="fas fa-save mr-1"></li> Simpan',
                             false);
                     }
                 });

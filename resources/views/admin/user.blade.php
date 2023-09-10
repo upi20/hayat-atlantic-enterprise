@@ -66,7 +66,7 @@
                             {!! $is_admin ? '<th>Email</th>' : '' !!}
                             <th>Role</th>
                             <th>Active</th>
-                            {!! $can_delete || $can_update ? '<th>Action</th>' : '' !!}
+                            {!! $can_delete || $can_update ? '<th>Ubah Data</th>' : '' !!}
                         </tr>
                     </thead>
                     <tbody> </tbody>
@@ -142,7 +142,7 @@
 
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary" id="btn-save" form="UserForm">
-                        <li class="fas fa-save mr-1"></li> Save changes
+                        <li class="fas fa-save mr-1"></li> Simpan
                     </button>
                     <button class="btn btn-light" data-bs-dismiss="modal">
                         <i class="fas fa-times"></i>
@@ -281,7 +281,7 @@
             $('#UserForm').submit(function(e) {
                 e.preventDefault();
                 var formData = new FormData(this);
-                setBtnLoading('#btn-save', 'Save Changes');
+                setBtnLoading('#btn-save', 'Simpan');
                 resetErrorAfterInput();
                 const route = ($('#id').val() == '') ? "{{ route('admin.user.store') }}" :
                     "{{ route('admin.user.update') }}";
@@ -325,7 +325,7 @@
                     },
                     complete: function() {
                         setBtnLoading('#btn-save',
-                            '<li class="fas fa-save mr-1"></li> Save changes',
+                            '<li class="fas fa-save mr-1"></li> Simpan',
                             false);
                     }
                 });
