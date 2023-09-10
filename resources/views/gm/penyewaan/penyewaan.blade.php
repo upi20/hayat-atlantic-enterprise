@@ -213,6 +213,11 @@
                     {
                         data: 'number',
                         name: 'number',
+                        render(data, type, full, meta) {
+                            const btn_detail = `<br><button type="button" data-toggle="tooltip" class="btn btn-rounded btn-info btn-sm me-1 mt-1" title="Detail Data" onClick="detailFunc('${full.id}')">
+                                <i class="fas fa-file-alt"></i> </button>`;
+                            return data + btn_detail;
+                        },
                     },
                     {
                         data: 'tanggal_order_str',

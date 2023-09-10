@@ -1,17 +1,13 @@
 
-[9/9/2023 11:37 AM] : -Fitur pesanan 
-Pas nambah nama customer bisa ditambahin opsi buat ngisi namanya kaya gini engga?
-
-[9/9/2023 11:37 AM] : Administrasi
+# Administrasi
+➖ Data Penyewaan, filternya tambhain perbulan (yg kaya General Manager)
 ➖ Fitur pesanan 
+- setelah terima pesanan, 
+    - nanti nama cust yg baru muncul di tabel cust & nanti si pesanan ini muncul di tabel penyewaan Jadi nge link langsung ke data customer sama data penyewaan
 - Filternya tambahin perbulan (yg kaya general manager) 
-- setelah terima pesanan, nanti nama cust yg baru muncul di tabel cust & nanti si pesanan ini muncul di tabel penyewaan Jadi nge link langsung ke data customer sama data penyewaan
 
-[9/9/2023 11:37 AM] : ➖ Data Penyewaan, filternya tambhain perbulan (yg kaya General Manager)
-
-[9/9/2023 11:37 AM] : Gudang
+# Gudang
 [x] Dashboardnya sesuain yg kaya di word (gaada menu customer & pembayaran) 
-➖ Fitur pesanannya sama kaya administrasi, blm nge link ke penyewaan
 [x] Data Penyewaan, filternya tambhain perbulan (yg kaya General Manager)
 [x] Nama tabel Penyewaan, Pengadaan & Pengurangan Barang sesuin lg juga
 [x] Nama Tabel
