@@ -21,111 +21,111 @@ class PModelHasRolesTableSeeder extends Seeder
         \DB::table('p_model_has_roles')->insert(array (
             0 => 
             array (
-                'role_id' => 1,
+                'role_id' => '1',
                 'model_type' => 'App\\Models\\User',
-                'model_id' => 1,
+                'model_id' => '1',
             ),
             1 => 
             array (
-                'role_id' => 2,
+                'role_id' => '2',
                 'model_type' => 'App\\Models\\User',
-                'model_id' => 2,
+                'model_id' => '2',
             ),
             2 => 
             array (
-                'role_id' => 3,
+                'role_id' => '3',
                 'model_type' => 'App\\Models\\User',
-                'model_id' => 4,
+                'model_id' => '4',
             ),
             3 => 
             array (
-                'role_id' => 4,
+                'role_id' => '5',
                 'model_type' => 'App\\Models\\User',
-                'model_id' => 3,
+                'model_id' => '5',
             ),
             4 => 
             array (
-                'role_id' => 5,
+                'role_id' => '6',
                 'model_type' => 'App\\Models\\User',
-                'model_id' => 5,
+                'model_id' => '3',
             ),
             5 => 
             array (
-                'role_id' => 6,
+                'role_id' => '6',
                 'model_type' => 'App\\Models\\User',
-                'model_id' => 18,
+                'model_id' => '18',
             ),
             6 => 
             array (
-                'role_id' => 7,
+                'role_id' => '7',
                 'model_type' => 'App\\Models\\User',
-                'model_id' => 6,
+                'model_id' => '6',
             ),
             7 => 
             array (
-                'role_id' => 8,
+                'role_id' => '8',
                 'model_type' => 'App\\Models\\User',
-                'model_id' => 7,
+                'model_id' => '7',
             ),
             8 => 
             array (
-                'role_id' => 8,
+                'role_id' => '8',
                 'model_type' => 'App\\Models\\User',
-                'model_id' => 8,
+                'model_id' => '9',
             ),
             9 => 
             array (
-                'role_id' => 8,
+                'role_id' => '8',
                 'model_type' => 'App\\Models\\User',
-                'model_id' => 9,
+                'model_id' => '10',
             ),
             10 => 
             array (
-                'role_id' => 8,
+                'role_id' => '8',
                 'model_type' => 'App\\Models\\User',
-                'model_id' => 10,
+                'model_id' => '11',
             ),
             11 => 
             array (
-                'role_id' => 8,
+                'role_id' => '8',
                 'model_type' => 'App\\Models\\User',
-                'model_id' => 11,
+                'model_id' => '12',
             ),
             12 => 
             array (
-                'role_id' => 8,
+                'role_id' => '8',
                 'model_type' => 'App\\Models\\User',
-                'model_id' => 12,
+                'model_id' => '13',
             ),
             13 => 
             array (
-                'role_id' => 8,
+                'role_id' => '10',
                 'model_type' => 'App\\Models\\User',
-                'model_id' => 13,
+                'model_id' => '14',
             ),
             14 => 
             array (
-                'role_id' => 9,
+                'role_id' => '10',
                 'model_type' => 'App\\Models\\User',
-                'model_id' => 14,
+                'model_id' => '15',
             ),
             15 => 
             array (
-                'role_id' => 10,
+                'role_id' => '11',
                 'model_type' => 'App\\Models\\User',
-                'model_id' => 15,
+                'model_id' => '8',
             ),
             16 => 
             array (
-                'role_id' => 10,
+                'role_id' => '11',
                 'model_type' => 'App\\Models\\User',
-                'model_id' => 16,
+                'model_id' => '16',
             ),
             17 => 
             array (
-                'role_id' => 10,
+                'role_id' => '11',
                 'model_type' => 'App\\Models\\User',
-                'model_id' => 17,
+                'model_id' => '17',
             ),
         ));
         
