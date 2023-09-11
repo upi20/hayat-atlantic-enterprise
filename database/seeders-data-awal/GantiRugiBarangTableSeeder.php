@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
-class ArtikelTableSeeder extends Seeder
+class GantiRugiBarangTableSeeder extends Seeder
 {
 
     /**
@@ -16,7 +16,7 @@ class ArtikelTableSeeder extends Seeder
     {
         
 
-        \DB::table('artikel')->delete();
+        \DB::table('ganti_rugi_barang')->delete();
         
         
         
