@@ -39,13 +39,11 @@ class LoginController extends Controller
         $password   = $request->input('password');
 
         if (Auth::guard('web')->attempt(['email' => $nik, 'password' => $password, 'active' => 1])) {
-            return response()->json([
-                'success' => true
-            ], 200);
+            return response()->json(['success' => true], 200);
         } else if (Auth::guard('web')->attempt(['nik' => $nik, 'password' => $password, 'active' => 1])) {
-            return response()->json([
-                'success' => true
-            ], 200);
+            return response()->json(['success' => true], 200);
+        } else if (Auth::guard('web')->attempt(['username' => $nik, 'password' => $password, 'active' => 1])) {
+            return response()->json(['success' => true], 200);
         } else {
             return response()->json([
                 'success' => false,

@@ -128,10 +128,13 @@ $page_attr_title = ($page_attr->title == '' ? '' : $page_attr->title . ' | ') . 
                     <div class="error-template">
                         @yield('content')
                         <div class="text-center">
-                            <a class="btn btn-secondary mt-5 mb-5" href="{{ url('') }}"> <i
+                            <a class="btn btn-secondary mt-5 mb-2" href="{{ url('') }}"> <i
                                     class="fa fa-long-arrow-left"></i> Kembali ke halaman utama
                             </a>
                         </div>
+                        <a class="mt-2 mb-5" href="{{ route('logout') }}">
+                            Keluar dari akun
+                        </a>
                     </div>
                 </div>
             </div>
