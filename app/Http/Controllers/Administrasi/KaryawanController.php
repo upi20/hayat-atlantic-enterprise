@@ -18,6 +18,10 @@ class KaryawanController extends Controller
         'no_telepon' => ['nullable', 'string'],
         'active' => ['required', 'int', 'in:1,0'],
         'nik' => ['required', 'string', 'max:16'],
+        'alamat' => ['required', 'string'],
+        'status_kontrak' => ['required', 'string'],
+        'tgl_lahir' => ['required', 'date'],
+        'awal_masuk_kerja' => ['required', 'integer'],
     ];
 
     private $query = [];
@@ -35,26 +39,39 @@ class KaryawanController extends Controller
                 ['name' => 'Dashboard'],
             ]
         ];
-        if (auth_has_role(6)) {
-            return view('gm.karyawan', compact('page_attr', 'user_role'));
-        }
-        return view('administrasi.karyawan', compact('page_attr', 'user_role'));
+
+        $status_kontrak = User::groupBy('status_kontrak')->pluck('status_kontrak');
+        $data = compact('page_attr', 'user_role', 'status_kontrak');
+
+        // if gm
+        if (auth_has_role(6)) return view('gm.karyawan', $data);
+
+        return view('administrasi.karyawan', $data);
     }
 
     public function insert(Request $request): mixed
     {
         try {
             $request->validate(array_merge(['password' => ['required', 'string']], $this->validate_model));
+            // username
+            $request->validate(array_merge(['username' => ['required', 'string', 'unique:users,username']], $this->validate_model));
+
             $model = new User();
 
             $model->name = $request->name;
-            $model->no_telepon = $request->no_telepon;
             $model->nik = $request->nik;
-            $model->active = $request->active;
-            $model->jenis_kelamin = $request->jenis_kelamin;
+            $model->alamat = $request->alamat;
+            $model->no_telepon = $request->no_telepon;
+            $model->tgl_lahir = $request->tgl_lahir;
+            $model->syncRoles([$request->role]); // jabatan
+            $model->awal_masuk_kerja = $request->awal_masuk_kerja;
+            $model->status_kontrak = $request->status_kontrak;
+            $model->username = $request->username;
             $model->password = Hash::make($request->password);
+            $model->active = $request->active;
+            // $model->jenis_kelamin = $request->jenis_kelamin;
+
             $model->created_by = auth()->user()->id;
-            $model->syncRoles([$request->role]);
             $model->save();
 
             return response()->json($model);
@@ -71,20 +88,23 @@ class KaryawanController extends Controller
         try {
             $model = User::findOrFail($request->id);
             $request->validate(array_merge(['id' => ['required', 'int']], $this->validate_model));
+            // username
+            $request->validate(array_merge(['username' => ['required', 'string', 'unique:users,username,' . $model->id]], $this->validate_model));
 
             $model->name = $request->name;
-            $model->no_telepon = $request->no_telepon;
             $model->nik = $request->nik;
+            $model->alamat = $request->alamat;
+            $model->no_telepon = $request->no_telepon;
+            $model->tgl_lahir = $request->tgl_lahir;
+            $model->syncRoles([$request->role]); // jabatan
+            $model->awal_masuk_kerja = $request->awal_masuk_kerja;
+            $model->status_kontrak = $request->status_kontrak;
+            $model->username = $request->username;
+            if ($request->password) $model->password = Hash::make($request->password);
             $model->active = $request->active;
-            $model->jenis_kelamin = $request->jenis_kelamin;
-            $model->syncRoles([$request->role]);
-
-            if ($request->password) {
-                $model->password = Hash::make($request->password);
-            }
+            // $model->jenis_kelamin = $request->jenis_kelamin;
 
             $model->updated_by = auth()->user()->id;
-
             $model->save();
             return response()->json($model);
         } catch (ValidationException $error) {
@@ -176,6 +196,12 @@ class KaryawanController extends Controller
             SQL;
         $this->query["{$c_active}_alias"] = $c_active;
 
+        $c_umur = 'umur';
+        $this->query[$c_umur] = <<<SQL
+            TIMESTAMPDIFF(YEAR, $table.tgl_lahir, CURDATE())
+            SQL;
+        $this->query["{$c_umur}_alias"] = $c_umur;
+
         // ========================================================================================================
 
 
@@ -194,6 +220,7 @@ class KaryawanController extends Controller
             $c_role,
             $c_jenis_kelamin,
             $c_active,
+            $c_umur
         ];
 
         $to_db_raw = array_map(function ($a) use ($sraa) {
@@ -229,7 +256,7 @@ class KaryawanController extends Controller
         }
 
         // filter custom
-        $filters = ['updated_by', 'created_by', 'jenis_kelamin', 'active'];
+        $filters = ['updated_by', 'created_by', 'jenis_kelamin', 'active', 'status_kontrak'];
         foreach ($filters as  $f) {
             if ($f_c($f) !== false) {
                 $model->whereRaw("$table.$f='{$f_c($f)}'");

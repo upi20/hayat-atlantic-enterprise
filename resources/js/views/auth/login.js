@@ -8,7 +8,7 @@ $(document).ready(function () {
             Swal.fire({
                 icon: 'warning',
                 title: 'Oops...',
-                text: 'Nomor Induk Karyawan harus di isi !'
+                text: 'Nomor Induk Kependudukan harus di isi !'
             });
         } else if (password.length == "") {
             Swal.fire({

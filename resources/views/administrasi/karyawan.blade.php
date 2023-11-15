@@ -43,41 +43,20 @@
                                     </select>
                                 </div>
                                 <div class="form-group float-start me-2" style="min-width: 250px">
-                                    <label for="filter_jenis_kelamin">Jenis Kelamin</label>
+                                    <label for="filter_status_kontrak">Keterangan Kontrak</label>
                                     <br>
-                                    <select class="form-control" id="filter_jenis_kelamin" name="filter_jenis_kelamin"
+                                    <select class="form-control" id="filter_status_kontrak" name="filter_status_kontrak"
                                         style="width: 100%;">
-                                        <option value="" selected>Semua</option>
-                                        <option value="l">Laki-Laki</option>
-                                        <option value="p">Perempuan</option>
-                                    </select>
-                                </div>
-                                <div class="form-group float-start me-2" style="min-width: 250px">
-                                    <label for="filter_active">Aktif</label>
-                                    <br>
-                                    <select class="form-control" id="filter_active" name="filter_active"
-                                        style="width: 100%;">
-                                        <option value="" selected>Semua</option>
-                                        <option value="1">Aktif</option>
-                                        <option value="0">Tidak Aktif</option>
+                                        @foreach ($status_kontrak as $status)
+                                            @if (is_null($status))
+                                                <option value="">Semua</option>
+                                            @else
+                                                <option value="{{ $status }}">{{ $status }}</option>
+                                            @endif
+                                        @endforeach
                                     </select>
                                 </div>
 
-                                <div class="form-group float-start me-2" style="min-width: 250px">
-                                    <label for="created_by">Dibuat Oleh</label>
-                                    <br>
-                                    <select class="form-control" id="created_by" name="created_by" style="width: 100%;">
-                                        <option value="" selected>Semua</option>
-                                    </select>
-                                </div>
-
-                                <div class="form-group float-start me-2" style="min-width: 250px">
-                                    <label for="updated_by">Diubah Oleh</label>
-                                    <br>
-                                    <select class="form-control" id="updated_by" name="updated_by" style="width: 100%;">
-                                        <option value="" selected>Semua</option>
-                                    </select>
-                                </div>
 
                             </form>
                             <div style="clear: both"></div>
@@ -93,11 +72,13 @@
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>NIK</th>
                         <th>Nama</th>
-                        <th>Jenis Kelamin</th>
+                        <th>NIK</th>
+                        <th>Alamat</th>
+                        <th>Umur</th>
                         <th>No Telepon</th>
-                        <th>Oleh</th>
+                        <th>Jabatan</th>
+                        <th>Keterangan Kontrak</th>
                         {!! $can_delete || $can_update ? '<th>Ubah Data</th>' : '' !!}
                     </tr>
                 </thead>
@@ -106,10 +87,9 @@
         </div>
     </div>
 
-
     <!-- End Row -->
     <div class="modal fade" id="modal-default">
-        <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content modal-content-demo">
                 <div class="modal-header">
                     <h6 class="modal-title" id="modal-default-title"></h6><button aria-label="Close" class="btn-close"
@@ -119,56 +99,123 @@
                     <form action="javascript:void(0)" id="UserForm" name="UserForm" method="POST"
                         enctype="multipart/form-data">
                         <input type="hidden" name="id" id="id">
-                        <div class="form-group">
-                            <label class="form-label" for="name">Name <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="name" name="name"
-                                placeholder="Enter Name" required="" />
-
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label" for="no_telepon">No Telepon</label>
-                            <input type="text" id="no_telepon" name="no_telepon" class="form-control"
-                                placeholder="No Telepon" />
-                            <div class="help-block"></div>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label" for="nik">Nomor Induk Karyawan
+                        <div class="row mb-1">
+                            <label class="col-md-3 form-label" for="name">Nama
                                 <span class="text-danger">*</span></label>
-                            <input type="number" id="nik" name="nik" class="form-control"
-                                placeholder="Nomor Induk Karyawan" required="" />
-                            <div class="help-block"></div>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="name" name="name"
+                                    placeholder="Nama Karyawan" required="" />
+                            </div>
                         </div>
-                        <div class="form-group ">
-                            <label class="form-label" for="password">Password <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="password" name="password"
-                                placeholder="Enter Password" required="">
+                        <div class="row mb-1">
+                            <label class="col-md-3 form-label" for="nik">Nomor Induk Kependudukan
+                                <span class="text-danger">*</span></label>
+                            <div class="col-md-9">
+                                <input type="number" id="nik" name="nik" class="form-control"
+                                    placeholder="Nomor Induk Kependudukan" required="" />
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label class="form-label" for="role">Jabatan</label>
-                            <select class="form-control" style="width: 100%;" required="" id="role"
-                                name="role">
-                                @foreach ($user_role as $role)
-                                    <option value="{{ $role->name }}">
-                                        {{ ucfirst(implode(' ', explode('_', $role->name))) }}
-                                    </option>
-                                @endforeach
-                            </select>
+
+                        {{-- new --}}
+                        <div class="row mb-1">
+                            <label class="col-md-3 form-label" for="alamat">Alamat
+                                <span class="text-danger">*</span></label>
+                            <div class="col-md-9">
+                                <textarea id="alamat" name="alamat" class="form-control" placeholder="Alamat" required="" rows="3"></textarea>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label class="form-label" for="jenis_kelamin">Jenis Kelamin</label>
-                            <select class="form-control" required="" id="jenis_kelamin" name="jenis_kelamin">
-                                <option value="l">Laki-Laki</option>
-                                <option value="p">Perempuan</option>
-                            </select>
+
+                        <div class="row mb-1">
+                            <label class="col-md-3 form-label" for="no_telepon">No Telepon
+                                <span class="text-danger">*</span></label>
+                            <div class="col-md-9">
+                                <input type="text" id="no_telepon" name="no_telepon" class="form-control"
+                                    placeholder="No Telepon" />
+                            </div>
                         </div>
-                        <div class="form-group d-none">
-                            <label class="form-label" for="active">Active</label>
-                            <input type="hidden" id="active" name="active" value="1">
-                            {{-- <select class="form-control" style="width: 100%;" required="" id="active"
-                                name="active">
-                                <option value="1">Yes</option>
-                                <option value="0">No</option>
-                            </select> --}}
+
+                        <div class="row mb-1">
+                            <label class="col-md-3 form-label" for="tgl_lahir">Tanggal Lahir
+                                <span class="text-danger">*</span></label>
+                            <div class="col-md-9">
+                                <input type="date" id="tgl_lahir" name="tgl_lahir"
+                                    class="form-control  date-input-str" placeholder="Tanggal Lahir" />
+                            </div>
+                        </div>
+
+                        <div class="row mb-1">
+                            <label class="col-md-3 form-label" for="role">Jabatan
+                                <span class="text-danger">*</span></label>
+                            <div class="col-md-9">
+                                <select class="form-control" style="width: 100%;" required="" id="role"
+                                    name="role">
+                                    @foreach ($user_role as $role)
+                                        <option value="{{ $role->name }}">
+                                            {{ ucfirst(implode(' ', explode('_', $role->name))) }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        {{-- new --}}
+                        <div class="row mb-1">
+                            <label class="col-md-3 form-label" for="awal_masuk_kerja">Awal Masuk Kerja
+                                <span class="text-danger">*</span></label>
+                            <div class="col-md-9">
+                                <input type="number" id="awal_masuk_kerja" name="awal_masuk_kerja" class="form-control"
+                                    placeholder="Awal Masuk Kerja" min="1970" max="{{ date('Y') }}" />
+                            </div>
+                        </div>
+
+                        {{-- new --}}
+                        <div class="row mb-1">
+                            <label class="col-md-3 form-label" for="status_kontrak">Status Kontrak
+                                <span class="text-danger">*</span></label>
+                            <div class="col-md-9">
+                                <input type="text" id="status_kontrak" name="status_kontrak" class="form-control"
+                                    placeholder="Status Kontrak" />
+                            </div>
+                        </div>
+
+                        <div class="row mb-1">
+                            <label class="col-md-3 form-label" for="username">Username
+                                <span class="text-danger">*</span></label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="username" name="username"
+                                    placeholder="Username" required="" />
+                            </div>
+                        </div>
+
+                        <div class="row mb-1">
+                            <label class="col-md-3 form-label" for="password">Password
+                                <span class="text-danger">*</span></label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" id="password" name="password"
+                                    placeholder="Password" required="">
+                            </div>
+                        </div>
+                        {{-- <div class="row mb-1">
+                            <label class="col-md-3 form-label" for="jenis_kelamin">Jenis Kelamin
+                                <span class="text-danger">*</span></label>
+                            <div class="col-md-9">
+                                <select class="form-control" required="" id="jenis_kelamin" name="jenis_kelamin">
+                                    <option value="l">Laki-Laki</option>
+                                    <option value="p">Perempuan</option>
+                                </select>
+                            </div>
+                        </div> --}}
+                        <div class="row mb-4 d-none">
+                            <label class="col-md-3 form-label" for="active">Active
+                                <span class="text-danger">*</span></label>
+                            <div class="col-md-9">
+                                <input type="hidden" id="active" name="active" value="1">
+                                {{-- <select class="form-control" style="width: 100%;" required="" id="active"
+                                    name="active">
+                                    <option value="1">Yes</option>
+                                    <option value="0">No</option>
+                                </select> --}}
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -268,6 +315,7 @@
                         d['filter[role_str]'] = $('#filter_role').val();
                         d['filter[active]'] = $('#filter_active').val();
                         d['filter[jenis_kelamin]'] = $('#filter_jenis_kelamin').val();
+                        d['filter[status_kontrak]'] = $('#filter_status_kontrak').val();
                     }
                 },
                 columns: [{
@@ -276,43 +324,44 @@
                         orderable: false,
                     },
                     {
+                        data: 'name',
+                        name: 'name',
+                        className: 'text-nowrap',
+                    },
+                    {
                         data: 'nik',
                         name: 'nik',
                         className: 'text-nowrap',
                     },
                     {
-                        data: 'name',
-                        name: 'name',
+                        data: 'alamat',
+                        name: 'alamat',
                         render(data, type, full, meta) {
-                            const class_el = full.active == 1 ? 'success' :
-                                'danger';
-                            // return `<span class="fw-bold" data-toggle="tooltip" title="Akun Karyawan ${full.active_str}" ><i class="fas fa-circle me-1 text-${class_el}"></i> ${data}</span><br>
-                        // <small>${full.role_str}</small>`;
-                            return `${data}</span><br>
-                            <small>${full.role_str}</small>`;
-                        },
-                        className: 'text-nowrap',
+                            return data ? `<small>${data}</small>` : '';
+                        }
                     },
                     {
-                        data: 'jenis_kelamin_str',
-                        name: 'jenis_kelamin_str',
+                        data: 'umur',
+                        name: 'umur',
                         className: 'text-nowrap',
                     },
                     {
                         data: 'no_telepon',
                         name: 'no_telepon',
                         className: 'text-nowrap',
-                        orderable: false
                     },
                     {
-                        data: 'updated',
-                        name: 'updated_by_str',
+                        data: 'role_str',
+                        name: 'role_str',
+                        className: 'text-nowrap'
+                    },
+                    {
+                        data: 'status_kontrak',
+                        name: 'awal_masuk_kerja',
                         render(data, type, full, meta) {
-                            const tanggal = data ?? full.created;
-                            const oleh = full.updated_by_str ?? full.created_by_str
-                            return `${oleh ??''}<br><small>${tanggal}</small>`;
+                            return `${data ?? ''}<br>${full.awal_masuk_kerja ? `(${full.awal_masuk_kerja})`: ''}`;
                         },
-                        className: 'text-nowrap to-link'
+                        className: 'text-nowrap'
                     },
                     ...((can_update || can_delete) ? [{
                         data: 'id',
@@ -332,7 +381,7 @@
                     }] : []),
                 ],
                 order: [
-                    [2, 'asc']
+                    [1, 'asc']
                 ],
                 language: {
                     url: datatable_indonesia_language_url
@@ -419,6 +468,7 @@
             $('#role').val('').trigger('change');
             resetErrorAfterInput();
             $('#password').attr('required', true);
+            render_tanggal('#tgl_lahir');
         }
 
         function editFunc(id) {
@@ -438,12 +488,18 @@
                     $('#UserForm').trigger("reset");
                     $('#id').val(data.id);
                     $('#name').val(data.name);
-                    $('#no_telepon').val(data.no_telepon);
                     $('#nik').val(data.nik);
-                    $('#jenis_kelamin').val(data.jenis_kelamin);
+                    $('#alamat').val(data.alamat);
+                    $('#no_telepon').val(data.no_telepon);
+                    $('#tgl_lahir').val(data.tgl_lahir);
+                    $('#awal_masuk_kerja').val(data.awal_masuk_kerja);
+                    $('#status_kontrak').val(data.status_kontrak);
+                    $('#username').val(data.username);
                     $('#role').val(data.role).trigger('change');
                     $('#active').val(data.active);
                     $('#password').removeAttr('required');
+
+                    render_tanggal('#tgl_lahir');
                 },
                 error: function(data) {
                     Swal.fire({

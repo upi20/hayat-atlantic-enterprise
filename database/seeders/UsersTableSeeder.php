@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class UsersTableSeeder extends Seeder
 {
@@ -14,19 +15,24 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        
 
-        \DB::table('users')->delete();
-        
-        \DB::table('users')->insert(array (
-            0 => 
-            array (
+
+        DB::table('users')->delete();
+
+        DB::table('users')->insert(array(
+            0 =>
+            array(
                 'id' => '1',
                 'name' => 'Super Admin',
-                'email' => 'superadmin@gmail.com',
-                'no_telepon' => '',
-                'nik' => '0000000',
+                'nik' => '0',
+                'alamat' => NULL,
+                'no_telepon' => NULL,
+                'awal_masuk_kerja' => NULL,
+                'status_kontrak' => NULL,
+                'username' => 'superadmin',
+                'tgl_lahir' => NULL,
                 'jenis_kelamin' => 'l',
+                'email' => 'superadmin@gmail.com',
                 'email_verified_at' => NULL,
                 'password' => '$2y$10$DsI7ChQu4aIwEwc0CTlCnO66pBuIukicAIA/oIKwHD4AIGzIHmHZO',
                 'two_factor_secret' => NULL,
@@ -37,18 +43,23 @@ class UsersTableSeeder extends Seeder
                 'profile_photo_path' => NULL,
                 'active' => '1',
                 'created_at' => NULL,
-                'updated_at' => '2022-09-15 08:38:55',
+                'updated_at' => NULL,
                 'updated_by' => NULL,
                 'created_by' => NULL,
             ),
-            1 => 
-            array (
+            1 =>
+            array(
                 'id' => '2',
                 'name' => 'Rusdi Salim',
-                'email' => NULL,
-                'no_telepon' => '085729414634',
-                'nik' => '0104001',
+                'nik' => '3273132205770009',
+                'alamat' => 'Jl. Burangrang Dalam No.23, Burangrang, Kota Bandung',
+                'no_telepon' => '8986733554',
+                'awal_masuk_kerja' => '2001',
+                'status_kontrak' => 'Tetap',
+                'username' => 'rusdi.salim',
+                'tgl_lahir' => '1977-05-22',
                 'jenis_kelamin' => 'l',
+                'email' => NULL,
                 'email_verified_at' => NULL,
                 'password' => '$2y$10$yje3O/tcKNsixd5/r1m0COTQTjSFqbAIop/.Y.h2n8zEUyjVR3c7W',
                 'two_factor_secret' => NULL,
@@ -63,14 +74,19 @@ class UsersTableSeeder extends Seeder
                 'updated_by' => '1',
                 'created_by' => NULL,
             ),
-            2 => 
-            array (
+            2 =>
+            array(
                 'id' => '3',
                 'name' => 'M Farhan',
-                'email' => NULL,
-                'no_telepon' => '082153965026',
-                'nik' => '0203001',
+                'nik' => '3273136905790004',
+                'alamat' => 'Jl. Burangrang Dalam No.23, Burangrang, Kota Bandung',
+                'no_telepon' => '81523749264',
+                'awal_masuk_kerja' => '2018',
+                'status_kontrak' => 'Tetap',
+                'username' => 'm.farhan',
+                'tgl_lahir' => '1979-05-29',
                 'jenis_kelamin' => 'l',
+                'email' => NULL,
                 'email_verified_at' => NULL,
                 'password' => '$2y$10$tv.Kw8Sn1sWZO2lC97kjR.wcrKo7a4966p5oUnNch23fg3i1wIIja',
                 'two_factor_secret' => NULL,
@@ -85,14 +101,19 @@ class UsersTableSeeder extends Seeder
                 'updated_by' => '1',
                 'created_by' => NULL,
             ),
-            3 => 
-            array (
+            3 =>
+            array(
                 'id' => '4',
                 'name' => 'Nafis Bacthir',
-                'email' => NULL,
-                'no_telepon' => '082165734905',
-                'nik' => '0302001',
+                'nik' => '3273065805800003',
+                'alamat' => 'Jl. Burangrang Dalam No.71, Burangrang, Kota Bandung',
+                'no_telepon' => '85723674392',
+                'awal_masuk_kerja' => '2017',
+                'status_kontrak' => 'Tetap',
+                'username' => 'nafis.bacthir',
+                'tgl_lahir' => '1980-05-18',
                 'jenis_kelamin' => 'l',
+                'email' => NULL,
                 'email_verified_at' => NULL,
                 'password' => '$2y$10$gAIMdv6G4UkxLQekQ8ipTOYjHKZRP1y5oxWxmhFT2rz7sO7QkFoda',
                 'two_factor_secret' => NULL,
@@ -107,14 +128,19 @@ class UsersTableSeeder extends Seeder
                 'updated_by' => '1',
                 'created_by' => NULL,
             ),
-            4 => 
-            array (
+            4 =>
+            array(
                 'id' => '5',
                 'name' => 'Yuli Yanti',
-                'email' => NULL,
-                'no_telepon' => '082134279054',
-                'nik' => '0401001',
+                'nik' => '3204325477810005',
+                'alamat' => 'Jl. Baleagung No.87, Baleendah, Kab. Bandung',
+                'no_telepon' => '85310462734',
+                'awal_masuk_kerja' => '2021',
+                'status_kontrak' => 'Tetap',
+                'username' => 'yuli.yanti',
+                'tgl_lahir' => '1987-05-14',
                 'jenis_kelamin' => 'p',
+                'email' => NULL,
                 'email_verified_at' => NULL,
                 'password' => '$2y$10$K1TY3Q/bHS3JHAgkVAu8AOdAeF/n06Fscrw4ZovdJR4GwxABP2zdW',
                 'two_factor_secret' => NULL,
@@ -129,14 +155,19 @@ class UsersTableSeeder extends Seeder
                 'updated_by' => '1',
                 'created_by' => NULL,
             ),
-            5 => 
-            array (
+            5 =>
+            array(
                 'id' => '6',
                 'name' => 'Budiman',
-                'email' => NULL,
-                'no_telepon' => '085790462350',
-                'nik' => '0501001',
+                'nik' => '3273282406760001',
+                'alamat' => 'Jl. Mekarmulya No.02, Panyileukan, Kota Bandung',
+                'no_telepon' => '85236491047',
+                'awal_masuk_kerja' => '2005',
+                'status_kontrak' => 'Tetap',
+                'username' => 'budiman',
+                'tgl_lahir' => '1976-06-24',
                 'jenis_kelamin' => 'l',
+                'email' => NULL,
                 'email_verified_at' => NULL,
                 'password' => '$2y$10$ipBOLMAkd2g7J76n95f1W.45BYAAxT1Q0hhS3letfDINihG.0TJ2W',
                 'two_factor_secret' => NULL,
@@ -151,14 +182,19 @@ class UsersTableSeeder extends Seeder
                 'updated_by' => '1',
                 'created_by' => NULL,
             ),
-            6 => 
-            array (
+            6 =>
+            array(
                 'id' => '7',
                 'name' => 'M Sidik',
-                'email' => NULL,
-                'no_telepon' => '089867439045',
-                'nik' => '0501002',
+                'nik' => '3273071405850004',
+                'alamat' => 'Jl. Karang Tineung Dalam No, 64, Sukagalih, Sukajadi',
+                'no_telepon' => '81234793672',
+                'awal_masuk_kerja' => '2022',
+                'status_kontrak' => 'Sementara',
+                'username' => 'm.sidik',
+                'tgl_lahir' => '1985-05-14',
                 'jenis_kelamin' => 'l',
+                'email' => NULL,
                 'email_verified_at' => NULL,
                 'password' => '$2y$10$ekh5rYs6JDdQ2pbc6ZGeyOYyfkEk65fLdVjo2EC2Y0ELiOe4qx2cm',
                 'two_factor_secret' => NULL,
@@ -173,14 +209,19 @@ class UsersTableSeeder extends Seeder
                 'updated_by' => '1',
                 'created_by' => NULL,
             ),
-            7 => 
-            array (
+            7 =>
+            array(
                 'id' => '8',
                 'name' => 'Jamal',
-                'email' => NULL,
-                'no_telepon' => '085785963206',
-                'nik' => '0502003',
+                'nik' => '3204282405800002',
+                'alamat' => 'Jl. Sumbawa No. 32, Sukamulya, Rancaekek, Kab. Bandung',
+                'no_telepon' => '85320494627',
+                'awal_masuk_kerja' => '2015',
+                'status_kontrak' => 'Sementara',
+                'username' => 'jamal',
+                'tgl_lahir' => '1980-05-24',
                 'jenis_kelamin' => 'l',
+                'email' => NULL,
                 'email_verified_at' => NULL,
                 'password' => '$2y$10$wjLtp0fuKdomzAxhSPsTbOz0tg4YnFjrE4l4i6hLxqGVLVvgWRifC',
                 'two_factor_secret' => NULL,
@@ -195,14 +236,19 @@ class UsersTableSeeder extends Seeder
                 'updated_by' => '1',
                 'created_by' => NULL,
             ),
-            8 => 
-            array (
+            8 =>
+            array(
                 'id' => '9',
                 'name' => 'Rusmin',
-                'email' => NULL,
-                'no_telepon' => '082157329646',
-                'nik' => '0502004',
+                'nik' => '3273261307770001',
+                'alamat' => 'Jl. Kampung  Baru No.107, Cigending, Ujung Berung, Kota Bandung',
+                'no_telepon' => '81394710362',
+                'awal_masuk_kerja' => '2018',
+                'status_kontrak' => 'Sementara',
+                'username' => 'rusmin',
+                'tgl_lahir' => '1977-07-13',
                 'jenis_kelamin' => 'l',
+                'email' => NULL,
                 'email_verified_at' => NULL,
                 'password' => '$2y$10$NoxFRXcGfIPBY6sd1Hg5uOv6OtguM6xbxuD01ErRe9BMBDk6.pF16',
                 'two_factor_secret' => NULL,
@@ -217,14 +263,19 @@ class UsersTableSeeder extends Seeder
                 'updated_by' => '1',
                 'created_by' => NULL,
             ),
-            9 => 
-            array (
+            9 =>
+            array(
                 'id' => '10',
                 'name' => 'Dikun',
-                'email' => NULL,
-                'no_telepon' => '085239646757',
-                'nik' => '0502005',
+                'nik' => '3273011004760006',
+                'alamat' => 'Jl. Palasari I No.37, Cibiru, Palasari, Kota Bandung',
+                'no_telepon' => '8984516372',
+                'awal_masuk_kerja' => '2017',
+                'status_kontrak' => 'Sementara',
+                'username' => 'dikun',
+                'tgl_lahir' => '1976-04-10',
                 'jenis_kelamin' => 'l',
+                'email' => NULL,
                 'email_verified_at' => NULL,
                 'password' => '$2y$10$nLJmgWwvFfcZiQaH1hhwzOEeJTogzinMKwQzrN1sUWNoJG65Lnp4y',
                 'two_factor_secret' => NULL,
@@ -239,14 +290,19 @@ class UsersTableSeeder extends Seeder
                 'updated_by' => '1',
                 'created_by' => NULL,
             ),
-            10 => 
-            array (
+            10 =>
+            array(
                 'id' => '11',
                 'name' => 'Rustandi',
-                'email' => NULL,
-                'no_telepon' => '089863457924',
-                'nik' => '0502006',
+                'nik' => '3204382208790005',
+                'alamat' => 'Jl. Gambung No. 28, Mekarsari, Pasir Jambu, Kab. Bandung',
+                'no_telepon' => '82164730173',
+                'awal_masuk_kerja' => '2019',
+                'status_kontrak' => 'Sementara',
+                'username' => 'rustandi',
+                'tgl_lahir' => '1979-08-22',
                 'jenis_kelamin' => 'l',
+                'email' => NULL,
                 'email_verified_at' => NULL,
                 'password' => '$2y$10$g2C1tn5NYRxxqFqQJ1XaleF9eABCn/I/oGzcK46745GhjlGeNavhi',
                 'two_factor_secret' => NULL,
@@ -261,14 +317,19 @@ class UsersTableSeeder extends Seeder
                 'updated_by' => '1',
                 'created_by' => NULL,
             ),
-            11 => 
-            array (
+            11 =>
+            array(
                 'id' => '12',
                 'name' => 'Dadan',
-                'email' => NULL,
-                'no_telepon' => '082236975391',
-                'nik' => '0502007',
+                'nik' => '3273241605830001',
+                'alamat' => 'Jl. Parakan Saat No. 76, Cisantren Endah, Arcamanik, Kota Bandung',
+                'no_telepon' => '89636173409',
+                'awal_masuk_kerja' => '2016',
+                'status_kontrak' => 'Sementara',
+                'username' => 'dadan',
+                'tgl_lahir' => '1983-05-16',
                 'jenis_kelamin' => 'l',
+                'email' => NULL,
                 'email_verified_at' => NULL,
                 'password' => '$2y$10$7T9DGFv1mnliu4IDhQVBc.cSrPzcu0SjPYl7zM1eVgg1bF3STljgu',
                 'two_factor_secret' => NULL,
@@ -283,14 +344,19 @@ class UsersTableSeeder extends Seeder
                 'updated_by' => '1',
                 'created_by' => NULL,
             ),
-            12 => 
-            array (
+            12 =>
+            array(
                 'id' => '13',
                 'name' => 'Turiman',
-                'email' => NULL,
-                'no_telepon' => '085735903254',
-                'nik' => '0502008',
+                'nik' => '3204061303850001',
+                'alamat' => 'Jl. Terusan Padasuka Atas No.73, Mandalamekar, Cimeunyan, Kab. Bandung',
+                'no_telepon' => '82364729307',
+                'awal_masuk_kerja' => '2016',
+                'status_kontrak' => 'Sementara',
+                'username' => 'turiman',
+                'tgl_lahir' => '1985-03-13',
                 'jenis_kelamin' => 'l',
+                'email' => NULL,
                 'email_verified_at' => NULL,
                 'password' => '$2y$10$wiWt.wNsx./xUuf7jJcHw.AOSGxJ6mzQBUGijTEKhRcSpC6Q5SvL.',
                 'two_factor_secret' => NULL,
@@ -305,14 +371,19 @@ class UsersTableSeeder extends Seeder
                 'updated_by' => '1',
                 'created_by' => NULL,
             ),
-            13 => 
-            array (
+            13 =>
+            array(
                 'id' => '14',
                 'name' => 'Gilang Sutani',
-                'email' => NULL,
-                'no_telepon' => '082246529477',
-                'nik' => '0601001',
+                'nik' => '3204261403810002',
+                'alamat' => 'Jl. Raya Ciomas no.55, Mandalawangi, Nagreg, Kab. Bandung',
+                'no_telepon' => '89526340174',
+                'awal_masuk_kerja' => '2016',
+                'status_kontrak' => 'Tetap',
+                'username' => 'gilang.sutani',
+                'tgl_lahir' => '1981-03-14',
                 'jenis_kelamin' => 'l',
+                'email' => NULL,
                 'email_verified_at' => NULL,
                 'password' => '$2y$10$P6eXUDyJEBC5bkgTCKdTgOLVRcLmF4GwnOVdwJ7FO7R/4MdXQQODa',
                 'two_factor_secret' => NULL,
@@ -327,14 +398,19 @@ class UsersTableSeeder extends Seeder
                 'updated_by' => '1',
                 'created_by' => NULL,
             ),
-            14 => 
-            array (
+            14 =>
+            array(
                 'id' => '15',
                 'name' => 'Aep',
-                'email' => NULL,
-                'no_telepon' => '082176945320',
-                'nik' => '0602002',
+                'nik' => '3273111507860002',
+                'alamat' => 'Jl. Kota Baru II No.23 Ciateul, Regol, Kota Bandung',
+                'no_telepon' => '85836173926',
+                'awal_masuk_kerja' => '2019',
+                'status_kontrak' => 'Sementara',
+                'username' => 'aep',
+                'tgl_lahir' => '1986-07-15',
                 'jenis_kelamin' => 'l',
+                'email' => NULL,
                 'email_verified_at' => NULL,
                 'password' => '$2y$10$bcGt6FPsM.TpKInV0eR9WOsWC6jh8CBTvRHwDUxPMSgAlpz42nYem',
                 'two_factor_secret' => NULL,
@@ -349,14 +425,19 @@ class UsersTableSeeder extends Seeder
                 'updated_by' => '1',
                 'created_by' => NULL,
             ),
-            15 => 
-            array (
+            15 =>
+            array(
                 'id' => '16',
                 'name' => 'Jabkan Muttaqien',
-                'email' => NULL,
-                'no_telepon' => '082167950239',
-                'nik' => '0602003',
+                'nik' => '3204252209870001',
+                'alamat' => 'Jl. Raya Barat Cicalengka No 350, Cicalengka Kulon, Kab. Bandung',
+                'no_telepon' => '81236173494',
+                'awal_masuk_kerja' => '2018',
+                'status_kontrak' => 'Sementara',
+                'username' => 'jabkan.muttaqien',
+                'tgl_lahir' => '1987-09-22',
                 'jenis_kelamin' => 'l',
+                'email' => NULL,
                 'email_verified_at' => NULL,
                 'password' => '$2y$10$2M/KQzunYfLaFVdBk/QmL.AWi45Fq4o9aMd/rgHNfPv.Q0AOKIVSu',
                 'two_factor_secret' => NULL,
@@ -371,14 +452,19 @@ class UsersTableSeeder extends Seeder
                 'updated_by' => '1',
                 'created_by' => NULL,
             ),
-            16 => 
-            array (
+            16 =>
+            array(
                 'id' => '17',
                 'name' => 'Abdul Farhan',
-                'email' => NULL,
-                'no_telepon' => '089867983452',
-                'nik' => '0602004',
+                'nik' => '3273192512880001',
+                'alamat' => 'Jl. Surareja No.153, Kebon Pisang, Sumur Bandung, Kota Bandung',
+                'no_telepon' => '82264371937',
+                'awal_masuk_kerja' => '2022',
+                'status_kontrak' => 'Sementara',
+                'username' => 'abdul.farhan',
+                'tgl_lahir' => '1988-12-25',
                 'jenis_kelamin' => 'l',
+                'email' => NULL,
                 'email_verified_at' => NULL,
                 'password' => '$2y$10$okA8/YP8wGCoMPMNSg1c7.PhTZe7TTOujcs3OFM02g0eQfNU.sjwC',
                 'two_factor_secret' => NULL,
@@ -393,14 +479,19 @@ class UsersTableSeeder extends Seeder
                 'updated_by' => '1',
                 'created_by' => NULL,
             ),
-            17 => 
-            array (
+            17 =>
+            array(
                 'id' => '18',
                 'name' => 'General Manager',
-                'email' => NULL,
+                'nik' => '1',
+                'alamat' => NULL,
                 'no_telepon' => '089876923147',
-                'nik' => '0000001',
+                'awal_masuk_kerja' => NULL,
+                'status_kontrak' => NULL,
+                'username' => 'generalmanager',
+                'tgl_lahir' => NULL,
                 'jenis_kelamin' => 'l',
+                'email' => NULL,
                 'email_verified_at' => NULL,
                 'password' => '$2y$10$fGyajfAv7mxdHec7qD8iNeCqkZJFS9CrvRDRepEbia30fymigjD1S',
                 'two_factor_secret' => NULL,
@@ -416,7 +507,5 @@ class UsersTableSeeder extends Seeder
                 'created_by' => '1',
             ),
         ));
-        
-        
     }
 }

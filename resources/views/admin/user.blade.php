@@ -100,10 +100,10 @@
                             <div class="help-block"></div>
                         </div>
                         <div class="form-group">
-                            <label class="form-label" for="nik">Nomor Induk Karyawan
+                            <label class="form-label" for="nik">Nomor Induk Kependudukan
                                 <span class="text-danger">*</span></label>
                             <input type="number" id="nik" name="nik" class="form-control"
-                                placeholder="Nomor Induk Karyawan" required="" />
+                                placeholder="Nomor Induk Kependudukan" required="" />
                             <div class="help-block"></div>
                         </div>
                         <div class="form-group ">

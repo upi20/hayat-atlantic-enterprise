@@ -137,7 +137,7 @@ $page_attr_title = ($page_attr->title == '' ? '' : $page_attr->title . ' | ') . 
                                                 <i class="zmdi zmdi-account-o text-muted ms-1" aria-hidden="true"></i>
                                             </a>
                                             <input class="input100 border-start-0 form-control ms-0 bg-white"
-                                                type="text" placeholder="Nomor Induk Karyawan" id="nik"
+                                                type="text" placeholder="Nomor Induk Kependudukan" id="nik"
                                                 required="" name="nik" style="border-radius: 0 24px 24px 0;">
                                         </div>
                                         <div class="wrap-input100 validate-input input-group" id="Password-toggle">
