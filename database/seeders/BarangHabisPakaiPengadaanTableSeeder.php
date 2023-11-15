@@ -21,12 +21,12 @@ class BarangHabisPakaiPengadaanTableSeeder extends Seeder
         \DB::table('barang_habis_pakai_pengadaan')->insert(array (
             0 => 
             array (
-                'id' => 1,
+                'id' => '1',
                 'nama' => 'Data Awal',
                 'keterangan' => NULL,
                 'tanggal' => '2020-01-01 14:18:04',
                 'updated_by' => NULL,
-                'created_by' => 5,
+                'created_by' => '5',
                 'created_at' => '2020-01-01 14:18:04',
                 'updated_at' => NULL,
             ),
