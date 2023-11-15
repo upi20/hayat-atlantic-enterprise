@@ -51,11 +51,9 @@ class DatabaseSeeder extends Seeder
         $this->call(BarangSatuanTableSeeder::class);
         $this->call(BarangTableSeeder::class);
 
-        // pengadaan dan pengurangan
+        // pengadaan 
         $this->call(BarangPengadaanTableSeeder::class);
         $this->call(BarangPengadaanListTableSeeder::class);
-        $this->call(BarangPenguranganTableSeeder::class);
-        $this->call(BarangPenguranganListTableSeeder::class);
 
         // penyewaan
         $this->call(PenyewaanTableSeeder::class);
@@ -78,5 +76,9 @@ class DatabaseSeeder extends Seeder
         $this->call(SessionsTableSeeder::class);
         $this->call(PesananTableSeeder::class);
         $this->call(PesananBarangTableSeeder::class);
+
+        // pengurangan
+        $this->call(BarangPenguranganTableSeeder::class);
+        $this->call(BarangPenguranganListTableSeeder::class);
     }
 }
