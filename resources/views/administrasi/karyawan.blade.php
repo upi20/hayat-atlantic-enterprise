@@ -328,7 +328,7 @@
                         name: 'name',
                         render(data, type, full, meta) {
                             return `${data}<br><small>${full.username}</small>`;
-                        }
+                        },
                         className: 'text-nowrap',
                     },
                     {
