@@ -26,7 +26,7 @@ class BarangSewaController extends Controller
             return $this->datatable($request);
         }
         $page_attr = [
-            'title' => 'Pengurangan Barang Sewa',
+            'title' => 'Penghapusan Barang Sewa',
             'breadcrumbs' => [
                 ['name' => 'Dashboard'],
                 ['name' => 'Pengurangan'],

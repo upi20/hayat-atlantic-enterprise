@@ -77,7 +77,7 @@
                         <th>No</th>
                         <th>Faktur Penyewaan</th>
                         <th>Tanggal Kirim</th>
-                        <th>Tanggal Pengambilan Barang</th>
+                        <th>Tanggal Pengiriman Barang</th>
                         {{-- <th>Tanggal Pakai</th> --}}
                         <th>Status Barang</th>
                     </tr>

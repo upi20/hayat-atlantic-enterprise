@@ -63,8 +63,8 @@
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>Nama Pengurangan Barang</th>
-                        <th>Tanggal Barang Berkurang</th>
+                        <th>Nama Penghapusan Barang</th>
+                        <th>Tanggal Penghapusan Barang</th>
                         <th>Jumlah Barang</th>
                         <th>Oleh</th>
                         {!! $can_delete || $can_update ? '<th >Ubah Data</th>' : '' !!}
@@ -88,14 +88,14 @@
                         enctype="multipart/form-data">
                         <input type="hidden" name="id" id="id">
                         <div class="form-group">
-                            <label class="form-label" for="nama">Nama Pengurangan Barang <span
+                            <label class="form-label" for="nama">Nama Penghapusan Barang <span
                                     class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="nama" name="nama" placeholder="Nama"
                                 required="" />
                         </div>
 
                         <div class="form-group">
-                            <label class="form-label" for="tanggal">Tanggal Barang Berkurang<span
+                            <label class="form-label" for="tanggal">Tanggal Penghapusan Barang<span
                                     class="text-danger">*</span></label>
                             <input type="datetime-local" class="form-control" id="tanggal" name="tanggal"
                                 placeholder="Tanggal" required="" />

@@ -322,7 +322,7 @@ class PMenuTableSeeder extends Seeder
             array (
                 'id' => '430',
                 'parent_id' => NULL,
-                'title' => 'Pengurangan Barang',
+                'title' => 'Penghapusan Barang',
                 'icon' => 'fas fa-people-carry',
                 'route' => NULL,
                 'sequence' => '20',
