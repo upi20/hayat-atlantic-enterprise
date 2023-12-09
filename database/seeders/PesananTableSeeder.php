@@ -67,6 +67,22 @@ class PesananTableSeeder extends Seeder
                 'created_at' => '2023-10-02 11:06:36',
                 'updated_at' => '2023-10-02 11:06:36',
             ),
+            3 => 
+            array (
+                'id' => '5',
+                'customer_id' => '18',
+                'tanggal_pakai_dari' => '2023-12-10',
+                'tanggal_pakai_sampai' => '2023-12-11',
+                'total_harga' => '900000',
+                'status' => '1',
+                'customer_nama' => NULL,
+                'customer_no_telepon' => NULL,
+                'customer_alamat' => NULL,
+                'updated_by' => NULL,
+                'created_by' => '5',
+                'created_at' => '2023-12-09 11:32:07',
+                'updated_at' => '2023-12-09 11:34:05',
+            ),
         ));
         
         

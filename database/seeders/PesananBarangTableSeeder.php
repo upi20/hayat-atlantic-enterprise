@@ -84,6 +84,45 @@ class PesananBarangTableSeeder extends Seeder
                 'created_at' => '2023-10-02 11:06:36',
                 'updated_at' => '2023-10-02 11:06:36',
             ),
+            5 => 
+            array (
+                'id' => '9',
+                'pesanan_id' => '5',
+                'barang_id' => '72',
+                'qty' => '500',
+                'stok' => '1750',
+                'harga' => '750',
+                'updated_by' => NULL,
+                'created_by' => '5',
+                'created_at' => '2023-12-09 11:32:07',
+                'updated_at' => '2023-12-09 11:32:07',
+            ),
+            6 => 
+            array (
+                'id' => '10',
+                'pesanan_id' => '5',
+                'barang_id' => '82',
+                'qty' => '500',
+                'stok' => '700',
+                'harga' => '1000',
+                'updated_by' => NULL,
+                'created_by' => '5',
+                'created_at' => '2023-12-09 11:32:07',
+                'updated_at' => '2023-12-09 11:32:07',
+            ),
+            7 => 
+            array (
+                'id' => '11',
+                'pesanan_id' => '5',
+                'barang_id' => '94',
+                'qty' => '1',
+                'stok' => '6',
+                'harga' => '25000',
+                'updated_by' => '5',
+                'created_by' => NULL,
+                'created_at' => '2023-12-09 11:34:05',
+                'updated_at' => '2023-12-09 11:34:05',
+            ),
         ));
         
         
